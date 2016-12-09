@@ -8,6 +8,7 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://48n.jp" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: sinn_shoyan
 github_username: shoyan
+permalink: /blog/:year/:month/:day/:title/
 
 # Build settings
 markdown: kramdown
