@@ -1,15 +1,24 @@
 <!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <link href="/assets/main.css" rel="stylesheet" type="text/css">
-  </head>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+
+  {% include head.html %}
+
   <body>
- <header>{% include header.html %}</header>
- <div id='main'>
-    {{ content }}
-    <nav>{% include nav.html %}</nav>
-    <aside>{% include aside.html %}</aside>
- </div>
- <footer>{% include footer.html %}</footer>
+
+  {% include header.html %}
+
+  <div id='main'>
+
+     {{ content }}
+
+     {% include nav.html %}
+
+     {% include aside.html %}
+
+  </div>
+
+  {% include footer.html %}
+
   </body>
+
 </html>
