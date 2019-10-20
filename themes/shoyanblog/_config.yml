@@ -1,0 +1,18 @@
+# html lang
+language: en
+
+# main menu navigation
+menu:
+  Home: /
+  "このページについて": /about
+  "プログラミングレッスン": /lesson
+  "記事一覧": /archives
+rss: /atom.xml
+
+# stylesheets loaded in the <head>
+stylesheets:
+- /css/shoyanblog.css
+
+# scripts loaded in the end of the body
+scripts:
+- /js/shoyanblog.js

@@ -1,0 +1,17 @@
+
+<article id="post">
+
+  <h1><%=page.title%></h1>
+
+  <time datetime="<%=page.date.toJSON()%>">
+    <%=date(page.date)%>
+  </time>
+
+  <%-partial('partials/share')%>
+
+  <%-page.content%>
+</article>
+
+<%- partial('partials/nav') %>
+
+<%- partial('partials/recent_posts') %>
