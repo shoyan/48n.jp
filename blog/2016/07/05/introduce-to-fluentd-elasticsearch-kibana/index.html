@@ -1,0 +1,255 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ja">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <title>Fluentd、ElasticsearchとKibanaでログ検索とグラフ表示を可能にする [ SHOYAN BLOG ]</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <!-- stylesheets list from _config.yml -->
+    
+      <link rel="stylesheet" href="/css/shoyanblog.css">
+    
+  
+  <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+
+  
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@sinn_shoyan">
+<meta name="twitter:title" content="Fluentd、ElasticsearchとKibanaでログ検索とグラフ表示を可能にする [ SHOYAN BLOG ]">
+
+  <meta name="twitter:description" content="Fluentdで転送されたログをElasticsearchに登録し、Kibanaでログ検索とグラフ表示する方法を紹介します。今回はsyslogのログをFluentd経由でElasticsearchに登録し、Kibanaで表示します。">
+
+<meta name="twitter:image" content="https://48n.jp/images/logo.png">
+
+  <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KQX8LKG');</script>
+<!-- End Google Tag Manager -->
+
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KQX8LKG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+<div id="menu-outer">
+  <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SHOYAN BLOG</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        <a class="nav-link" href="https://twitter.com/sinn_shoyan" target="_blank">
+          <?xml version="1.0" encoding="utf-8"?>
+          <!-- Generator: Adobe Illustrator 20.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewbox="0 0 400 400" style="enable-background:new 0 0 400 400;" xml:space="preserve" width="25" height="25">
+            <style type="text/css">
+              .st0 {
+                fill: #1da1f2;
+              }
+              .st1 {
+                fill: #ffffff;
+              }
+            </style>
+            <g id="Dark_Blue">
+              <path class="st0" d="M350,400H50c-27.6,0-50-22.4-50-50V50C0,22.4,22.4,0,50,0h300c27.6,0,50,22.4,50,50v300
+		C400,377.6,377.6,400,350,400z"/>
+            </g>
+            <g id="Logo__x2014__FIXED">
+              <path class="st1" d="M153.6,301.6c94.3,0,145.9-78.2,145.9-145.9c0-2.2,0-4.4-0.1-6.6c10-7.2,18.7-16.3,25.6-26.6
+		c-9.2,4.1-19.1,6.8-29.5,8.1c10.6-6.3,18.7-16.4,22.6-28.4c-9.9,5.9-20.9,10.1-32.6,12.4c-9.4-10-22.7-16.2-37.4-16.2
+		c-28.3,0-51.3,23-51.3,51.3c0,4,0.5,7.9,1.3,11.7c-42.6-2.1-80.4-22.6-105.7-53.6c-4.4,7.6-6.9,16.4-6.9,25.8
+		c0,17.8,9.1,33.5,22.8,42.7c-8.4-0.3-16.3-2.6-23.2-6.4c0,0.2,0,0.4,0,0.7c0,24.8,17.7,45.6,41.1,50.3c-4.3,1.2-8.8,1.8-13.5,1.8
+		c-3.3,0-6.5-0.3-9.6-0.9c6.5,20.4,25.5,35.2,47.9,35.6c-17.6,13.8-39.7,22-63.7,22c-4.1,0-8.2-0.2-12.2-0.7
+		C97.7,293.1,124.7,301.6,153.6,301.6"/>
+            </g>
+          </svg>
+        </a>
+        
+        <a class="nav-link" href="/atom.xml" title="RSSフィード">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25" viewbox="0 0 100 100">
+            <path class="social" d="M 13.310204,73.332654 C 5.967347,73.332654 0,79.322448 0,86.621428 c 0,7.338776 5.967347,13.262246 13.310204,13.262246 7.370408,0 13.328572,-5.92245 13.328572,-13.262246 0,-7.29898 -5.958164,-13.288774 -13.328572,-13.288774 z M 0.01530612,33.978572 V 53.143878 C 12.493878,53.143878 24.229592,58.02347 33.068368,66.865306 41.894898,75.685714 46.767346,87.47449 46.767346,100 h 19.25 C 66.017346,63.592858 36.4,33.979592 0.01530612,33.978572 l 0,0 z M 0.03877552,0 V 19.17449 C 44.54796,19.17551 80.77551,55.437756 80.77551,100 H 100 C 100,44.87653 55.15102,0 0.03877552,0 z"/>
+          </svg>
+        </a>
+         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="https://48n.jp"></form>
+      </nav>
+
+      <nav id="main-nav">
+        
+        <a class="main-nav-link" href="/">Home</a>
+        
+        <a class="main-nav-link" href="/about">このページについて</a>
+        
+        <a class="main-nav-link" href="/lesson">プログラミングレッスン</a>
+        
+        <a class="main-nav-link" href="/archives">記事一覧</a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+</div>
+
+<div id="content-outer">
+  <div id="content-inner">
+    
+<article id="post">
+
+  <h1>Fluentd、ElasticsearchとKibanaでログ検索とグラフ表示を可能にする</h1>
+
+  <time datetime="2016-07-05T08:21:32.000Z">
+    2016-07-05
+  </time>
+
+  <div class="sharing">
+  <a class="twitter-share-button" href="https://twitter.com/intent/tweet"> Tweet</a>
+  <a href="https://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;"></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+</div>
+
+<script>window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));</script>
+
+
+  <p><a href="/blog/2016/07/04/fluentd-tutorial/">前回の記事</a>で<a href="http://www.fluentd.org/" target="_blank" rel="noopener">Fluentd</a>を使ってログをログ収集サーバに転送する方法を紹介しました。<br>今回は転送されたログを<a href="https://www.elastic.co/jp/products/elasticsearch" target="_blank" rel="noopener">Elasticsearch</a>に登録し、<a href="https://www.elastic.co/jp/products/kibana" target="_blank" rel="noopener">Kibana</a>でログ検索とグラフ表示する方法を紹介します。</p>
+<p>ログ収集サーバー(前回の記事でいうVagrant)の変更を行っていきます。</p>
+<h2 id="FluentdのElasticsearchプラグインをインストール"><a href="#FluentdのElasticsearchプラグインをインストール" class="headerlink" title="FluentdのElasticsearchプラグインをインストール"></a>FluentdのElasticsearchプラグインをインストール</h2><p>まずは、FluetndのElasticsearchプラグインをインストールしておきます。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo /usr/sbin/td-agent-gem <span class="keyword">install</span> fluent-<span class="keyword">plugin</span>-elasticsearch</span><br></pre></td></tr></table></figure>
+
+<h2 id="Javaのインストール"><a href="#Javaのインストール" class="headerlink" title="Javaのインストール"></a>Javaのインストール</h2><p>Elasticsearchを動かすにはJavaが必要なのでJavaをインストールします。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum <span class="keyword">install</span> <span class="keyword">java</span><span class="number">-1.7</span><span class="number">.0</span>-openjdk</span><br><span class="line">$ sudo yum <span class="keyword">install</span> <span class="keyword">java</span><span class="number">-1.7</span><span class="number">.0</span>-openjdk-devel</span><br><span class="line">$ <span class="keyword">java</span> -<span class="keyword">version</span></span><br><span class="line"><span class="keyword">java</span> <span class="keyword">version</span> <span class="string">"1.7.0_101"</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Elasticsearchのインストールと起動"><a href="#Elasticsearchのインストールと起動" class="headerlink" title="Elasticsearchのインストールと起動"></a>Elasticsearchのインストールと起動</h2><p>今回はアーカイブをダウンロードしてきてインストールします。<br>インストールといっても特に設定は不要でアーカイブを展開して<code>bin/elasticsearch</code>を実行するだけです。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>curl -O <span class="symbol">https:</span>/<span class="regexp">/download.elastic.co/elasticsearch</span><span class="regexp">/release/org</span><span class="regexp">/elasticsearch/distribution</span><span class="regexp">/tar/elasticsearch</span><span class="regexp">/2.3.3/elasticsearch</span>-<span class="number">2.3</span>.<span class="number">3</span>.tar.gz</span><br><span class="line"><span class="variable">$ </span>cd elastic search-<span class="number">2.3</span>.<span class="number">3</span></span><br><span class="line"><span class="variable">$ </span>./bin/elasticsearch</span><br></pre></td></tr></table></figure>
+
+<h2 id="kibanaのインストールと起動"><a href="#kibanaのインストールと起動" class="headerlink" title="kibanaのインストールと起動"></a>kibanaのインストールと起動</h2><p>Kibanaも同じようにアーカイブをダウンロードして起動します。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>curl -O <span class="symbol">https:</span>/<span class="regexp">/download.elastic.co/kibana</span><span class="regexp">/kibana/kibana</span>-<span class="number">4.5</span>.<span class="number">1</span>-linux-x64.tar.gz</span><br><span class="line"><span class="variable">$ </span>cd kibana-<span class="number">4.5</span>.<span class="number">1</span>-linux-x64</span><br><span class="line"><span class="variable">$ </span>./bin/kibana</span><br></pre></td></tr></table></figure>
+
+<p><code>http://192.168.33.10:5601</code> にブラウザでアクセスするとKibanaの管理画面が表示されます。<br>Indexの設定が必要ですが、ここでは何もせず次に進みます。</p>
+<h2 id="syslogのログをElasticsearchに格納する"><a href="#syslogのログをElasticsearchに格納する" class="headerlink" title="syslogのログをElasticsearchに格納する"></a>syslogのログをElasticsearchに格納する</h2><p>syslogのログをElasticsearchに格納し、Kibanaで参照します。</p>
+<p><code>/etc/td-agent/td-agent.conf</code>に以下を追記します。</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;source&gt;</span></span><br><span class="line">  @<span class="keyword">type</span> syslog <span class="comment"># syslogプラグイン</span></span><br><span class="line">  port <span class="number">42185</span>   <span class="comment"># portは42185を指定</span></span><br><span class="line">  <span class="keyword">tag</span> <span class="title">syslog</span>   <span class="comment"># syslogというtagをつける</span></span><br><span class="line"><span class="tag">&lt;/source&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;match syslog.**&gt;</span></span><br><span class="line">  @<span class="keyword">type</span> elasticsearch <span class="comment"># elasticsearchプラグインを使う</span></span><br><span class="line">  logstash_format <span class="literal">true</span> <span class="comment"># ログのフォーマット</span></span><br><span class="line">  flush_interval <span class="number">10s</span> <span class="comment"># 10秒ごとに登録する</span></span><br><span class="line"><span class="tag">&lt;/match&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>fluendをリスタートします。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo<span class="built_in"> service </span>td-agent restart</span><br></pre></td></tr></table></figure>
+
+<p>次にsyslogの設定をします。</p>
+<p><code>/etc/rsyslog.conf</code> に以下を追記します。<br>syslogが出力するログをFlutedがlistenするポート、42185に転送するための設定です。</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*.* @<span class="number">127.0</span><span class="meta">.0</span><span class="meta">.1</span>:<span class="number">42185</span></span><br></pre></td></tr></table></figure>
+
+<p>設定を反映させるため、syslogをリスタートします。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo <span class="regexp">/etc/i</span>nit.d<span class="regexp">/rsyslog restart</span></span><br></pre></td></tr></table></figure>
+
+<p>先ほど確認した <code>http://192.168.33.10:5601</code> に戻ります。<br>syslogの出力がElasticsearchに登録されると、Indexを登録できるようになります。<br>Indexは<code>logstash-2016.07.05</code> のような名前で作成されます。<br>セレクトボックスからIndexを選択し、Createボタンを押下後にKibanaでログの表示、検索が行えます。</p>
+<p>手動でElasticsearchにログを送りたい場合は以下のコマンドで登録できます。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> logger -t <span class="built_in">test</span> foobar</span></span><br></pre></td></tr></table></figure>
+
+<p>もしくは、Fluentdのhttpポートにリクエストします。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X POST -d <span class="symbol">'json</span>=&#123;<span class="string">"json"</span>:<span class="string">"Hello"</span>&#125;' http:<span class="comment">//localhost:8888/syslog.test</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
+<li><a href="http://docs.fluentd.org/articles/free-alternative-to-splunk-by-fluentd" target="_blank" rel="noopener">Free Alternative to Splunk Using Fluentd</a></li>
+</ul>
+
+</article>
+
+
+<nav id="article-nav">
+  
+    <a href="/blog/2016/07/08/tips-for-tmpwatch/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">次の記事</strong>
+      <div class="article-nav-title">
+        
+          tmpwatchでさくっと不要なファイルを消す
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2016/07/04/fluentd-tutorial/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">Fluentdを使ってローカル環境にログ収集サーバを構築する</div>
+    </a>
+  
+</nav>
+
+
+
+
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2019/09/20/the-value-of-speed/">スピードの価値</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/08/19/simple-implementation/">シンプルに実装する大切さ</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/08/02/why-do-not-i-aim-for-100-test-coverage/">テストカバレッジ100%を目指さない理由</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/04/25/avoid-using-database-specific-functions/">データベース固有の関数の使用を避けるべき理由</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2018/12/17/decide-criteria-instead-of-consultation/">相談ではなく明確な基準を決めよう</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  </div>
+</div>
+
+<footer>
+  <div id="bottom-outer">
+    <div id="bottom-inner">
+      <a href="/">Home</a>
+      <p>Copyright © 2019 - SHOYAN BLOG</p>
+    </div>
+  </div>
+</footer>
+
+
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="/js/shoyanblog.js"></script>
+  
+
+
+</body>
+</html>

@@ -1,0 +1,271 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ja">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <title>ShellのTipsてきなやつ [ SHOYAN BLOG ]</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <!-- stylesheets list from _config.yml -->
+    
+      <link rel="stylesheet" href="/css/shoyanblog.css">
+    
+  
+  <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+
+  
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@sinn_shoyan">
+<meta name="twitter:title" content="ShellのTipsてきなやつ [ SHOYAN BLOG ]">
+
+  <meta name="twitter:description" content="ShellスクリプトのTipsです。自分がShellのコードを読んだり書いたりしたときにでてきた疑問のメモでもあります。">
+
+<meta name="twitter:image" content="https://48n.jp/images/logo.png">
+
+  <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KQX8LKG');</script>
+<!-- End Google Tag Manager -->
+
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KQX8LKG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+<div id="menu-outer">
+  <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SHOYAN BLOG</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        <a class="nav-link" href="https://twitter.com/sinn_shoyan" target="_blank">
+          <?xml version="1.0" encoding="utf-8"?>
+          <!-- Generator: Adobe Illustrator 20.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewbox="0 0 400 400" style="enable-background:new 0 0 400 400;" xml:space="preserve" width="25" height="25">
+            <style type="text/css">
+              .st0 {
+                fill: #1da1f2;
+              }
+              .st1 {
+                fill: #ffffff;
+              }
+            </style>
+            <g id="Dark_Blue">
+              <path class="st0" d="M350,400H50c-27.6,0-50-22.4-50-50V50C0,22.4,22.4,0,50,0h300c27.6,0,50,22.4,50,50v300
+		C400,377.6,377.6,400,350,400z"/>
+            </g>
+            <g id="Logo__x2014__FIXED">
+              <path class="st1" d="M153.6,301.6c94.3,0,145.9-78.2,145.9-145.9c0-2.2,0-4.4-0.1-6.6c10-7.2,18.7-16.3,25.6-26.6
+		c-9.2,4.1-19.1,6.8-29.5,8.1c10.6-6.3,18.7-16.4,22.6-28.4c-9.9,5.9-20.9,10.1-32.6,12.4c-9.4-10-22.7-16.2-37.4-16.2
+		c-28.3,0-51.3,23-51.3,51.3c0,4,0.5,7.9,1.3,11.7c-42.6-2.1-80.4-22.6-105.7-53.6c-4.4,7.6-6.9,16.4-6.9,25.8
+		c0,17.8,9.1,33.5,22.8,42.7c-8.4-0.3-16.3-2.6-23.2-6.4c0,0.2,0,0.4,0,0.7c0,24.8,17.7,45.6,41.1,50.3c-4.3,1.2-8.8,1.8-13.5,1.8
+		c-3.3,0-6.5-0.3-9.6-0.9c6.5,20.4,25.5,35.2,47.9,35.6c-17.6,13.8-39.7,22-63.7,22c-4.1,0-8.2-0.2-12.2-0.7
+		C97.7,293.1,124.7,301.6,153.6,301.6"/>
+            </g>
+          </svg>
+        </a>
+        
+        <a class="nav-link" href="/atom.xml" title="RSSフィード">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25" viewbox="0 0 100 100">
+            <path class="social" d="M 13.310204,73.332654 C 5.967347,73.332654 0,79.322448 0,86.621428 c 0,7.338776 5.967347,13.262246 13.310204,13.262246 7.370408,0 13.328572,-5.92245 13.328572,-13.262246 0,-7.29898 -5.958164,-13.288774 -13.328572,-13.288774 z M 0.01530612,33.978572 V 53.143878 C 12.493878,53.143878 24.229592,58.02347 33.068368,66.865306 41.894898,75.685714 46.767346,87.47449 46.767346,100 h 19.25 C 66.017346,63.592858 36.4,33.979592 0.01530612,33.978572 l 0,0 z M 0.03877552,0 V 19.17449 C 44.54796,19.17551 80.77551,55.437756 80.77551,100 H 100 C 100,44.87653 55.15102,0 0.03877552,0 z"/>
+          </svg>
+        </a>
+         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="https://48n.jp"></form>
+      </nav>
+
+      <nav id="main-nav">
+        
+        <a class="main-nav-link" href="/">Home</a>
+        
+        <a class="main-nav-link" href="/about">このページについて</a>
+        
+        <a class="main-nav-link" href="/lesson">プログラミングレッスン</a>
+        
+        <a class="main-nav-link" href="/archives">記事一覧</a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+</div>
+
+<div id="content-outer">
+  <div id="content-inner">
+    
+<article id="post">
+
+  <h1>ShellのTipsてきなやつ</h1>
+
+  <time datetime="2016-06-22T09:16:41.000Z">
+    2016-06-22
+  </time>
+
+  <div class="sharing">
+  <a class="twitter-share-button" href="https://twitter.com/intent/tweet"> Tweet</a>
+  <a href="https://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;"></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+</div>
+
+<script>window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));</script>
+
+
+  <p>ShellスクリプトのTipsです。</p>
+<h2 id="シェル変数の初期化をする"><a href="#シェル変数の初期化をする" class="headerlink" title="シェル変数の初期化をする"></a>シェル変数の初期化をする</h2><p>変数に値が設定されていない場合は、指定された値を返します。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">: <span class="variable">$&#123;VAR:=初期化する値&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="パラメーターを取得する"><a href="#パラメーターを取得する" class="headerlink" title="パラメーターを取得する"></a>パラメーターを取得する</h2><p><code>$@</code> にパラメーターが格納されています。</p>
+<p>例えば以下の記述をした for.sh ファイルを作成します。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> role <span class="keyword">in</span> <span class="string">"<span class="variable">$@</span>"</span>; <span class="keyword">do</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="variable">$role</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<p>以下のように出力されます。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ./for.sh hoge moge</span><br><span class="line">=&gt; hoge</span><br><span class="line">moge</span><br></pre></td></tr></table></figure>
+
+<h2 id="評価結果を変数に格納する"><a href="#評価結果を変数に格納する" class="headerlink" title="評価結果を変数に格納する"></a>評価結果を変数に格納する</h2><p><code>&quot;$()&quot;</code> で囲めば、評価結果を変数に格納することができます。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ name=<span class="string">"$(hostname)"</span></span><br><span class="line">$ echo $name</span><br><span class="line">=&gt; shoyan-pc</span><br><span class="line"></span><br><span class="line"># 以下も同じです。</span><br><span class="line"></span><br><span class="line">$ name=`hostname`</span><br><span class="line">$ echo $name</span><br><span class="line">=&gt; shoyan-pc</span><br></pre></td></tr></table></figure>
+
+<h2 id="if-と-test-コマンドの合わせ技"><a href="#if-と-test-コマンドの合わせ技" class="headerlink" title="if と test コマンドの合わせ技"></a>if と test コマンドの合わせ技</h2><p>ifとtestコマンドを使う場合はtestコマンドを省略した<code>[]</code>がよく使われます。</p>
+<p>[ 文字列1 = 文字列2 ]<br>[ 数値1 オプション 数値2 ]<br>[ オプション 評価対象 ]  </p>
+<p>[ の直後と ] の直前には必ず半角スペースが必要です (無いと正常に動作しません)。</p>
+<p>ちなみに比較は <code>==</code> でなくて <code>=</code>です。</p>
+<p>シェルの比較は文字列の比較と数値の比較があり、それぞれに対応するオペレーターがあります。<br>そのせいで複雑になっている印象があります。</p>
+<h3 id="数値の比較"><a href="#数値の比較" class="headerlink" title="数値の比較"></a>数値の比較</h3><h4 id="数値1と数値2が等しいかどうか"><a href="#数値1と数値2が等しいかどうか" class="headerlink" title="数値1と数値2が等しいかどうか"></a>数値1と数値2が等しいかどうか</h4><p><code>-eq</code>、もしくは <code>=</code>を使います。</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$  [ <span class="number">1</span> -eq <span class="number">1</span> ]; echo $?</span><br><span class="line"><span class="number">0</span></span><br><span class="line">$  [ <span class="number">1</span> = <span class="number">1</span> ]; echo $?</span><br><span class="line"><span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="数値1と数値2が等しくないかどうか"><a href="#数値1と数値2が等しくないかどうか" class="headerlink" title="数値1と数値2が等しくないかどうか"></a>数値1と数値2が等しくないかどうか</h4><p><code>-ne</code> を使います。</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span>  [ <span class="number">1</span> -<span class="keyword">ne</span> <span class="number">2</span> ]; echo <span class="symbol">$</span>?</span><br><span class="line"><span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p><code>!=</code> でも動作しますが、慣習的にあまり使わないようです。</p>
+<h3 id="文字列の比較"><a href="#文字列の比較" class="headerlink" title="文字列の比較"></a>文字列の比較</h3><h4 id="文字列1と文字列2が等しいかどうか"><a href="#文字列1と文字列2が等しいかどうか" class="headerlink" title="文字列1と文字列2が等しいかどうか"></a>文字列1と文字列2が等しいかどうか</h4><p>同じ場合にtrueを返す<code>=</code>と その否定である <code>!=</code> を使います。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span> [ <span class="string">"hey"</span> = <span class="string">"hey"</span> ]; echo <span class="variable">$?</span></span><br><span class="line"><span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>ちなみに数値の比較に使う <code>-eq</code> で比較したところエラーとなりました。</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span>  [ <span class="string">"hey"</span> -<span class="keyword">eq</span> <span class="string">"hey"</span> ]; echo <span class="symbol">$</span>?</span><br><span class="line">[: <span class="keyword">integer</span> expression expected: hey</span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="文字列1と文字列2が等しくないかどうか"><a href="#文字列1と文字列2が等しくないかどうか" class="headerlink" title="文字列1と文字列2が等しくないかどうか"></a>文字列1と文字列2が等しくないかどうか</h4><p>文字列比較のNOT条件<br><code>!=</code>を使用します。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[ <span class="string">"$hoge"</span> != <span class="string">"fuga"</span> ]</span><br></pre></td></tr></table></figure>
+
+<p>数値比較のNOT条件</p>
+<p>数値の比較の場合は <code>-ne</code> オプションを使うのが慣習のようです。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[ <span class="number">1</span> -ne <span class="number">2</span> ]</span><br></pre></td></tr></table></figure>
+
+<h3 id="変数が空かどうか"><a href="#変数が空かどうか" class="headerlink" title="変数が空かどうか"></a>変数が空かどうか</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[ -z <span class="string">"$hoge"</span> ]</span><br></pre></td></tr></table></figure>
+
+<p>空でないかを判定する場合は <code>-n</code> を使います。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[ -n <span class="string">"$hoge"</span> ]</span><br></pre></td></tr></table></figure>
+
+<h3 id="findで抽出したファイルをreadコマンドで1行ずつ処理する"><a href="#findで抽出したファイルをreadコマンドで1行ずつ処理する" class="headerlink" title="findで抽出したファイルをreadコマンドで1行ずつ処理する"></a>findで抽出したファイルをreadコマンドで1行ずつ処理する</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find application -<span class="built_in">type</span> f -name <span class="string">"*.ini"</span> | <span class="keyword">while</span> <span class="built_in">read</span> LINE; <span class="keyword">do</span> wc -l <span class="variable">$&#123;LINE&#125;</span>; <span class="keyword">done</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="実行ファイルのあるパスを取得する"><a href="#実行ファイルのあるパスを取得する" class="headerlink" title="実行ファイルのあるパスを取得する"></a>実行ファイルのあるパスを取得する</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$(cd $(dirname $0)</span>;pwd)"</span></span><br></pre></td></tr></table></figure>
+
+<p>1つ上のディレクトリは以下のように取得する</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$(cd $(dirname $0)</span>;cd ..;pwd)"</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
+<li><a href="http://doi-t.hatenablog.com/entry/2013/12/08/161929" target="_blank" rel="noopener">シェル変数のデフォルト値を設定する、未初期化時にエラーメッセージを出力してスクリプトを強制終了する - 百日半狂乱</a></li>
+<li><a href="http://shellscript.sunone.me/if_and_test.html#数値の比較:ed775c34e441eb16a91481d087cc1a74" target="_blank" rel="noopener">if 文と test コマンド - UNIX &amp; Linux コマンド・シェルスクリプト リファレンス</a></li>
+</ul>
+
+</article>
+
+
+<nav id="article-nav">
+  
+    <a href="/blog/2016/06/23/php-syntax-check/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">次の記事</strong>
+      <div class="article-nav-title">
+        
+          レガシーコード向けに修正した部分だけPHP構文チェックをする仕組みを作った
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2016/06/21/introduce-treantjs/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">Treant.jsでツリーダイアグラムを描画する</div>
+    </a>
+  
+</nav>
+
+
+
+
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2019/09/20/the-value-of-speed/">スピードの価値</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/08/19/simple-implementation/">シンプルに実装する大切さ</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/08/02/why-do-not-i-aim-for-100-test-coverage/">テストカバレッジ100%を目指さない理由</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/04/25/avoid-using-database-specific-functions/">データベース固有の関数の使用を避けるべき理由</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2018/12/17/decide-criteria-instead-of-consultation/">相談ではなく明確な基準を決めよう</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  </div>
+</div>
+
+<footer>
+  <div id="bottom-outer">
+    <div id="bottom-inner">
+      <a href="/">Home</a>
+      <p>Copyright © 2019 - SHOYAN BLOG</p>
+    </div>
+  </div>
+</footer>
+
+
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="/js/shoyanblog.js"></script>
+  
+
+
+</body>
+</html>
