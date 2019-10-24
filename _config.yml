@@ -5,11 +5,11 @@
 # Site
 title: SHOYAN BLOG
 subtitle:
-description:
-keywords:
+description: 当サイトSHOYAN BLOGは、Webアプリケーションエンジニアの山崎勝平(Yamasaki Shohei)が運営するブログです。IT技術に関連する情報を発信しています。
+keywords: プログラミング
 author: Shohei Yamasaki
 language: ja
-timezone:
+timezone: Japan
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
