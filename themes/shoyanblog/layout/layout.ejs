@@ -7,6 +7,9 @@ if (is_category()) pageTitle = 'Category: ' + page.category;
 if (is_month()) pageTitle += ': ' + page.month + '/' + page.year;
 if (is_year()) pageTitle += ': ' + page.year;
 pageTitle += ' [ ' + config.title + ' ]';
+
+var description = page.description || config.description || '';
+var keyword = page.keyword || config.keyword || '';
 %>
 
 <!DOCTYPE html>
@@ -20,6 +23,14 @@ pageTitle += ' [ ' + config.title + ' ]';
     <% theme.stylesheets.forEach(url => { %>
       <link rel="stylesheet" href="<%=url%>">
     <% }); %>
+  <% } %>
+
+  <% if (description) { %>
+    <meta name="description" content="<%=description%>">
+  <% } %>
+
+  <% if (keyword) { %>
+    <meta name="keywords" content="<%=keyword%>">
   <% } %>
   <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
