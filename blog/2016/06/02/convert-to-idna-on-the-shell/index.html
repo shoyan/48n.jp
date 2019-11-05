@@ -3,7 +3,7 @@
 
 <!DOCTYPE html>
 <html lang="ja">
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="UTF-8">
   <title>Shellで日本語ドメインをPunycode(IDNドメイン)に変換する方法 [ SHOYAN BLOG ]</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -13,17 +13,20 @@
       <link rel="stylesheet" href="/css/shoyanblog.css">
     
   
+  
+    <meta name="description" content="Shellで日本語ドメインをIDNフォーマットに変換する方法を紹介します。libidnというGNUのライブラリがあるので、それを使います。対象のOSはMacです。">
+  
+  
   <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
-
   
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@sinn_shoyan">
-<meta name="twitter:title" content="Shellで日本語ドメインをPunycode(IDNドメイン)に変換する方法 [ SHOYAN BLOG ]">
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@sinn_shoyan" />
+<meta name="twitter:title" content="Shellで日本語ドメインをPunycode(IDNドメイン)に変換する方法 [ SHOYAN BLOG ]" />
 
-  <meta name="twitter:description" content="Shellで日本語ドメインをIDNフォーマットに変換する方法を紹介します。libidnというGNUのライブラリがあるので、それを使います。対象のOSはMacです。">
+  <meta name="twitter:description" content="Shellで日本語ドメインをIDNフォーマットに変換する方法を紹介します。libidnというGNUのライブラリがあるので、それを使います。対象のOSはMacです。" />
 
-<meta name="twitter:image" content="https://48n.jp/images/logo.png">
+<meta name="twitter:image" content="https://48n.jp/images/logo.png" />
 
   <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -38,7 +41,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KQX8LKG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KQX8LKG"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
 
@@ -56,7 +60,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <a class="nav-link" href="https://twitter.com/sinn_shoyan" target="_blank">
           <?xml version="1.0" encoding="utf-8"?>
           <!-- Generator: Adobe Illustrator 20.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewbox="0 0 400 400" style="enable-background:new 0 0 400 400;" xml:space="preserve" width="25" height="25">
+          <svg
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            x="0px"
+            y="0px"
+            viewBox="0 0 400 400"
+            style="enable-background:new 0 0 400 400;"
+            xml:space="preserve"
+            width="25"
+            height="25"
+          >
             <style type="text/css">
               .st0 {
                 fill: #1da1f2;
@@ -66,23 +81,32 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               }
             </style>
             <g id="Dark_Blue">
-              <path class="st0" d="M350,400H50c-27.6,0-50-22.4-50-50V50C0,22.4,22.4,0,50,0h300c27.6,0,50,22.4,50,50v300
-		C400,377.6,377.6,400,350,400z"/>
+              <path
+                class="st0"
+                d="M350,400H50c-27.6,0-50-22.4-50-50V50C0,22.4,22.4,0,50,0h300c27.6,0,50,22.4,50,50v300
+		C400,377.6,377.6,400,350,400z"
+              />
             </g>
             <g id="Logo__x2014__FIXED">
-              <path class="st1" d="M153.6,301.6c94.3,0,145.9-78.2,145.9-145.9c0-2.2,0-4.4-0.1-6.6c10-7.2,18.7-16.3,25.6-26.6
+              <path
+                class="st1"
+                d="M153.6,301.6c94.3,0,145.9-78.2,145.9-145.9c0-2.2,0-4.4-0.1-6.6c10-7.2,18.7-16.3,25.6-26.6
 		c-9.2,4.1-19.1,6.8-29.5,8.1c10.6-6.3,18.7-16.4,22.6-28.4c-9.9,5.9-20.9,10.1-32.6,12.4c-9.4-10-22.7-16.2-37.4-16.2
 		c-28.3,0-51.3,23-51.3,51.3c0,4,0.5,7.9,1.3,11.7c-42.6-2.1-80.4-22.6-105.7-53.6c-4.4,7.6-6.9,16.4-6.9,25.8
 		c0,17.8,9.1,33.5,22.8,42.7c-8.4-0.3-16.3-2.6-23.2-6.4c0,0.2,0,0.4,0,0.7c0,24.8,17.7,45.6,41.1,50.3c-4.3,1.2-8.8,1.8-13.5,1.8
 		c-3.3,0-6.5-0.3-9.6-0.9c6.5,20.4,25.5,35.2,47.9,35.6c-17.6,13.8-39.7,22-63.7,22c-4.1,0-8.2-0.2-12.2-0.7
-		C97.7,293.1,124.7,301.6,153.6,301.6"/>
+		C97.7,293.1,124.7,301.6,153.6,301.6"
+              />
             </g>
           </svg>
         </a>
         
         <a class="nav-link" href="/atom.xml" title="RSSフィード">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25" viewbox="0 0 100 100">
-            <path class="social" d="M 13.310204,73.332654 C 5.967347,73.332654 0,79.322448 0,86.621428 c 0,7.338776 5.967347,13.262246 13.310204,13.262246 7.370408,0 13.328572,-5.92245 13.328572,-13.262246 0,-7.29898 -5.958164,-13.288774 -13.328572,-13.288774 z M 0.01530612,33.978572 V 53.143878 C 12.493878,53.143878 24.229592,58.02347 33.068368,66.865306 41.894898,75.685714 46.767346,87.47449 46.767346,100 h 19.25 C 66.017346,63.592858 36.4,33.979592 0.01530612,33.978572 l 0,0 z M 0.03877552,0 V 19.17449 C 44.54796,19.17551 80.77551,55.437756 80.77551,100 H 100 C 100,44.87653 55.15102,0 0.03877552,0 z"/>
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25" viewBox="0 0 100 100">
+            <path
+              class="social"
+              d="M 13.310204,73.332654 C 5.967347,73.332654 0,79.322448 0,86.621428 c 0,7.338776 5.967347,13.262246 13.310204,13.262246 7.370408,0 13.328572,-5.92245 13.328572,-13.262246 0,-7.29898 -5.958164,-13.288774 -13.328572,-13.288774 z M 0.01530612,33.978572 V 53.143878 C 12.493878,53.143878 24.229592,58.02347 33.068368,66.865306 41.894898,75.685714 46.767346,87.47449 46.767346,100 h 19.25 C 66.017346,63.592858 36.4,33.979592 0.01530612,33.978572 l 0,0 z M 0.03877552,0 V 19.17449 C 44.54796,19.17551 80.77551,55.437756 80.77551,100 H 100 C 100,44.87653 55.15102,0 0.03877552,0 z"
+            ></path>
           </svg>
         </a>
          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="https://48n.jp"></form>
@@ -112,13 +136,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
   <h1>Shellで日本語ドメインをPunycode(IDNドメイン)に変換する方法</h1>
 
-  <time datetime="2016-06-02T10:37:47.000Z">
+  <time datetime="2016-06-02T01:37:47.000Z">
     2016-06-02
   </time>
 
   <div class="sharing">
-  <a class="twitter-share-button" href="https://twitter.com/intent/tweet"> Tweet</a>
-  <a href="https://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;"></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+  <a class="twitter-share-button" href="https://twitter.com/intent/tweet" target="_blank" rel="noopener"> Tweet</a>
+  <a href="https://b.hatena.ne.jp/entry/" target="_blank" rel="noopener" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 </div>
 
 <script>window.twttr = (function(d, s, id) {
@@ -153,15 +177,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <p>unicodeに変換する場合は<code>-u</code>オプションを使います。</p>
 <figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ idn -u xn<span class="params">--68jwei3c27a</span>.xyz</span><br><span class="line">しょーやん<span class="string">.xyz</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="digとidnを組み合わせて使う"><a href="#digとidnを組み合わせて使う" class="headerlink" title="digとidnを組み合わせて使う"></a>digとidnを組み合わせて使う</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">⇒  <span class="selector-tag">dig</span> `<span class="selector-tag">idn</span> しょーやん<span class="selector-class">.xyz</span>` <span class="selector-tag">NS</span></span><br><span class="line"></span><br><span class="line">; &lt;&lt;&gt;&gt; <span class="selector-tag">DiG</span> 9<span class="selector-class">.8</span><span class="selector-class">.3-P1</span> &lt;&lt;&gt;&gt; <span class="selector-tag">xn--68jwei3c27a</span><span class="selector-class">.xyz</span> <span class="selector-tag">NS</span></span><br><span class="line">;; <span class="selector-tag">global</span> <span class="selector-tag">options</span>: +<span class="selector-tag">cmd</span></span><br><span class="line">;; <span class="selector-tag">Got</span> <span class="selector-tag">answer</span>:</span><br><span class="line">;; <span class="selector-tag">-</span>&gt;&gt;<span class="selector-tag">HEADER</span>&lt;&lt;<span class="selector-tag">-</span> <span class="selector-tag">opcode</span>: <span class="selector-tag">QUERY</span>, <span class="selector-tag">status</span>: <span class="selector-tag">NOERROR</span>, <span class="selector-tag">id</span>: 59533</span><br><span class="line">;; <span class="selector-tag">flags</span>: <span class="selector-tag">qr</span> <span class="selector-tag">rd</span> <span class="selector-tag">ra</span>; <span class="selector-tag">QUERY</span>: 1, <span class="selector-tag">ANSWER</span>: 2, <span class="selector-tag">AUTHORITY</span>: 0, <span class="selector-tag">ADDITIONAL</span>: 0</span><br><span class="line"></span><br><span class="line">;; <span class="selector-tag">QUESTION</span> <span class="selector-tag">SECTION</span>:</span><br><span class="line">;<span class="selector-tag">xn--68jwei3c27a</span><span class="selector-class">.xyz</span>.   <span class="selector-tag">IN</span>  <span class="selector-tag">NS</span></span><br><span class="line"></span><br><span class="line">;; <span class="selector-tag">ANSWER</span> <span class="selector-tag">SECTION</span>:</span><br><span class="line"><span class="selector-tag">xn--68jwei3c27a</span><span class="selector-class">.xyz</span>.  3578  <span class="selector-tag">IN</span>  <span class="selector-tag">NS</span>  <span class="selector-tag">dns01</span><span class="selector-class">.muumuu-domain</span><span class="selector-class">.com</span>.</span><br><span class="line"><span class="selector-tag">xn--68jwei3c27a</span><span class="selector-class">.xyz</span>.  3578  <span class="selector-tag">IN</span>  <span class="selector-tag">NS</span>  <span class="selector-tag">dns02</span><span class="selector-class">.muumuu-domain</span><span class="selector-class">.com</span>.</span><br><span class="line"></span><br><span class="line">;; <span class="selector-tag">Query</span> <span class="selector-tag">time</span>: 34 <span class="selector-tag">msec</span></span><br><span class="line">;; <span class="selector-tag">SERVER</span>: 192<span class="selector-class">.168</span><span class="selector-class">.74</span><span class="selector-class">.20</span><span class="selector-id">#53</span>(192<span class="selector-class">.168</span><span class="selector-class">.74</span><span class="selector-class">.20</span>)</span><br><span class="line">;; <span class="selector-tag">WHEN</span>: <span class="selector-tag">Fri</span> <span class="selector-tag">Jun</span>  3 09<span class="selector-pseudo">:25</span><span class="selector-pseudo">:40</span> 2016</span><br><span class="line">;; <span class="selector-tag">MSG</span> <span class="selector-tag">SIZE</span>  <span class="selector-tag">rcvd</span>: 94)&gt;&gt;&gt;&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
-
+<h2 id="digとidnを組み合わせて使う"><a href="#digとidnを組み合わせて使う" class="headerlink" title="digとidnを組み合わせて使う"></a>digとidnを組み合わせて使う</h2><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">⇒  dig `idn しょーやん.xyz` NS</span><br><span class="line"></span><br><span class="line">; &lt;&lt;&gt;&gt; DiG <span class="number">9.8</span><span class="number">.3</span>-P1 &lt;&lt;&gt;&gt; xn-<span class="number">-68</span>jwei3c27a.xyz NS</span><br><span class="line">;; global options: +cmd</span><br><span class="line">;; Got answer:</span><br><span class="line">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: <span class="number">59533</span></span><br><span class="line">;; flags: qr rd ra; QUERY: <span class="number">1</span>, ANSWER: <span class="number">2</span>, AUTHORITY: <span class="number">0</span>, ADDITIONAL: <span class="number">0</span></span><br><span class="line"></span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;xn-<span class="number">-68</span>jwei3c27a.xyz.   IN  NS</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">xn-<span class="number">-68</span>jwei3c27a.xyz.  <span class="number">3578</span>  IN  NS  dns01.muumuu-domain.com.</span><br><span class="line">xn-<span class="number">-68</span>jwei3c27a.xyz.  <span class="number">3578</span>  IN  NS  dns02.muumuu-domain.com.</span><br><span class="line"></span><br><span class="line">;; Query time: <span class="number">34</span> msec</span><br><span class="line">;; SERVER: <span class="number">192.168</span><span class="number">.74</span><span class="number">.20</span>#<span class="number">53</span>(<span class="number">192.168</span><span class="number">.74</span><span class="number">.20</span>)</span><br><span class="line">;; WHEN: Fri Jun  <span class="number">3</span> <span class="number">09</span>:<span class="number">25</span>:<span class="number">40</span> <span class="number">2016</span></span><br><span class="line">;; MSG SIZE  rcvd: <span class="number">94</span>)&gt;&gt;&gt;&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
 
 </article>
 
 
 <nav id="article-nav">
   
-    <a href="/blog/2016/06/03/cross-site-scripting-aka-xss/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/blog/2016/06/02/cross-site-scripting-aka-xss/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">次の記事</strong>
       <div class="article-nav-title">
         
@@ -171,7 +194,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </a>
   
   
-    <a href="/blog/2016/06/01/capistrano-tutorial-and-capistrano-plugins/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/blog/2016/05/31/capistrano-tutorial-and-capistrano-plugins/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">前の記事</strong>
       <div class="article-nav-title">Capistranoの導入手順とプラグインの紹介</div>
     </a>
@@ -187,23 +210,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <ul>
         
           <li>
-            <a href="/blog/2019/09/20/the-value-of-speed/">スピードの価値</a>
+            <a href="/blog/2019/10/31/replace-blog-system/">ブログシステムをHexoにしました</a>
           </li>
         
           <li>
-            <a href="/blog/2019/08/19/simple-implementation/">シンプルに実装する大切さ</a>
+            <a href="/blog/2019/09/19/the-value-of-speed/">スピードの価値</a>
           </li>
         
           <li>
-            <a href="/blog/2019/08/02/why-do-not-i-aim-for-100-test-coverage/">テストカバレッジ100%を目指さない理由</a>
+            <a href="/blog/2019/08/18/simple-implementation/">シンプルに実装する大切さ</a>
           </li>
         
           <li>
-            <a href="/blog/2019/04/25/avoid-using-database-specific-functions/">データベース固有の関数の使用を避けるべき理由</a>
+            <a href="/blog/2019/08/01/why-do-not-i-aim-for-100-test-coverage/">テストカバレッジ100%を目指さない理由</a>
           </li>
         
           <li>
-            <a href="/blog/2018/12/17/decide-criteria-instead-of-consultation/">相談ではなく明確な基準を決めよう</a>
+            <a href="/blog/2019/04/24/avoid-using-database-specific-functions/">データベース固有の関数の使用を避けるべき理由</a>
           </li>
         
       </ul>

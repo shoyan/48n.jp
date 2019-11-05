@@ -1,0 +1,277 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>base64エンコードのアルゴリズムをRubyで実装する [ SHOYAN BLOG ]</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <!-- stylesheets list from _config.yml -->
+    
+      <link rel="stylesheet" href="/css/shoyanblog.css">
+    
+  
+  
+    <meta name="description" content="base64エンコードのアルゴリズムを解説します。また、そのアルゴリズムをRubyで実装してみました。">
+  
+  
+  <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+  
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@sinn_shoyan" />
+<meta name="twitter:title" content="base64エンコードのアルゴリズムをRubyで実装する [ SHOYAN BLOG ]" />
+
+  <meta name="twitter:description" content="base64エンコードのアルゴリズムを解説します。また、そのアルゴリズムをRubyで実装してみました。" />
+
+<meta name="twitter:image" content="https://48n.jp/images/logo.png" />
+
+  <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KQX8LKG');</script>
+<!-- End Google Tag Manager -->
+
+  <script data-ad-client="ca-pub-5334899437265020" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KQX8LKG"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+<div id="menu-outer">
+  <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SHOYAN BLOG</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        <a class="nav-link" href="https://twitter.com/sinn_shoyan" target="_blank">
+          <?xml version="1.0" encoding="utf-8"?>
+          <!-- Generator: Adobe Illustrator 20.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+          <svg
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            x="0px"
+            y="0px"
+            viewBox="0 0 400 400"
+            style="enable-background:new 0 0 400 400;"
+            xml:space="preserve"
+            width="25"
+            height="25"
+          >
+            <style type="text/css">
+              .st0 {
+                fill: #1da1f2;
+              }
+              .st1 {
+                fill: #ffffff;
+              }
+            </style>
+            <g id="Dark_Blue">
+              <path
+                class="st0"
+                d="M350,400H50c-27.6,0-50-22.4-50-50V50C0,22.4,22.4,0,50,0h300c27.6,0,50,22.4,50,50v300
+		C400,377.6,377.6,400,350,400z"
+              />
+            </g>
+            <g id="Logo__x2014__FIXED">
+              <path
+                class="st1"
+                d="M153.6,301.6c94.3,0,145.9-78.2,145.9-145.9c0-2.2,0-4.4-0.1-6.6c10-7.2,18.7-16.3,25.6-26.6
+		c-9.2,4.1-19.1,6.8-29.5,8.1c10.6-6.3,18.7-16.4,22.6-28.4c-9.9,5.9-20.9,10.1-32.6,12.4c-9.4-10-22.7-16.2-37.4-16.2
+		c-28.3,0-51.3,23-51.3,51.3c0,4,0.5,7.9,1.3,11.7c-42.6-2.1-80.4-22.6-105.7-53.6c-4.4,7.6-6.9,16.4-6.9,25.8
+		c0,17.8,9.1,33.5,22.8,42.7c-8.4-0.3-16.3-2.6-23.2-6.4c0,0.2,0,0.4,0,0.7c0,24.8,17.7,45.6,41.1,50.3c-4.3,1.2-8.8,1.8-13.5,1.8
+		c-3.3,0-6.5-0.3-9.6-0.9c6.5,20.4,25.5,35.2,47.9,35.6c-17.6,13.8-39.7,22-63.7,22c-4.1,0-8.2-0.2-12.2-0.7
+		C97.7,293.1,124.7,301.6,153.6,301.6"
+              />
+            </g>
+          </svg>
+        </a>
+        
+        <a class="nav-link" href="/atom.xml" title="RSSフィード">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25" viewBox="0 0 100 100">
+            <path
+              class="social"
+              d="M 13.310204,73.332654 C 5.967347,73.332654 0,79.322448 0,86.621428 c 0,7.338776 5.967347,13.262246 13.310204,13.262246 7.370408,0 13.328572,-5.92245 13.328572,-13.262246 0,-7.29898 -5.958164,-13.288774 -13.328572,-13.288774 z M 0.01530612,33.978572 V 53.143878 C 12.493878,53.143878 24.229592,58.02347 33.068368,66.865306 41.894898,75.685714 46.767346,87.47449 46.767346,100 h 19.25 C 66.017346,63.592858 36.4,33.979592 0.01530612,33.978572 l 0,0 z M 0.03877552,0 V 19.17449 C 44.54796,19.17551 80.77551,55.437756 80.77551,100 H 100 C 100,44.87653 55.15102,0 0.03877552,0 z"
+            ></path>
+          </svg>
+        </a>
+         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="https://48n.jp"></form>
+      </nav>
+
+      <nav id="main-nav">
+        
+        <a class="main-nav-link" href="/">Home</a>
+        
+        <a class="main-nav-link" href="/about">このページについて</a>
+        
+        <a class="main-nav-link" href="/lesson">プログラミングレッスン</a>
+        
+        <a class="main-nav-link" href="/archives">記事一覧</a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+</div>
+
+<div id="content-outer">
+  <div id="content-inner">
+    
+<article id="post">
+
+  <h1>base64エンコードのアルゴリズムをRubyで実装する</h1>
+
+  <time datetime="2016-06-12T20:08:03.000Z">
+    2016-06-13
+  </time>
+
+  <div class="sharing">
+  <a class="twitter-share-button" href="https://twitter.com/intent/tweet" target="_blank" rel="noopener"> Tweet</a>
+  <a href="https://b.hatena.ne.jp/entry/" target="_blank" rel="noopener" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+</div>
+
+<script>window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));</script>
+
+
+  <p>Base64とは英数字、記号を用いてマルチバイト文字やバイナリデータ(画像など)を扱うためのエンコード方式です。<br>具体的には<code>A–Z, a–z, 0–9</code> までの62文字と、記号2つ (<code>+</code>,<code>/</code>)、さらにパディング（余った部分を詰める）のための記号として <code>=</code> が用いられます。<br>7ビットの文字コードしか扱うことができない電子メールにおいてよく利用されています。</p>
+<h2 id="変換アルゴリズム"><a href="#変換アルゴリズム" class="headerlink" title="変換アルゴリズム"></a>変換アルゴリズム</h2><p>変換アルゴリズムは以下となります。</p>
+<ol>
+<li>元データを6ビットずつに分割する(6ビットに満たない部分は0を追加して6ビットにする)。</li>
+<li>各6ビットの値を変換表を使って4文字ずつに変換する(4文字に満たない部分は<code>=</code>記号を使って4文字にする)。</li>
+</ol>
+<h2 id="変換例"><a href="#変換例" class="headerlink" title="変換例"></a>変換例</h2><h3 id="1-元データ"><a href="#1-元データ" class="headerlink" title="1. 元データ"></a>1. 元データ</h3><p>文字列: “ABCDEFG”<br>2進数に変換する: “0100 0001 0100 0010 0100 0011 0100 0100 0100 0101 0100 0110 0100 0111”</p>
+<p>rubyでのサンプルコード</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"ABCDEFG"</span>.unpack(<span class="string">"B*"</span>).pop.scan(<span class="regexp">/.&#123;1,4&#125;/</span>).join(<span class="string">" "</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-6ビットずつに分割"><a href="#2-6ビットずつに分割" class="headerlink" title="2. 6ビットずつに分割"></a>2. 6ビットずつに分割</h3><p>“010000 010100 001001 000011 010001 000100 010101 000110 010001 11”</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"ABCDEFG"</span>.unpack(<span class="string">"B*"</span>).<span class="keyword">pop</span>.scan(<span class="regexp">/.&#123;1,6&#125;/</span>).<span class="keyword">join</span>(<span class="string">" "</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2ビット余るので、4ビット分0を追加して6ビットにする"><a href="#3-2ビット余るので、4ビット分0を追加して6ビットにする" class="headerlink" title="3. 2ビット余るので、4ビット分0を追加して6ビットにする"></a>3. 2ビット余るので、4ビット分0を追加して6ビットにする</h3><p>“010000 010100 001001 000011 010001 000100 010101 000110 010001 110000”</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">list</span> = <span class="string">"ABCDEFG"</span>.unpack(<span class="string">"B*"</span>).<span class="keyword">pop</span>.scan(/.&#123;<span class="number">1</span>,<span class="number">6</span>&#125;/).<span class="keyword">join</span>(<span class="string">" "</span>).<span class="keyword">split</span>.<span class="keyword">map</span> &#123; |s| sprintf(<span class="string">"%-06s"</span>, s).gsub(<span class="string">" "</span>, <span class="string">"0"</span>)&#125;.<span class="keyword">join</span>(<span class="string">" "</span>)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="4-変換表により、4文字ずつ変換"><a href="#4-変換表により、4文字ずつ変換" class="headerlink" title="4. 変換表により、4文字ずつ変換"></a>4. 変換表により、4文字ずつ変換</h3><p>“QUJD”, “REVG”, “Rw”</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 変換表を作成する</span><br><span class="line"><span class="built_in">keys</span> = (<span class="number">0</span>..<span class="number">63</span>).<span class="keyword">map</span> &#123;|<span class="keyword">m</span>| sprintf(<span class="string">"%06s"</span>, <span class="keyword">m</span>.to_s(<span class="number">2</span>)).gsub(<span class="string">" "</span>, <span class="string">"0"</span>)&#125;</span><br><span class="line"><span class="built_in">values</span> = [(<span class="string">'A'</span>..<span class="string">'Z'</span>), (<span class="string">'a'</span>..<span class="string">'z'</span>), (<span class="string">'0'</span>..<span class="string">'9'</span>), [<span class="string">'+'</span>, <span class="string">'/'</span>]].<span class="keyword">map</span> &#123; |<span class="keyword">a</span>| <span class="keyword">a</span>.to_a &#125;.flatten</span><br><span class="line">base64_table = Hash[[<span class="built_in">keys</span>, <span class="built_in">values</span>].transpose]</span><br><span class="line"></span><br><span class="line">base64_list = <span class="keyword">list</span>.<span class="keyword">map</span> &#123;|<span class="keyword">a</span>| base64_table[<span class="keyword">a</span>]&#125;.<span class="keyword">join</span>.scan(/.&#123;<span class="number">1</span>,<span class="number">4</span>&#125;/)</span><br><span class="line">=&gt; [<span class="string">"QUJD"</span>, <span class="string">"REVG"</span>, <span class="string">"Rw"</span>]</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2文字余るので、2文字分-記号を追加して4文字にする"><a href="#5-2文字余るので、2文字分-記号を追加して4文字にする" class="headerlink" title="5. 2文字余るので、2文字分 = 記号を追加して4文字にする"></a>5. 2文字余るので、2文字分 = 記号を追加して4文字にする</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">base64_list.<span class="built_in">map</span> &#123;|s| <span class="built_in">sprintf</span>(<span class="string">"%-4s"</span>, s).gsub(<span class="string">" "</span>, <span class="string">"="</span>)&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-Base64文字列"><a href="#6-Base64文字列" class="headerlink" title="6. Base64文字列"></a>6. Base64文字列</h3><p>“QUJDREVGRw==”</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">base64_str.scan(/.&#123;<span class="number">1</span>,<span class="number">4</span>&#125;/).map &#123;|s| sprintf(<span class="string">"%-4s"</span>, s).gsub(<span class="string">" "</span>, <span class="string">"="</span>)&#125;.join</span><br><span class="line">=&gt; <span class="string">"QUJDREVGRw=="</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="簡易的なbase64-decodeメソッド"><a href="#簡易的なbase64-decodeメソッド" class="headerlink" title="簡易的なbase64_decodeメソッド"></a>簡易的なbase64_decodeメソッド</h2><p>今までのロジックをメソッドにまとめて簡易的なbase64_decodeメソッドを作成しました。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base64</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">self</span>.<span class="title">base64_encode</span><span class="params">(str)</span></span></span><br><span class="line">    <span class="comment"># 変換表を作成する</span></span><br><span class="line">    keys = (<span class="number">0</span>..<span class="number">63</span>).map &#123;<span class="params">|m|</span> sprintf(<span class="string">"%06s"</span>, m.to_s(<span class="number">2</span>)).gsub(<span class="string">" "</span>, <span class="string">"0"</span>)&#125;</span><br><span class="line">    values = [(<span class="string">'A'</span>..<span class="string">'Z'</span>), (<span class="string">'a'</span>..<span class="string">'z'</span>), (<span class="string">'0'</span>..<span class="string">'9'</span>), [<span class="string">'+'</span>, <span class="string">'/'</span>]].map &#123; <span class="params">|a|</span> a.to_a &#125;.flatten</span><br><span class="line">    base64_table = Hash[[keys, values].transpose]</span><br><span class="line"></span><br><span class="line">    binary = str.unpack(<span class="string">"B*"</span>).pop.scan(<span class="regexp">/.&#123;1,6&#125;/</span>).join(<span class="string">" "</span>).split.map &#123; <span class="params">|s|</span> sprintf(<span class="string">"%-06s"</span>, s).gsub(<span class="string">" "</span>, <span class="string">"0"</span>) &#125;</span><br><span class="line">    base64_list = binary.map &#123;<span class="params">|a|</span> base64_table[a]&#125;.join.scan(<span class="regexp">/.&#123;1,4&#125;/</span>)</span><br><span class="line">    base64_list.map &#123;<span class="params">|s|</span> sprintf(<span class="string">"%-4s"</span>, s).gsub(<span class="string">" "</span>, <span class="string">"="</span>)&#125;.join</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">p Base64.base64_encode(<span class="string">"ABCDEFG"</span>)</span><br><span class="line">=&gt; <span class="string">"QUJDREVGRw=="</span></span><br></pre></td></tr></table></figure>
+
+<p>RubyのBase64ライブラリでencodeした値と比べてみましょう。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">require 'base64'</span><br><span class="line">Base64.encode64(<span class="string">"ABCDEFG"</span>)</span><br><span class="line">=&gt; <span class="string">"QUJDREVGRw==\n"</span></span><br></pre></td></tr></table></figure>
+
+<p>Rubyのencode64は最後に改行が入るようですが、encodeされた値は同じですね！</p>
+<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
+<li><a href="https://ja.wikipedia.org/wiki/Base64Base64" target="_blank" rel="noopener">Base64 - Wikipedia</a></li>
+</ul>
+
+</article>
+
+
+<nav id="article-nav">
+  
+    <a href="/blog/2016/06/13/learn-ssh-kit/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">次の記事</strong>
+      <div class="article-nav-title">
+        
+          SSHKitを実際に使ってみて理解する
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2016/06/08/calculate-the-date-of-the-last-week-monday/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">先週月曜日の日付を取得するアルゴリズム</div>
+    </a>
+  
+</nav>
+
+
+
+
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2019/10/31/replace-blog-system/">ブログシステムをHexoにしました</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/09/19/the-value-of-speed/">スピードの価値</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/08/18/simple-implementation/">シンプルに実装する大切さ</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/08/01/why-do-not-i-aim-for-100-test-coverage/">テストカバレッジ100%を目指さない理由</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/04/24/avoid-using-database-specific-functions/">データベース固有の関数の使用を避けるべき理由</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  </div>
+</div>
+
+<footer>
+  <div id="bottom-outer">
+    <div id="bottom-inner">
+      <a href="/">Home</a>
+      <p>Copyright © 2019 - SHOYAN BLOG</p>
+    </div>
+  </div>
+</footer>
+
+
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="/js/shoyanblog.js"></script>
+  
+
+
+</body>
+</html>

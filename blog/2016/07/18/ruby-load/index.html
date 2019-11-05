@@ -1,0 +1,284 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Rubyのロード機構について [ SHOYAN BLOG ]</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <!-- stylesheets list from _config.yml -->
+    
+      <link rel="stylesheet" href="/css/shoyanblog.css">
+    
+  
+  
+    <meta name="description" content="Rubyはロード機構として、require, load, autoload, require_relativeを備えています。それぞれのメソッドの特徴と使いかたを紹介します。">
+  
+  
+  <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+  
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@sinn_shoyan" />
+<meta name="twitter:title" content="Rubyのロード機構について [ SHOYAN BLOG ]" />
+
+  <meta name="twitter:description" content="Rubyはロード機構として、require, load, autoload, require_relativeを備えています。それぞれのメソッドの特徴と使いかたを紹介します。" />
+
+<meta name="twitter:image" content="https://48n.jp/images/logo.png" />
+
+  <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KQX8LKG');</script>
+<!-- End Google Tag Manager -->
+
+  <script data-ad-client="ca-pub-5334899437265020" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KQX8LKG"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+<div id="menu-outer">
+  <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SHOYAN BLOG</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        <a class="nav-link" href="https://twitter.com/sinn_shoyan" target="_blank">
+          <?xml version="1.0" encoding="utf-8"?>
+          <!-- Generator: Adobe Illustrator 20.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+          <svg
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            x="0px"
+            y="0px"
+            viewBox="0 0 400 400"
+            style="enable-background:new 0 0 400 400;"
+            xml:space="preserve"
+            width="25"
+            height="25"
+          >
+            <style type="text/css">
+              .st0 {
+                fill: #1da1f2;
+              }
+              .st1 {
+                fill: #ffffff;
+              }
+            </style>
+            <g id="Dark_Blue">
+              <path
+                class="st0"
+                d="M350,400H50c-27.6,0-50-22.4-50-50V50C0,22.4,22.4,0,50,0h300c27.6,0,50,22.4,50,50v300
+		C400,377.6,377.6,400,350,400z"
+              />
+            </g>
+            <g id="Logo__x2014__FIXED">
+              <path
+                class="st1"
+                d="M153.6,301.6c94.3,0,145.9-78.2,145.9-145.9c0-2.2,0-4.4-0.1-6.6c10-7.2,18.7-16.3,25.6-26.6
+		c-9.2,4.1-19.1,6.8-29.5,8.1c10.6-6.3,18.7-16.4,22.6-28.4c-9.9,5.9-20.9,10.1-32.6,12.4c-9.4-10-22.7-16.2-37.4-16.2
+		c-28.3,0-51.3,23-51.3,51.3c0,4,0.5,7.9,1.3,11.7c-42.6-2.1-80.4-22.6-105.7-53.6c-4.4,7.6-6.9,16.4-6.9,25.8
+		c0,17.8,9.1,33.5,22.8,42.7c-8.4-0.3-16.3-2.6-23.2-6.4c0,0.2,0,0.4,0,0.7c0,24.8,17.7,45.6,41.1,50.3c-4.3,1.2-8.8,1.8-13.5,1.8
+		c-3.3,0-6.5-0.3-9.6-0.9c6.5,20.4,25.5,35.2,47.9,35.6c-17.6,13.8-39.7,22-63.7,22c-4.1,0-8.2-0.2-12.2-0.7
+		C97.7,293.1,124.7,301.6,153.6,301.6"
+              />
+            </g>
+          </svg>
+        </a>
+        
+        <a class="nav-link" href="/atom.xml" title="RSSフィード">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25" viewBox="0 0 100 100">
+            <path
+              class="social"
+              d="M 13.310204,73.332654 C 5.967347,73.332654 0,79.322448 0,86.621428 c 0,7.338776 5.967347,13.262246 13.310204,13.262246 7.370408,0 13.328572,-5.92245 13.328572,-13.262246 0,-7.29898 -5.958164,-13.288774 -13.328572,-13.288774 z M 0.01530612,33.978572 V 53.143878 C 12.493878,53.143878 24.229592,58.02347 33.068368,66.865306 41.894898,75.685714 46.767346,87.47449 46.767346,100 h 19.25 C 66.017346,63.592858 36.4,33.979592 0.01530612,33.978572 l 0,0 z M 0.03877552,0 V 19.17449 C 44.54796,19.17551 80.77551,55.437756 80.77551,100 H 100 C 100,44.87653 55.15102,0 0.03877552,0 z"
+            ></path>
+          </svg>
+        </a>
+         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="https://48n.jp"></form>
+      </nav>
+
+      <nav id="main-nav">
+        
+        <a class="main-nav-link" href="/">Home</a>
+        
+        <a class="main-nav-link" href="/about">このページについて</a>
+        
+        <a class="main-nav-link" href="/lesson">プログラミングレッスン</a>
+        
+        <a class="main-nav-link" href="/archives">記事一覧</a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+</div>
+
+<div id="content-outer">
+  <div id="content-inner">
+    
+<article id="post">
+
+  <h1>Rubyのロード機構について</h1>
+
+  <time datetime="2016-07-18T20:07:16.000Z">
+    2016-07-19
+  </time>
+
+  <div class="sharing">
+  <a class="twitter-share-button" href="https://twitter.com/intent/tweet" target="_blank" rel="noopener"> Tweet</a>
+  <a href="https://b.hatena.ne.jp/entry/" target="_blank" rel="noopener" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+</div>
+
+<script>window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));</script>
+
+
+  <p>Rubyはロード機構として、以下を備えています。</p>
+<ul>
+<li>require</li>
+<li>load</li>
+<li>autoload</li>
+<li>require_relative</li>
+</ul>
+<h2 id="require"><a href="#require" class="headerlink" title="require"></a>require</h2><p>requireは以下の特徴を備えています。</p>
+<ul>
+<li>ロードパスからファイルを探してくる</li>
+<li>拡張ライブラリもロードできる</li>
+<li>拡張子 .rb / .so を省略できる</li>
+<li>同じファイルは2度以上ロードしない</li>
+</ul>
+<p>Rubyのロードパスは <code>$:</code>に入っています。<br>私の環境では以下のように表示されました。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>] pry(main)&gt; puts <span class="string">$:</span></span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>rbenv.d<span class="regexp">/exec/</span>gem-rehash</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>gems<span class="regexp">/2.3.0/</span>gems<span class="regexp">/did_you_mean-1.0.0/</span>lib</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>gems<span class="regexp">/2.3.0/</span>gems<span class="regexp">/coderay-1.1.1/</span>lib</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>gems<span class="regexp">/2.3.0/</span>gems<span class="regexp">/slop-3.6.0/</span>lib</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>gems<span class="regexp">/2.3.0/</span>gems<span class="regexp">/method_source-0.8.2/</span>lib</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>gems<span class="regexp">/2.3.0/</span>gems<span class="regexp">/pry-0.10.3/</span>lib</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>site_ruby/<span class="number">2.3</span><span class="number">.0</span></span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>site_ruby<span class="regexp">/2.3.0/</span>x86_64-darwin14</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>site_ruby</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>vendor_ruby/<span class="number">2.3</span><span class="number">.0</span></span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>vendor_ruby<span class="regexp">/2.3.0/</span>x86_64-darwin14</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>vendor_ruby</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span><span class="number">2.3</span><span class="number">.0</span></span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span><span class="number">2.3</span><span class="number">.0</span>/x86_64-darwin14</span><br></pre></td></tr></table></figure>
+
+<h2 id="load"><a href="#load" class="headerlink" title="load"></a>load</h2><p>loadもrequireと同じくロードパスからファイルを探してロードします。<br>しかし、requireのように拡張ライブラリはロードできません。<br>また、ロードできるファイルもRubyプログラムだけです。<br>requireのように2回以上の読み込みを制御する機構もなく、callされた回数分ファイルは読み込まれます。</p>
+<h2 id="autoload"><a href="#autoload" class="headerlink" title="autoload"></a>autoload</h2><p>autoloadはrequireと似ていますが、すぐには読み込まれず、必要になった段階でrequrieされます。以下、サンプルコードです。</p>
+<p>autoload.rb</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">autoload <span class="symbol">:Outer</span>, <span class="string">'./outer'</span></span><br><span class="line">puts Outer.new</span><br></pre></td></tr></table></figure>
+
+<p>outer.rb</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="symbol">Outer</span></span><br><span class="line"><span class="symbol">end</span></span><br><span class="line"></span><br><span class="line"><span class="symbol">puts</span> '<span class="symbol">Outer</span> <span class="symbol">loaded</span>!'</span><br></pre></td></tr></table></figure>
+
+<p>実行すると、Outerがloadされているのが確認できます。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">⇒  ruby <span class="built_in">auto</span>load.rb</span><br><span class="line">Outer loaded!</span><br><span class="line">#&lt;Outer:<span class="number">0x007fcc14040e60</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>autoloadはネストされたクラスやモジュールもloadすることができます。</p>
+<p>autoload.rb</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">autoload :<span class="keyword">Outer</span>, <span class="string">'./outer'</span></span><br><span class="line">puts <span class="keyword">Outer</span>.<span class="built_in">new</span></span><br><span class="line">puts <span class="keyword">Outer</span>::<span class="keyword">Inner</span>.<span class="built_in">new</span></span><br></pre></td></tr></table></figure>
+
+<p>outer.rb</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Outer</span></span></span><br><span class="line">  autoload <span class="symbol">:Inner</span>, <span class="string">'./inner'</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">puts <span class="string">'Outer loaded!'</span></span><br></pre></td></tr></table></figure>
+
+<p>inner.rb</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="symbol">Outer</span></span><br><span class="line">  <span class="symbol">class</span> <span class="symbol">Inner</span></span><br><span class="line">  <span class="symbol">end</span></span><br><span class="line"><span class="symbol">end</span></span><br><span class="line"></span><br><span class="line"><span class="symbol">puts</span> "<span class="symbol">Outer::<span class="symbol">Inner</span></span> <span class="symbol">loaded</span>!"</span><br></pre></td></tr></table></figure>
+
+<p>実行すると、Outer::Innerがloadされているのが確認できます。</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">⇒  ruby autoload.rb</span><br><span class="line"><span class="keyword">Outer</span> loaded!</span><br><span class="line">#&lt;<span class="keyword">Outer</span>:<span class="number">0x007f9fd4054df0</span>&gt;</span><br><span class="line"><span class="keyword">Outer</span>::<span class="keyword">Inner</span> loaded!</span><br><span class="line">#&lt;<span class="keyword">Outer</span>::<span class="keyword">Inner</span>:<span class="number">0x007f9fd404f990</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="require-relative"><a href="#require-relative" class="headerlink" title="require_relative"></a>require_relative</h2><p>あまり見かけることがありませんが、<code>require_relative</code> というメソッドがRuby1.9.2から追加されています。<br>例えば<code>require</code>で同じ階層のファイルをロードする場合は、<code>require &#39;./filename&#39;</code> のように明示的に<code>./</code>を指定する必要があります。<br><code>require_relative</code>を使えば、<code>require_relative &#39;filename&#39;</code> のように定義することができます。</p>
+
+</article>
+
+
+<nav id="article-nav">
+  
+    <a href="/blog/2016/07/20/ruby-configuration-pattern/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">次の記事</strong>
+      <div class="article-nav-title">
+        
+          [Ruby]オブジェクトの設定情報を保持するパターンの紹介
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2016/07/14/learn-iptables/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">iptablesことはじめ</div>
+    </a>
+  
+</nav>
+
+
+
+
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2019/10/31/replace-blog-system/">ブログシステムをHexoにしました</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/09/19/the-value-of-speed/">スピードの価値</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/08/18/simple-implementation/">シンプルに実装する大切さ</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/08/01/why-do-not-i-aim-for-100-test-coverage/">テストカバレッジ100%を目指さない理由</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/04/24/avoid-using-database-specific-functions/">データベース固有の関数の使用を避けるべき理由</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  </div>
+</div>
+
+<footer>
+  <div id="bottom-outer">
+    <div id="bottom-inner">
+      <a href="/">Home</a>
+      <p>Copyright © 2019 - SHOYAN BLOG</p>
+    </div>
+  </div>
+</footer>
+
+
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="/js/shoyanblog.js"></script>
+  
+
+
+</body>
+</html>
