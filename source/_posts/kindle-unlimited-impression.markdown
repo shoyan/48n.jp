@@ -3,7 +3,7 @@ layout: post
 title: "Kindle Unlimitedの冊数は図書館並みだった"
 date: 2016-10-17 17:06:47 +0900
 comments: true
-categories: lifehack
+tags: LifeHack
 description: "Kindle UnlimitedはKindle本の読み放題サービスだ。現在登録されている本はおよそ13万冊。この数は私が利用する糸島市図書館のおよそ2倍だ。ちなみに13万冊というのは日本で出版されている本の数で洋書は含まれていない。"
 ---
 

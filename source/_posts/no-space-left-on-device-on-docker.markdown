@@ -3,7 +3,7 @@ layout: post
 title: "Dockerでno space left on deviceが出てbuildできなくなった"
 date: 2016-04-13 16:14:05 +0900
 comments: true
-categories: Docker
+tags: Docker
 ---
 
 Dockerのbuild時に以下のエラーが発生するようになった。

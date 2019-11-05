@@ -3,7 +3,7 @@ layout: post
 title: "相談ではなく明確な基準を決めよう"
 date: 2018-12-17 12:56:02 +0900
 comments: true
-categories: コラム
+tags: コラム
 ---
 こんにちは、しょーやんです。
 

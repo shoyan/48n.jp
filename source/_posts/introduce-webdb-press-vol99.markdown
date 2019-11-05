@@ -3,7 +3,7 @@ layout: post
 title: "WEB+DB PRESS Vol.99に寄稿しました"
 date: 2017-06-26 10:37:20 +0900
 comments: true
-categories: 寄稿
+tags: 寄稿
 ---
 
 こんにちは、SHOYANです。

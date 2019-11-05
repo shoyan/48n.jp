@@ -3,7 +3,10 @@ layout: post
 title: "Guardでrspecのテストを自動化する"
 date: 2016-05-24 15:05:01 +0900
 comments: true
-categories: ruby gem 自動化
+tags: 
+  - Ruby 
+  - Gem 
+  - 自動化
 description: "Guardはファイルを監視して、ファイルになんらかの変更がされたら、指定した処理を実行するツールです。この機能を使ってファイルが変更されたらテストを自動で実行させたり、シンタックスチェックをすることができます。今回はrspecで自動的にテストを実行する方法を紹介します。"
 ---
 

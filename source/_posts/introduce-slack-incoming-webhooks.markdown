@@ -3,7 +3,10 @@ layout: post
 title: "RubyでSlack通知をする"
 date: 2015-09-28 12:15:42 +0900
 comments: true
-categories: [ruby, gem, slack]
+tags: 
+  - Ruby
+  - Gem
+  - Slack
 ---
 
 [Slack](https://slack.com/)は使っていますか？  

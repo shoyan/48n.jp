@@ -3,7 +3,9 @@ layout: post
 title: "Guardでrubocopを自動化する"
 date: 2016-12-07 13:55:09 +0900
 comments: true
-categories: 自動化 ruby
+tags: 
+  - 自動化 
+  - Ruby
 description: "RubyのシンタックスチェックにRubocopを使っていて、リポジトリにpushした時にチェックするようにしている。push→シンタックスエラー→直してもう1回pushというのがまどろこしいのでGuardを使ってファイルを保存する度にチェックするようにしてみた。"
 ---
 

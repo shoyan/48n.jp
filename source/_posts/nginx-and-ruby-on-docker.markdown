@@ -3,7 +3,9 @@ layout: post
 title: "DockerコンテナにChefを流してみた"
 date: 2016-04-21 18:19:01 +0900
 comments: true
-categories: Docker Chef
+tags: 
+  - Docker 
+  - Chef
 ---
 Chefのレシピを書くとき、Dockerコンテナにレシピを流せると気軽に確認ができてよいなと思い、DockerコンテナにChefを流せるようにしてみました。
 

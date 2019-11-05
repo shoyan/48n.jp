@@ -3,7 +3,7 @@ layout: post
 title: "2017年のPHPについて数値をまとめてみました"
 date: 2017-12-12 17:22:48 +0900
 comments: true
-categories: php
+tags: PHP
 description: "2017年ももうすぐ終わりということで、2017年のPHPをふりかえってみるのはいかがでしょうか。この記事ではPHPに関係する情報を集め、数値としてまとめました。"
 ---
 

@@ -3,7 +3,7 @@ layout: post
 title: "Webサイトのメタタグを取得するsite-parserをつくった"
 date: 2016-04-27 13:37:10 +0900
 comments: true
-categories: ruby
+tags: Ruby
 ---
 
 Webサイトのメタデータを抽出するツールを作成しました。  

@@ -3,7 +3,9 @@ layout: post
 title: "Gitのコミッターを集計するGitFindCommitterをつくった"
 date: 2016-07-25 18:09:52 +0900
 comments: true
-categories: gem git
+tags: 
+  - Gem 
+  - Git
 description: "Gitのコミッターを集計するGitFindCommitterをつくったので紹介します。GitFindCommitterとは変更されたファイルを対象としてコミッターを探すツールです。名前の通り、Gitのコミット履歴からコミッターを探します。"
 ---
 

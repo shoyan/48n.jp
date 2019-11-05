@@ -3,7 +3,7 @@ layout: post
 title: Rspecのコードリーディング
 date: 2015-07-16 17:13:38 +0900
 comments: true
-categories: 
+tags: 
 ---
 
 bundle exec rspecを実行したときの処理を追ってみた。  

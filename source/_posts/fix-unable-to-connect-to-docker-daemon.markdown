@@ -3,7 +3,7 @@ layout: post
 title: "Macを引っ越ししたらDockerデーモンが起動しなくなった"
 date: 2016-10-05 14:27:46 +0900
 comments: true
-categories: docker
+tags: Docker
 description: "Macを引っ越ししたらDockerデーモンが起動しなくなった。Dockerを起動しようとすると Cannot connect to the Docker daemon. Is the docker daemon running on this host? というメッセージがでて起動しない。"
 ---
 

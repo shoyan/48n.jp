@@ -3,7 +3,9 @@ layout: post
 title: "Capistranoの導入手順とプラグインの紹介"
 date: 2016-06-01 14:17:45 +0900
 comments: true
-categories: ruby gem
+tags: 
+  - Ruby 
+  - Gem
 description: "Capistranoのインストールと設定、プラグインの紹介をします。Capistranoには様々なプラグインがあります。ここでは私が使っているプラグインを紹介します。"
 ---
 

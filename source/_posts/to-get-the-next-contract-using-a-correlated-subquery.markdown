@@ -3,7 +3,7 @@ layout: post
 title: "相関サブクエリを使って次回契約を取得する"
 date: 2015-09-25 13:35:45 +0900
 comments: true
-categories: sql
+tags: SQL
 ---
 
 相関サブクエリを使って次回契約を取得します。

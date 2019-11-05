@@ -3,7 +3,7 @@ layout: post
 title: "ポケモンGOが自分を変えたこと"
 date: 2016-08-31 13:36:11 +0900
 comments: true
-categories: service
+tags: コラム
 description: "ポケモンGOが日本で遊べるようになったのが2016/6/21。およそ2ヶ月が経ちスタート当時のブームは落ち着いてきた。自分はコツコツと続けていて、最近ようやくレベル20になった。"
 ---
 

@@ -3,7 +3,9 @@ layout: post
 title: "Sinatraのエラーハンドリング"
 date: 2016-05-12 13:29:14 +0900
 comments: true
-categories: sinatra ruby
+tags: 
+  - Sinatra 
+  - Ruby
 description: "Sinatraのエラーハンドリングにはnot_foundハンドラとerrorハンドラの2つのハンドラが用意されています。この2つのerrorハンドラの使い方を説明します。"
 ---
 

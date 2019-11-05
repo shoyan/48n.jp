@@ -3,7 +3,9 @@ layout: post
 title: "Sinatraのロギング機構について調べてみた"
 date: 2016-05-27 13:48:34 +0900
 comments: true
-categories: sinatra rack
+tags: 
+  - Sinatra 
+  - Rack
 description: "Sinatraのloggerヘルパーを使ったところ、なぜか標準エラーの出力先にログが吐かれており、標準出力の出力先にはログが吐かれない。
 標準出力先にログを吐くものだと思っていたのだが、自分が想定していた挙動と違うので調べてみた。Sinatraのロギング機構の仕組みと任意のファイルにログを出力する方法を解説する。"
 ---

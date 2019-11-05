@@ -3,7 +3,7 @@ layout: post
 title: "FTPについて調べてみた"
 date: 2016-06-17 15:21:34 +0900
 comments: true
-categories: linux
+tags: Linux
 description: "FTPはすでにご存知のかたも多いと思います。自分はFTPについて、「ファイル転送に使われるプロトコルであり、セキュリティが脆弱である」というくらいしか理解していなかったので詳細を把握するために調べました。"
 ---
 

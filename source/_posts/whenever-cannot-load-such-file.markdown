@@ -3,7 +3,9 @@ layout: post
 title: "capistrano/wheneverで cannot load such fileがでる"
 date: 2016-06-15 13:42:55 +0900
 comments: true
-categories: ruby gem
+tags: 
+  - Ruby 
+  - Gem
 description: "wheneverでLoadError: cannot load such fileとinstance variable @_env not definedがでた。その回避策とその後の記録です。"
 ---
 

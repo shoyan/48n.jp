@@ -3,7 +3,7 @@ layout: post
 title: "Fluentdを使ってローカル環境にログ収集サーバを構築する"
 date: 2016-07-04 13:50:35 +0900
 comments: true
-categories: Fluentd
+tags: Fluentd
 description: "アプリケーションサーバとログ収集サーバにFluentdをインストールし、アプリケーションサーバからログ収集サーバにログをフォワードする方法を紹介します。ここでは、アプリケーションサーバをMacOS X、ログ収集サーバをVagrantとします。"
 ---
 

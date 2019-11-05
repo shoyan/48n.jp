@@ -3,7 +3,7 @@ layout: post
 title: "スピードの価値"
 date: 2019-09-20 13:43:04 +0900
 comments: true
-categories: 
+tags: 
 ---
 開発をする上で最も大切にしなければいけないものはなんでしょうか。私はスピードだと思います。
 

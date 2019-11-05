@@ -3,7 +3,9 @@ layout: post
 title: "Jekyllチュートリアル"
 date: 2016-12-06 23:49:36 +0900
 comments: true
-categories: jekyll ブログ作成
+tags: 
+  - Jekyll 
+  - ブログ
 ---
 
 最近、ブログをリニューアルしようとJekyllをちょこちょこ触っている。

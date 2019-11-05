@@ -3,7 +3,7 @@ layout: post
 title: "Mac OSXにPHP7をインストール"
 date: 2016-01-12 22:26:16 +0900
 comments: true
-categories: "PHP"
+tags: "PHP"
 ---
 
 2015年12月にPHP7.0.0がリリースされました。

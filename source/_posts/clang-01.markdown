@@ -3,7 +3,7 @@ layout: post
 title: "C言語でHello World"
 date: 2015-10-09 13:36:48 +0900
 comments: true
-categories: clang
+tags: C言語
 ---
 
 たくさんのソフトウェアがC言語で作られており、自分もそういうソフトウェアの仕組みを知ったり自分で作れるようになりたいなと思って、C言語の勉強を始めました。

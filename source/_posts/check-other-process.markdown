@@ -3,7 +3,7 @@ layout: post
 title: "シェルスクリプトで別プロセスの終了ステータスを取得する"
 date: 2018-11-29 14:55:51 +0900
 comments: true
-categories: linux
+tags: Linux
 ---
 
 シェルスクリプトで別プロセスの終了ステータスを取得するTipを紹介します。

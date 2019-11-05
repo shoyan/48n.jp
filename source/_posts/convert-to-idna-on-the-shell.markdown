@@ -3,7 +3,7 @@ layout: post
 title: "Shellで日本語ドメインをPunycode(IDNドメイン)に変換する方法"
 date: 2016-06-02 19:37:47 +0900
 comments: true
-categories: linux
+tags: Linux
 description: "Shellで日本語ドメインをIDNフォーマットに変換する方法を紹介します。libidnというGNUのライブラリがあるので、それを使います。対象のOSはMacです。"
 ---
 

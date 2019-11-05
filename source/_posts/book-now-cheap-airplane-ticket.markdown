@@ -3,7 +3,7 @@ layout: post
 title: "航空券を安くとる方法"
 date: 2017-09-17 13:24:10 +0900
 comments: true
-categories: lifehack
+tags: LifeHack
 description: "航空券は早く予約して、なるべく安い会社の航空券を買えば安く手にいれることができます。今回はスカイ・シーとトラべリストを利用して航空券を購入しました。"
 ---
 

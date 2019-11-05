@@ -3,7 +3,7 @@ layout: post
 title: "Dockerでlocaleを設定する"
 date: 2016-08-24 17:32:51 +0900
 comments: true
-categories: docker
+tags: Docker
 description: "Dockerでlocaleを設定したいときがある。例えばマルチバイトを扱うときだ。Dockerでlocaleを設定する場合は、以下のようにDockerfileに定義する。"
 ---
 

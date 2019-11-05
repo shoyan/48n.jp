@@ -3,7 +3,9 @@ layout: post
 title: "Rubyのモジュールはあと勝ち"
 date: 2017-05-10 16:52:23 +0900
 comments: true
-categories: ruby rails
+tags: 
+  - Ruby 
+  - RubyonRails
 description: "Rubyのモジュールはあと勝ちということを知りました。もう少し正確に言うと、異なるモジュールに同じ名前のメソッドが定義してあった場合、後にinclude されたメソッドで上書きされます。"
 ---
 

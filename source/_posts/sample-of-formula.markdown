@@ -3,7 +3,7 @@ layout: post
 title: "LATEXチートシート - 数式記号の読み方・表し方"
 date: 2016-07-12 14:45:29 +0900
 comments: true
-categories: 数学
+tags: 数学
 description: "LATEXを使った数式記号の読み方・表し方をまとめました。"
 math: true
 ---

@@ -3,7 +3,7 @@ layout: post
 title: "これからの技術書の書き方"
 date: 2018-06-27 13:52:30 +0900
 comments: true
-categories: コラム
+tags: コラム
 ---
 技術書は少しずつ書いて有料で公開する。これが、これからの技術書の書き方だと思います。具体的な例としては「<a href="https://note.mu/makingx/m/m2dc6f318899c" target="_blank">はじめるSpring Boot 2</a>」があります。
 

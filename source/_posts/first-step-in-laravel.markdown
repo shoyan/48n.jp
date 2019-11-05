@@ -3,7 +3,9 @@ layout: post
 title: "LaravelをMacにインストールして起動する手順"
 date: 2016-04-28 13:36:36 +0900
 comments: true
-categories: php laravel
+tags: 
+  - PHP 
+  - Laravel
 description: "PHPで人気のフレームワーク、Laravelのチュートリアルです。このチュートリアルではMacでLaravelを起動する手順を紹介します。冗長な説明を除きLaravelを動かすために重要な部分のみ解説することでスピーディにLaravelを動作できるようにしています。"
 ---
 

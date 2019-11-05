@@ -3,7 +3,7 @@ layout: post
 title: "Twitterカードをサイトに設定する手順"
 date: 2017-02-25 22:50:20 +0900
 comments: true
-categories: ブログ作成
+tags: ブログ
 description: "Twitterカードはタイムラインに表示される情報をカスタマイズできる機能です。Twitterカードを設定することでタイムラインに表示される情報をよりリッチなものにすることができます。この記事ではTwitterカードを設定する手順を紹介します。"
 ---
 

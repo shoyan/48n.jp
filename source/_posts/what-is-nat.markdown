@@ -3,7 +3,7 @@ layout: post
 title: "NAT・NAPT・ポートフォワーディングの違いとは"
 date: 2016-04-22 13:59:35 +0900
 comments: true
-categories: network
+tags: Network
 ---
 ネットワークの話しによくNATという言葉が出てくるので整理した。  
 また、NAPT・ポートフォワーディングについても理解しておいたほうが理解が深まると思ったのでまとめておいた。

@@ -3,7 +3,7 @@ layout: post
 title: "TCPWrappersとは何なのかを調べてみた"
 date: 2016-06-06 19:33:59 +0900
 comments: true
-categories: linux
+tags: Linux
 description: "sshのハンドシェイクでこけてしまい、その原因がわからずハマりました。  原因としては、TCPWrappersで拒否されていました。TCPWrappersとはなんだろうということで調べてみました。"
 ---
 

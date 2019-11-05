@@ -3,7 +3,7 @@ layout: post
 title: "SIMについて"
 date: 2016-09-17 16:36:10 +0900
 comments: true
-categories: 
+tags: 
 description: "SIMとは Subscriber Identity Module = 加入者IDモジュール の頭文字をとったものです。それをカード状にしたものが「SIMカード」と呼ばれています。つまり一種のIDカードです。また、簡単に情報が盗まれないような仕組みも入っています。"
 ---
 

@@ -1,9 +1,11 @@
 ---
 title: ブログシステムをHexoにしました
 date: 2019-10-31 18:30:30
-tags: hexo ブログ 静的サイトジェネレーター
+tags: 
+  - Hexo 
+  - ブログ 
+  - 静的サイトジェネレーター
 description: ブログシステムをHexoにしました。Hexoのメリットや他のフレームワークであるGatsubyやVuePressと比較した結果などをまとめました。
-keyword: hexo ブログ 静的サイトジェネレーター
 ---
 
 ブログシステムを<a href="https://hexo.io/" target="_blank">Hexo<img src="/images/outbound.svg" alt="hexo.io" width="16" height="16"></a>にしました。ブログデザインも新規で作成しました。ブログシステムはそのうちリプレースしたいなと常々思っていたのですが、なかなかこれといったものがなく時間が経ってしまいましたが、ついにリプレースすることができました。

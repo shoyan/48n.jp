@@ -3,7 +3,9 @@ layout: post
 title: "rubyでhttp通信をするhttp gem"
 date: 2016-04-25 14:05:02 +0900
 comments: true
-categories: ruby gem
+tags: 
+  - Ruby 
+  - Gem
 ---
 rubyでhttp通信をする際に便利なhttp gemというものがあるので紹介します。  
 https://github.com/httprb/http

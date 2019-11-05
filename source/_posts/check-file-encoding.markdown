@@ -3,7 +3,7 @@ layout: post
 title: "Rubyでファイルエンコーディングを確認する"
 date: 2016-06-16 13:46:56 +0900
 comments: true
-categories: ruby
+tags: Ruby
 description: "Rubyでファイルエンコーディングを確認するにはNKFモジュールを使って確認します。またrspecでの利用方法を紹介します。"
 ---
 

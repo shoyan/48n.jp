@@ -3,7 +3,7 @@ layout: post
 title: "社内ISUCONに参加して優勝した"
 date: 2016-09-02 13:36:58 +0900
 comments: true
-categories: 
+tags: 
 description: "社内ISUCONが開催されたので参加してみた。ISUCONは今回初めての参加だったが、思っていた以上に楽しかった。参加するまではそんなに楽しいものなのかと懐疑的だったのだが、ほかのチームとスコアを競い一喜一憂するのは楽しいものだった。"
 ---
 

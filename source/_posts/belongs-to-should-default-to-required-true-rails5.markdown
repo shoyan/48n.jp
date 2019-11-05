@@ -3,7 +3,7 @@ layout: post
 title: "Rails5からbelongs_toアソシエーションの挙動が変わった"
 date: 2017-01-13 15:44:48 +0900
 comments: true
-categories: rails
+tags: RubyonRails
 description: "Rails5からbelongs_toアソシエーションの挙動が変わった。親モデルに属している子モデルは親モデルの外部キーが存在しないとバリデーションエラーになるのがデフォルトの挙動となっている。"
 ---
 

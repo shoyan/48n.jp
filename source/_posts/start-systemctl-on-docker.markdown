@@ -3,7 +3,7 @@ layout: post
 title: "Dockerでsystemctlでserviceが起動できない"
 date: 2016-04-14 20:10:46 +0900
 comments: true
-categories: Docker
+tags: Docker
 ---
 centos7からsystemctlでserviceを起動するようになったが、Dockerで起動すると「Failed to get D-Bus connection: No connection to service manager.」というエラーメッセージがでて起動できないという問題が起こった。
 

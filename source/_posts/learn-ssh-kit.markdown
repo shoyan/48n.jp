@@ -3,7 +3,9 @@ layout: post
 title: "SSHKitを実際に使ってみて理解する"
 date: 2016-06-14 13:34:48 +0900
 comments: true
-categories: ruby gem
+tags: 
+  - Ruby 
+  - Gem
 description: "Capistrano/sshkitを紹介します。SSHKitはサーバーに対してコマンドを実行するためのツールキットです。CapistranoやCapistranoプラグインではSSHKitが使われています。実際に使ってみて使い方を理解しましょう。"
 ---
 

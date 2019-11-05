@@ -3,7 +3,7 @@ layout: post
 title: "ポモドーロ・テクニックを使ってみた感想"
 date: 2016-09-15 13:46:15 +0900
 comments: true
-categories: lifehack
+tags: LifeHack
 description: "最近、仕事中はポモドーロ・テクニックを使っている。ポモドーロテクニックは25分集中して5分休憩するサイクルを繰り返すことでメリハリをつけて集中力を高める手法だ。"
 ---
 

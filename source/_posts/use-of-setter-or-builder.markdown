@@ -3,7 +3,7 @@ layout: post
 title: "SetterとBuilderの使いわけ"
 date: 2018-06-29 17:39:49 +0900
 comments: true
-categories: Java
+tags: Java
 ---
 
 先日、「SetterとBuilderはどのように使いわければいいのか？」という質問を受けました。なかなかよい質問ですね。Builderを使うとクラスのインスタンスを柔軟に作ることができます。Builderを使ったサンプルコードです。

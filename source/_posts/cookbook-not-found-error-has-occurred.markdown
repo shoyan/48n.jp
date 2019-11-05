@@ -3,7 +3,7 @@ layout: post
 title: "cookbook_fileリソースでCookbookNotFoundが発生した"
 date: 2016-04-18 13:43:40 +0900
 comments: true
-categories: Chef
+tags: Chef
 ---
 cookbook_fileでCookbookNotFoundというエラーがでた。  
 しかし、どこをどうみても合っているようにしか見えず、2時間ほどハマった。

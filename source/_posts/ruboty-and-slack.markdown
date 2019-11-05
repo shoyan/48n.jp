@@ -3,7 +3,10 @@ layout: post
 title: "Botsインテグレーションを使って手軽にRubotyをSlackで動かす"
 date: 2016-08-02 13:40:25 +0900
 comments: true
-categories: ruby gem chatops
+tags: 
+  - Ruby 
+  - Gem 
+  - ChatOps
 description: "RubotyにはSlackアダプターが用意してありますが、新しくユーザーの作成が必要です。今回はユーザーの作成が必要のない、Botsインテグレーションとruboty-slack_rtmを使ってRubotyをSlackで動かす方法を紹介します。"
 ---
 

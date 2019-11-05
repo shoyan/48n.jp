@@ -3,7 +3,9 @@ layout: post
 title: "Sinatraのレスポンスの設定とストリーミングヘルパー"
 date: 2016-04-26 13:52:30 +0900
 comments: true
-categories: sinatra ruby
+tags: 
+  - Sinatra 
+  - Ruby
 ---
 
 通常はルーティングブロックの戻り値にセットした文字列がbodyにセットされます。  

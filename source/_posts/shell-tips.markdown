@@ -3,7 +3,7 @@ layout: post
 title: "ShellのTipsてきなやつ"
 date: 2016-06-22 18:16:41 +0900
 comments: true
-categories: linux
+tags: Linux
 description: "ShellスクリプトのTipsです。自分がShellのコードを読んだり書いたりしたときにでてきた疑問のメモでもあります。"
 ---
 

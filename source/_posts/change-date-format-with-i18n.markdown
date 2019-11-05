@@ -3,7 +3,7 @@ layout: post
 title: "Railsで日付をいい感じ(スラッシュ区切り)に表示する"
 date: 2016-11-10 18:28:31 +0900
 comments: true
-categories: rails
+tags: RubyonRails
 description: "日付は日本だと/(スラッシュ)区切りが一般的なのでそのように表示したい。I18nを使った方法を紹介する。"
 ---
 

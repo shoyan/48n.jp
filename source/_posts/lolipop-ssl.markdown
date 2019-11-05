@@ -3,7 +3,7 @@ layout: post
 title: "SHOYAN BLOGを0円でSSL対応しました"
 date: 2017-07-13 13:47:27 +0900
 comments: true
-categories: ブログ作成
+tags: ブログ
 ---
 
 こんにちは、SHOYANです。

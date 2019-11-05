@@ -3,7 +3,10 @@ layout: post
 title: "5分でできるRubotyのインストールとプラグインチュートリアル"
 date: 2016-07-29 13:55:33 +0900
 comments: true
-categories: ruby gem chatops
+tags: 
+  - Ruby
+  - Gem 
+  - ChatOps
 description: "RubotyはhubotクローンでRubyで書けるbotです。このチュートリアルではRubotyのインストールとプラグインの作成方法を紹介します。冗長な説明をあえて除きRubotyを動かすために重要な部分のみ解説することでスピーディにRubotyを動作できるようにしています。"
 ---
 

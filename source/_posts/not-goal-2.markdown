@@ -3,7 +3,7 @@ layout: post
 title: "好きなことをひたすら追いかければよい"
 date: 2018-10-15 16:39:50 +0900
 comments: true
-categories: コラム
+tags: コラム
 ---
 
 この記事は前回の続きです。前回の記事は「[計画はいらない](/blog/2018/10/12/not-goal/)」です。

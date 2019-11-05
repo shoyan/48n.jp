@@ -3,7 +3,7 @@ layout: post
 title: "Chefのworkerが詰まって処理が進まなくなった"
 date: 2016-05-20 17:40:56 +0900
 comments: true
-categories: chef
+tags: Chef
 description: "chefを実行したらWARN: Chef client 24431 is running, will wait for it to finish and then run.というメッセージがでて、処理が進まない。2つのchef-clientが立ち上がっている状態。"
 ---
 

@@ -3,7 +3,7 @@ layout: post
 title: "Nginxで構築するキャッシュプロキシサーバ"
 date: 2018-03-13 15:27:18 +0900
 comments: true
-categories: 
+tags: 
 ---
 
 Nginxを使えば簡単にプロキシサーバを構築することができます。手元で動かせるサンプルコードをGithubで公開しています。git cloneしてご利用ください。PCにDockerがインストールされていれば簡単に動作環境を構築することができます。
