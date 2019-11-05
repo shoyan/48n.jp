@@ -8,8 +8,17 @@ if (is_month()) pageTitle += ': ' + page.month + '/' + page.year;
 if (is_year()) pageTitle += ': ' + page.year;
 pageTitle += ' [ ' + config.title + ' ]';
 
-var description = page.description || config.description || '';
-var keyword = page.keyword || config.keyword || '';
+let description = ''
+let keyword = '';
+
+if (page.title) {
+  description = page.description || '';
+  keyword = page.keyword || '';
+} else {
+  description = config.description || '';
+  keyword = config.keyword || '';
+}
+
 %>
 
 <!DOCTYPE html>
@@ -24,17 +33,14 @@ var keyword = page.keyword || config.keyword || '';
       <link rel="stylesheet" href="<%=url%>">
     <% }); %>
   <% } %>
-
   <% if (description) { %>
     <meta name="description" content="<%=description%>">
   <% } %>
-
   <% if (keyword) { %>
     <meta name="keywords" content="<%=keyword%>">
   <% } %>
   <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
-
   <%- partial('partials/twitter-card') %>
   <%- partial('partials/google-tag-manager') %>
   <%- partial('partials/google-ads') %>
