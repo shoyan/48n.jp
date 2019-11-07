@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "これからの技術書の書き方"
-date: 2018-06-27 13:52:30 +0900
+date: 2018-06-27 13:52:30
 comments: true
 tags: コラム
 ---

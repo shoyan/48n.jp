@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "GitHubにpushしたらDockerイメージを自動ビルドする"
-date: 2016-08-03 13:42:38 +0900
+date: 2016-08-03 13:42:38
 comments: true
 tags: Docker
 description: "Docker HubとGitHubを使ってDockerイメージの自動ビルドを行う方法を紹介します。自動ビルドを設定することで、常に最新のイメージがDocker Hubに用意され、DockerfileやREADMEも自動的にDocker Hubで公開されるようになります。"

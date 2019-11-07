@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "天気予報をSlackに通知する on Heroku"
-date: 2015-10-06 16:12:17 +0900
+date: 2015-10-06 16:12:17
 comments: true
 tags: 
   - Slack 

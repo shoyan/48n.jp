@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "相談ではなく明確な基準を決めよう"
-date: 2018-12-17 12:56:02 +0900
+date: 2018-12-17 12:56:02
 comments: true
 tags: コラム
 ---

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "リモートワークは効率が悪いはウソ"
-date: 2018-06-28 14:42:53 +0900
+date: 2018-06-28 14:42:53
 comments: true
 tags: コラム
 ---

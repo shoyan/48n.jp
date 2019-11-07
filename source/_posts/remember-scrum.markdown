@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "3年経ってスクラムをふりかえる"
-date: 2016-07-21 18:41:04 +0900
+date: 2016-07-21 18:41:04
 comments: true
 tags: 
 ---

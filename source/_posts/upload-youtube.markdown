@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "手軽にスプラトゥーンをYouTubeで配信する"
-date: 2018-12-07 16:47:03 +0900
+date: 2018-12-07 16:47:03
 comments: true
 tags: スプラトゥーン2
 ---

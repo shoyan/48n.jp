@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Rspecのコードリーディング
-date: 2015-07-16 17:13:38 +0900
+date: 2015-07-16 17:13:38
 comments: true
 tags: 
 ---

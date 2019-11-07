@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "SHOYAN BLOGを0円でSSL対応しました"
-date: 2017-07-13 13:47:27 +0900
+date: 2017-07-13 13:47:27
 comments: true
 tags: ブログ
 ---

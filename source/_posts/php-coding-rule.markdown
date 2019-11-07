@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "PHPコーディング規約とサポートするツール"
-date: 2016-03-17 00:41:01 +0900
+date: 2016-03-17 00:41:01
 comments: true
 tags: "PHP"
 ---

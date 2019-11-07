@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "C言語でHello World"
-date: 2015-10-09 13:36:48 +0900
+date: 2015-10-09 13:36:48
 comments: true
 tags: C言語
 ---

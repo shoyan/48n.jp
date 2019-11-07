@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "グラフを描画するHighChartsで平均気温のグラフを描画する"
-date: 2016-05-31 13:58:42 +0900
+date: 2016-05-31 13:58:42
 comments: true
 tags: JavaScript
 description: "グラフを描画するHighChartsを紹介します。 HighChartsはJavaScriptのグラフ描画ライブラリです。福岡市の平均気温をグラフで表示するデモを作成しました。"

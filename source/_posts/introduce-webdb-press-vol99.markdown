@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "WEB+DB PRESS Vol.99に寄稿しました"
-date: 2017-06-26 10:37:20 +0900
+date: 2017-06-26 10:37:20
 comments: true
 tags: 寄稿
 ---

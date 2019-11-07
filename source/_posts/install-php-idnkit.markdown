@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "php-idnkitをインストールする"
-date: 2016-09-09 10:53:43 +0900
+date: 2016-09-09 10:53:43
 comments: true
 tags: PHP
 description: "php-idnkitをインストールしたのでメモ。OSはubuntu、PHPのバージョンは5.6.24で行った。php-idnkitは拡張モジュールなのでPHPをコンパイルし直す必要はない。モジュールをコンパイルして、php.iniのextensionに指定すれば使えるようになる。"

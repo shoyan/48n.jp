@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "capistrano3-unicornを使う"
-date: 2016-04-19 17:21:17 +0900
+date: 2016-04-19 17:21:17
 comments: true
 tags: Ruby
 ---

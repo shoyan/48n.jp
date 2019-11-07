@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "シェルスクリプトで別プロセスの終了ステータスを取得する"
-date: 2018-11-29 14:55:51 +0900
+date: 2018-11-29 14:55:51
 comments: true
 tags: Linux
 ---

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Slackで定期的にRubotyに仕事をさせる"
-date: 2016-10-31 16:58:56 +0900
+date: 2016-10-31 16:58:56
 comments: true
 tags: 
   - Ruby 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Guardでrubocopを自動化する"
-date: 2016-12-07 13:55:09 +0900
+date: 2016-12-07 13:55:09
 comments: true
 tags: 
   - 自動化 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "mysql_real_escape_string()のみで防げないSQLインジェクション"
-date: 2016-09-06 14:26:15 +0900
+date: 2016-09-06 14:26:15
 comments: true
 tags: 
   - SQL 

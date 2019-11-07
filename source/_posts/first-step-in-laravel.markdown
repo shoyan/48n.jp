@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "LaravelをMacにインストールして起動する手順"
-date: 2016-04-28 13:36:36 +0900
+date: 2016-04-28 13:36:36
 comments: true
 tags: 
   - PHP 

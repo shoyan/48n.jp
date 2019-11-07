@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "スピードの価値"
-date: 2019-09-20 13:43:04 +0900
+date: 2019-09-20 13:43:04
 comments: true
 tags: 
 ---

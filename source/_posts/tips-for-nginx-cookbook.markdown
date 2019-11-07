@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "NginxのCookbookでハマった"
-date: 2016-05-31 18:03:46 +0900
+date: 2016-05-31 18:03:46
 comments: true
 tags: Chef
 description: "Nginxのcookbookでversionを指定しているのに、指定したバージョンでインストールされない問題でハマった。結果としてわかったことはパッケージでインストールする場合はバージョンが指定できない。バージョンを指定したい場合はソースでインストールする必要がある。"

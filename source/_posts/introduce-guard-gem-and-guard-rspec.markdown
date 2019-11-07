@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Guardでrspecのテストを自動化する"
-date: 2016-05-24 15:05:01 +0900
+date: 2016-05-24 15:05:01
 comments: true
 tags: 
   - Ruby 

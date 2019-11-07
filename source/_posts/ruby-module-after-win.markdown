@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Rubyのモジュールはあと勝ち"
-date: 2017-05-10 16:52:23 +0900
+date: 2017-05-10 16:52:23
 comments: true
 tags: 
   - Ruby 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "シンプルに実装する大切さ"
-date: 2019-08-19 12:48:14 +0900
+date: 2019-08-19 12:48:14
 comments: true
 tags: コラム
 ---

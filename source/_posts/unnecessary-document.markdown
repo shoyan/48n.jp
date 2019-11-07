@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "まだ設計書書いてるんですか？"
-date: 2018-05-14 17:28:36 +0900
+date: 2018-05-14 17:28:36
 comments: true
 tags: コラム
 ---

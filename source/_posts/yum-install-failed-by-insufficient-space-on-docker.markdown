@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Dockerのコンテナでyum installが失敗する"
-date: 2016-05-30 12:58:52 +0900
+date: 2016-05-30 12:58:52
 comments: true
 tags: Docker
 description: "Dockerのコンテナでyum installが失敗する。Insufficient space in download directory /var/cache/yum/x86_64/6/updates/packagesという容量不足のエラーがでていた。不要なコンテナを消したら解決した。"

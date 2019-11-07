@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "PMDでJavaのコードのバグをチェックする"
-date: 2018-03-20 18:41:09 +0900
+date: 2018-03-20 18:41:09
 comments: true
 tags: Java
 ---

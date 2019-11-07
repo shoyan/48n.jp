@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "超高速grep「The Silver Searcher(ag)」からhighwayに乗り換えた"
-date: 2015-10-28 13:51:49 +0900
+date: 2015-10-28 13:51:49
 comments: true
 tags: 
 ---

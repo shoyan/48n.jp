@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "FTPについて調べてみた"
-date: 2016-06-17 15:21:34 +0900
+date: 2016-06-17 15:21:34
 comments: true
 tags: Linux
 description: "FTPはすでにご存知のかたも多いと思います。自分はFTPについて、「ファイル転送に使われるプロトコルであり、セキュリティが脆弱である」というくらいしか理解していなかったので詳細を把握するために調べました。"
@@ -210,7 +210,7 @@ local: index.html remote: index.html
 3096 bytes received in 00:00 (163.72 KiB/s)
 ---> MDTM index.html
 213 20160617023028
-parsed date `20160617023028' as 1466130628, Fri, 17 Jun 2016 11:30:28 +0900
+parsed date `20160617023028' as 1466130628, Fri, 17 Jun 2016 11:30:28
 
 ```
 

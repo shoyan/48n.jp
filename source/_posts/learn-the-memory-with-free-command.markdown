@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "freeコマンドで確認するOSのメモリ情報"
-date: 2016-05-08 22:22:45 +0900
+date: 2016-05-08 22:22:45
 comments: true
 tags: Linux
 description: "サーバーのメモリ情報はシステムの空きメモリと使用メモリの量を表示するfreeコマンドを使って確認することができます。

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "sedやawkを使ってテキストから必要な列のみ取得する"
-date: 2016-06-29 17:01:36 +0900
+date: 2016-06-29 17:01:36
 comments: true
 tags: Linux
 description: "文字列からsedやawkを使ってlabelだけとるshell芸を紹介します。"

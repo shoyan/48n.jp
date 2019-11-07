@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "機械学習ことはじめ"
-date: 2016-11-11 14:13:32 +0900
+date: 2016-11-11 14:13:32
 comments: true
 tags: 機械学習
 description: "機械学習を学び始めたエンジニアの記録です。"

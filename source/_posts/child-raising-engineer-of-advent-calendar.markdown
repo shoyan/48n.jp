@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "幸せな子育てとエンジニアライフ"
-date: 2015-12-06 22:23:14 +0900
+date: 2015-12-06 22:23:14
 comments: true
 tags: 
 ---

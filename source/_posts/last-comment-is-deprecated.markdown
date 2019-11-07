@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Rails 4.2.7.1 に更新した後に [DEPRECATION] last_comment is deprecated. が発生した"
-date: 2016-08-23 13:37:27 +0900
+date: 2016-08-23 13:37:27
 comments: true
 tags: 
   - Ruby 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Webサイトのメタタグを取得するsite-parserをつくった"
-date: 2016-04-27 13:37:10 +0900
+date: 2016-04-27 13:37:10
 comments: true
 tags: Ruby
 ---

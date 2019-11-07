@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "エンジニアが意識しておくべきこと"
-date: 2018-01-22 15:06:05 +0900
+date: 2018-01-22 15:06:05
 comments: true
 tags: 
 ---
