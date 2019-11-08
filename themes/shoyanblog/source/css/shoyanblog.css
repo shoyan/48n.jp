@@ -44,6 +44,7 @@ h3 {
 a {
   text-decoration: none;
   color: rgb(43, 123, 185);
+  word-wrap: break-word;
 }
 
 h1 a {
