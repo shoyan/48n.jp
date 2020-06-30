@@ -9,10 +9,7 @@ date: 2019-10-17 15:07:07
 
 * <a href="https://github.com/shoyan" target="_blank">GitHub</a>
 * <a href="https://twitter.com/sinn_shoyan" target="_blank">Twitter</a>
-* <a href="https://www.facebook.com/shohei.yamasaki0406" target="_blank">Facebook</a>
-* <a href="https://instagram.com/shoheiyamasaki" target="_blank">Instagram</a>
 * <a href="https://speakerdeck.com/shoyan" target="_blank">SlideShare</a>
-* <a href="https://www.youtube.com/channel/UCpvoHGGd2lKScMNx-bcg7aA?view_as=subscriber" target="_blank">YouTube</a>
 
 ## Amazon.co.jpアソシエイトに関するプライバシーポリシー
 

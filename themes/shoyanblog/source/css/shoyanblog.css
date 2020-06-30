@@ -20,8 +20,7 @@ img {
 }
 
 h1 {
-  font-size: 2rem;
-  line-height: 3rem;
+  font-size: 1.5rem;
   font-weight: 400;
   margin: 1rem 0;
 }
@@ -90,12 +89,12 @@ header h1 a {
 #content-outer {
   margin: 0 1rem;
 }
-
 #main-nav {
   display: inline-flex;
   width: 100%;
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
+  flex-wrap: wrap;
 }
 
 #main-nav a:hover {
@@ -391,15 +390,26 @@ pre code {
   overflow: scroll;
 }
 
-@media screen and (max-width: 750px) {
-  h1 {
-    font-size: 2.2rem;
+@media screen and (min-width: 980px) {
+  #content-outer {
+    margin: 0 auto;
+    max-width: 850px;
   }
-
   #main-nav {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
   }
 }
+
+@media screen and (min-width: 768px) {
+  #content-outer {
+    margin: 0 auto;
+    max-width: 700px;
+  }
+  #main-nav {
+    flex-wrap: nowrap;
+  }
+} 
+
  
 @media screen and (max-width: 419px) {
   pre,
