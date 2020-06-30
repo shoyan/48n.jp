@@ -36,6 +36,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-KQX8LKG');</script>
 <!-- End Google Tag Manager -->
 
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -155,7 +156,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> ENV[<span class="string">"RACK_ENV"</span>]</span><br><span class="line"><span class="keyword">when</span> <span class="string">"development"</span></span><br><span class="line"><span class="keyword">when</span> <span class="string">"deployment"</span></span><br><span class="line">  middleware.delete(<span class="symbol">:ShowExceptions</span>)</span><br><span class="line">  middleware.delete(<span class="symbol">:Lint</span>)</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="keyword">return</span> inner_app</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 <p><a href="https://github.com/defunkt/unicorn/blob/master/lib/unicorn.rb#L79" target="_blank" rel="noopener">https://github.com/defunkt/unicorn/blob/master/lib/unicorn.rb#L79</a></p>
 <h3 id="Sinatraの環境変数"><a href="#Sinatraの環境変数" class="headerlink" title="Sinatraの環境変数"></a>Sinatraの環境変数</h3><p>SinatraはRACK_ENVとenvironmentという環境変数が2つありややこしいです。<br>基本的には、environmentを定義して使います。<br>異なる環境で実行したい場合、RACK_ENVを指定することができます(これが混乱のもと)。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">異なる環境を走らせるには、RACK_ENV環境変数を設定します。</span><br><span class="line">RACK_ENV=production ruby my_app.rb</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">異なる環境を走らせるには、RACK_ENV環境変数を設定します。</span><br><span class="line">RACK_ENV&#x3D;production ruby my_app.rb</span><br></pre></td></tr></table></figure>
 <p><a href="https://github.com/sinatra/sinatra/blob/4c7d38eb1b2cc02ce51029f28e0c3c34ca12ccfd/README.ja.md#%E7%92%B0%E5%A2%83%E8%A8%AD%E5%AE%9Aenvironments" target="_blank" rel="noopener">https://github.com/sinatra/sinatra/blob/4c7d38eb1b2cc02ce51029f28e0c3c34ca12ccfd/README.ja.md#%E7%92%B0%E5%A2%83%E8%A8%AD%E5%AE%9Aenvironments</a></p>
 <p><code>set :environment, :production</code> と定義して、<code>RACK_ENV=development ruby my_app.rb</code> を実行してみました。<br>このときの <code>settings.production?</code>の戻り値は何になるでしょうか。<br>trueとなり、productionと判定されます。<br>set :environmentで指定されたもので判定されるようです。</p>
 <p>まとめると以下のような挙動になります。</p>
@@ -259,7 +260,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="content">
           <p>Webサイトのメタデータを抽出するツールを作成しました。<br><a href="https://github.com/shoyan/site-parser" target="_blank" rel="noopener">https://github.com/shoyan/site-parser</a></p>
 <h2 id="使い方"><a href="#使い方" class="headerlink" title="使い方"></a>使い方</h2><ol>
-<li>git clone <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:shoyan/site-parser.git</li>
+<li>git clone <a href="mailto:git@github.com">git@github.com</a>:shoyan/site-parser.git</li>
 <li>cd site-parser</li>
 <li>bundle install</li>
 <li>site.csv をテキストエディタで編集</li>
@@ -384,8 +385,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <footer>
   <div id="bottom-outer">
     <div id="bottom-inner">
-      <a href="/">Home</a>
-      <p>Copyright © 2019 - SHOYAN BLOG</p>
+      <div id="author-profile">
+        <div id="author">
+          <p>著者情報</p>
+          <a href="/about/">
+            <img src="https://avatars1.githubusercontent.com/u/1150041?s=460&u=f615fc39ae1a47862c73b870898620fc9b5e6d60&v=4" alt="著者">
+          </a>
+          <a href="/about/">
+            <p class="author-name">山崎勝平</p>
+          </a>
+          <p class="author-introduction">ソフトウェアエンジニア。福岡の郊外でリモートワークをしています。webアプリ開発とプログラミングのレッスンをしています。</p>
+        </div>
+        <div id="twitter-timeline">
+          <a class="twitter-timeline" href="https://twitter.com/sinn_shoyan?ref_src=twsrc%5Etfw" target="_blank" rel="noopener">Tweets by sinn_shoyan</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
+      </div>
+      <div id="footer-bottom">
+        <p>Copyright ©SHOYAN BLOG</p>
+      </div>
     </div>
   </div>
 </footer>
