@@ -11,8 +11,9 @@ body {
     "Droid Sans",
     "Helvetica Neue",
     sans-serif;
-    min-width: 320px;
-    max-width: 1000px;
+  min-width: 320px;
+  max-width: 1000px;
+  line-height: 1.6rem;
 }
 
 img {
@@ -20,7 +21,6 @@ img {
 }
 
 h1 {
-  font-size: 1.5rem;
   font-weight: 400;
   margin: 1rem 0;
 }
@@ -403,8 +403,33 @@ pre code {
 .author-introduction {
   text-align: left;
 }
-
- /* for Tablet */
+.memo {
+  background-color: aliceblue;
+  padding: 10px;
+  border-left: 2px solid #5280dd;
+}
+.apply-btn {
+  display: block;
+  background-color: deepskyblue;
+  color: white;
+  width: 300px;
+  text-align: center;
+  margin: 0 auto;
+  padding: 10px;
+}
+details {
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 10px 0;
+}
+details.hint {
+  background-color: #f0f8ff;
+}
+details.answer {
+  background-color: #ffefe0;
+}
+/* for Tablet */
 @media screen and (min-width: 768px) {
   #content-outer {
     margin: 0 auto;
@@ -427,6 +452,9 @@ pre code {
 
  /* for PC */
 @media screen and (min-width: 980px) {
+  body {
+    font-size: .8rem;
+  }
   #content-outer {
     margin: 0 auto;
     max-width: 850px;
