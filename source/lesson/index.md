@@ -29,8 +29,8 @@ date: 2019-10-17 15:08:19
 
         document.querySelector('.apply-btn').addEventListener('click', function() {
             try {
-                gtag('event', 'apply', {
-                    'event_category' : 'click',
+                gtag('event', 'クリック', {
+                    'event_category' : '申し込み',
                     'event_label' : '無料カウンセリングに申し込む'
                 });
             } catch (error) {
