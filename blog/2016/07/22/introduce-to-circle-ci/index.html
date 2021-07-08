@@ -36,7 +36,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-KQX8LKG');</script>
 <!-- End Google Tag Manager -->
 
-<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -166,10 +166,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h2 id="CircleCIの便利な点"><a href="#CircleCIの便利な点" class="headerlink" title="CircleCIの便利な点"></a>CircleCIの便利な点</h2><p>CircleCIの便利な点は特別な設定をせずにテストコードさえあればCIができてしまうことです。<br>CircleCIにアカウントを作って、CIを行うリポジトリを設定すればOKです。<br>リポジトリにpushするとCIが実行されます。<br>ソースコードからbundle installなどの必要な前処理をしてくれるので、CIを行うための前準備的な設定が必要ありません。</p>
 <p>私は<a href="https://github.com/shoyan/git_find_committer" target="_blank" rel="noopener">git_find_commiter</a>や<a href="https://github.com/shoyan/php-syntax-check" target="_blank" rel="noopener">php-syntax-check</a>でCircleCIを使っています。</p>
 <h2 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h2><p>デフォルトのRubyのバージョンが古いので(マニュアルによるとUbuntu 12.04 and Ubuntu 14.04 build imagesのもの)、Ruby1.9から導入されたキーワード引数など比較的新しく導入された機構を使うと構文エラーが発生することがあります。<br>その場合は<code>circle.yml</code>ファイルにRubyのバージョンを設定できます。</p>
-<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">machine:</span></span><br><span class="line"><span class="symbol">  ruby:</span></span><br><span class="line"><span class="symbol">    version:</span> <span class="number">2.3</span><span class="number">.0</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">machine:</span></span><br><span class="line">  <span class="attr">ruby:</span></span><br><span class="line">    <span class="attr">version:</span> <span class="number">2.3</span><span class="number">.0</span></span><br></pre></td></tr></table></figure>
 
 <p>また、bundlerのバージョンでエラーが発生することがありました。<br>その場合は、以下のようにバージョンを指定することができます。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies:</span><br><span class="line">  pre:</span><br><span class="line">    - gem install bundler -v <span class="number">1.12</span><span class="number">.5</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">dependencies:</span></span><br><span class="line">  <span class="attr">pre:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">gem</span> <span class="string">install</span> <span class="string">bundler</span> <span class="string">-v</span> <span class="number">1.12</span><span class="number">.5</span></span><br></pre></td></tr></table></figure>
 
 <p>circle.ymlの構文についてはドキュメントを参考にしてください。</p>
 <ul>

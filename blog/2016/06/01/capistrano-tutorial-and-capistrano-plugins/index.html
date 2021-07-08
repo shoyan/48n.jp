@@ -36,7 +36,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-KQX8LKG');</script>
 <!-- End Google Tag Manager -->
 
-<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -164,10 +164,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <p>Capistranoのインストールと設定、プラグインの紹介をします。</p>
 <h2 id="Capistranoのインストール"><a href="#Capistranoのインストール" class="headerlink" title="Capistranoのインストール"></a>Capistranoのインストール</h2><p>bundle initコマンドでGemfileを作成します。</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$  bundle init</span><br><span class="line">Writing <span class="keyword">new</span> Gemfile to <span class="regexp">/Users/</span>shoyan<span class="regexp">/app/</span>Gemfile</span><br></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$  bundle init</span><br><span class="line">Writing <span class="keyword">new</span> Gemfile to <span class="regexp">/Users/</span>shoyan<span class="regexp">/app/G</span>emfile</span><br></pre></td></tr></table></figure>
 
 <p>以下のGemfileが作成されます。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ cat Gemfile</span><br><span class="line"><span class="comment"># A sample Gemfile</span></span><br><span class="line"><span class="built_in">source</span> <span class="string">"https://rubygems.org"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># gem "rails"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ cat Gemfile</span><br><span class="line"><span class="meta"># A sample Gemfile</span></span><br><span class="line">source <span class="string">"https://rubygems.org"</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># gem "rails"</span></span><br></pre></td></tr></table></figure>
 
 <p>GemfileにCapistranoを定義します。</p>
 <figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">group</span> <span class="title">:development</span> do</span><br><span class="line">  gem <span class="string">"capistrano"</span>, <span class="string">"~&gt; 3.4"</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>

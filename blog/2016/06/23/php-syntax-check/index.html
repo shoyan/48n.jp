@@ -36,7 +36,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-KQX8LKG');</script>
 <!-- End Google Tag Manager -->
 
-<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -206,7 +206,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p>注意点としては、PRを作っていないと通知でエラーとなります。</p>
 <p>ですので、Pull Requestがあるかどうかをチェックするif文をいれています。<br><code>$CI_PULL_REQUEST</code> はCIrcleCIの変数で、Pull Requestが作られていればこの変数にURLが格納されています。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [ -n <span class="string">"<span class="variable">$CI_PULL_REQUESTS</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if [ -n "$CI_PULL_REQUESTS" ]; then</span><br><span class="line"></span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
 
 <p>また、通知には<code>GITHUB_ACCESS_TOKEN</code>を発行して環境変数に登録しておく必要があります。</p>
 <ul>

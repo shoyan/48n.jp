@@ -36,7 +36,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-KQX8LKG');</script>
 <!-- End Google Tag Manager -->
 
-<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -211,7 +211,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h2 id="実際にFTPを試してみる"><a href="#実際にFTPを試してみる" class="headerlink" title="実際にFTPを試してみる"></a>実際にFTPを試してみる</h2><p>実際にFTPを試してみる場合、FTPサーバーが必要です。<br><a href="https://lolipop.jp" target="_blank" rel="noopener">ロリポップ！レンタルサーバー</a>を使えば無料でFTPサーバーが利用できます。</p>
 <p>ちなみにtelnetでファイルの送受信はできません。<br>というのも、telnetでは1つのポートを使った通信しかサポートしていないからです。<br>FTPはデータ転送用のポートと制御用のポートの2つを利用するため、telnetでは認証しか行えません。  </p>
 <p>まずは、telnetで認証をやってみます(localhostにftpサーバーが起動しているという前提です)。  </p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ telnet localhost <span class="number">21</span></span><br><span class="line">Trying <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>...</span><br><span class="line">Connected to localhost.</span><br><span class="line">Escape character <span class="keyword">is</span> <span class="string">'^]'</span>.</span><br><span class="line"><span class="number">220</span> FTP server ready.</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ telnet localhost 21</span><br><span class="line">Trying 127.0.0.1<span class="built_in">..</span>.</span><br><span class="line">Connected <span class="keyword">to</span> localhost.</span><br><span class="line">Escape character is <span class="string">'^]'</span>.</span><br><span class="line">220 FTP<span class="built_in"> server </span>ready.</span><br></pre></td></tr></table></figure>
 
 <p>まず、ユーザ名を入力します。</p>
 <figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">USER</span> <span class="title">ftp</span></span><br><span class="line"><span class="number">331</span> Password required for example.com</span><br></pre></td></tr></table></figure>

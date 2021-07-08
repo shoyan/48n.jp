@@ -36,7 +36,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-KQX8LKG');</script>
 <!-- End Google Tag Manager -->
 
-<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -166,14 +166,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h2 id="符号化の原理"><a href="#符号化の原理" class="headerlink" title="符号化の原理"></a>符号化の原理</h2><p>実際にアルゴリズムを確認していきます。</p>
 <p><code>DAEBCBACBBBC</code> という12文字のメッセージをハフマン符号化します。</p>
 <p>このメッセージでは、ABCDEという5種類の文字が使われているため、それぞれの文字を固有のビット長で表す場合は、3ビットが必要です。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">A: <span class="number">000</span></span><br><span class="line">B: <span class="number">001</span></span><br><span class="line">C: <span class="number">010</span></span><br><span class="line">D: <span class="number">011</span></span><br><span class="line">E: <span class="number">100</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">A:</span> <span class="number">000</span></span><br><span class="line"><span class="attr">B:</span> <span class="number">001</span></span><br><span class="line"><span class="attr">C:</span> <span class="number">010</span></span><br><span class="line"><span class="attr">D:</span> <span class="number">011</span></span><br><span class="line"><span class="attr">E:</span> <span class="number">100</span></span><br></pre></td></tr></table></figure>
 
 <p>上記の対応表をもとに、文字列をビットに変換します。</p>
 <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DAEBCBACBBBC</span><br><span class="line"><span class="number">011</span> <span class="number">000</span> <span class="number">100</span> <span class="number">001</span> <span class="number">010</span> <span class="number">001</span> <span class="number">000</span> <span class="number">010</span> <span class="number">001</span> <span class="number">001</span> <span class="number">001</span> <span class="number">010</span></span><br></pre></td></tr></table></figure>
 
 <p>1文字3ビットで12文字あることから全体のビット数は36ビットとなります。</p>
 <p>ここで、よく出てくる文字には短いビットを、あまりでてこない文字には短いビットを与えます。<br>対応表を以下のように作ります。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">A: <span class="number">110</span></span><br><span class="line">B: <span class="number">0</span></span><br><span class="line">C: <span class="number">10</span></span><br><span class="line">D: <span class="number">1110</span></span><br><span class="line">E: <span class="number">1111</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">A:</span> <span class="number">110</span></span><br><span class="line"><span class="attr">B:</span> <span class="number">0</span></span><br><span class="line"><span class="attr">C:</span> <span class="number">10</span></span><br><span class="line"><span class="attr">D:</span> <span class="number">1110</span></span><br><span class="line"><span class="attr">E:</span> <span class="number">1111</span></span><br></pre></td></tr></table></figure>
 
 <p>メッセージ全体では以下のようになります。</p>
 <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DAEBCBACBBBC</span><br><span class="line"><span class="number">1110</span> <span class="number">110</span> <span class="number">1111</span> <span class="number">0</span> <span class="number">10</span> <span class="number">0</span> <span class="number">110</span> <span class="number">10</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">10</span></span><br></pre></td></tr></table></figure>

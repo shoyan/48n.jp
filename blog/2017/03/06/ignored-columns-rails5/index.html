@@ -36,7 +36,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-KQX8LKG');</script>
 <!-- End Google Tag Manager -->
 
-<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -176,7 +176,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <h2 id="ignored-columnsで防げないパターン"><a href="#ignored-columnsで防げないパターン" class="headerlink" title="ignored_columnsで防げないパターン"></a>ignored_columnsで防げないパターン</h2><p>ただし、<code>ignored_columns</code> でも完全に防げない場合があります。</p>
 <p><code>to_json</code> メソッドでエラーが発生します。</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">pry</span><span class="params">(main)</span></span>&gt; User<span class="selector-class">.all</span><span class="selector-class">.to_json</span></span><br><span class="line">SystemStackError: stack level too deep</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">pry</span><span class="params">(main)</span></span>&gt; User<span class="selector-class">.all</span>.to_json</span><br><span class="line">SystemStackError: stack level too deep</span><br></pre></td></tr></table></figure>
 
 <p>この場合は、<code>except</code> オプションで回避できます。</p>
 <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="module-access"><span class="module"><span class="identifier">User</span>.</span></span>all.<span class="keyword">to</span><span class="constructor">_json(<span class="params">except</span>: [:<span class="params">class</span>])</span></span><br></pre></td></tr></table></figure>

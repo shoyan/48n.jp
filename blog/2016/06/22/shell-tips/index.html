@@ -36,7 +36,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-KQX8LKG');</script>
 <!-- End Google Tag Manager -->
 
-<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -168,7 +168,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <h2 id="パラメーターを取得する"><a href="#パラメーターを取得する" class="headerlink" title="パラメーターを取得する"></a>パラメーターを取得する</h2><p><code>$@</code> にパラメーターが格納されています。</p>
 <p>例えば以下の記述をした for.sh ファイルを作成します。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> role <span class="keyword">in</span> <span class="string">"<span class="variable">$@</span>"</span>; <span class="keyword">do</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="variable">$role</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for <span class="keyword">role</span> <span class="title">in</span> <span class="string">"$@"</span>; do</span><br><span class="line">  echo $role</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 
 <p>以下のように出力されます。</p>
 <figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ./for.sh hoge moge</span><br><span class="line">=&gt; hoge</span><br><span class="line">moge</span><br></pre></td></tr></table></figure>
@@ -189,7 +189,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p><code>!=</code> でも動作しますが、慣習的にあまり使わないようです。</p>
 <h3 id="文字列の比較"><a href="#文字列の比較" class="headerlink" title="文字列の比較"></a>文字列の比較</h3><h4 id="文字列1と文字列2が等しいかどうか"><a href="#文字列1と文字列2が等しいかどうか" class="headerlink" title="文字列1と文字列2が等しいかどうか"></a>文字列1と文字列2が等しいかどうか</h4><p>同じ場合にtrueを返す<code>=</code>と その否定である <code>!=</code> を使います。</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span> [ <span class="string">"hey"</span> = <span class="string">"hey"</span> ]; echo <span class="variable">$?</span></span><br><span class="line"><span class="number">0</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span> [ <span class="string">"hey"</span> = <span class="string">"hey"</span> ]; echo <span class="variable">$?</span></span><br><span class="line">0</span><br></pre></td></tr></table></figure>
 
 <p>ちなみに数値の比較に使う <code>-eq</code> で比較したところエラーとなりました。</p>
 <figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span>  [ <span class="string">"hey"</span> -<span class="keyword">eq</span> <span class="string">"hey"</span> ]; echo <span class="symbol">$</span>?</span><br><span class="line">[: <span class="keyword">integer</span> expression expected: hey</span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure>
@@ -208,10 +208,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <h3 id="findで抽出したファイルをreadコマンドで1行ずつ処理する"><a href="#findで抽出したファイルをreadコマンドで1行ずつ処理する" class="headerlink" title="findで抽出したファイルをreadコマンドで1行ずつ処理する"></a>findで抽出したファイルをreadコマンドで1行ずつ処理する</h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find application -<span class="keyword">type</span> f -<span class="type">name</span> "*.ini" | <span class="keyword">while</span> <span class="keyword">read</span> <span class="type">LINE</span>; <span class="keyword">do</span> wc -l $&#123;<span class="type">LINE</span>&#125;; done;</span><br></pre></td></tr></table></figure>
 
-<h3 id="実行ファイルのあるパスを取得する"><a href="#実行ファイルのあるパスを取得する" class="headerlink" title="実行ファイルのあるパスを取得する"></a>実行ファイルのあるパスを取得する</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$(cd $(dirname $0)</span>;pwd)"</span></span><br></pre></td></tr></table></figure>
+<h3 id="実行ファイルのあるパスを取得する"><a href="#実行ファイルのあるパスを取得する" class="headerlink" title="実行ファイルのあるパスを取得する"></a>実行ファイルのあるパスを取得する</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo <span class="string">"<span class="variable">$</span>(cd <span class="variable">$</span>(dirname <span class="variable">$0</span>);pwd)"</span></span><br></pre></td></tr></table></figure>
 
 <p>1つ上のディレクトリは以下のように取得する</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$(cd $(dirname $0)</span>;cd ..;pwd)"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo <span class="string">"<span class="variable">$</span>(cd <span class="variable">$</span>(dirname <span class="variable">$0</span>);cd ..;pwd)"</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
 <li><a href="http://doi-t.hatenablog.com/entry/2013/12/08/161929" target="_blank" rel="noopener">シェル変数のデフォルト値を設定する、未初期化時にエラーメッセージを出力してスクリプトを強制終了する - 百日半狂乱</a></li>

@@ -36,7 +36,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-KQX8LKG');</script>
 <!-- End Google Tag Manager -->
 
-<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -169,7 +169,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h2 id="立ちはだかる様々な問題"><a href="#立ちはだかる様々な問題" class="headerlink" title="立ちはだかる様々な問題"></a>立ちはだかる様々な問題</h2><h3 id="versionが反映されない"><a href="#versionが反映されない" class="headerlink" title="versionが反映されない"></a>versionが反映されない</h3><p><code>attributes/default.rb</code>にversionを定義してみたが、指定されたバージョンがインストールされない問題にハマった。<br>デフォルトである、1.4.4がインストールされている。</p>
 <h4 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h4><p>rolesのoverride_attributesとして指定すると指定されたバージョンがインストールされた。<br>基本的にvendor cookbookの値の定義はroleのoverride_attributeで指定したほうがいいのかもしれない。<br>とはいえ、パラメーターによっては上書きされる場合もあってそのあたりの挙動がよくわかっていない。</p>
 <h3 id="Checksumを指定しないといけない"><a href="#Checksumを指定しないといけない" class="headerlink" title="Checksumを指定しないといけない"></a>Checksumを指定しないといけない</h3><p>sourceからインストールする場合、checksumを設定する必要がある。<br>checksumは以下のようにして作成できる。</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shasum -<span class="selector-tag">a</span> <span class="number">256</span> nginx-x<span class="selector-class">.x</span><span class="selector-class">.x</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">shasum</span> <span class="selector-tag">-a</span> 256 <span class="selector-tag">nginx-x</span><span class="selector-class">.x</span><span class="selector-class">.x</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></span><br></pre></td></tr></table></figure>
 
 <p>もしくは</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">http:</span><span class="comment">//nginx.org/download/nginx-x.x.x.tar.gz | shasum -a 256</span></span><br></pre></td></tr></table></figure>

@@ -36,7 +36,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-KQX8LKG');</script>
 <!-- End Google Tag Manager -->
 
-<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -176,7 +176,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">error </span>MyCustomError do</span><br><span class="line">  'So what happened was...' + env['sinatra.error'].message</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 
 <p>raiseでエラーを発生させるようにしてみます。</p>
-<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">get</span> <span class="string">'/'</span> <span class="keyword">do</span></span><br><span class="line">  raise MyCustomError, <span class="string">'something bad'</span></span><br><span class="line">end</span><br><span class="line"></span><br><span class="line"><span class="meta"># 以下のようにレスポンスが返ります。</span></span><br><span class="line"></span><br><span class="line">So what happened was... something bad</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">get</span> <span class="string">'/'</span> <span class="keyword">do</span></span><br><span class="line">  raise MyCustomError, <span class="string">'something bad'</span></span><br><span class="line">end</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以下のようにレスポンスが返ります。</span></span><br><span class="line"></span><br><span class="line">So what happened was<span class="built_in">..</span>. something bad</span><br></pre></td></tr></table></figure>
 
 <p>ステータスコードを指定してエラーハンドリングを行う方法もあります。</p>
 <figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">error </span>403 do</span><br><span class="line">  'Access forbidden'</span><br><span class="line">end</span><br></pre></td></tr></table></figure>

@@ -36,7 +36,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-KQX8LKG');</script>
 <!-- End Google Tag Manager -->
 
-<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -163,7 +163,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
   <p>sshログインできないので <code>/var/log/secure</code> のログを見てみました。<br>以下のメッセージがでていました。</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Apr <span class="number">28</span> <span class="number">14</span>:<span class="number">11</span>:<span class="number">14</span> server01 sshd[<span class="number">31264</span>]: <span class="keyword">User</span> <span class="title">shoyan</span> from example.jp not allowed because none of user's groups are listed <span class="keyword">in</span> AllowGroups</span><br><span class="line">Apr <span class="number">28</span> <span class="number">14</span>:<span class="number">11</span>:<span class="number">14</span> server01 sshd[<span class="number">31265</span>]: input_userauth_request: invalid <span class="keyword">user</span> <span class="title">shoyan</span></span><br><span class="line">Apr <span class="number">28</span> <span class="number">14</span>:<span class="number">11</span>:<span class="number">14</span> server01 sshd[<span class="number">31265</span>]: Connection closed by <span class="number">192.168</span>.<span class="number">1.1</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Apr 28 14:11:14 server01 sshd[31264]:<span class="built_in"> User </span>shoyan <span class="keyword">from</span> example.jp <span class="keyword">not</span> allowed because none of user<span class="string">'s groups are listed in AllowGroups</span></span><br><span class="line"><span class="string">Apr 28 14:11:14 server01 sshd[31265]: input_userauth_request: invalid user shoyan</span></span><br><span class="line"><span class="string">Apr 28 14:11:14 server01 sshd[31265]: Connection closed by 192.168.1.1</span></span><br></pre></td></tr></table></figure>
 
 <p><code>none of user&#39;s groups are listed in AllowGroups</code> と書いてあるので、groupの問題らしい。</p>
 <p><code>/etc/ssh/sshd_config</code>をみると、AllowGroups にいなかったのでユーザーのグループを追加しました。</p>
