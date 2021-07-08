@@ -452,9 +452,6 @@ details.answer {
 
  /* for PC */
 @media screen and (min-width: 980px) {
-  body {
-    font-size: .8rem;
-  }
   #content-outer {
     margin: 0 auto;
     max-width: 850px;
