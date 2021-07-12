@@ -8,7 +8,7 @@ tags:
 description: ブログシステムをHexoにしました。Hexoのメリットや他のフレームワークであるGatsubyやVuePressと比較した結果などをまとめました。
 ---
 
-ブログシステムを<a href="https://hexo.io/" target="_blank">Hexo<img src="/images/outbound.svg" alt="hexo.io" width="16" height="16"></a>にしました。ブログデザインも新規で作成しました。ブログシステムはそのうちリプレースしたいなと常々思っていたのですが、なかなかこれといったものがなく時間が経ってしまいましたが、ついにリプレースすることができました。
+ブログシステムを<a href="https://hexo.io/" target="_blank" class="outbound">Hexo</a>にしました。ブログデザインも新規で作成しました。ブログシステムはそのうちリプレースしたいなと常々思っていたのですが、なかなかこれといったものがなく時間が経ってしまいましたが、ついにリプレースすることができました。
 
 ## 以前のブログシステム
 
@@ -40,7 +40,7 @@ HexoはNode.jsで書かれています。
 
 Node.jsで書かれていて人気のあるブログシステムはHexoとGatsby、あとは最近VuePressも人気が出てきているようです。
 他にどんなソフトウェアがあるかはこちらで確認することができます。
-* <a href="https://github.com/topics/static-site-generator" target="_blank">static-site-generator · GitHub Topics<img src="/images/outbound.svg" alt="hexo.io" width="16" height="16"></a>
+* <a href="https://github.com/topics/static-site-generator" target="_blank" class="outbound">static-site-generator · GitHub Topics</a>
 
 人気のあるソフトウェアは開発が活発で便利な機能も多く、使いやすいことが多いです。
 
@@ -48,7 +48,7 @@ Node.jsで書かれていて人気のあるブログシステムはHexoとGatsby
 
 Hexoは現在も開発が行われています。2019-10-14にバージョン4.0のリリースが行われました。
 
-* <a href="https://hexo.io/news/2019/10/14/hexo-4-released/" target="_blank">Hexo 4.0.0 Released | Hexo<img src="/images/outbound.svg" alt="hexo.io" width="16" height="16"></a>
+* <a href="https://hexo.io/news/2019/10/14/hexo-4-released/" target="_blank" class="outbound">Hexo 4.0.0 Released | Hexo</a>
 
 ## Hexo vs Gatsby vs VuePress
 
@@ -56,14 +56,14 @@ Node.js環境の静的サイトジェネレーターはHexo、Gatsby、VuePress�
 
 ### Gatsbyを採用しなかった理由
 
-<a href="https://www.gatsbyjs.org/" target="_blank">Gatsby<img src="/images/outbound.svg" alt="hexo.io" width="16" height="16"></a>はReactベースの静的サイトジェネレーターです。Reactに慣れている人であればいいかもしれませんが、私がReactに詳しくないのもあり、Gatsbyは学習コストが高いという印象です。あえてその学習コストを払ってGatsbyを使うメリットが見当たらないので採用を見送りました。
+<a href="https://www.gatsbyjs.org/" target="_blank" class="outbound">Gatsby</a>はReactベースの静的サイトジェネレーターです。Reactに慣れている人であればいいかもしれませんが、私がReactに詳しくないのもあり、Gatsbyは学習コストが高いという印象です。あえてその学習コストを払ってGatsbyを使うメリットが見当たらないので採用を見送りました。
 
 ### VuePressを採用しなかった理由
 
-<a href="https://vuepress.vuejs.org/" target="_blank">VuePress<img src="/images/outbound.svg" alt="hexo.io" width="16" height="16"></a>がメジャーバージョンになったということもあり、VuePressも試してみました。情報が少なくまだまだ使いづらいというのが正直なところで、VuePressを使うメリットが見当たりませんでした。
+<a href="https://vuepress.vuejs.org/" target="_blank" class="outbound">VuePress</a>がメジャーバージョンになったということもあり、VuePressも試してみました。情報が少なくまだまだ使いづらいというのが正直なところで、VuePressを使うメリットが見当たりませんでした。
 ブログではなく、ドキュメントなどのシステムとして使うならありかもしれません。
 一応、サンプルコードをGitHubにあげているので興味のある方は参考にしてみてください。
-* <a href="https://github.com/shoyan/vuepress-sample" target="_blank">vuepress-sample<img src="/images/outbound.svg" alt="hexo.io" width="16" height="16"></a>
+* <a href="https://github.com/shoyan/vuepress-sample" target="_blank" class="outbound">vuepress-sample</a>
 
 ### 結論
 
@@ -88,14 +88,14 @@ $ hexo server
 ### テーマの作成がしやすい
 
 Hexoにはテーマ作成をサポートするツールが用意されています。
-<a href="https://www.npmjs.com/package/generator-hexo-theme" target="_blank">generator-hexo-theme<img src="/images/outbound.svg" alt="hexo.io" width="16" height="16"></a>を使えば簡単にブログテーマの雛形を用意することができます。
+<a href="https://www.npmjs.com/package/generator-hexo-theme" target="_blank" class="outbound">generator-hexo-theme</a>を使えば簡単にブログテーマの雛形を用意することができます。
 ブログテーマは自作したのですが、その雛形はgenerator-hexo-themeで作成しました。
 
 ### CI/CDも簡単
 
 masterにマージしたら自動的にデプロイする設定を入れています。そのあたりも公式のマニュアルが用意してあり、手順にそって設定していくだけでCI/CD環境を作ることができます。私はGitHub Pagesを使っており、サーバー費用0円でブログを運営しています。コストパフォーマンスは最高ですね。
 
-* <a href="https://hexo.io/docs/github-pages.html" target="_blank">GitHub Pages | Hexo<img src="/images/outbound.svg" alt="hexo.io" width="16" height="16"></a>
+* <a href="https://hexo.io/docs/github-pages.html" target="_blank" class="outbound">GitHub Pages | Hexo</a>
 
 ## まとめ
 
