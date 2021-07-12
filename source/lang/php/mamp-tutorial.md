@@ -16,7 +16,9 @@ MAMPとはMacOSとWindowsで利用できる、開発環境です。Apache、Ngin
 - Apache、Nginx: Webサーバと呼ばれるプログラムで、ブラウザからのリクエストを受けとり、対応するデータを返す
 - MySQL: データベースと呼ばれるプログラムで、データを保存したり取り出したりすることができる
 
+<p class="memo">
 Apache、Nginx、MySQLなどのプログラムはソフトウェアと呼ばれます。
+</p>
 
 ## MAMPのインストール
 
