@@ -18,26 +18,35 @@ body {
 
 img {
   max-width: 100%;
+  border: 1px solid #d8d8d8;
 }
 
 h1 {
   font-weight: 400;
-  margin: 1rem 0;
+  text-align: center;
+  margin: 20px;
+  font-size: 2rem;
+  line-height: 2rem;
 }
 
 h2 {
   font-size: 1.3rem;
-  padding-bottom: .3rem;
   line-height: 2rem;
   font-weight: 400;
   border-bottom: 1px solid #eaecef;
+  background-color: #f7f7f7;
+  padding: 10px 20px;
+  border-left: 9px solid #4865b2;
+  margin: 40px 0;
 }
 
 h3 {
-  font-size: 1.2rem;
-  padding-bottom: .3rem;
+  font-size: 1.1rem;
+  padding: 10px 20px;
   line-height: 2rem;
   font-weight: 400;
+  border-left: 9px solid #4865b2;
+  margin: 40px 0 20px 0;
 }
 
 a {
@@ -77,7 +86,6 @@ th {
 }
 
 header h1 {
-  font-family: "Fjalla One", sans-serif;
   text-align: center;
 } 
 
@@ -431,6 +439,9 @@ details.answer {
 }
 /* for Tablet */
 @media screen and (min-width: 768px) {
+  h1 {
+    margin: 40px;
+  }
   #content-outer {
     margin: 0 auto;
     max-width: 700px;
@@ -448,7 +459,7 @@ details.answer {
     border-bottom: none;
     margin-bottom: 0;
   }
-} 
+}
 
  /* for PC */
 @media screen and (min-width: 980px) {
