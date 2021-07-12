@@ -437,6 +437,13 @@ details.hint {
 details.answer {
   background-color: #ffefe0;
 }
+.outbound::after{
+  content: "";
+  background-image: url("../images/outbound.svg");
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+}
 /* for Tablet */
 @media screen and (min-width: 768px) {
   h1 {
