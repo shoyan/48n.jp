@@ -25,8 +25,6 @@ date: 2019-10-17 15:08:19
 
 <script>
     window.onload = function() {
-        document.querySelector('#lesson-section').style.display = 'none';
-
         document.querySelector('.apply-btn').addEventListener('click', function() {
             try {
                 gtag('event', 'クリック', {
