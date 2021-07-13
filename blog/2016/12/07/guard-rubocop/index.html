@@ -30,11 +30,14 @@
   
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:site" content="@sinn_shoyan" />
-<meta name="twitter:title" content="Guardでrubocopを自動化する [ SHOYAN BLOG ]" />
+<meta name="twitter:creator" content="@sinn_shoyan" />
+<meta name="og:title" content="Guardでrubocopを自動化する - SHOYAN BLOG" />
 
-  <meta name="twitter:description" content="RubyのシンタックスチェックにRubocopを使っていて、リポジトリにpushした時にチェックするようにしている。push→シンタックスエラー→直してもう1回pushというのがまどろこしいのでGuardを使ってファイルを保存する度にチェックするようにしてみた。" />
+  <meta name="og:description" content="RubyのシンタックスチェックにRubocopを使っていて、リポジトリにpushした時にチェックするようにしている。push→シンタックスエラー→直してもう1回pushというのがまどろこしいのでGuardを使ってファイルを保存する度にチェックするようにしてみた。" />
 
-<meta name="twitter:image" content="https://48n.jp/images/logo.png" />
+
+  <meta name="og:image" content="https://48n.jp/images/logo.png" />
+
 
   <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -140,13 +143,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div id="content-inner">
     
 <article id="post">
-
+  <div class="date-box">
+    <time datetime="2016-12-07T04:55:09.000Z" itemprop="datepublished">
+      2016-12-07
+    </time>
+    <time datetime="2016-12-07T04:55:09.000Z" itemprop="modified">
+      (更新日: 2016-12-07)
+    </time>
+  </div>
   <h1>Guardでrubocopを自動化する</h1>
-
-  <time datetime="2016-12-07T04:55:09.000Z">
-    2016-12-07
-  </time>
-
   <div class="sharing">
   <a class="twitter-share-button" href="https://twitter.com/intent/tweet" target="_blank" rel="noopener"> Tweet</a>
   <a href="https://b.hatena.ne.jp/entry/" target="_blank" rel="noopener" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
@@ -168,7 +173,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   return t;
 }(document, "script", "twitter-wjs"));</script>
-
 
   <p>RubyのシンタックスチェックにRubocopを使っていて、リポジトリにpushした時にチェックするようにしている。<br>push→シンタックスエラー→直してもう1回pushというのがまどろこしいので<a href="https://github.com/yujinakayama/guard-rubocop" target="_blank" rel="noopener">guard-rubocop</a>を使ってファイルを保存する度にチェックするようにしてみた。<br>ストレスが軽減され、良い感じだったので紹介する。</p>
 <h2 id="guard-rubocopの導入"><a href="#guard-rubocopの導入" class="headerlink" title="guard-rubocopの導入"></a>guard-rubocopの導入</h2><p>gurad-rubocopを導入するにはまず、rubocopを導入している必要がある。<br>この記事ではrubocopは導入済みという前提で進める。</p>

@@ -30,11 +30,14 @@
   
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:site" content="@sinn_shoyan" />
-<meta name="twitter:title" content="Exception Notificationでundefined method `current&#39; for Time:Classエラーがでた [ SHOYAN BLOG ]" />
+<meta name="twitter:creator" content="@sinn_shoyan" />
+<meta name="og:title" content="Exception Notificationでundefined method `current&#39; for Time:Classエラーがでた - SHOYAN BLOG" />
 
-  <meta name="twitter:description" content="例外発生時にException Notificationで通知をしようと思い、導入してみたところTime.currentがundefined methodだというエラーがでました。active_supportを読みこむことでSinatraで使えるようにしました。" />
+  <meta name="og:description" content="例外発生時にException Notificationで通知をしようと思い、導入してみたところTime.currentがundefined methodだというエラーがでました。active_supportを読みこむことでSinatraで使えるようにしました。" />
 
-<meta name="twitter:image" content="https://48n.jp/images/logo.png" />
+
+  <meta name="og:image" content="https://48n.jp/images/logo.png" />
+
 
   <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -140,13 +143,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div id="content-inner">
     
 <article id="post">
-
+  <div class="date-box">
+    <time datetime="2016-05-13T04:28:11.000Z" itemprop="datepublished">
+      2016-05-13
+    </time>
+    <time datetime="2016-05-13T04:28:11.000Z" itemprop="modified">
+      (更新日: 2016-05-13)
+    </time>
+  </div>
   <h1>Exception Notificationでundefined method `current&#39; for Time:Classエラーがでた</h1>
-
-  <time datetime="2016-05-13T04:28:11.000Z">
-    2016-05-13
-  </time>
-
   <div class="sharing">
   <a class="twitter-share-button" href="https://twitter.com/intent/tweet" target="_blank" rel="noopener"> Tweet</a>
   <a href="https://b.hatena.ne.jp/entry/" target="_blank" rel="noopener" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
@@ -168,7 +173,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   return t;
 }(document, "script", "twitter-wjs"));</script>
-
 
   <p>例外発生時に<a href="https://github.com/smartinez87/exception_notification" target="_blank" rel="noopener">Exception Notification</a>で通知をしようと思い、導入してみたところ以下のエラーがでました。</p>
 <figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR: Failed <span class="keyword">to</span> generate exception summary:</span><br><span class="line">ActionView::Template::Error: undefined <span class="function"><span class="keyword">method</span> `<span class="title">current</span>' <span class="title">for</span> <span class="title">Time</span>:</span><span class="keyword">Class</span></span><br></pre></td></tr></table></figure>

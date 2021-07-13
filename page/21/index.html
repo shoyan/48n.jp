@@ -30,11 +30,14 @@
   
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:site" content="@sinn_shoyan" />
-<meta name="twitter:title" content=" [ SHOYAN BLOG ]" />
+<meta name="twitter:creator" content="@sinn_shoyan" />
+<meta name="og:title" content=" - SHOYAN BLOG" />
 
-  <meta name="twitter:description" content="当サイトSHOYAN BLOGは、Webアプリケーションエンジニアの山崎勝平(Yamasaki Shohei)が運営するブログです。IT技術に関連する情報を発信しています。" />
+  <meta name="og:description" content="当サイトSHOYAN BLOGは、Webアプリケーションエンジニアの山崎勝平(Yamasaki Shohei)が運営するブログです。IT技術に関連する情報を発信しています。" />
 
-<meta name="twitter:image" content="https://48n.jp/images/logo.png" />
+
+  <meta name="og:image" content="https://48n.jp/images/logo.png" />
+
 
   <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -139,16 +142,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div id="content-outer">
   <div id="content-inner">
     
-
   <div id="recent-posts">
     
       <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-06-15T04:42:55.000Z" itemprop="datepublished">
+            2016-06-15
+          </time>
+          <time datetime="2016-06-15T04:42:55.000Z" itemprop="modified">
+            (更新日: 2016-06-15)
+          </time>
+        </div>
         <h1>
         <a href="/blog/2016/06/15/whenever-cannot-load-such-file/">capistrano/wheneverで cannot load such fileがでる</a>
         </h1>
-        <time datetime="2016-06-15T04:42:55.000Z">
-          2016-06-15
-        </time>
         <div class="content">
           <p>wheneverを導入するため<code>Capfile</code>に <code>require &quot;whenever/capistrano&quot;</code>と定義して <code>bundle exec cap -T</code> とすると以下のエラーがでた。</p>
 <figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">LoadError:</span> cannot load such file -- /Users<span class="meta-keyword">/shoyan/</span>app<span class="meta-keyword">/vendor/</span>bundle<span class="meta-keyword">/ruby/</span><span class="number">2.2</span><span class="number">.0</span><span class="meta-keyword">/gems/</span>whenever<span class="number">-0.9</span><span class="number">.5</span><span class="meta-keyword">/lib/</span>whenever<span class="meta-keyword">/tasks/</span>whenever.rake</span><br></pre></td></tr></table></figure>
@@ -183,12 +190,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     
       <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-06-14T04:34:48.000Z" itemprop="datepublished">
+            2016-06-14
+          </time>
+          <time datetime="2016-06-14T04:34:48.000Z" itemprop="modified">
+            (更新日: 2016-06-14)
+          </time>
+        </div>
         <h1>
         <a href="/blog/2016/06/14/learn-ssh-kit/">SSHKitを実際に使ってみて理解する</a>
         </h1>
-        <time datetime="2016-06-14T04:34:48.000Z">
-          2016-06-14
-        </time>
         <div class="content">
           <p>Capistrano/sshkitを紹介します。<br><a href="https://github.com/capistrano/sshkit" target="_blank" rel="noopener">https://github.com/capistrano/sshkit</a></p>
 <p>SSHKitはリモートサーバーに対してコマンドを実行するためのツールキットです。<br>CapistranoやCapistranoプラグインではSSHKitが使われています。</p>
@@ -235,12 +247,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     
       <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-06-13T05:08:03.000Z" itemprop="datepublished">
+            2016-06-13
+          </time>
+          <time datetime="2016-06-13T05:08:03.000Z" itemprop="modified">
+            (更新日: 2016-06-13)
+          </time>
+        </div>
         <h1>
         <a href="/blog/2016/06/13/learn-base64-encode/">base64エンコードのアルゴリズムをRubyで実装する</a>
         </h1>
-        <time datetime="2016-06-13T05:08:03.000Z">
-          2016-06-13
-        </time>
         <div class="content">
           <p>Base64とは英数字、記号を用いてマルチバイト文字やバイナリデータ(画像など)を扱うためのエンコード方式です。<br>具体的には<code>A–Z, a–z, 0–9</code> までの62文字と、記号2つ (<code>+</code>,<code>/</code>)、さらにパディング（余った部分を詰める）のための記号として <code>=</code> が用いられます。<br>7ビットの文字コードしか扱うことができない電子メールにおいてよく利用されています。</p>
 <h2 id="変換アルゴリズム"><a href="#変換アルゴリズム" class="headerlink" title="変換アルゴリズム"></a>変換アルゴリズム</h2><p>変換アルゴリズムは以下となります。</p>
@@ -282,12 +299,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     
       <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-06-09T05:04:17.000Z" itemprop="datepublished">
+            2016-06-09
+          </time>
+          <time datetime="2016-06-09T05:04:17.000Z" itemprop="modified">
+            (更新日: 2016-06-09)
+          </time>
+        </div>
         <h1>
         <a href="/blog/2016/06/09/calculate-the-date-of-the-last-week-monday/">先週月曜日の日付を取得するアルゴリズム</a>
         </h1>
-        <time datetime="2016-06-09T05:04:17.000Z">
-          2016-06-09
-        </time>
         <div class="content">
           <h2 id="先週の月曜日を求めるアルゴリズム"><a href="#先週の月曜日を求めるアルゴリズム" class="headerlink" title="先週の月曜日を求めるアルゴリズム"></a>先週の月曜日を求めるアルゴリズム</h2><ul>
 <li>先週(7日前)が月曜日である場合はその日付を返す</li>
@@ -325,12 +347,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     
       <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-06-08T09:41:16.000Z" itemprop="datepublished">
+            2016-06-08
+          </time>
+          <time datetime="2016-06-08T09:41:16.000Z" itemprop="modified">
+            (更新日: 2016-06-08)
+          </time>
+        </div>
         <h1>
         <a href="/blog/2016/06/08/testing-attachment-for-action-mailer/">ActionMailerの添付ファイルをRspecでテストする</a>
         </h1>
-        <time datetime="2016-06-08T09:41:16.000Z">
-          2016-06-08
-        </time>
         <div class="content">
           <p>ActionMailerで添付ファイルを送るようにしたのですが、そのテストをするときの情報があまりなかったのでまとめました。</p>
 <p>以下のようにテストしました。</p>

@@ -30,11 +30,14 @@
   
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:site" content="@sinn_shoyan" />
-<meta name="twitter:title" content="Dockerのコンテナ間を繋ぐLinksを使ってPHPとMySQLコンテナを連携させる [ SHOYAN BLOG ]" />
+<meta name="twitter:creator" content="@sinn_shoyan" />
+<meta name="og:title" content="Dockerのコンテナ間を繋ぐLinksを使ってPHPとMySQLコンテナを連携させる - SHOYAN BLOG" />
 
-  <meta name="twitter:description" content="DockerはLinksというコンテナ間のネットワークを繋ぐ仕組みを持つ。例えば、アプリケーションコンテナとデータベースコンテナを連携して使いたいときに有用だ。例えば、3306ポートがEXPOSEされたmysqlがインストールされたコンテナと連携したいとする。" />
+  <meta name="og:description" content="DockerはLinksというコンテナ間のネットワークを繋ぐ仕組みを持つ。例えば、アプリケーションコンテナとデータベースコンテナを連携して使いたいときに有用だ。例えば、3306ポートがEXPOSEされたmysqlがインストールされたコンテナと連携したいとする。" />
 
-<meta name="twitter:image" content="https://48n.jp/images/logo.png" />
+
+  <meta name="og:image" content="https://48n.jp/images/logo.png" />
+
 
   <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -140,13 +143,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div id="content-inner">
     
 <article id="post">
-
+  <div class="date-box">
+    <time datetime="2016-09-16T08:37:10.000Z" itemprop="datepublished">
+      2016-09-16
+    </time>
+    <time datetime="2016-09-16T08:37:10.000Z" itemprop="modified">
+      (更新日: 2016-09-16)
+    </time>
+  </div>
   <h1>Dockerのコンテナ間を繋ぐLinksを使ってPHPとMySQLコンテナを連携させる</h1>
-
-  <time datetime="2016-09-16T08:37:10.000Z">
-    2016-09-16
-  </time>
-
   <div class="sharing">
   <a class="twitter-share-button" href="https://twitter.com/intent/tweet" target="_blank" rel="noopener"> Tweet</a>
   <a href="https://b.hatena.ne.jp/entry/" target="_blank" rel="noopener" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
@@ -168,7 +173,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   return t;
 }(document, "script", "twitter-wjs"));</script>
-
 
   <p>DockerはLinksというコンテナ間のネットワークを繋ぐ仕組みを持つ。<br>例えば、アプリケーションコンテナとデータベースコンテナを連携して使いたいときに有用だ。<br>今回はMySQLとPHPのコンテナを連携させる方法を紹介する。</p>
 <h2 id="MySQLコンテナの作成"><a href="#MySQLコンテナの作成" class="headerlink" title="MySQLコンテナの作成"></a>MySQLコンテナの作成</h2><p>まずは、mysqlコンテナを作成する。<br>バックグラウンドで起動させるための <code>--detach</code>オプションと3306ポートを解放するための <code>expose</code>オプションを指定している。</p>

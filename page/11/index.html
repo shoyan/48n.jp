@@ -30,11 +30,14 @@
   
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:site" content="@sinn_shoyan" />
-<meta name="twitter:title" content=" [ SHOYAN BLOG ]" />
+<meta name="twitter:creator" content="@sinn_shoyan" />
+<meta name="og:title" content=" - SHOYAN BLOG" />
 
-  <meta name="twitter:description" content="当サイトSHOYAN BLOGは、Webアプリケーションエンジニアの山崎勝平(Yamasaki Shohei)が運営するブログです。IT技術に関連する情報を発信しています。" />
+  <meta name="og:description" content="当サイトSHOYAN BLOGは、Webアプリケーションエンジニアの山崎勝平(Yamasaki Shohei)が運営するブログです。IT技術に関連する情報を発信しています。" />
 
-<meta name="twitter:image" content="https://48n.jp/images/logo.png" />
+
+  <meta name="og:image" content="https://48n.jp/images/logo.png" />
+
 
   <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -139,16 +142,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div id="content-outer">
   <div id="content-inner">
     
-
   <div id="recent-posts">
     
       <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-12-06T14:49:36.000Z" itemprop="datepublished">
+            2016-12-06
+          </time>
+          <time datetime="2016-12-06T14:49:36.000Z" itemprop="modified">
+            (更新日: 2016-12-06)
+          </time>
+        </div>
         <h1>
         <a href="/blog/2016/12/06/jekyll-tutorial-01/">Jekyllチュートリアル</a>
         </h1>
-        <time datetime="2016-12-06T14:49:36.000Z">
-          2016-12-06
-        </time>
         <div class="content">
           <p>最近、ブログをリニューアルしようとJekyllをちょこちょこ触っている。<br>ブログを作る上でJekyllで知っておいたほうが良いことをまとめていきたいと思う。</p>
 <h2 id="Jekyllとは"><a href="#Jekyllとは" class="headerlink" title="Jekyllとは"></a>Jekyllとは</h2><p>Jekyllは静的なサイトを作ることに特化したツールだ。<br>Ruby製でGithub pagesでも利用されている。<br>内部的には<a href="https://github.com/Shopify/liquid/wiki" target="_blank" rel="noopener">Liquid</a>が使われている。<br>Liquidはテンプレートエンジンで変数や制御文(foreachとか)を使うことができる。<br>Jekyllはそれをラップしたものだ。<br>Jekyllの何が便利かというと、サイトの設定をymlファイルで管理したりJekyllコマンドでMarkdownからhtmlファイルを生成したりすることができるという点だ。<br>また、サードパーティ製のテーマを利用できたりもする。</p>
@@ -171,12 +178,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     
       <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-11-11T05:13:32.000Z" itemprop="datepublished">
+            2016-11-11
+          </time>
+          <time datetime="2016-11-11T05:13:32.000Z" itemprop="modified">
+            (更新日: 2016-11-11)
+          </time>
+        </div>
         <h1>
         <a href="/blog/2016/11/11/machine-learning-01/">機械学習ことはじめ</a>
         </h1>
-        <time datetime="2016-11-11T05:13:32.000Z">
-          2016-11-11
-        </time>
         <div class="content">
           <p>機械学習をやるぞ！と息巻いてから半年が経とうとしている。<br>進捗はてんでダメ。ほとんど勉強せずに時間だけが過ぎてしまった。<br>さすがにこれではいけないと学習を始めた。</p>
 <p>とりあえず学ぶにも何かしらの教材がないと効率が悪いと思い、基礎的な理論が勉強できそうな 「機械学習理論入門」を買った(半年前に)。<br>機械学習の理論を優しく書いてあるはずなのだが、高校数学の理解もままならない自分の数学力では理解に苦しみ、本棚の肥やしとなっていた。<br>この段階では機械学習にも色々種類があるんだなということがわかった。</p>
@@ -204,12 +216,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     
       <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-11-10T09:28:31.000Z" itemprop="datepublished">
+            2016-11-10
+          </time>
+          <time datetime="2016-11-10T09:28:31.000Z" itemprop="modified">
+            (更新日: 2016-11-10)
+          </time>
+        </div>
         <h1>
         <a href="/blog/2016/11/10/change-date-format-with-i18n/">Railsで日付をいい感じ(スラッシュ区切り)に表示する</a>
         </h1>
-        <time datetime="2016-11-10T09:28:31.000Z">
-          2016-11-10
-        </time>
         <div class="content">
           <p>日付は日本だと <code>/</code>(スラッシュ)区切りが一般的なのでそのように表示したい。<br>しかし、RailsでDateオブジェクトやDateTimeオブジェクトを表示すると以下のような感じになってしまう。</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pry(main)&gt; Date.today.to_s</span><br><span class="line">=&gt; <span class="string">"2016-11-10"</span></span><br><span class="line"></span><br><span class="line">pry(main)&gt; DateTime.now.to_s</span><br><span class="line">=&gt; <span class="string">"2016-11-10T17:47:01+09:00"</span></span><br></pre></td></tr></table></figure>
@@ -229,12 +246,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     
       <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-11-08T08:48:30.000Z" itemprop="datepublished">
+            2016-11-08
+          </time>
+          <time datetime="2016-11-08T08:48:30.000Z" itemprop="modified">
+            (更新日: 2016-11-08)
+          </time>
+        </div>
         <h1>
         <a href="/blog/2016/11/08/after-truncate-in-the-phpunit/">PHPUnitの後処理でテーブルをTRUNCATEする</a>
         </h1>
-        <time datetime="2016-11-08T08:48:30.000Z">
-          2016-11-08
-        </time>
         <div class="content">
           <p>PHPUnitでテスト用のレコードを作成するのだが、テストで作成したレコードが残ってしまい再度テストを行うと失敗するという現象に遭遇した。</p>
 <p>以下のように<code>AppTestCase</code> を作成してカスタマイズしている。<br><code>setup()</code> メソッドで <code>datasets</code> ディレクトリにymlファイルがあればその内容でデータを作成している。</p>
@@ -261,12 +283,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     
       <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-10-31T08:17:19.000Z" itemprop="datepublished">
+            2016-10-31
+          </time>
+          <time datetime="2016-10-31T08:17:19.000Z" itemprop="modified">
+            (更新日: 2016-10-31)
+          </time>
+        </div>
         <h1>
         <a href="/blog/2016/10/31/study-english-fifth-month/">StudyPlusを使った英語の勉強をはじめて５ヶ月目の記録</a>
         </h1>
-        <time datetime="2016-10-31T08:17:19.000Z">
-          2016-10-31
-        </time>
         <div class="content">
           <p>StudyPlusに英語の勉強を記録し始めて５ヶ月。<br>幸運なことに継続して学習を続けることができている。</p>
 <p>勉強時間は128時間(累計)。<br>覚えた単語数は4600。<br>前回が3500だったので１ヶ月で1100、語彙数が増えた。<br>だんだん単語が覚えやすくなってきた感じがしている。</p>

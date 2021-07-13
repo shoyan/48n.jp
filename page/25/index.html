@@ -30,11 +30,14 @@
   
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:site" content="@sinn_shoyan" />
-<meta name="twitter:title" content=" [ SHOYAN BLOG ]" />
+<meta name="twitter:creator" content="@sinn_shoyan" />
+<meta name="og:title" content=" - SHOYAN BLOG" />
 
-  <meta name="twitter:description" content="当サイトSHOYAN BLOGは、Webアプリケーションエンジニアの山崎勝平(Yamasaki Shohei)が運営するブログです。IT技術に関連する情報を発信しています。" />
+  <meta name="og:description" content="当サイトSHOYAN BLOGは、Webアプリケーションエンジニアの山崎勝平(Yamasaki Shohei)が運営するブログです。IT技術に関連する情報を発信しています。" />
 
-<meta name="twitter:image" content="https://48n.jp/images/logo.png" />
+
+  <meta name="og:image" content="https://48n.jp/images/logo.png" />
+
 
   <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -139,16 +142,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div id="content-outer">
   <div id="content-inner">
     
-
   <div id="recent-posts">
     
       <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-05-12T04:29:14.000Z" itemprop="datepublished">
+            2016-05-12
+          </time>
+          <time datetime="2016-05-12T04:29:14.000Z" itemprop="modified">
+            (更新日: 2016-05-12)
+          </time>
+        </div>
         <h1>
         <a href="/blog/2016/05/12/error-handling-sinatra/">Sinatraのエラーハンドリング</a>
         </h1>
-        <time datetime="2016-05-12T04:29:14.000Z">
-          2016-05-12
-        </time>
         <div class="content">
           <p>Sinatraには not_foundハンドラとerrorハンドラの2つのハンドラが用意されています。<br>not_foundハンドラは404エラーを補足するためのエラーハンドラです。<br>errorハンドラは様々なエラーを補足するためのエラーハンドラです。  </p>
 <h2 id="Not-Foundハンドラ"><a href="#Not-Foundハンドラ" class="headerlink" title="Not Foundハンドラ"></a>Not Foundハンドラ</h2><p>not_foundハンドラは404エラーを補足するためのエラーハンドラです。<br><code>Sinatra::NotFound</code>が発生したとき、またはステータスコードが404のときは not_foundハンドラが実行されます。</p>
@@ -187,12 +194,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     
       <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-05-10T04:29:15.000Z" itemprop="datepublished">
+            2016-05-10
+          </time>
+          <time datetime="2016-05-10T04:29:15.000Z" itemprop="modified">
+            (更新日: 2016-05-10)
+          </time>
+        </div>
         <h1>
         <a href="/blog/2016/05/10/chef-converge-with-knife-zero/">knife zeroを使ってレシピを適用する</a>
         </h1>
-        <time datetime="2016-05-10T04:29:15.000Z">
-          2016-05-10
-        </time>
         <div class="content">
           <p>Chefでよく使われるknifeコマンドですが、そのプラグインである<a href="https://github.com/higanworks/knife-zero" target="_blank" rel="noopener">knife zero</a>を使ってレシピを適用する方法を紹介します。<br>knife zeroはknifeプラグインで、リモートnode上でchef-clientを実行するツールです。</p>
 <p>リモートnodeとはchefを適用するサーバー(管理対象となるサーバー)のことです。</p>
@@ -220,12 +232,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     
       <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-05-08T13:22:45.000Z" itemprop="datepublished">
+            2016-05-08
+          </time>
+          <time datetime="2016-05-08T13:22:45.000Z" itemprop="modified">
+            (更新日: 2016-05-08)
+          </time>
+        </div>
         <h1>
         <a href="/blog/2016/05/08/learn-the-memory-with-free-command/">freeコマンドで確認するOSのメモリ情報</a>
         </h1>
-        <time datetime="2016-05-08T13:22:45.000Z">
-          2016-05-08
-        </time>
         <div class="content">
           <p>サーバーのメモリ情報はシステムの空きメモリと使用メモリの量を表示する<code>free</code>コマンドを使って確認することができます。</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[shoyan@server01</span> <span class="string">~]$</span> <span class="string">free</span></span><br><span class="line">             <span class="string">total</span>       <span class="string">used</span>       <span class="string">free</span>     <span class="string">shared</span>    <span class="string">buffers</span>     <span class="string">cached</span></span><br><span class="line"><span class="attr">Mem:</span>       <span class="number">1922324</span>    <span class="number">1716832</span>     <span class="number">205492</span>          <span class="number">0</span>     <span class="number">197248</span>    <span class="number">1055352</span></span><br><span class="line"><span class="string">-/+</span> <span class="attr">buffers/cache:</span>     <span class="number">464232</span>    <span class="number">1458092</span></span><br><span class="line"><span class="attr">Swap:</span>      <span class="number">4194300</span>          <span class="number">0</span>    <span class="number">4194300</span></span><br></pre></td></tr></table></figure>
@@ -265,12 +282,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     
       <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-05-06T04:33:16.000Z" itemprop="datepublished">
+            2016-05-06
+          </time>
+          <time datetime="2016-05-06T04:33:16.000Z" itemprop="modified">
+            (更新日: 2016-05-06)
+          </time>
+        </div>
         <h1>
         <a href="/blog/2016/05/06/can-not-ssh-login-allow-groups-problems/">AllowGroupsの問題でsshログインできない</a>
         </h1>
-        <time datetime="2016-05-06T04:33:16.000Z">
-          2016-05-06
-        </time>
         <div class="content">
           <p>sshログインできないので <code>/var/log/secure</code> のログを見てみました。<br>以下のメッセージがでていました。</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Apr 28 14:11:14 server01 sshd[31264]:<span class="built_in"> User </span>shoyan <span class="keyword">from</span> example.jp <span class="keyword">not</span> allowed because none of user<span class="string">'s groups are listed in AllowGroups</span></span><br><span class="line"><span class="string">Apr 28 14:11:14 server01 sshd[31265]: input_userauth_request: invalid user shoyan</span></span><br><span class="line"><span class="string">Apr 28 14:11:14 server01 sshd[31265]: Connection closed by 192.168.1.1</span></span><br></pre></td></tr></table></figure>
@@ -290,12 +312,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     
       <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-05-04T13:12:07.000Z" itemprop="datepublished">
+            2016-05-04
+          </time>
+          <time datetime="2016-05-04T13:12:07.000Z" itemprop="modified">
+            (更新日: 2016-05-04)
+          </time>
+        </div>
         <h1>
         <a href="/blog/2016/05/04/introduce-studyplus/">勉強が楽しく続くようになるアプリ Studyplusのいいところ</a>
         </h1>
-        <time datetime="2016-05-04T13:12:07.000Z">
-          2016-05-04
-        </time>
         <div class="content">
           <p>Studyplusという勉強のSNSアプリを最近使い始めたのですが、よくできているので紹介したいと思います。</p>
 <p><a href="http://studyplus.jp/" target="_blank" rel="noopener">http://studyplus.jp/</a></p>

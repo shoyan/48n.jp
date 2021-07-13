@@ -30,11 +30,14 @@
   
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:site" content="@sinn_shoyan" />
-<meta name="twitter:title" content=" [ SHOYAN BLOG ]" />
+<meta name="twitter:creator" content="@sinn_shoyan" />
+<meta name="og:title" content=" - SHOYAN BLOG" />
 
-  <meta name="twitter:description" content="当サイトSHOYAN BLOGは、Webアプリケーションエンジニアの山崎勝平(Yamasaki Shohei)が運営するブログです。IT技術に関連する情報を発信しています。" />
+  <meta name="og:description" content="当サイトSHOYAN BLOGは、Webアプリケーションエンジニアの山崎勝平(Yamasaki Shohei)が運営するブログです。IT技術に関連する情報を発信しています。" />
 
-<meta name="twitter:image" content="https://48n.jp/images/logo.png" />
+
+  <meta name="og:image" content="https://48n.jp/images/logo.png" />
+
 
   <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -139,16 +142,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div id="content-outer">
   <div id="content-inner">
     
-
   <div id="recent-posts">
     
       <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-04-14T11:10:46.000Z" itemprop="datepublished">
+            2016-04-14
+          </time>
+          <time datetime="2016-04-14T11:10:46.000Z" itemprop="modified">
+            (更新日: 2016-04-14)
+          </time>
+        </div>
         <h1>
         <a href="/blog/2016/04/14/start-systemctl-on-docker/">Dockerでsystemctlでserviceが起動できない</a>
         </h1>
-        <time datetime="2016-04-14T11:10:46.000Z">
-          2016-04-14
-        </time>
         <div class="content">
           <p>centos7からsystemctlでserviceを起動するようになったが、Dockerで起動すると「Failed to get D-Bus connection: No connection to service manager.」というエラーメッセージがでて起動できないという問題が起こった。</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="builtin-name">run</span> -it centos:centos7 /bin/bash</span><br><span class="line"><span class="comment"># systemctl</span></span><br><span class="line">Failed <span class="keyword">to</span> <span class="builtin-name">get</span> D-Bus connection: <span class="literal">No</span><span class="built_in"> connection </span><span class="keyword">to</span><span class="built_in"> service </span>manager.</span><br></pre></td></tr></table></figure>
@@ -198,12 +205,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     
       <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-04-13T07:14:05.000Z" itemprop="datepublished">
+            2016-04-13
+          </time>
+          <time datetime="2016-04-13T07:14:05.000Z" itemprop="modified">
+            (更新日: 2016-04-13)
+          </time>
+        </div>
         <h1>
         <a href="/blog/2016/04/13/no-space-left-on-device-on-docker/">Dockerでno space left on deviceが出てbuildできなくなった</a>
         </h1>
-        <time datetime="2016-04-13T07:14:05.000Z">
-          2016-04-13
-        </time>
         <div class="content">
           <p>Dockerのbuild時に以下のエラーが発生するようになった。</p>
 <figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$  docker build -t docker-and-chef .</span><br><span class="line">Sending build context to Docker daemon <span class="number">131.6</span> kB</span><br><span class="line">Error response from <span class="symbol">daemon:</span> mkdir /mnt/sda1/var/<span class="class"><span class="keyword">lib</span>/<span class="title">docker</span>/<span class="title">tmp</span>/<span class="title">docker</span>-<span class="title">builder670782655</span>: <span class="title">no</span> <span class="title">space</span> <span class="title">left</span> <span class="title">on</span> <span class="title">device</span></span></span><br></pre></td></tr></table></figure>
@@ -221,12 +233,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     
       <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-03-16T15:41:01.000Z" itemprop="datepublished">
+            2016-03-17
+          </time>
+          <time datetime="2016-03-16T15:41:01.000Z" itemprop="modified">
+            (更新日: 2016-03-17)
+          </time>
+        </div>
         <h1>
         <a href="/blog/2016/03/16/php-coding-rule/">PHPコーディング規約とサポートするツール</a>
         </h1>
-        <time datetime="2016-03-16T15:41:01.000Z">
-          2016-03-17
-        </time>
         <div class="content">
           <h2 id="この記事の内容"><a href="#この記事の内容" class="headerlink" title="この記事の内容"></a>この記事の内容</h2><p>PHPのコーディング規約とそれをサポートするツールの紹介です。<br>座学形式で説明していきます。</p>
 <p>概要を知りたい場合は以下のスライドを参照ください。</p>
@@ -314,12 +331,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     
       <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-01-12T13:26:16.000Z" itemprop="datepublished">
+            2016-01-12
+          </time>
+          <time datetime="2016-01-12T13:26:16.000Z" itemprop="modified">
+            (更新日: 2016-01-12)
+          </time>
+        </div>
         <h1>
         <a href="/blog/2016/01/12/install-php7-on-mac-os/">Mac OSXにPHP7をインストール</a>
         </h1>
-        <time datetime="2016-01-12T13:26:16.000Z">
-          2016-01-12
-        </time>
         <div class="content">
           <p>2015年12月にPHP7.0.0がリリースされました。<br>先日、PHP7.0.2がリリースされ、活発に開発が行われているようです。</p>
 <p>手元でPHP7を試すために、PHP7.0.2をインストールしてみました。<br>OSはMac OSX(Yosemite)です。</p>
@@ -367,12 +389,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     
       <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2015-12-06T13:23:14.000Z" itemprop="datepublished">
+            2015-12-06
+          </time>
+          <time datetime="2015-12-06T13:23:14.000Z" itemprop="modified">
+            (更新日: 2015-12-06)
+          </time>
+        </div>
         <h1>
         <a href="/blog/2015/12/06/child-raising-engineer-of-advent-calendar/">幸せな子育てとエンジニアライフ</a>
         </h1>
-        <time datetime="2015-12-06T13:23:14.000Z">
-          2015-12-06
-        </time>
         <div class="content">
           <p>この記事は<a href="http://www.adventar.org/calendars/853" target="_blank" rel="noopener">子育てプログラマ・ITエンジニア・Webデザイナー Advent Calendar 2015</a> 7日目の記事です。</p>
 <p>我が家は僕と妻、4歳の長男と1歳の長女の4人家族です。<br>どちらの子もすくすくと育っています。<br>上の子は幼稚園が楽しいようで毎日元気に登園しており、日に日に成長する我が子の姿を見るのは幸せなことだと感じています。</p>
