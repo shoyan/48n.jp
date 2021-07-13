@@ -2,6 +2,7 @@
 layout: post
 title: "SSHKitを実際に使ってみて理解する"
 date: 2016-06-14 13:34:48
+updated: 2016-06-14 13:34:48
 comments: true
 tags: 
   - Ruby 

@@ -2,6 +2,7 @@
 layout: post
 title: "RACK_ENVとUnicorn、SinatraでのRACK_ENVの扱いと注意点"
 date: 2016-05-02 14:14:29
+updated: 2016-05-02 14:14:29
 comments: true
 tags: 
   - Ruby 

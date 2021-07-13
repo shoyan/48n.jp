@@ -2,6 +2,7 @@
 layout: post
 title: "JekyllテーマのminimaをAMP対応した"
 date: 2017-04-14 15:11:53
+updated: 2017-04-14 15:11:53
 comments: true
 tags: Jekyll
 description: "JekyllテーマのminimaをAMP対応しました。デモサイトも用意していてこちらで確認できます。"

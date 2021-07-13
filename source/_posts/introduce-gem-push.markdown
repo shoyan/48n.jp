@@ -2,6 +2,7 @@
 layout: post
 title: "RubyGems.orgに反映させるRakeタスクの紹介"
 date: 2016-10-25 14:17:29
+updated: 2016-10-25 14:17:29
 comments: true
 tags: 
   - Ruby 

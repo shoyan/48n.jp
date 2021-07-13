@@ -1,14 +1,15 @@
 
 <article id="post">
-
+  <div class="date-box">
+    <time datetime="<%=page.date.toJSON()%>" itemprop="datepublished">
+      <%=date(page.date)%>
+    </time>
+    <time datetime="<%=page.updated.toJSON()%>" itemprop="modified">
+      (更新日: <%=date(page.updated)%>)
+    </time>
+  </div>
   <h1><%=page.title%></h1>
-
-  <time datetime="<%=page.date.toJSON()%>">
-    <%=date(page.date)%>
-  </time>
-
   <%-partial('partials/share')%>
-
   <%-page.content%>
 </article>
 

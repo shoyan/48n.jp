@@ -2,6 +2,7 @@
 layout: post
 title: "そろそろlombokから卒業しようと考えています"
 date: 2018-06-29 15:26:49
+updated: 2018-06-29 15:26:49
 comments: true
 tags: Java
 ---

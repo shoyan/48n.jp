@@ -2,6 +2,7 @@
 layout: post
 title: "5分でできるRubotyのインストールとプラグインチュートリアル"
 date: 2016-07-29 13:55:33
+updated: 2016-07-29 13:55:33
 comments: true
 tags: 
   - Ruby

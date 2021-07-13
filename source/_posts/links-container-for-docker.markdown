@@ -2,6 +2,7 @@
 layout: post
 title: "Dockerのコンテナ間を繋ぐLinksを使ってPHPとMySQLコンテナを連携させる"
 date: 2016-09-16 17:37:10
+updated: 2016-09-16 17:37:10
 comments: true
 tags: Docker
 description: "DockerはLinksというコンテナ間のネットワークを繋ぐ仕組みを持つ。例えば、アプリケーションコンテナとデータベースコンテナを連携して使いたいときに有用だ。例えば、3306ポートがEXPOSEされたmysqlがインストールされたコンテナと連携したいとする。"

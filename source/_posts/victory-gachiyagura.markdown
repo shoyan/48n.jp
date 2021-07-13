@@ -2,6 +2,7 @@
 layout: post
 title: "ラピッドブラスターエリートデコのガチヤグラ必勝法"
 date: 2018-06-21 17:14:05
+updated: 2018-06-21 17:14:05
 comments: true
 tags: スプラトゥーン2
 ---

@@ -2,6 +2,7 @@
 layout: post
 title: "PHPUnitの後処理でテーブルをTRUNCATEする"
 date: 2016-11-08 17:48:30
+updated: 2016-11-08 17:48:30
 comments: true
 tags: PHP
 description: "PHPUnitでテスト用のレコードを作成するのだが、テストで作成したレコードが残ってしまい再度テストを行うと失敗するという現象に遭遇した。テストを実行した後にPHPUnitでテーブルをTRUNCATEする方法を紹介する"

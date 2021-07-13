@@ -2,6 +2,7 @@
 layout: post
 title: "RubyでのWebアプリケーション開発はSinatraから入りRailsに行く"
 date: 2018-11-20 16:04:35
+updated: 2018-11-20 16:04:35
 comments: true
 tags: 
   - Ruby

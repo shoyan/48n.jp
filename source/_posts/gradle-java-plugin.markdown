@@ -2,6 +2,7 @@
 layout: post
 title: "Gradleのjavaプラグインとは"
 date: 2018-01-21 00:52:36
+updated: 2018-01-21 00:52:36
 comments: true
 tags: 
   - Java 

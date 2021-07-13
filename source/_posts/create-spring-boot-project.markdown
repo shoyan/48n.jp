@@ -2,6 +2,7 @@
 layout: post
 title: "IntelliJでSpringBootのアプリケーションを作成する"
 date: 2018-01-19 11:48:27
+updated: 2018-01-19 11:48:27
 comments: true
 tags: 
   - Java 

@@ -2,6 +2,7 @@
 layout: post
 title: "docker-composeを使ってPHPコンテナとMySQLコンテナを連携させる"
 date: 2016-09-27 14:04:11
+updated: 2016-09-27 14:04:11
 comments: true
 tags: Docker
 description: "以前、Dockerコンテナを連携させる方法を書いたが、コンテナ間の連携が必要な際はdocker-composeを使うと便利だ。今回は前回と同じようにPHPとMySQLのコンテナを連携させるが、その連携にdocker-composeを使った方法を紹介する。"

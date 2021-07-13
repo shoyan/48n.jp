@@ -2,6 +2,7 @@
 layout: post
 title: "最短でビデオチャットを開発したい人へ"
 date: 2018-08-07 14:23:15
+updated: 2018-08-07 14:23:15
 comments: true
 tags: 開発
 ---

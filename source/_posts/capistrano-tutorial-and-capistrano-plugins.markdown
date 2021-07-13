@@ -2,6 +2,7 @@
 layout: post
 title: "Capistranoの導入手順とプラグインの紹介"
 date: 2016-06-01 14:17:45
+updated: 2016-06-01 14:17:45
 comments: true
 tags: 
   - Ruby 

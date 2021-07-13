@@ -24,7 +24,7 @@ img {
 h1 {
   font-weight: 400;
   text-align: center;
-  margin: 20px;
+  margin: 0 0 40px 0;
   font-size: 2rem;
   line-height: 2rem;
 }
@@ -93,7 +93,9 @@ header h1 a {
   color: #777;
   text-decoration: none;
 }
-
+#menu-outer {
+  margin-top: 40px;
+}
 #content-outer {
   margin: 0 1rem;
 }
@@ -218,6 +220,7 @@ footer a {
 
 .recent-post-item {
   border-bottom: 1px solid #777;
+  padding-top: 40px;
   padding-bottom: 2rem;
 }
 
@@ -437,6 +440,9 @@ details.hint {
 details.answer {
   background-color: #ffefe0;
 }
+.date-box {
+  text-align: center;
+}
 .outbound::after{
   content: "";
   background-image: url("../images/outbound.svg");
@@ -446,9 +452,6 @@ details.answer {
 }
 /* for Tablet */
 @media screen and (min-width: 768px) {
-  h1 {
-    margin: 40px;
-  }
   #content-outer {
     margin: 0 auto;
     max-width: 700px;
@@ -471,7 +474,7 @@ details.answer {
  /* for PC */
 @media screen and (min-width: 980px) {
   #content-outer {
-    margin: 0 auto;
+    margin: 40px auto;
     max-width: 850px;
   }
 }

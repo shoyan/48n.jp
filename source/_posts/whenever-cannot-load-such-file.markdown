@@ -2,6 +2,7 @@
 layout: post
 title: "capistrano/wheneverで cannot load such fileがでる"
 date: 2016-06-15 13:42:55
+updated: 2016-06-15 13:42:55
 comments: true
 tags: 
   - Ruby 

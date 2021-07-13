@@ -2,6 +2,7 @@
 layout: post
 title: "Sinatraのロギング機構について調べてみた"
 date: 2016-05-27 13:48:34
+updated: 2016-05-27 13:48:34
 comments: true
 tags: 
   - Sinatra 

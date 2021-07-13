@@ -2,6 +2,7 @@
 layout: post
 title: "AllowGroupsの問題でsshログインできない"
 date: 2016-05-06 13:33:16
+updated: 2016-05-06 13:33:16
 comments: true
 tags: Linux
 description: "sshログインできないので/var/log/secureのログを見てみたところ、none of user's groups are listed in AllowGroupsとメッセージがでていました。

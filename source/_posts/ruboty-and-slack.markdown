@@ -2,6 +2,7 @@
 layout: post
 title: "Botsインテグレーションを使って手軽にRubotyをSlackで動かす"
 date: 2016-08-02 13:40:25
+updated: 2016-08-02 13:40:25
 comments: true
 tags: 
   - Ruby 

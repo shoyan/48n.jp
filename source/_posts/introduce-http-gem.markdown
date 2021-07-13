@@ -2,6 +2,7 @@
 layout: post
 title: "rubyでhttp通信をするhttp gem"
 date: 2016-04-25 14:05:02
+updated: 2016-04-25 14:05:02
 comments: true
 tags: 
   - Ruby 

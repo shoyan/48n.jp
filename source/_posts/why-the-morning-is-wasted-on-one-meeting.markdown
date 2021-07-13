@@ -2,6 +2,7 @@
 layout: post
 title: "1つのMTGが午前中をダメにする"
 date: 2018-07-05 16:34:33
+updated: 2018-07-05 16:34:33
 comments: true
 tags: コラム
 ---

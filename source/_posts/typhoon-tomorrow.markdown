@@ -2,6 +2,7 @@
 layout: post
 title: "明日は台風なのでリモートワークします"
 date: 2018-07-02 17:23:02
+updated: 2018-07-02 17:23:02
 comments: true
 tags: コラム
 ---

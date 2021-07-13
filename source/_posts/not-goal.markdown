@@ -2,6 +2,7 @@
 layout: post
 title: "計画はいらない"
 date: 2018-10-12 16:35:56
+updated: 2018-10-12 16:35:56
 comments: true
 tags: コラム
 ---

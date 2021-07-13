@@ -2,6 +2,7 @@
 layout: post
 title: "勉強が楽しく続くようになるアプリ Studyplusのいいところ"
 date: 2016-05-04 22:12:07
+updated: 2016-05-04 22:12:07
 comments: true
 tags: 英語
 description: "Studyplusという勉強のSNSアプリを最近使い始めたのですが、よくできているので紹介したいと思います。

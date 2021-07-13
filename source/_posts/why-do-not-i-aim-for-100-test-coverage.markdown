@@ -2,6 +2,7 @@
 layout: post
 title: "テストカバレッジ100%を目指さない理由"
 date: 2019-08-02 17:47:20
+updated: 2019-08-02 17:47:20
 comments: true
 tags: ソフトウェア開発
 ---

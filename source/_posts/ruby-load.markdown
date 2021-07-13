@@ -2,6 +2,7 @@
 layout: post
 title: "Rubyのロード機構について"
 date: 2016-07-19 14:07:16
+updated: 2016-07-19 14:07:16
 comments: true
 tags: Ruby
 description: "Rubyはロード機構として、require, load, autoload, require_relativeを備えています。それぞれのメソッドの特徴と使いかたを紹介します。"

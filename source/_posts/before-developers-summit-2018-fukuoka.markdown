@@ -2,6 +2,7 @@
 layout: post
 title: "Developers Summit 2018 FUKUOKAに登壇します"
 date: 2018-09-05 19:40:36
+updated: 2018-09-05 19:40:36
 comments: true
 tags: 
 ---

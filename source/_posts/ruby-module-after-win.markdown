@@ -2,6 +2,7 @@
 layout: post
 title: "Rubyのモジュールはあと勝ち"
 date: 2017-05-10 16:52:23
+updated: 2017-05-10 16:52:23
 comments: true
 tags: 
   - Ruby 

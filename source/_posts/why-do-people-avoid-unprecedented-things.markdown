@@ -2,6 +2,7 @@
 layout: post
 title: "なぜ人は前例がないことを避けるのか"
 date: 2018-03-08 15:20:13
+updated: 2018-03-08 15:20:13
 comments: true
 tags: コラム
 ---

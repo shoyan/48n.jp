@@ -2,6 +2,7 @@
 layout: post
 title: "知っていると便利なRubyの小技集"
 date: 2016-07-14 13:43:40
+updated: 2016-07-14 13:43:40
 comments: true
 tags: Ruby
 description: "知っていると便利なRubyの小技集を紹介します。"

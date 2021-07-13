@@ -2,6 +2,7 @@
 layout: post
 title: "Gitのコミッターを集計するGitFindCommitterをつくった"
 date: 2016-07-25 18:09:52
+updated: 2016-07-25 18:09:52
 comments: true
 tags: 
   - Gem 

@@ -2,6 +2,7 @@
 layout: post
 title: "base64エンコードのアルゴリズムをRubyで実装する"
 date: 2016-06-13 14:08:03
+updated: 2016-06-13 14:08:03
 comments: true
 tags: 
   - Ruby 

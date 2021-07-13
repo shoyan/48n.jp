@@ -2,6 +2,7 @@
 layout: post
 title: Rspecのコードリーディング
 date: 2015-07-16 17:13:38
+updated: 2015-07-16 17:13:38
 comments: true
 tags: 
 ---

@@ -2,6 +2,7 @@
 layout: post
 title: "SinatraのインストールとRspecでテストする"
 date: 2016-04-20 13:53:28
+updated: 2016-04-20 13:53:28
 comments: true
 tags: 
   - Ruby 

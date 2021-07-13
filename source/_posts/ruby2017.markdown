@@ -2,6 +2,7 @@
 layout: post
 title: "2017年のRubyについて数値をまとめてみました"
 date: 2017-12-10 08:05:39
+updated: 2017-12-10 08:05:39
 comments: true
 tags: Ruby
 description: "2017年はRubyでどのようなことが起こったのか気になりませんか？そんなRubyが大好きなあなたに向けて、本記事では2017年のRubyについてまとめました。"

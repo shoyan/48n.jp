@@ -2,6 +2,7 @@
 layout: post
 title: "これから機械学習の理論を学ぶ人に最適な入門書とは？"
 date: 2017-09-29 11:21:09
+updated: 2017-09-29 11:21:09
 comments: true
 tags: 
   - 書評 

@@ -2,6 +2,7 @@
 layout: post
 title: "SetterとBuilderの使いわけ"
 date: 2018-06-29 17:39:49
+updated: 2018-06-29 17:39:49
 comments: true
 tags: Java
 ---

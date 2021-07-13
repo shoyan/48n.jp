@@ -2,6 +2,7 @@
 layout: post
 title: "Treant.jsでツリーダイアグラムを描画する"
 date: 2016-06-21 13:26:40
+updated: 2016-06-21 13:26:40
 comments: true
 tags: JavaScript
 description: "Treant.jsとはツリーダイアグラムを描画するためのJavaScriptライブラリです。Treant.jsの使い方をチュートリアル形式で紹介します。"

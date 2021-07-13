@@ -2,6 +2,7 @@
 layout: post
 title: "cookbook_fileリソースでCookbookNotFoundが発生した"
 date: 2016-04-18 13:43:40
+updated: 2016-04-18 13:43:40
 comments: true
 tags: Chef
 ---

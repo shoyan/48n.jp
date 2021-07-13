@@ -2,6 +2,7 @@
 layout: post
 title: "Jekyllチュートリアル"
 date: 2016-12-06 23:49:36
+updated: 2016-12-06 23:49:36
 comments: true
 tags: 
   - Jekyll 

@@ -2,6 +2,7 @@
 layout: post
 title: "Exception Notificationでundefined method `current' for Time:Classエラーがでた"
 date: 2016-05-13 13:28:11
+updated: 2016-05-13 13:28:11
 comments: true
 tags: 
   - Sinatra 

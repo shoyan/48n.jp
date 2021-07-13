@@ -2,6 +2,7 @@
 layout: post
 title: "DockerコンテナにChefを流してみた"
 date: 2016-04-21 18:19:01
+updated: 2016-04-21 18:19:01
 comments: true
 tags: 
   - Docker 

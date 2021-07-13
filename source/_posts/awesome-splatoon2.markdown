@@ -2,6 +2,7 @@
 layout: post
 title: "スプラトゥーン2が楽しすぎる"
 date: 2018-06-12 18:28:53
+updated: 2018-06-12 18:28:53
 comments: true
 tags: スプラトゥーン2
 ---

@@ -2,6 +2,7 @@
 layout: post
 title: "NAT・NAPT・ポートフォワーディングの違いとは"
 date: 2016-04-22 13:59:35
+updated: 2016-04-22 13:59:35
 comments: true
 tags: Network
 ---
