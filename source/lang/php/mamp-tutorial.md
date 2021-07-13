@@ -1,8 +1,14 @@
 ---
 title: 'MAMPチュートリアル'
 date: 2021-07-08 11:47:55
-updated: 2021-07-08 11:47:55
+updated: 2021-07-13 17:47:55
+photos:
+- /images/mamp/mamp-banner.png
+description: この記事ではPHPの開発環境であるMAMPの使い方を説明します。MAMPを導入することでPHPの開発環境を簡単に準備することができます。
 ---
+
+<img src="/images/mamp/mamp-banner.png" alt="MAMPバナー" title="MAMPバナー">
+
 この記事ではPHPの開発環境であるMAMPの使い方を説明します。MAMPを導入することでPHPの開発環境を簡単に準備することができます。
 
 本記事はMacを対象として解説しています。Windowsをお使いの方は、適宜Windows環境に置き換えて進めてください。

@@ -5,14 +5,20 @@ if (is_tag()) pageTitle = 'Tag: ' + page.tag;
 if (is_category()) pageTitle = 'Category: ' + page.category;
 if (is_month()) pageTitle += ': ' + page.month + '/' + page.year;
 if (is_year()) pageTitle += ': ' + page.year;
-pageTitle += ' [ ' + config.title + ' ]';
+pageTitle += ' - ' + config.title;
+const pageOrPost = page || post;
 %>
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:site" content="@<%= config.twitter %>" />
-<meta name="twitter:title" content="<%= pageTitle %>" />
-<% if(page.description) { %>
-  <meta name="twitter:description" content="<%= page.description %>" />
+<meta name="twitter:creator" content="@<%= config.twitter %>" />
+<meta name="og:title" content="<%= pageTitle %>" />
+<% if(pageOrPost.description) { %>
+  <meta name="og:description" content="<%= pageOrPost.description %>" />
 <% } else { %>
-  <meta name="twitter:description" content="<%= config.description %>" />
+  <meta name="og:description" content="<%= config.description %>" />
 <% } %>
-<meta name="twitter:image" content="<%= config.url %>/images/logo.png" />
+<% if(pageOrPost.photos && pageOrPost.photos.length) { %>
+  <meta name="og:image" content="<%= config.url %><%= pageOrPost.photos[0] %>" />
+<% } else { %>
+  <meta name="og:image" content="<%= config.url %>/images/logo.png" />
+<% } %>
