@@ -151,27 +151,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
   <h1>Gradleのjavaプラグインとは</h1>
   <div class="sharing">
-  <a class="twitter-share-button" href="https://twitter.com/intent/tweet" target="_blank" rel="noopener"> Tweet</a>
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" target="_blank" rel="noopener" class="twitter-share-button" data-via="sinn_shoyan" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   <a href="https://b.hatena.ne.jp/entry/" target="_blank" rel="noopener" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 </div>
-
-<script>window.twttr = (function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0],
-    t = window.twttr || {};
-  if (d.getElementById(id)) return t;
-  js = d.createElement(s);
-  js.id = id;
-  js.src = "https://platform.twitter.com/widgets.js";
-  fjs.parentNode.insertBefore(js, fjs);
-
-  t._e = [];
-  t.ready = function(f) {
-    t._e.push(f);
-  };
-
-  return t;
-}(document, "script", "twitter-wjs"));</script>
-
   <p>build.gradleでよく見かける<code>apply plugin: ‘java&#39;</code>という記述について説明します。この記述をするとgradleにjavaプラグインが追加されます。プラグインはgradleの機能を拡張するためのもので、javaプラグインを追加するとjavaに関連するタスクが使えるようになります。</p>
 <p>何もプラグインを追加していないgradleタスクは以下の通りです。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">$ gradle tasks</span><br><span class="line"></span><br><span class="line">&gt; Task :tasks</span><br><span class="line"></span><br><span class="line">------------------------------------------------------------</span><br><span class="line">All tasks runnable from root project</span><br><span class="line">------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">Build Setup tasks</span><br><span class="line">-----------------</span><br><span class="line">init - Initializes a new Gradle build.</span><br><span class="line">wrapper - Generates Gradle wrapper files.</span><br><span class="line"></span><br><span class="line">Help tasks</span><br><span class="line">----------</span><br><span class="line">buildEnvironment - Displays all buildscript dependencies declared <span class="keyword">in</span> root project <span class="string">'gs-gradle'</span>.</span><br><span class="line">components - Displays the components produced by root project <span class="string">'gs-gradle'</span>. [incubating]</span><br><span class="line">dependencies - Displays all dependencies declared <span class="keyword">in</span> root project <span class="string">'gs-gradle'</span>.</span><br><span class="line">dependencyInsight - Displays the insight into a specific dependency <span class="keyword">in</span> root project <span class="string">'gs-gradle'</span>.</span><br><span class="line">dependentComponents - Displays the dependent components of components <span class="keyword">in</span> root project <span class="string">'gs-gradle'</span>. [incubating]</span><br><span class="line"><span class="built_in">help</span> - Displays a <span class="built_in">help</span> message.</span><br><span class="line">model - Displays the configuration model of root project <span class="string">'gs-gradle'</span>. [incubating]</span><br><span class="line">projects - Displays the sub-projects of root project <span class="string">'gs-gradle'</span>.</span><br><span class="line">properties - Displays the properties of root project <span class="string">'gs-gradle'</span>.</span><br><span class="line">tasks - Displays the tasks runnable from root project <span class="string">'gs-gradle'</span>.</span><br><span class="line"></span><br><span class="line">To see all tasks and more detail, run gradle tasks --all</span><br><span class="line"></span><br><span class="line">To see more detail about a task, run gradle <span class="built_in">help</span> --task &lt;task&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">BUILD SUCCESSFUL <span class="keyword">in</span> 0s</span><br><span class="line">1 actionable task: 1 executed</span><br></pre></td></tr></table></figure>
