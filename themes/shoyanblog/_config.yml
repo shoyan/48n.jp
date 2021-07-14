@@ -4,9 +4,10 @@ language: ja
 # main menu navigation
 menu:
   Home: /
-  "このページについて": /about
+  "PHP入門": /lang/php/
   "プログラミングレッスン": /lesson
   "記事一覧": /archives
+  "このページについて": /about
 rss: /atom.xml
 
 # stylesheets loaded in the <head>

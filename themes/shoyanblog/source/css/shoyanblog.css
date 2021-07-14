@@ -450,6 +450,19 @@ details.answer {
   height: 16px;
   display: inline-block;
 }
+
+.tutorial-box {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.tutorial-box h2{
+  background-color: #4169e1;
+  border-left: none;
+  border-radius: 5px;
+  color: white;
+  margin: 20px 0;
+
+}
 /* for Tablet */
 @media screen and (min-width: 768px) {
   #content-outer {
@@ -468,6 +481,14 @@ details.answer {
   #author {
     border-bottom: none;
     margin-bottom: 0;
+  }
+  .flex-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .tutorial-box {
+    width: 45%;
   }
 }
 
