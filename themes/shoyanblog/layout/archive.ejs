@@ -1,15 +1,23 @@
 
 <%
-const categoriesList = list_categories({ show_count: false });
-const tagsList = list_tags({ show_count: false });
-const archivesList = list_archives({ show_count: false });
+const categoriesList = list_categories({ show_count: true});
+const tagsList = list_tags({ show_count: true });
+const archivesList = list_archives({ show_count: true, format: "YYYY年M月" });
 %>
 
 <% if (is_year() === false) { %>
   <div id="archive">
 
-    <h1>Archives</h1>
+    <h1>記事一覧</h1>
 
+    <aside>
+      <h2>記事一覧</h2>
+      <% if (archivesList !== "") { %>
+        <%-archivesList%>
+      <% } else { %>
+        <p>None.</p>
+      <% } %>
+    </aside>
     <% if (theme.atom !== undefined) { %>
       <p>
         The feed is available via
@@ -18,15 +26,12 @@ const archivesList = list_archives({ show_count: false });
       <br>
     <% } %>
 
-    <aside>
-      <h2>Categories</h2>
-      <% if (categoriesList !== "") { %>
+    <% if (categoriesList !== "") { %>
+      <aside>
+        <h2>Categories</h2>
         <%-categoriesList%>
-      <% } else { %>
-        <p>None.</p>
-      <% } %>
-    </aside>
-    <br>
+      </aside>
+    <% } %>
 
     <aside>
       <h2>Tags</h2>
@@ -38,19 +43,12 @@ const archivesList = list_archives({ show_count: false });
     </aside>
     <br>
 
-    <aside>
-      <h2>Archives</h2>
-      <% if (archivesList !== "") { %>
-        <%-archivesList%>
-      <% } else { %>
-        <p>None.</p>
-      <% } %>
-    </aside>
+
 
   </div>
 <% } else { %>
 
-  <h1><%=page.month + '/' + page.year%></h1>
+  <h1><%=page.year+ '年' + page.month + '月' %></h1>
 
   <% page.posts.each(article => { %>
     <div class="archive-item">

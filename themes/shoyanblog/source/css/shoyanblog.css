@@ -463,6 +463,22 @@ details.answer {
   margin: 20px 0;
 
 }
+
+.archive-list-count,
+.tag-list-count{
+  color: #777;
+}
+.archive-list-count::before,
+.tag-list-count::before {
+  content: "(";
+  color: #777;
+}
+
+.archive-list-count::after,
+.tag-list-count::after{
+  content: ")";
+  color: #777;
+}
 /* for Tablet */
 @media screen and (min-width: 768px) {
   #content-outer {
