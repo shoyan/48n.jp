@@ -461,7 +461,6 @@ details.answer {
   border-radius: 5px;
   color: white;
   margin: 20px 0;
-
 }
 
 .archive-list-count,
@@ -478,6 +477,10 @@ details.answer {
 .tag-list-count::after{
   content: ")";
   color: #777;
+}
+.post-tags {
+  margin-top: 20px;
+  text-align: right;
 }
 /* for Tablet */
 @media screen and (min-width: 768px) {
