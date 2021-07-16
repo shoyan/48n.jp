@@ -145,13 +145,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <article id="post">
   <div class="date-box">
     <time datetime="2016-05-13T04:28:11.000Z" itemprop="datepublished">
-      2016-05-13
+      2016/05/13
     </time>
     <time datetime="2016-05-13T04:28:11.000Z" itemprop="modified">
-      (更新日: 2016-05-13)
+      (更新日: 2016/05/13)
     </time>
   </div>
   <h1>Exception Notificationでundefined method `current&#39; for Time:Classエラーがでた</h1>
+  <div class="post-tags">
+    <a class="post-tags-link" href="/tags/Ruby/" rel="tag">Ruby</a> <a class="post-tags-link" href="/tags/Sinatra/" rel="tag">Sinatra</a>
+  </div>
   <div class="sharing">
   <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" target="_blank" rel="noopener" class="twitter-share-button" data-via="sinn_shoyan" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   <a href="https://b.hatena.ne.jp/entry/" target="_blank" rel="noopener" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
@@ -169,7 +172,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span> <span class="string">'rubygems'</span></span><br><span class="line"><span class="built_in">require</span> <span class="string">'bundler/setup'</span></span><br><span class="line"><span class="built_in">require</span> <span class="string">"sinatra/base"</span></span><br><span class="line"><span class="built_in">require</span> <span class="string">'exception_notification'</span></span><br><span class="line"># Time.currentを使えるようにする</span><br><span class="line"><span class="built_in">require</span> <span class="string">'active_support/core_ext/time'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> App &lt; Sinatra::Application</span><br><span class="line">  use ExceptionNotification::Rack,</span><br><span class="line">    :<span class="function"><span class="params">email</span> =&gt;</span> &#123;</span><br><span class="line">      :<span class="function"><span class="params">email_prefix</span> =&gt;</span> <span class="string">"[Exception] "</span>,</span><br><span class="line">      :<span class="function"><span class="params">sender_address</span> =&gt;</span> %&#123;<span class="string">"notifier"</span> &lt;notifier<span class="meta">@example</span>.com&gt;&#125;,</span><br><span class="line">      :<span class="function"><span class="params">exception_recipients</span> =&gt;</span> %w&#123;shoyan<span class="meta">@example</span>.com&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">get</span> <span class="string">'/'</span> <span class="keyword">do</span></span><br><span class="line">    begin</span><br><span class="line">      <span class="comment">// 何かの処理</span></span><br><span class="line">    rescue Exception =&gt; e</span><br><span class="line">      status <span class="number">500</span></span><br><span class="line">      ExceptionNotifier.notify_exception(e, env: env)</span><br><span class="line">      e.message</span><br><span class="line">    end</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 
 </article>
-
 
 <nav id="article-nav">
   
@@ -189,7 +191,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </a>
   
 </nav>
-
 
 
 
@@ -221,7 +222,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </ul>
     </div>
   </div>
-
 
   </div>
 </div>
