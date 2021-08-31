@@ -93,6 +93,19 @@ header h1 a {
   color: #777;
   text-decoration: none;
 }
+ul, ol {
+  background-color: #f8f9ff;
+  border: dashed 1px #4865b2;
+  margin: 20px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  padding-right: 10px;
+}
+.top-message {
+  border: dashed 1px gray;
+  margin: 20px;
+  padding: 20px;
+}
 #menu-outer {
   margin-top: 40px;
 }
@@ -204,10 +217,6 @@ footer a {
 .widget li {
   list-style-type: none;
   margin-top: 1rem;
-}
-
-.widget ul {
-  padding: 0;
 }
 
 #bottom-inner {
@@ -416,8 +425,9 @@ pre code {
 }
 .memo {
   background-color: aliceblue;
-  padding: 10px;
+  padding: 40px;
   border-left: 2px solid #5280dd;
+  margin: 40px 20px;
 }
 .apply-btn {
   display: block;
