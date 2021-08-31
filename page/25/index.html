@@ -146,6 +146,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-05-13T04:28:11.000Z" itemprop="datepublished">
+            2016/05/13
+          </time>
+          <time datetime="2016-05-13T04:28:11.000Z" itemprop="modified">
+            (更新日: 2016/05/13)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/05/13/exception-notification-and-sinatra/">Exception Notificationでundefined method `current&#39; for Time:Classエラーがでた</a>
+        </h1>
+        <div class="content">
+          <p>例外発生時に<a href="https://github.com/smartinez87/exception_notification" target="_blank" rel="noopener">Exception Notification</a>で通知をしようと思い、導入してみたところ以下のエラーがでました。</p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR: Failed <span class="keyword">to</span> generate exception summary:</span><br><span class="line">ActionView::Template::Error: undefined <span class="function"><span class="keyword">method</span> `<span class="title">current</span>' <span class="title">for</span> <span class="title">Time</span>:</span><span class="keyword">Class</span></span><br></pre></td></tr></table></figure>
+
+<p>日付の取得に<code>Time.current</code>を使っており、<code>Time.current</code>はActive supportにより拡張されたメソッドなのでActive Supportを使っている環境でしか動作しません(要するにRailsじゃないと動かない。Sinatraは…)。</p>
+<p>PRもでているので対応してほしいところです。</p>
+<ul>
+<li><a href="https://github.com/smartinez87/exception_notification/pull/332" target="_blank" rel="noopener">Fix timestamp error</a></li>
+</ul>
+<h2 id="対応方法"><a href="#対応方法" class="headerlink" title="対応方法"></a>対応方法</h2><p><code>require &#39;active_support/core_ext/time’</code> をすることで<code>Time.current</code>を使えるようにしました。</p>
+<p>サンプルコード</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span> <span class="string">'rubygems'</span></span><br><span class="line"><span class="built_in">require</span> <span class="string">'bundler/setup'</span></span><br><span class="line"><span class="built_in">require</span> <span class="string">"sinatra/base"</span></span><br><span class="line"><span class="built_in">require</span> <span class="string">'exception_notification'</span></span><br><span class="line"># Time.currentを使えるようにする</span><br><span class="line"><span class="built_in">require</span> <span class="string">'active_support/core_ext/time'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> App &lt; Sinatra::Application</span><br><span class="line">  use ExceptionNotification::Rack,</span><br><span class="line">    :<span class="function"><span class="params">email</span> =&gt;</span> &#123;</span><br><span class="line">      :<span class="function"><span class="params">email_prefix</span> =&gt;</span> <span class="string">"[Exception] "</span>,</span><br><span class="line">      :<span class="function"><span class="params">sender_address</span> =&gt;</span> %&#123;<span class="string">"notifier"</span> &lt;notifier<span class="meta">@example</span>.com&gt;&#125;,</span><br><span class="line">      :<span class="function"><span class="params">exception_recipients</span> =&gt;</span> %w&#123;shoyan<span class="meta">@example</span>.com&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">get</span> <span class="string">'/'</span> <span class="keyword">do</span></span><br><span class="line">    begin</span><br><span class="line">      <span class="comment">// 何かの処理</span></span><br><span class="line">    rescue Exception =&gt; e</span><br><span class="line">      status <span class="number">500</span></span><br><span class="line">      ExceptionNotifier.notify_exception(e, env: env)</span><br><span class="line">      e.message</span><br><span class="line">    end</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-05-12T04:29:14.000Z" itemprop="datepublished">
             2016/05/12
           </time>
@@ -307,32 +335,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <li><a href="http://open-groove.net/linux/sshd-restart/" target="_blank" rel="noopener">http://open-groove.net/linux/sshd-restart/</a></li>
 <li><a href="https://www.howtoforge.com/community/threads/cannot-ssh-with-shell-user.52800/i" target="_blank" rel="noopener">https://www.howtoforge.com/community/threads/cannot-ssh-with-shell-user.52800/i</a></li>
 </ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-05-04T13:12:07.000Z" itemprop="datepublished">
-            2016/05/04
-          </time>
-          <time datetime="2016-05-04T13:12:07.000Z" itemprop="modified">
-            (更新日: 2016/05/04)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/05/04/introduce-studyplus/">勉強が楽しく続くようになるアプリ Studyplusのいいところ</a>
-        </h1>
-        <div class="content">
-          <p>Studyplusという勉強のSNSアプリを最近使い始めたのですが、よくできているので紹介したいと思います。</p>
-<p><a href="http://studyplus.jp/" target="_blank" rel="noopener">http://studyplus.jp/</a></p>
-<h2 id="Studyplusとは"><a href="#Studyplusとは" class="headerlink" title="Studyplusとは"></a>Studyplusとは</h2><p>勉強のSNSアプリです。<br>自分のした勉強の内容や時間を記録することができます。<br>また、他の人が書いたログを見ることができ、いいねをつけることができます。</p>
-<h2 id="Studyplusのいいところ"><a href="#Studyplusのいいところ" class="headerlink" title="Studyplusのいいところ"></a>Studyplusのいいところ</h2><h3 id="勉強したアプリや教材を登録できる"><a href="#勉強したアプリや教材を登録できる" class="headerlink" title="勉強したアプリや教材を登録できる"></a>勉強したアプリや教材を登録できる</h3><p>勉強したアプリや教材を登録できるのですが、種類が多く検索すればだいたい見つかります。</p>
-<h3 id="いいねでモチベーションアップ"><a href="#いいねでモチベーションアップ" class="headerlink" title="いいねでモチベーションアップ"></a>いいねでモチベーションアップ</h3><p>いいねがつくとモチベーションがあがります。<br>けっこういいねをしてくれる人がいて、ありがたいことです。</p>
-<h3 id="勉強時間を把握できる"><a href="#勉強時間を把握できる" class="headerlink" title="勉強時間を把握できる"></a>勉強時間を把握できる</h3><p>勉強時間を記録することができ、どの教材でどれくらい勉強したのかがグラフで表示されます。<br>1日の勉強時間、累計の勉強時間も記録されます。</p>
-<h3 id="ほかの人の勉強方法がわかる"><a href="#ほかの人の勉強方法がわかる" class="headerlink" title="ほかの人の勉強方法がわかる"></a>ほかの人の勉強方法がわかる</h3><p>ほかの人が勉強に使っている教材や勉強時間がわかります。  </p>
-<h2 id="とりあえず使ってみる"><a href="#とりあえず使ってみる" class="headerlink" title="とりあえず使ってみる"></a>とりあえず使ってみる</h2><p>インストールしたら、目標とアイコンを登録しましょう。<br>友達申請ができるので10人くらい申請しておきます。<br>そうするといいねをしてもらいやすくなるのでモチベーションを上げるのに役立ちます。</p>
-<p>僕はおもに英語の勉強のログを残すために使っています。<br>Studyplusを使うようになってから英語の勉強時間を把握できるようになりました。<br>勉強時間が少ないことがわかったので、もっと勉強しなければと意識しだしました。<br>おかげで勉強時間が増えました。</p>
 
         </div>
       </div>

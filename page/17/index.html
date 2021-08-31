@@ -146,6 +146,40 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-07-25T09:09:52.000Z" itemprop="datepublished">
+            2016/07/25
+          </time>
+          <time datetime="2016-07-25T09:09:52.000Z" itemprop="modified">
+            (更新日: 2016/07/25)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/07/25/introduce-to-git-find-committer/">Gitのコミッターを集計するGitFindCommitterをつくった</a>
+        </h1>
+        <div class="content">
+          <p>Gitのコミッターを集計する<a href="https://github.com/shoyan/git_find_committer" target="_blank" rel="noopener">GitFindCommitter</a>をつくったので紹介します。</p>
+<h2 id="GitFindCommitterとは"><a href="#GitFindCommitterとは" class="headerlink" title="GitFindCommitterとは"></a>GitFindCommitterとは</h2><p>GitFindCommitterとは変更されたファイルを対象としてコミッターを探すツールです。<br>名前の通り、Gitのコミット履歴からコミッターを探します。<br>例えば、fixブランチでhoge.rbとfuga.rbを修正したとします。<br>GitFindCommitterはhoge.rbとfugue.rbを対象にコミッターを探します。</p>
+<h2 id="なぜつくったのか"><a href="#なぜつくったのか" class="headerlink" title="なぜつくったのか"></a>なぜつくったのか</h2><p>チーム内でコードレビューを行っているのですが、なかなかレビューしてもらえないということが時々あります。<br>コードレビューの際に詳しいコミッターをレコメンドすればスムーズにレビューしてもらえるのではと考えました。<br>レビュアーのレコメンド機能はまだ作成中なのですが、そのモジュールの1つとしてGemに機能を切り出しました。</p>
+<h2 id="使い方"><a href="#使い方" class="headerlink" title="使い方"></a>使い方</h2><p>以下のコマンドでインストールします。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gem <span class="keyword">install</span> git_find_committer</span><br></pre></td></tr></table></figure>
+
+<p>searchメソッドにリポジトリとブランチを指定すると、関連するファイルのコミッターを探してきます。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">'git_find_committer'</span></span><br><span class="line"></span><br><span class="line">GitFindCommitter.search(<span class="symbol">repo:</span> <span class="string">'balloonbros/sutekki'</span>, <span class="symbol">branch:</span> <span class="string">'add-ui'</span>)</span><br><span class="line">=&gt; [&#123;<span class="symbol">:name=&gt;<span class="string">"Shohei Yamasaki"</span></span>, <span class="symbol">:commit_count=&gt;</span><span class="number">51</span>&#125;, &#123;<span class="symbol">:name=&gt;<span class="string">"keitakawamoto"</span></span>, <span class="symbol">:commit_count=&gt;</span><span class="number">21</span>&#125;]</span><br></pre></td></tr></table></figure>
+
+<p>GitHub Enterpriseにも対応しており、GitHub Enterpriseで利用する場合は、以下の設定が必要です。</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GitFindCommitter.configure <span class="built_in">do</span> |<span class="type">c</span>|<span class="type"></span></span><br><span class="line"><span class="type">  c</span>.url = <span class="string">"https://&lt;hostname&gt;"</span></span><br><span class="line">  c.access_token = <span class="string">"&lt;your 40 char token&gt;"</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="便利なTips"><a href="#便利なTips" class="headerlink" title="便利なTips"></a>便利なTips</h2><p>集計対象のコミッターをフィルターすることができます。</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GitFindCommitter.configure <span class="built_in">do</span> |<span class="type">c</span>|<span class="type"></span></span><br><span class="line"><span class="type">  c</span>.available_committer_names = %w(shoyan)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>名前のみ配列で取得します。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GitFindCommitter.search(re<span class="symbol">po:</span> 'balloonbros/sutekki', bran<span class="symbol">ch:</span> 'add-ui’).names(<span class="number">1</span>)</span><br><span class="line">=&gt; [<span class="string">"Shohei Yamasaki"</span>]</span><br></pre></td></tr></table></figure>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-07-22T05:12:06.000Z" itemprop="datepublished">
             2016/07/22
           </time>
@@ -289,80 +323,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">⇒  ruby autoload.rb</span><br><span class="line"><span class="keyword">Outer</span> loaded!</span><br><span class="line">#&lt;<span class="keyword">Outer</span>:<span class="number">0x007f9fd4054df0</span>&gt;</span><br><span class="line"><span class="keyword">Outer</span>::<span class="keyword">Inner</span> loaded!</span><br><span class="line">#&lt;<span class="keyword">Outer</span>::<span class="keyword">Inner</span>:<span class="number">0x007f9fd404f990</span>&gt;</span><br></pre></td></tr></table></figure>
 
 <h2 id="require-relative"><a href="#require-relative" class="headerlink" title="require_relative"></a>require_relative</h2><p>あまり見かけることがありませんが、<code>require_relative</code> というメソッドがRuby1.9.2から追加されています。<br>例えば<code>require</code>で同じ階層のファイルをロードする場合は、<code>require &#39;./filename&#39;</code> のように明示的に<code>./</code>を指定する必要があります。<br><code>require_relative</code>を使えば、<code>require_relative &#39;filename&#39;</code> のように定義することができます。</p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-07-15T05:05:31.000Z" itemprop="datepublished">
-            2016/07/15
-          </time>
-          <time datetime="2016-07-15T05:05:31.000Z" itemprop="modified">
-            (更新日: 2016/07/15)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/07/15/learn-iptables/">iptablesことはじめ</a>
-        </h1>
-        <div class="content">
-          <p>iptablesの概念と設定方法を調べました。</p>
-<h2 id="iptablesとは"><a href="#iptablesとは" class="headerlink" title="iptablesとは"></a>iptablesとは</h2><p>iptablesとはパケットをフィルタリングするためのツールです。<br>また、NATとしても使えます。</p>
-<h2 id="iptablesの用語"><a href="#iptablesの用語" class="headerlink" title="iptablesの用語"></a>iptablesの用語</h2><p>iptablesを理解するにあたって必要な用語をまとめました。</p>
-<h3 id="TARGETS"><a href="#TARGETS" class="headerlink" title="TARGETS"></a>TARGETS</h3><p>iptablesのルールを設定する際に、targetを指定します。<br>targetはユーザー定義のものと特別なtargetである、ACCEPT, DROP, QUEUE or RETURNがあります。<br>パケットに対してどんな操作をするかを定義します。</p>
-<p>代表的なtargetです。</p>
-<p>ACCEPT<br>パケットを通す<br>DROP<br>パケットを破棄する<br>QUEUE<br>パケットをキューにためる<br>RETURN<br>チェインを辿るのをストップして、評価を行う<br>REJECT<br>パケットを破棄し、エラーパケットを返す<br>DNAT<br>送信先IPアドレスを変更する<br>SNAT<br>送信元IPアドレスを変更する<br>MASQUERADE<br>複数の送信元IPアドレスを変更（マスカレード）する<br>LOG<br>ログを出力する</p>
-<h3 id="Chain"><a href="#Chain" class="headerlink" title="Chain"></a>Chain</h3><p>iptablesを設定する際にchainを指定します。<br>chainにはビルトインchainとユーザー定義chainがあります。<br>chainはパケットに対する実行条件を定義します。</p>
-<p>ビルトインchainは以下です。</p>
-<p>INPUT<br>FORWARD<br>OUTPUT<br>PREROUTING<br>POSTROUTING</p>
-<h3 id="TABLES"><a href="#TABLES" class="headerlink" title="TABLES"></a>TABLES</h3><p>一般的にはフィルタリングとして使われることが多いiptablesですが、他にも様々な機能があります。<br>iptablesにはそれをtableという概念で扱っており、5つのtableがあります。</p>
-<p><em>filter</em><br>パケットのフィルタリングを設定するためのテーブルです。<br>デフォルトのテーブルです。tableオプションを明示的に指定しない場合は、filterが指定されたことになります。<br>INPUT、FORWARD、OUTPUTのChainを含みます。</p>
-<p><em>nat</em><br>IPアドレスの変換を設定するためのテーブルです。<br>PREROUTING、POSTROUTING のChainを含みます。</p>
-<p><em>mangle</em><br>パケットの書き換えを設定するためのテーブルです。</p>
-<p><em>raw</em><br>接続の追跡の除外の設定をするためのテーブルです。</p>
-<p><em>security</em><br>アクセスコントロールの設定をするためのテーブルです。</p>
-<h2 id="OPTIONS"><a href="#OPTIONS" class="headerlink" title="OPTIONS"></a>OPTIONS</h2><p>iptablesのコマンドにオプションを指定できます。<br>オプションはいくつかのグループに区別されます。</p>
-<h3 id="COMMANDS"><a href="#COMMANDS" class="headerlink" title="COMMANDS"></a>COMMANDS</h3><p>iptablesに実行してほしいコマンドを指定します。<br>以下のようなコマンドがあります。</p>
-<p>-A, –append<br>選択したチェインにルールを追加します。</p>
-<p>-C, –check<br>指定したチェインにルールが存在するかをチェックします。</p>
-<p>-D, –delete<br>チェインからルールを消します。</p>
-<p>詳細はiptablesのmanをご覧ください。</p>
-<h3 id="PARAMETERS"><a href="#PARAMETERS" class="headerlink" title="PARAMETERS"></a>PARAMETERS</h3><p>ルールを作成する際に指定するパラメーターです。</p>
-<p>-p, –protocol<br>ルールの対象となるプロトコルを指定します。</p>
-<p>-j, –jump<br>ルールの対象となるtargetを指定します。</p>
-<p>-s, –source<br>ルールの対象となるアドレスを指定します。<br>例えば、IPアドレス、ホスト名、ネットワーク名などを指定します。</p>
-<p>詳細はiptablesのmanをご覧ください。</p>
-<h3 id="OTHER-OPTIONS"><a href="#OTHER-OPTIONS" class="headerlink" title="OTHER OPTIONS"></a>OTHER OPTIONS</h3><p>追加オプションです。</p>
-<p>-v, –verbose<br>詳細表示のオプションです。</p>
-<p>詳細はiptablesのmanを参照ください。</p>
-<h2 id="iptablesの基本的な構文"><a href="#iptablesの基本的な構文" class="headerlink" title="iptablesの基本的な構文"></a>iptablesの基本的な構文</h2><p>基本的には以下のように指定します。</p>
-<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables [-t <span class="keyword">table</span>] command <span class="comment">chain options target</span></span><br></pre></td></tr></table></figure>
-
-<p>例えば、ローカルホストからのping(icmp)を許可する場合は以下となります。</p>
-<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -p icmp -j <span class="keyword">ACCEPT</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="iptablesの基本的な読み方"><a href="#iptablesの基本的な読み方" class="headerlink" title="iptablesの基本的な読み方"></a>iptablesの基本的な読み方</h2><p>現在のiptablesの設定を表示するには、iptables -L コマンドを使います。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Example: Input Chain Rule Table Listing</span><br><span class="line">Chain INPUT (policy <span class="keyword">DROP</span>)</span><br><span class="line">target     prot opt <span class="keyword">source</span>               destination</span><br><span class="line"><span class="keyword">ACCEPT</span>     <span class="keyword">all</span>  <span class="comment">--  anywhere             anywhere             ctstate RELATED,ESTABLISHED</span></span><br><span class="line"><span class="keyword">ACCEPT</span>     <span class="keyword">all</span>  <span class="comment">--  anywhere             anywhere</span></span><br><span class="line"><span class="keyword">DROP</span>       <span class="keyword">all</span>  <span class="comment">--  anywhere             anywhere             ctstate INVALID</span></span><br><span class="line">UDP        udp  <span class="comment">--  anywhere             anywhere             ctstate NEW</span></span><br><span class="line">TCP        tcp  <span class="comment">--  anywhere             anywhere             tcp flags:FIN,SYN,RST,ACK/SYN ctstate NEW</span></span><br><span class="line">ICMP       icmp <span class="comment">--  anywhere             anywhere             ctstate NEW</span></span><br><span class="line"><span class="keyword">REJECT</span>     udp  <span class="comment">--  anywhere             anywhere             reject-with icmp-port-unreachable</span></span><br><span class="line"><span class="keyword">REJECT</span>     tcp  <span class="comment">--  anywhere             anywhere             reject-with tcp-reset</span></span><br><span class="line"><span class="keyword">REJECT</span>     <span class="keyword">all</span>  <span class="comment">--  anywhere             anywhere             reject-with icmp-proto-unreachable</span></span><br></pre></td></tr></table></figure>
-
-<p>1行目がChainの名前で、次にデフォルトポリシーが表示されています(DROP)。<br>2行目がカラム名です。</p>
-<p><em>target</em>: target名<br><em>prot</em>: プロトコル名。例えば、tcp, udp, icmp, or all<br><em>opt</em>: めったに使われません。<br><em>source</em>: 接続元のIPアドレス or サブネット or anywhere<br><em>destination</em>: 接続先のIPアドレス or サブネット or anywhere</p>
-<h2 id="iptablesコマンドの使い方"><a href="#iptablesコマンドの使い方" class="headerlink" title="iptablesコマンドの使い方"></a>iptablesコマンドの使い方</h2><p>いくつかの例を紹介します。</p>
-<h3 id="特定のサーバーからのhttp通信を許可する"><a href="#特定のサーバーからのhttp通信を許可する" class="headerlink" title="特定のサーバーからのhttp通信を許可する"></a>特定のサーバーからのhttp通信を許可する</h3><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># iptables -A INPUT -p tcp -s 192.168.1.1 --dport 80 -j ACCEPT</span></span><br><span class="line"><span class="meta"># 設定を保存</span></span><br><span class="line"><span class="meta"># service iptables save</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="ルールを消す"><a href="#ルールを消す" class="headerlink" title="ルールを消す"></a>ルールを消す</h3><p>iptables -D ルール で消すことができます。<br><code>iptables -S</code> でルール一覧がでるので、そのルールを指定すれば簡単です。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># iptables -S</span><br><span class="line">-A INPUT -s <span class="number">157.7</span><span class="number">.105</span><span class="number">.69</span>/<span class="number">32</span> -p tcp -m tcp --dport <span class="number">80</span> -j ACCEPT</span><br></pre></td></tr></table></figure>
-
-<p>以下のコマンドで消します。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -D INPUT -s <span class="number">157.7</span><span class="number">.105</span><span class="number">.69</span>/<span class="number">32</span> -p tcp -m tcp --dport <span class="number">80</span> -j ACCEPT</span><br></pre></td></tr></table></figure>
-
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
-<li><a href="http://linux.die.net/man/8/iptables" target="_blank" rel="noopener">Man page of IPTABLES</a></li>
-<li><a href="https://linuxjm.osdn.jp/html/iptables/man8/iptables.8.html" target="_blank" rel="noopener">日本語訳</a></li>
-<li><a href="http://qiita.com/kmikmy/items/d279b1b993661ba7dbe4" target="_blank" rel="noopener">iptablesの読み方覚え書き</a></li>
-<li><a href="http://murayama.hatenablog.com/entry/20100206/1265444193" target="_blank" rel="noopener">iptablesの設定 入門編</a></li>
-<li><a href="https://help.sakura.ad.jp/app/answers/detail/a_id/2423/~/iptables%E3%81%AE%E8%A8%AD%E5%AE%9A%E6%96%B9%E6%B3%95" target="_blank" rel="noopener">iptablesの設定方法</a></li>
-<li><a href="https://www.digitalocean.com/community/tutorials/how-to-list-and-delete-iptables-firewall-rules" target="_blank" rel="noopener">How To List and Delete Iptables Firewall Rules</a></li>
-</ul>
 
         </div>
       </div>
