@@ -182,7 +182,7 @@ $$ \Delta $$ | デルタ | \Delta
 
 - 数学初心者の私が数学の勉強会で登壇することに！
   - [プログラマのための数学勉強会@福岡に登壇してきました](/blog/2015/09/08/mathematics-for-programmer/)
-  - [プログラマのための数学勉強会@福岡#2に登壇してきました](/blog/2015/11/11/mathematics-for-programmer-second/)
+  - [プログラマのための数学勉強会@福岡#2に登壇してきました](/blog/2015/11/10/mathematics-for-programmer-second/)
 
 ## 参考リンク
 * [数式記号の読み方・表し方](http://izumi-math.jp/sanae/report/suusiki/suusiki.htm)
