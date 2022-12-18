@@ -12,7 +12,7 @@ math: true
 LATEXを使った数式記号の読み方・表し方をまとめました。
 [数式記号の読み方・表し方](http://izumi-math.jp/sanae/report/suusiki/suusiki.htm)の数式を実際にLATEXで表示しています。
 
-- 数学初心者の私が30歳で数学を学び直したときの経験を書きました。[30歳から始める数学](/blog/2015/12/01/mathematics-of-advent-calendar/)
+- 数学初心者の私が30歳で数学を学び直したときの経験を書きました。[30歳から始める数学](/blog/2015/11/30/mathematics-of-advent-calendar/)
 
 ## 1. 数と式
 
@@ -178,7 +178,7 @@ $$ \pi $$ | パイ | \pi
 $$ \Delta $$ | デルタ | \Delta
 
 ## 関連記事
-- 数学初心者の私が30歳で数学を学び直したときの経験を書きました。[30歳から始める数学](/blog/2015/12/01/mathematics-of-advent-calendar/)
+- 数学初心者の私が30歳で数学を学び直したときの経験を書きました。[30歳から始める数学](/blog/2015/11/30/mathematics-of-advent-calendar/)
 
 - 数学初心者の私が数学の勉強会で登壇することに！
   - [プログラマのための数学勉強会@福岡に登壇してきました](/blog/2015/09/08/mathematics-for-programmer/)
