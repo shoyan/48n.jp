@@ -2,7 +2,7 @@
 layout: post
 title: "LATEXチートシート - 数式記号の読み方・表し方"
 date: 2016-07-12 14:45:29
-updated: 2016-07-12 14:45:29
+updated: 2022-12-18 13:42:29
 comments: true
 tags: 数学
 description: "LATEXを使った数式記号の読み方・表し方をまとめました。"
@@ -11,6 +11,8 @@ math: true
 
 LATEXを使った数式記号の読み方・表し方をまとめました。
 [数式記号の読み方・表し方](http://izumi-math.jp/sanae/report/suusiki/suusiki.htm)の数式を実際にLATEXで表示しています。
+
+- 数学初心者の私が30歳で数学を学び直したときの経験を書きました。[30歳から始める数学](/blog/2015/12/01/mathematics-of-advent-calendar/)
 
 ## 1. 数と式
 
@@ -175,8 +177,15 @@ $$ \theta $$ | シータ | \theta
 $$ \pi $$ | パイ | \pi
 $$ \Delta $$ | デルタ | \Delta
 
-## 参考リンク
+## 関連記事
+- 数学初心者の私が30歳で数学を学び直したときの経験を書きました。[30歳から始める数学](/blog/2015/12/01/mathematics-of-advent-calendar/)
 
+- 数学初心者の私が数学の勉強会で登壇することに！
+  - [プログラマのための数学勉強会@福岡に登壇してきました](/blog/2015/09/08/mathematics-for-programmer/)
+  - [プログラマのための数学勉強会@福岡#2に登壇してきました](/blog/2015/11/11/mathematics-for-programmer-second/)
+
+## 参考リンク
 * [数式記号の読み方・表し方](http://izumi-math.jp/sanae/report/suusiki/suusiki.htm)
+
 
 <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
