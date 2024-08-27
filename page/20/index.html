@@ -146,119 +146,72 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2016-06-20T04:23:28.000Z" itemprop="datepublished">
-            2016/06/20
+          <time datetime="2016-06-09T05:04:17.000Z" itemprop="datepublished">
+            2016/06/09
           </time>
-          <time datetime="2016-06-20T04:23:28.000Z" itemprop="modified">
-            (更新日: 2016/06/20)
+          <time datetime="2016-06-09T05:04:17.000Z" itemprop="modified">
+            (更新日: 2016/06/09)
           </time>
         </div>
         <h1>
-        <a href="/blog/2016/06/20/sets-csv-encoding/">[Ruby]CSVファイルのエンコードをsjisに指定する</a>
+        <a href="/blog/2016/06/09/calculate-the-date-of-the-last-week-monday/">先週月曜日の日付を取得するアルゴリズム</a>
         </h1>
         <div class="content">
-          <p>日本語の場合、CSVのファイルエンコードをShift JISにする要件がけっこうあると思います。<br>RubyのCSVライブラリは、<code>encoding</code>というオプションが用意されており、<code>encoding: ’sjis’</code> のようにファイルエンコーディングを指定できます。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">'csv'</span></span><br><span class="line">CSV.open(<span class="string">"hoge.csv"</span>, <span class="string">"wb"</span>, <span class="symbol">encoding:</span> <span class="string">'sjis'</span>) <span class="keyword">do</span> <span class="params">|csv|</span></span><br><span class="line">  csv &lt;&lt; [<span class="string">"ID"</span>, <span class="string">"担当者"</span>, <span class="string">"メールアドレス"</span>]</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+          <h2 id="先週の月曜日を求めるアルゴリズム"><a href="#先週の月曜日を求めるアルゴリズム" class="headerlink" title="先週の月曜日を求めるアルゴリズム"></a>先週の月曜日を求めるアルゴリズム</h2><ul>
+<li>先週(7日前)が月曜日である場合はその日付を返す</li>
+<li>月曜日でない場合<ul>
+<li>月曜日より前であれば日付を1日たす</li>
+<li>月曜日より後であれば日付を1日ひく</li>
+</ul>
+</li>
+</ul>
+<h3 id="Rubyで実装"><a href="#Rubyで実装" class="headerlink" title="Rubyで実装"></a>Rubyで実装</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">last_monday</span><span class="params">(date = Date.today - <span class="number">7</span>)</span></span></span><br><span class="line">  <span class="keyword">return</span> date <span class="keyword">if</span> date.monday?</span><br><span class="line">  <span class="keyword">if</span> date.wday &lt; <span class="number">1</span></span><br><span class="line">    date += <span class="number">1</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    date -= <span class="number">1</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  last_monday(date)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
-<p>nkfコマンドを使ってファイルエンコーディングを確認します。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">⇒  <span class="selector-tag">nkf</span> <span class="selector-tag">-g</span> <span class="selector-tag">hoge</span><span class="selector-class">.csv</span></span><br><span class="line"><span class="selector-tag">Shift_JIS</span></span><br></pre></td></tr></table></figure>
+<h3 id="先週の金曜日を求める場合"><a href="#先週の金曜日を求める場合" class="headerlink" title="先週の金曜日を求める場合"></a>先週の金曜日を求める場合</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">last_friday</span><span class="params">(date = Date.today - <span class="number">7</span>)</span></span></span><br><span class="line">  <span class="keyword">return</span> date <span class="keyword">if</span> date.friday?</span><br><span class="line">  <span class="keyword">if</span> date.wday &lt; <span class="number">5</span></span><br><span class="line">    date += <span class="number">1</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    date -= <span class="number">1</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  last_friday(date)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
-<p>Shift_JISで作成されていることが確認できました。</p>
+<h2 id="次の月曜日の日付を求めるアルゴリズム"><a href="#次の月曜日の日付を求めるアルゴリズム" class="headerlink" title="次の月曜日の日付を求めるアルゴリズム"></a>次の月曜日の日付を求めるアルゴリズム</h2><ul>
+<li>明日が月曜日かどうか<ul>
+<li>月曜日であればその日を返す</li>
+<li>月曜日でなければ1日たす</li>
+</ul>
+</li>
+</ul>
+<h3 id="Rubyで実装-1"><a href="#Rubyで実装-1" class="headerlink" title="Rubyで実装"></a>Rubyで実装</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">next_monday</span><span class="params">(date = Date.today + <span class="number">1</span>)</span></span></span><br><span class="line">  <span class="keyword">return</span> date <span class="keyword">if</span> date.monday?</span><br><span class="line">  next_monday(date + <span class="number">1</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="前回の月曜日の日付を求めるアルゴリズム"><a href="#前回の月曜日の日付を求めるアルゴリズム" class="headerlink" title="前回の月曜日の日付を求めるアルゴリズム"></a>前回の月曜日の日付を求めるアルゴリズム</h2><ul>
+<li>昨日が月曜日かどうか<ul>
+<li>月曜日であればその日を返す</li>
+<li>月曜日でなければ1日ひく</li>
+</ul>
+</li>
+</ul>
+<h3 id="Rubyで実装-2"><a href="#Rubyで実装-2" class="headerlink" title="Rubyで実装"></a>Rubyで実装</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">prev_monday</span><span class="params">(date = Date.today - <span class="number">1</span>)</span></span></span><br><span class="line">  <span class="keyword">return</span> date <span class="keyword">if</span> date.monday?</span><br><span class="line">  prev_monday(date - <span class="number">1</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="実行結果"><a href="#実行結果" class="headerlink" title="実行結果"></a>実行結果</h3><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">puts Date.today.strftime(<span class="string">"%Y-%m-%d (%a)"</span>)</span><br><span class="line">=&gt; <span class="number">2016</span>-<span class="number">06</span>-<span class="number">09</span> (Thu)</span><br><span class="line">puts prev_monday.strftime(<span class="string">"%Y-%m-%d (%a)"</span>)</span><br><span class="line">=&gt; <span class="number">2016</span>-<span class="number">06</span>-<span class="number">06</span> (Mon)</span><br><span class="line">puts next_monday.strftime(<span class="string">"%Y-%m-%d (%a)"</span>)</span><br><span class="line">=&gt; <span class="number">2016</span>-<span class="number">06</span>-<span class="number">13</span> (Mon)</span><br><span class="line">puts last_monday.strftime(<span class="string">"%Y-%m-%d (%a)"</span>)</span><br><span class="line">=&gt; <span class="number">2016</span>-<span class="number">05</span>-<span class="number">30</span> (Mon)</span><br><span class="line">puts last_friday.strftime(<span class="string">"%Y-%m-%d (%a)"</span>)</span><br><span class="line">=&gt; <span class="number">2016</span>-<span class="number">06</span>-<span class="number">03</span> (Fri)</span><br></pre></td></tr></table></figure>
 
         </div>
       </div>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2016-06-17T06:21:34.000Z" itemprop="datepublished">
-            2016/06/17
+          <time datetime="2016-06-08T09:41:16.000Z" itemprop="datepublished">
+            2016/06/08
           </time>
-          <time datetime="2016-06-17T06:21:34.000Z" itemprop="modified">
-            (更新日: 2016/06/17)
+          <time datetime="2016-06-08T09:41:16.000Z" itemprop="modified">
+            (更新日: 2016/06/08)
           </time>
         </div>
         <h1>
-        <a href="/blog/2016/06/17/learn-ftp/">FTPについて調べてみた</a>
+        <a href="/blog/2016/06/08/testing-attachment-for-action-mailer/">ActionMailerの添付ファイルをRspecでテストする</a>
         </h1>
         <div class="content">
-          <p>FTPはすでにご存知のかたも多いと思います。<br>自分はFTPについて、「ファイル転送に使われるプロトコルであり、セキュリティが脆弱である」というくらいしか理解していなかったので詳細を把握するために調べました。</p>
-<h2 id="FTPとは"><a href="#FTPとは" class="headerlink" title="FTPとは"></a>FTPとは</h2><p>FTPとはインターネットの初期の頃から存在するプロトコルで、今でもインターネットでよく使われています。<br>用途としては、以下に使われます。</p>
-<ul>
-<li>ウェブページの各種ファイル(HTMLや画像)をクライアントのPCからサーバーへアップロードする</li>
-<li>ソフトウェアの配布サイトやFTPファイルサーバーからクライアントPCへダウンロードする</li>
-</ul>
-<p>FTPを利用するにはユーザー名とパスワードが必要です。<br>ソフトを配布するための目的で使う匿名でアクセスできるAnonymous(匿名)FTPサーバーもあります。<br>しかし、形式上ユーザー名とパスワードは必要なので、ユーザー名にanonymousやftpを使います。パスワードは何でもよいですが、慣習としてメールアドレスを入力するようです。</p>
-<h2 id="プロトコルの概要"><a href="#プロトコルの概要" class="headerlink" title="プロトコルの概要"></a>プロトコルの概要</h2><p>FTPのプロトコルは<a href="https://tools.ietf.org/html/rfc959" target="_blank" rel="noopener">RFC959</a>に定義してあります。<br>RFC959が書かれたのが1985年なのでおよそ30年前に作られたプロトコルです。</p>
-<p>FTPは大きくわけると、コネクションの確立とデータ転送にわけることができます。<br>そして、使うポートも2つが用意してあります。</p>
-<ul>
-<li>20: データ転送ポート</li>
-<li>21: コントロールポート</li>
-</ul>
-<p>20番がデータを転送するときに使うポートで、21番は認証などの接続に使うためのポートです。</p>
-<h3 id="コネクションの確立"><a href="#コネクションの確立" class="headerlink" title="コネクションの確立"></a>コネクションの確立</h3><p>FTPは <code>アクティブモード</code> か <code>パッシブモード</code> のいずれかで動作し、サーバーとの接続をする際にどちらかを選択します。</p>
-<h3 id="アクティブモードの場合"><a href="#アクティブモードの場合" class="headerlink" title="アクティブモードの場合"></a>アクティブモードの場合</h3><p>アクティブモードの場合、クライアントはデータ転送用のポートを用意しPORTコマンドを使って待ち受けポートをサーバーに伝えます。<br>サーバーはPORTコマンドを受け取ると、そのポートに対して接続を行います。<br>しかし、Firewallがある環境の場合、サーバーからの接続が拒否されうまくいかない場合があります。<br>その際はパッシブモードを使います。</p>
-<h3 id="パッシブモード"><a href="#パッシブモード" class="headerlink" title="パッシブモード"></a>パッシブモード</h3><p>パッシブモードでは、まず最初にクライアントがPASVというコマンドを使いサーバーに送信します。<br>そのコマンドを受け取ったサーバーは自身のIPアドレスとポート番号をクライアントに送信します。<br>クライアントは受け取ったIPアドレスとポート番号へコネクションを確立しにいきます。  </p>
-<p>アクティブモードはサーバーより接続を行う、パッシブモードはクライアントより接続を行うという違いがあります。<br>ちなみに、FTPはよく使われるプロトコルのため、PORTコマンドがFirewallを通過する際にPORTコマンドに書かれたPORTは通過できるようにしてくれるFirewallもあるとのことです。</p>
-<h2 id="データ転送"><a href="#データ転送" class="headerlink" title="データ転送"></a>データ転送</h2><p>接続ができたら、次はデータ転送を行います。<br>FTPにはデータタイプという考え方があって、現在は2つのモードが使われています。</p>
-<h3 id="アスキーモード"><a href="#アスキーモード" class="headerlink" title="アスキーモード"></a>アスキーモード</h3><p>アスキーモードは、必要であればデータを変換します。<br>例えば異なるOS間でファイルを送ると改行コードが違ったりする場合があると思いますが、アスキーモードはファイルを受け取るホストに適した改行コードにファイルを変換します。</p>
-<h3 id="Imageモード-バイナリモード"><a href="#Imageモード-バイナリモード" class="headerlink" title="Imageモード(バイナリモード)"></a>Imageモード(バイナリモード)</h3><p>Imageモードは一般的にバイナリモードと呼ばれます。<br>バイト単位でデータを転送します。<br>アスキーモードのようにデータの変換は行われません。</p>
-<p>データの転送モードには、以下の3つのモードがあります。</p>
-<ul>
-<li>ストリームモード</li>
-<li>ブロックモード</li>
-<li>圧縮モード</li>
-</ul>
-<h3 id="ストリームモード"><a href="#ストリームモード" class="headerlink" title="ストリームモード"></a>ストリームモード</h3><p>データをそのまま転送するモードです。</p>
-<h3 id="ブロックモード"><a href="#ブロックモード" class="headerlink" title="ブロックモード"></a>ブロックモード</h3><p>データをブロックに分割して転送するモードです。</p>
-<h3 id="圧縮モード"><a href="#圧縮モード" class="headerlink" title="圧縮モード"></a>圧縮モード</h3><p>ランレングスエンコーディングを使ってデータを圧縮して転送するモードです。</p>
-<h2 id="セキュリティ上の問題"><a href="#セキュリティ上の問題" class="headerlink" title="セキュリティ上の問題"></a>セキュリティ上の問題</h2><p>FTPはセキュアなプロトコルとして設計されていません。<br>ユーザー名やパスワードを暗号化せずに送信する問題のほかにも数多くのセキュリティ脆弱性があげられています。</p>
-<ul>
-<li>総当たり攻撃</li>
-<li>en:FTP bounce attack</li>
-<li>パケットキャプチャ (sniffing)</li>
-<li>Port stealing</li>
-<li>en:Spoofing attack</li>
-<li>ユーザ名保護</li>
-</ul>
-<p>また、通信内容を暗号化できないので通信経路上でパケットキャプチャすることで盗聴することができてしまいます。<br>セキュアにする一般的な方法として、SSL/TLSセッション上で通信を行うようにします。<br>これをFTPSと言います。<br>また、SSHを介してファイル転送を行うSFTP、SCPを使います。  </p>
-<p>ちなみにFTPSとSFTPの違いは以下のようになります。</p>
-<ul>
-<li>FTPS : FTPの通信をSSL/TLSで暗号化 → FTPの拡張</li>
-<li>SFTP : SSHの通信を使って、FTPを行う → SSHで動作するアプリケーション</li>
-</ul>
-<p>理解を深めるためにtelnetを使って実際にFTPサーバーと通信してみます。  </p>
-<h2 id="実際にFTPを試してみる"><a href="#実際にFTPを試してみる" class="headerlink" title="実際にFTPを試してみる"></a>実際にFTPを試してみる</h2><p>実際にFTPを試してみる場合、FTPサーバーが必要です。<br><a href="https://lolipop.jp" target="_blank" rel="noopener">ロリポップ！レンタルサーバー</a>を使えば無料でFTPサーバーが利用できます。</p>
-<p>ちなみにtelnetでファイルの送受信はできません。<br>というのも、telnetでは1つのポートを使った通信しかサポートしていないからです。<br>FTPはデータ転送用のポートと制御用のポートの2つを利用するため、telnetでは認証しか行えません。  </p>
-<p>まずは、telnetで認証をやってみます(localhostにftpサーバーが起動しているという前提です)。  </p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ telnet localhost 21</span><br><span class="line">Trying 127.0.0.1<span class="built_in">..</span>.</span><br><span class="line">Connected <span class="keyword">to</span> localhost.</span><br><span class="line">Escape character is <span class="string">'^]'</span>.</span><br><span class="line">220 FTP<span class="built_in"> server </span>ready.</span><br></pre></td></tr></table></figure>
+          <p>ActionMailerで添付ファイルを送るようにしたのですが、そのテストをするときの情報があまりなかったのでまとめました。</p>
+<p>以下のようにテストしました。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">RSpec.describe AppMailer, <span class="symbol">type:</span> <span class="symbol">:mailer</span> <span class="keyword">do</span></span><br><span class="line"></span><br><span class="line">  before(<span class="symbol">:all</span>) <span class="keyword">do</span></span><br><span class="line">    Archive::Zip.archive(</span><br><span class="line">      <span class="string">"tmp/app.zip"</span>,</span><br><span class="line">      <span class="string">"README.md"</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  after(<span class="symbol">:all</span>) <span class="keyword">do</span></span><br><span class="line">    FileUtils.rm <span class="string">"tmp/app.zip"</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  let(<span class="symbol">:mail</span>) <span class="keyword">do</span></span><br><span class="line">    AppMailer.send_email(zip_path)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  it <span class="string">'assings the attachment file'</span> <span class="keyword">do</span></span><br><span class="line">    attachment = mail.attachments[<span class="number">0</span>]</span><br><span class="line">    expect(attachment).to be_a_kind_of(Mail::Part)</span><br><span class="line">    expect(attachment.content_type).to be_start_with(<span class="string">'application/zip'</span>)</span><br><span class="line">    expect(attachment.filename).to eq <span class="string">"app.zip"</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
-<p>まず、ユーザ名を入力します。</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">USER</span> <span class="title">ftp</span></span><br><span class="line"><span class="number">331</span> Password required for example.com</span><br></pre></td></tr></table></figure>
-
-<p>次に、パスワードを入力します。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PASS 123</span><br><span class="line">230<span class="built_in"> User </span>example.com logged <span class="keyword">in</span>.</span><br></pre></td></tr></table></figure>
-
-<p>telnetでは他に何もできませんのでQUITします。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">QUIT</span><br><span class="line">221 Goodbye.</span><br><span class="line">Connection closed by foreign host.</span><br></pre></td></tr></table></figure>
-
-<h3 id="FTPでファイルの送受信を行う"><a href="#FTPでファイルの送受信を行う" class="headerlink" title="FTPでファイルの送受信を行う"></a>FTPでファイルの送受信を行う</h3><p>FTPでファイルの送受信を行うには、ftpコマンドを使います。<br><code>-d</code> オプションはデバッグモードです。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ftp -d localhost <span class="number">21</span></span><br></pre></td></tr></table></figure>
-
-<p>ユーザー名とパスワードを聞かれるので入力します。</p>
-<p><code>ls</code>でファイルの一覧をみることができます。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ftp&gt; ls</span><br><span class="line">---&gt; EPSV</span><br><span class="line"><span class="number">229</span> Entering Extended Passive Mode (|||<span class="number">65086</span>|)</span><br><span class="line"><span class="number">229</span> Entering Extended Passive Mode (|||<span class="number">65086</span>|)</span><br><span class="line">---&gt; LIST</span><br><span class="line"><span class="number">150</span> Opening ASCII mode data connection <span class="keyword">for</span> file list</span><br><span class="line">drwx---r-x   <span class="number">6</span> shoyan shoyan      <span class="number">4096</span> Jun <span class="number">17</span> <span class="number">11</span>:<span class="number">31</span> .</span><br><span class="line">drwx---r-x   <span class="number">6</span> shoyan shoyan     <span class="number">4096</span> Jun <span class="number">17</span> <span class="number">11</span>:<span class="number">31</span> ..</span><br><span class="line">-rw-r--r--   <span class="number">1</span> shoyan shoyan     <span class="number">3096</span> Jun <span class="number">17</span> <span class="number">11</span>:<span class="number">30</span> index.html</span><br><span class="line"><span class="number">226</span> Transfer complete</span><br></pre></td></tr></table></figure>
-
-<p><code>get</code>コマンドでファイルをダウンロードできます。</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">ftp&gt; get index.html</span><br><span class="line">local: index.html remote: index.html</span><br><span class="line">---&gt; SIZE index.html</span><br><span class="line">213 3096</span><br><span class="line">---&gt; EPSV</span><br><span class="line">229 Entering Extended Passive Mode (|||65011|)</span><br><span class="line">229 Entering Extended Passive Mode (|||65011|)</span><br><span class="line">---&gt; RETR index.html</span><br><span class="line">150 Opening BINARY mode data connection for index.html (3096 bytes)</span><br><span class="line">100% |<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span>**|  3096        4.61 MiB/s    00:00 ETA</span><br><span class="line">226 Transfer complete</span><br><span class="line">3096 bytes received in 00:00 (163.72 KiB/s)</span><br><span class="line">---&gt; MDTM index.html</span><br><span class="line">213 20160617023028</span><br><span class="line">parsed date `20160617023028' as 1466130628, Fri, 17 Jun 2016 11:30:28</span><br></pre></td></tr></table></figure>
-
-<p>参考リンク</p>
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/File_Transfer_Protocol" target="_blank" rel="noopener">File Transfer Protocol</a></li>
-<li><a href="https://ja.wikipedia.org/wiki/File_Transfer_Protocol" target="_blank" rel="noopener">File Transfer Protocol(日本語)</a></li>
-<li><a href="http://www5e.biglobe.ne.jp/%257eaji/3min/56.html" target="_blank" rel="noopener">3 Minutes Networking No.56</a></li>
-<li><a href="http://ash.jp/net/ftp_command.htm" target="_blank" rel="noopener">telnetでファイル転送？(FTP)</a></li>
-<li><a href="http://ash.jp/net/telnet_ftp.htm" target="_blank" rel="noopener">FTPコマンドでファイル転送</a></li>
-<li><a href="http://qiita.com/kasei-san/items/bf766e6c2ececa4c3905" target="_blank" rel="noopener">FTPS、SFTPの違いって?</a></li>
+<p>まず、before(:all)でテストに使うzipファイルを作成します。<br>zipファイルは<a href="https://github.com/javanthropus/archive-zip" target="_blank" rel="noopener">archive-zip</a>を使って作成しています。<br>アーカイブするファイルは何でもよいですが、この記事ではREADME.mdとしています。<br>テストで作成したzipファイルはafter(:all)で消しています。<br>mail.attachments[0]に添付ファイルが入っているので、その種類やファイル名を確認しています。</p>
+<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
+<li><a href="http://stackoverflow.com/questions/14286179/rails-how-to-test-that-actionmailer-sent-a-specific-attachment" target="_blank" rel="noopener">rails-how-to-test-that-actionmailer-sent-a-specific-attachment</a></li>
 </ul>
 
         </div>
@@ -266,68 +219,48 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2016-06-16T04:46:56.000Z" itemprop="datepublished">
-            2016/06/16
+          <time datetime="2016-06-06T10:33:59.000Z" itemprop="datepublished">
+            2016/06/06
           </time>
-          <time datetime="2016-06-16T04:46:56.000Z" itemprop="modified">
-            (更新日: 2016/06/16)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/06/16/check-file-encoding/">Rubyでファイルエンコーディングを確認する</a>
-        </h1>
-        <div class="content">
-          <p>Rubyでファイルエンコーディングを確認するにはNKFモジュールを使って確認します。</p>
-<p><a href="http://docs.ruby-lang.org/ja/2.3.0/class/NKF.html" target="_blank" rel="noopener">http://docs.ruby-lang.org/ja/2.3.0/class/NKF.html</a></p>
-<p>NKFモジュールとは、nkf(Network Kanji code conversion Filter, <a href="http://sourceforge.jp/projects/nkf/" target="_blank" rel="noopener">http://sourceforge.jp/projects/nkf/</a>) をRubyから使うためのモジュールです。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">'nkf'</span></span><br><span class="line"></span><br><span class="line">content = File.read(<span class="string">"path/to/file.txt"</span>)</span><br><span class="line">NKF.guess(content).to_s</span><br><span class="line">=&gt; <span class="string">"Shift_JIS"</span></span><br></pre></td></tr></table></figure>
-
-<p>このような感じでrspecでテストするときにも使えます。</p>
-<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span> <span class="string">'nkf'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">it</span> <span class="string">'file encoding is Shift_JIS'</span> <span class="built_in">do</span></span><br><span class="line"> content = File.<span class="built_in">read</span>(<span class="string">"filename.csv"</span>)</span><br><span class="line"> expect(NKF.guess(content).to_s).<span class="built_in">to</span> eq <span class="string">'Shift_JIS'</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-06-15T04:42:55.000Z" itemprop="datepublished">
-            2016/06/15
-          </time>
-          <time datetime="2016-06-15T04:42:55.000Z" itemprop="modified">
-            (更新日: 2016/06/15)
+          <time datetime="2016-06-06T10:33:59.000Z" itemprop="modified">
+            (更新日: 2016/06/06)
           </time>
         </div>
         <h1>
-        <a href="/blog/2016/06/15/whenever-cannot-load-such-file/">capistrano/wheneverで cannot load such fileがでる</a>
+        <a href="/blog/2016/06/06/guide-tcpwrappers/">TCPWrappersとは何なのかを調べてみた</a>
         </h1>
         <div class="content">
-          <p>wheneverを導入するため<code>Capfile</code>に <code>require &quot;whenever/capistrano&quot;</code>と定義して <code>bundle exec cap -T</code> とすると以下のエラーがでた。</p>
-<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">LoadError:</span> cannot load such file -- /Users<span class="meta-keyword">/shoyan/</span>app<span class="meta-keyword">/vendor/</span>bundle<span class="meta-keyword">/ruby/</span><span class="number">2.2</span><span class="number">.0</span><span class="meta-keyword">/gems/</span>whenever<span class="number">-0.9</span><span class="number">.5</span><span class="meta-keyword">/lib/</span>whenever<span class="meta-keyword">/tasks/</span>whenever.rake</span><br></pre></td></tr></table></figure>
-
-<p>実際に<code>vendor/bundle/ruby/2.2.0/gems/whenever-0.9.5/lib/whenever/tasks/whenever.rake</code> を確認してみると、たしかにそのファイルが存在しない。</p>
-<p>wheneverのリポジトリを見てみると、シンボリックリンクがはってあった。  </p>
-<p><code>bundle install</code> したときにはシンボリックリンクがはられないようだ。</p>
-<p>手元のRubyのバージョンは、2.2.4だった。</p>
-<p>ruby2.3.1で実行してみると <code>Gem::Package::PathError</code> が発生した。</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR:  <span class="keyword">While</span> executing gem ... (Gem::<span class="keyword">Package</span>::PathError)</span><br><span class="line">    installing <span class="keyword">into</span> parent path <span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/g</span>ems<span class="regexp">/2.3.0/g</span>ems<span class="regexp">/capistrano/</span>v3<span class="regexp">/tasks/</span>whenever.rake of <span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/g</span>ems<span class="regexp">/2.3.0/g</span>ems<span class="regexp">/whenever-0.9.5 is not allowed</span></span><br></pre></td></tr></table></figure>
-
-<p>このエラーはRuby2.3.2では直っていることが期待される。</p>
+          <p>sshのハンドシェイクでこけてしまい、その原因がわからずハマりました。<br>原因としては、TCPWrappersで拒否されていました。<br>TCPWrappersとはなんだろうということで調べてみました。</p>
+<h2 id="TCPWrappersとは"><a href="#TCPWrappersとは" class="headerlink" title="TCPWrappersとは"></a>TCPWrappersとは</h2><p>TCPWrapperとは、ネットワークのアクセス制御をする機能です。<br>デフォルトでインストールされています。</p>
+<h2 id="Linuxの基本的なアクセス制御の仕組み"><a href="#Linuxの基本的なアクセス制御の仕組み" class="headerlink" title="Linuxの基本的なアクセス制御の仕組み"></a>Linuxの基本的なアクセス制御の仕組み</h2><p><img src="https://www.centos.org/docs/5/html/Deployment_Guide-en-US/images/tcp-wrappers/tcp_wrap_diagram.png" alt="Access Control to Network Services"></p>
+<p>アクセス制御の仕組みとして、FirewallとTCP Wrappersがあります。<br>Firewallはiptablesで制御します。<br>なぜ2つの仕組みが存在するのかはわかりません（誰か教えてください）。</p>
+<p>クライアント→Firewall→TCPWrappers→サービスという流れで処理を行います。<br>TCPWrappersは接続を許可するかどうかのファイルを参照し、許可リストにあればサービスに処理を受け渡します。</p>
+<p>処理のログはsyslog daemon (syslogd)によってクライアントと接続先サービスの情報を <code>/var/log/secure</code> または <code>/var/log/messages</code> に書き込まれます。</p>
+<h2 id="TCPWrappersのアドバンテージ"><a href="#TCPWrappersのアドバンテージ" class="headerlink" title="TCPWrappersのアドバンテージ"></a>TCPWrappersのアドバンテージ</h2><p>TCPWrappersを使うことで、以下のメリットがあるとのこと。</p>
 <ul>
-<li><a href="https://github.com/rubygems/rubygems/issues/1448#issuecomment-218355005" target="_blank" rel="noopener">https://github.com/rubygems/rubygems/issues/1448#issuecomment-218355005</a></li>
+<li>接続したクライアントとそのサービスがログに残る</li>
+<li>様々なプロトコルを集約して管理できる</li>
 </ul>
-<h2 id="回避策"><a href="#回避策" class="headerlink" title="回避策"></a>回避策</h2><p>Capfileでの指定はやめて、<code>lib/capistrano/tasks</code> 以下にwhenever.taskを作成した。<br>これでcapのタスク自体は実行できるようになった。<br>しかし、ruby2.3.1の環境ではbundle installがこけるのでwheneverの導入自体ができないという状況。</p>
-<h2 id="その後"><a href="#その後" class="headerlink" title="その後"></a>その後</h2><p>bundle installがこけるバグは以下のPRがでており0.9.6で修正されていた。</p>
+<p>##TCPWrappersの設定ファイル</p>
+<p>以下の2つのファイルがあります。</p>
 <ul>
-<li><a href="https://github.com/javan/whenever/pull/633" target="_blank" rel="noopener">https://github.com/javan/whenever/pull/633</a></li>
+<li>/etc/hosts.allow</li>
+<li>/etc/hosts.deny</li>
 </ul>
-<p>また、0.9.5では <code>cap whenever:update_crontab</code> で <code>instance variable @_env not defined</code> が発生してコマンドが正常に実行できないバグがあったが、0.9.7で修正されている。</p>
+<p>TCPWrappersはクライアントからのリクエストを受けると、以下の処理を行います。</p>
 <ul>
-<li><a href="https://github.com/javan/whenever/issues/634" target="_blank" rel="noopener">https://github.com/javan/whenever/issues/634</a></li>
+<li><code>/etc/hosts.allow</code> を参照します。クライアントがリストに存在した場合、接続を許可します。リストに存在しない場合は次のステップに進みます。</li>
+<li><code>/etc/hosts.deny</code>を参照します。クライアントがリストに存在した場合、接続を拒否します。リストにない場合は接続を許可します。</li>
 </ul>
-<p>実はこのバグは自分が踏んでおり、その修正案をPRしてCHANGELOGに名前が刻まれた。</p>
-<ul>
-<li><a href="https://github.com/javan/whenever/pull/636" target="_blank" rel="noopener">https://github.com/javan/whenever/pull/636</a></li>
-<li><a href="https://github.com/javan/whenever/commit/5aa0ccfa53e87bda43e92da005d781a4b5a8d5a5" target="_blank" rel="noopener">https://github.com/javan/whenever/commit/5aa0ccfa53e87bda43e92da005d781a4b5a8d5a5</a></li>
+<h3 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h3><ul>
+<li><code>/etc/hosts.allow</code>から先に評価され、そこでリストに一致した場合<code>/etc/hosts.deny</code>は評価されません。<code>/etc/hosts.allow</code>と<code>/etc/hosts.deny</code>に同じクライアントを指定した場合は<code>/etc/hosts.allow</code>が優先されます。</li>
+<li>ファイルの上から評価されていき、一致した時点で評価を打ち切ります。順番が重要です。</li>
+<li>TCPWrappersはキャッシュを持ちません。ですので、設定ファイルを書き換えたら即反映されます。デーモンをリスタートする必要はありません。</li>
+<li>最後に改行を含めるとエラーメッセージが出るとのことなので、含めないほうがよさそうです。<code>warning: /etc/hosts.allow, line 20: missing newline or line too long</code>というメッセージが <code>/var/log/messages</code> または <code>/var/log/secure</code>に出力されるとのことです。</li>
+</ul>
+<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
+<li><a href="http://lpi.or.jp/column/linux/linux_m06.shtml" target="_blank" rel="noopener">【第6回】TCPWrappers(hosts.allow,hosts.deny)とSSHの公開鍵認証について</a></li>
+<li><a href="https://www.centos.org/docs/5/html/Deployment_Guide-en-US/ch-tcpwrappers.html" target="_blank" rel="noopener">42.5. TCP Wrappers and xinetd</a></li>
 </ul>
 
         </div>
@@ -335,57 +268,73 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2016-06-14T04:34:48.000Z" itemprop="datepublished">
-            2016/06/14
+          <time datetime="2016-06-03T08:45:45.000Z" itemprop="datepublished">
+            2016/06/03
           </time>
-          <time datetime="2016-06-14T04:34:48.000Z" itemprop="modified">
-            (更新日: 2016/06/14)
+          <time datetime="2016-06-03T08:45:45.000Z" itemprop="modified">
+            (更新日: 2016/06/03)
           </time>
         </div>
         <h1>
-        <a href="/blog/2016/06/14/learn-ssh-kit/">SSHKitを実際に使ってみて理解する</a>
+        <a href="/blog/2016/06/03/cross-site-scripting-aka-xss/">クロスサイトスクリプティングの脆弱性とその対策</a>
         </h1>
         <div class="content">
-          <p>Capistrano/sshkitを紹介します。<br><a href="https://github.com/capistrano/sshkit" target="_blank" rel="noopener">https://github.com/capistrano/sshkit</a></p>
-<p>SSHKitはリモートサーバーに対してコマンドを実行するためのツールキットです。<br>CapistranoやCapistranoプラグインではSSHKitが使われています。</p>
-<h2 id="インストール"><a href="#インストール" class="headerlink" title="インストール"></a>インストール</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem <span class="keyword">install</span> sshkit</span><br></pre></td></tr></table></figure>
+          <p>クロスサイトスクリプティングはユーザーの入力を受け付ける動的なアプリケーションに含まれる脆弱性を利用した攻撃です。<br>英語ではCross Site Scriptingと呼ばれその頭文字をとるとCSSとなりますが、「Cascading Style Sheets」との区別が紛らわしいため一般的にXSSの表記が使われています。</p>
+<h2 id="クロスサイトスクリプティングとはどのような脆弱性であるのか"><a href="#クロスサイトスクリプティングとはどのような脆弱性であるのか" class="headerlink" title="クロスサイトスクリプティングとはどのような脆弱性であるのか"></a>クロスサイトスクリプティングとはどのような脆弱性であるのか</h2><p>XSSとは動的なWebサイトのプログラムの脆弱性を利用した攻撃です。<br>この脆弱性を利用することで、攻撃者は悪意のあるJavaScriptコードをサイトに埋め込み、そのコードを実行することができるようになります。</p>
+<p>例えば、XSSの脆弱性がある掲示板があったとします。<br>攻撃者はフィッシングサイトにページを遷移させるJavaScriptコードを投稿しました。<br>すると、他の利用者がこの掲示板を閲覧したときにそのJavaScriptコードが実行され、フィッシングサイトが表示されるようになります。</p>
+<h2 id="この脆弱性を持ったサイトが攻撃されるとどのような被害が起き得るのか"><a href="#この脆弱性を持ったサイトが攻撃されるとどのような被害が起き得るのか" class="headerlink" title="この脆弱性を持ったサイトが攻撃されるとどのような被害が起き得るのか"></a>この脆弱性を持ったサイトが攻撃されるとどのような被害が起き得るのか</h2><p>上記の例のようにXSSはWebサイトの利用者を攻撃の対象とします。</p>
+<p>例えば、以下のような被害が出る可能性があります。</p>
+<ul>
+<li>ユーザーのcookie情報を盗み、その情報を利用してそのユーザーでログインする</li>
+<li>不正なページへユーザーを誘導する</li>
+<li>不正なファイルをダウンロードさせる</li>
+</ul>
+<p>Webサイトを直接攻撃することも可能です。<br>JavaScriptのhtmlを書き換える機能を使って、攻撃対象のサイトの内容を書き換えることができてしまいます。</p>
+<h2 id="なぜそのようなセキュリティホールが作り込まれてしまうのか"><a href="#なぜそのようなセキュリティホールが作り込まれてしまうのか" class="headerlink" title="なぜそのようなセキュリティホールが作り込まれてしまうのか"></a>なぜそのようなセキュリティホールが作り込まれてしまうのか</h2><p>HTMLには特殊文字が存在します。<br>具体的には「’”&lt;&gt;&amp;」といった文字です。<br>これらの特殊文字をHTML上に表示するには適切な方法で変換しなければなりません。<br>しかし、XSSの脆弱性のあるプログラムはこのような特殊文字を意識せずに作られてしまっています。</p>
+<h2 id="どのように対策をすればよいのか"><a href="#どのように対策をすればよいのか" class="headerlink" title="どのように対策をすればよいのか"></a>どのように対策をすればよいのか</h2><p>入力時のチェックと出力時のチェックを行います。</p>
+<h3 id="入力時のチェック"><a href="#入力時のチェック" class="headerlink" title="入力時のチェック"></a>入力時のチェック</h3><p>具体的には、入力時に入力できる文字を制限します。<br>例えば、郵便番号を入力するフォームの場合は、数字と-しか入力できないようにします。<br>そうすれば、悪意のあるコード自体が入力できなくなります。<br>入り口でとめる作戦です。</p>
+<p>注意点としては、入力文字のチェックは必ずサーバサイドで行わなければなりません。<br>PHP等のサーバサイドで実行されるプログラムでチェックする必要があるということです。<br>クライアントサイド(JavaScript)のチェックでは攻撃者がそのチェック機構自体を無効にすることが可能です。</p>
+<h3 id="出力時のチェック"><a href="#出力時のチェック" class="headerlink" title="出力時のチェック"></a>出力時のチェック</h3><p>実際には仕様上、入力文字を制限することができないことがあります。<br>例えばフリーフォームの場合、無闇に入力文字を制限するとユーザーは自由に文章を入力することができなくなってしまいます。</p>
+<p>そこで、出力時に文字を無害化（サニタイジング）します。</p>
+<p>サニタイジングについては、プログラム言語やフレームワークに専用の機能が用意されています。<br>その機能を使うことを強く推奨します。</p>
+<p>例えばPHPであれば、<code>htmlspecialchars</code>というhtmlの特殊文字を無害化する関数が用意されています。<br><a href="http://php.net/manual/ja/function.htmlspecialchars.php" target="_blank" rel="noopener">http://php.net/manual/ja/function.htmlspecialchars.php</a></p>
+<p>また、フレームワークはデフォルトでサニタイズされた文字が出力される仕組みになっているはずなので、そのようなフレームワークを使ったほうがよいでしょう。</p>
+<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
+<li><a href="http://www.atmarkit.co.jp/ait/articles/0211/09/news001.html" target="_blank" rel="noopener">クロスサイトスクリプティングの脆弱性とは？</a></li>
+<li><a href="http://qiita.com/mpyw/items/565b3670dd0c7f9162fa" target="_blank" rel="noopener">XSS攻撃への対策</a></li>
+</ul>
 
-<h2 id="コマンドのサンプル"><a href="#コマンドのサンプル" class="headerlink" title="コマンドのサンプル"></a>コマンドのサンプル</h2><p>実際に使ってみて理解していきます。<br>使うには、sshkitをロードする必要があります。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">'sshkit'</span></span><br><span class="line"><span class="keyword">include</span> SSHKit::DSL</span><br></pre></td></tr></table></figure>
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-06-02T10:37:47.000Z" itemprop="datepublished">
+            2016/06/02
+          </time>
+          <time datetime="2016-06-02T10:37:47.000Z" itemprop="modified">
+            (更新日: 2016/06/02)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/06/02/convert-to-idna-on-the-shell/">Shellで日本語ドメインをPunycode(IDNドメイン)に変換する方法</a>
+        </h1>
+        <div class="content">
+          <p>Shellで日本語ドメインをIDNフォーマットに変換する方法を紹介します。<br>対象のOSはMacです。</p>
+<p><a href="http://www.gnu.org/software/libidn/" target="_blank" rel="noopener">libidn</a>というGNUのライブラリがあるので、それを使います。</p>
+<h2 id="libidnのインストール"><a href="#libidnのインストール" class="headerlink" title="libidnのインストール"></a>libidnのインストール</h2><p>homebrewでインストールします。</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">brew </span><span class="keyword">install </span>libidn</span><br></pre></td></tr></table></figure>
 
-<h3 id="ホスト名を取得する"><a href="#ホスト名を取得する" class="headerlink" title="ホスト名を取得する"></a>ホスト名を取得する</h3><p>まずはログインしてホスト名を取得してみましょう。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">on ['deploy@example.com’] do |host|</span><br><span class="line"> puts capture(<span class="symbol">:ho</span>stname)</span><br><span class="line">end</span><br><span class="line">=&gt; example.com</span><br></pre></td></tr></table></figure>
+<p>インストールしたら、idnコマンドが使えるようになります。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ idn</span><br><span class="line">libidn 1.32</span><br><span class="line">Copyright 2002-2015 Simon Josefsson.</span><br><span class="line">GNU Libidn is free software <span class="keyword">with</span> ABSOLUTELY <span class="keyword">NO</span> WARRANTY.  <span class="keyword">For</span> more</span><br><span class="line">information about these matters, see &lt;<span class="keyword">http</span>://www.gnu.org/licenses/&gt;.</span><br><span class="line"><span class="keyword">Type</span> <span class="keyword">each</span> <span class="keyword">input</span> <span class="keyword">string</span> <span class="keyword">on</span> a line <span class="keyword">by</span> itself, <span class="keyword">terminated</span> <span class="keyword">by</span> a <span class="keyword">newline</span> character.</span><br><span class="line"></span><br><span class="line">idn: tld_check_4z: <span class="keyword">Missing</span> <span class="keyword">input</span></span><br></pre></td></tr></table></figure>
 
-<p><code>on</code> メソッドに対象のサーバーとブロックを渡します。<br>対象のサーバーは複数設定することも可能です。<br>ブロックにはサーバー上で実行するコマンドを設定します。<br><code>capture</code>メソッドは渡された引数をコマンドとして実行し、結果をログに出力します。</p>
-<h3 id="特定のユーザーでコマンドを実行する"><a href="#特定のユーザーでコマンドを実行する" class="headerlink" title="特定のユーザーでコマンドを実行する"></a>特定のユーザーでコマンドを実行する</h3><p>特定のユーザーでコマンドを実行する場合は、<code>as</code>メソッドで指定します。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">on [<span class="string">'example.com'</span>] <span class="keyword">do</span> <span class="params">|host|</span></span><br><span class="line">  as <span class="string">'deploy'</span> <span class="keyword">do</span></span><br><span class="line">  　puts capture(<span class="symbol">:whoami</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2 id="libidnでPunycodeに変換する"><a href="#libidnでPunycodeに変換する" class="headerlink" title="libidnでPunycodeに変換する"></a>libidnでPunycodeに変換する</h2><p>以下のようにPunycodeに変換できます。</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ idn しょーやん<span class="string">.xyz</span></span><br><span class="line">xn<span class="params">--68jwei3c27a</span>.xyz</span><br></pre></td></tr></table></figure>
 
-<h3 id="特定のディレクトリを指定する"><a href="#特定のディレクトリを指定する" class="headerlink" title="特定のディレクトリを指定する"></a>特定のディレクトリを指定する</h3><p>特定のディレクトリを指定する場合は、<code>within</code>メソッドを指定します。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">on [<span class="string">'deploy@example.com'</span>] <span class="keyword">do</span> <span class="params">|host|</span></span><br><span class="line">  within <span class="string">'/var/log'</span> <span class="keyword">do</span></span><br><span class="line">    puts capture(<span class="symbol">:head</span>, <span class="string">'-n5'</span>, <span class="string">'messages'</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>unicodeに変換する場合は<code>-u</code>オプションを使います。</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ idn -u xn<span class="params">--68jwei3c27a</span>.xyz</span><br><span class="line">しょーやん<span class="string">.xyz</span></span><br></pre></td></tr></table></figure>
 
-<p><code>/var/log</code> で <code>head -n5 messages</code> を実行します。</p>
-<h3 id="環境変数を指定する"><a href="#環境変数を指定する" class="headerlink" title="環境変数を指定する"></a>環境変数を指定する</h3><p><code>with</code>メソッドで環境変数を指定することができます。</p>
-<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">on hosts <span class="built_in">do</span> |<span class="type">host</span>|<span class="type"></span></span><br><span class="line"><span class="type">  with</span> rack_env: :test <span class="built_in">do</span></span><br><span class="line">    puts capture(<span class="string">"env"</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>rack_envに<code>:test</code> を設定しています。</p>
-<h3 id="ファイルをチェックして存在すればメッセージを表示、なければファイルを作成する"><a href="#ファイルをチェックして存在すればメッセージを表示、なければファイルを作成する" class="headerlink" title="ファイルをチェックして存在すればメッセージを表示、なければファイルを作成する"></a>ファイルをチェックして存在すればメッセージを表示、なければファイルを作成する</h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">on</span> [<span class="string">'deploy@example.com'</span>] <span class="keyword">do</span> |host|</span><br><span class="line">  f = <span class="string">'/tmp/file'</span></span><br><span class="line">  <span class="keyword">if</span> test("[ -f #&#123;f&#125; ]")</span><br><span class="line">    <span class="keyword">info</span> "#&#123;f&#125; already exist on #&#123;host&#125;!"</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="keyword">execute</span> :touch, f</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">INFO</span> [<span class="number">790</span>b6aaa] Running /usr/bin/env touch /tmp/file <span class="keyword">as</span> deploy@example.com</span><br><span class="line"><span class="keyword">INFO</span> [<span class="number">790</span>b6aaa] Finished <span class="keyword">in</span> <span class="number">0.052</span> seconds <span class="keyword">with</span> <span class="keyword">exit</span> status <span class="number">0</span> (successful).</span><br></pre></td></tr></table></figure>
-
-<p><code>test</code>メソッドでファイルをチェックし、<code>execute</code>メソッドで<code>touch</code>コマンドを実行しています。</p>
-<h3 id="ファイルをアップロードする"><a href="#ファイルをアップロードする" class="headerlink" title="ファイルをアップロードする"></a>ファイルをアップロードする</h3><p>ファイルをアップロードすることもできます。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">on [<span class="string">'deploy@example.com'</span>] <span class="keyword">do</span> <span class="params">|host|</span></span><br><span class="line">  upload! <span class="string">'README.md'</span>, <span class="string">'/tmp/README.md'</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>第1引数がローカルのファイルのパス、第2引数がサーバーに配置するファイルのパスです。</p>
-<p>また、<code>recursive</code>オプションをtrueに設定することでディレクトリをアップロードすることもできます。</p>
-<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">on</span> hosts <span class="keyword">do</span> |host|</span><br><span class="line">  upload! <span class="string">'.'</span>, <span class="string">'/tmp/mypwd'</span>, <span class="keyword">recursive</span>: <span class="keyword">true</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="ローカルで実行する"><a href="#ローカルで実行する" class="headerlink" title="ローカルで実行する"></a>ローカルで実行する</h3><p>ローカルで実行することもできます。</p>
-<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">run_locally do</span><br><span class="line">  within '/tmp' do</span><br><span class="line">   <span class="built_in"> execute </span>:whoami</span><br><span class="line">  end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line"><span class="comment"># もしくは</span></span><br><span class="line"></span><br><span class="line">on(:local) do</span><br><span class="line">  within '/tmp' do</span><br><span class="line">   <span class="built_in"> execute </span>:whoami</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-
-<h3 id="Rakeタスクで利用する"><a href="#Rakeタスクで利用する" class="headerlink" title="Rakeタスクで利用する"></a>Rakeタスクで利用する</h3><p>RakeタスクでSSHKitのDSLを使うこともできます。<br>この仕組みを利用してCapistranoのプラグインは作成されています。</p>
-<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">require 'sshkit'</span><br><span class="line"></span><br><span class="line">SSHKit.config.command_map[:rake] = <span class="string">"./bin/rake"</span></span><br><span class="line"></span><br><span class="line">desc <span class="string">"Deploy the site, pulls from Git, migrate the db and precompile assets, then restart Passenger."</span></span><br><span class="line">task<span class="keyword"> :deploy</span> do</span><br><span class="line">  include SSHKit::DSL</span><br><span class="line"></span><br><span class="line">  on <span class="string">"example.com"</span> do |host|</span><br><span class="line">    within <span class="string">"/opt/sites/example.com"</span> do</span><br><span class="line">     <span class="built_in"> execute </span>:git,<span class="keyword"> :pull</span></span><br><span class="line">     <span class="built_in"> execute </span>:bundle,<span class="keyword"> :install</span>, '--deployment'</span><br><span class="line">     <span class="built_in"> execute </span>:rake, 'db:migrate'</span><br><span class="line">     <span class="built_in"> execute </span>:rake, 'assets:precompile'</span><br><span class="line">     <span class="built_in"> execute </span>:touch, 'tmp/restart.txt'</span><br><span class="line">    end</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-
-<p>サンプルがこちらにたくさんあるので、参考になると思います。</p>
-<p><a href="https://github.com/capistrano/sshkit/blob/master/EXAMPLES.md" target="_blank" rel="noopener">https://github.com/capistrano/sshkit/blob/master/EXAMPLES.md</a></p>
+<h2 id="digとidnを組み合わせて使う"><a href="#digとidnを組み合わせて使う" class="headerlink" title="digとidnを組み合わせて使う"></a>digとidnを組み合わせて使う</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">⇒</span>  <span class="string">dig</span> <span class="string">`idn</span> <span class="string">しょーやん.xyz`</span> <span class="string">NS</span></span><br><span class="line"></span><br><span class="line"><span class="string">;</span> <span class="string">&lt;&lt;&gt;&gt;</span> <span class="string">DiG</span> <span class="number">9.8</span><span class="number">.3</span><span class="string">-P1</span> <span class="string">&lt;&lt;&gt;&gt;</span> <span class="string">xn--68jwei3c27a.xyz</span> <span class="string">NS</span></span><br><span class="line"><span class="string">;;</span> <span class="attr">global options:</span> <span class="string">+cmd</span></span><br><span class="line"><span class="string">;;</span> <span class="attr">Got answer:</span></span><br><span class="line"><span class="string">;;</span> <span class="string">-&gt;&gt;HEADER&lt;&lt;-</span> <span class="attr">opcode:</span> <span class="string">QUERY,</span> <span class="attr">status:</span> <span class="string">NOERROR,</span> <span class="attr">id:</span> <span class="number">59533</span></span><br><span class="line"><span class="string">;;</span> <span class="attr">flags:</span> <span class="string">qr</span> <span class="string">rd</span> <span class="string">ra;</span> <span class="attr">QUERY:</span> <span class="number">1</span><span class="string">,</span> <span class="attr">ANSWER:</span> <span class="number">2</span><span class="string">,</span> <span class="attr">AUTHORITY:</span> <span class="number">0</span><span class="string">,</span> <span class="attr">ADDITIONAL:</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="string">;;</span> <span class="attr">QUESTION SECTION:</span></span><br><span class="line"><span class="string">;xn--68jwei3c27a.xyz.</span>   <span class="string">IN</span>  <span class="string">NS</span></span><br><span class="line"></span><br><span class="line"><span class="string">;;</span> <span class="attr">ANSWER SECTION:</span></span><br><span class="line"><span class="string">xn--68jwei3c27a.xyz.</span>  <span class="number">3578</span>  <span class="string">IN</span>  <span class="string">NS</span>  <span class="string">dns01.muumuu-domain.com.</span></span><br><span class="line"><span class="string">xn--68jwei3c27a.xyz.</span>  <span class="number">3578</span>  <span class="string">IN</span>  <span class="string">NS</span>  <span class="string">dns02.muumuu-domain.com.</span></span><br><span class="line"></span><br><span class="line"><span class="string">;;</span> <span class="attr">Query time:</span> <span class="number">34</span> <span class="string">msec</span></span><br><span class="line"><span class="string">;;</span> <span class="attr">SERVER:</span> <span class="number">192.168</span><span class="number">.74</span><span class="number">.20</span><span class="comment">#53(192.168.74.20)</span></span><br><span class="line"><span class="string">;;</span> <span class="attr">WHEN:</span> <span class="string">Fri</span> <span class="string">Jun</span>  <span class="number">3</span> <span class="number">09</span><span class="string">:25:40</span> <span class="number">2016</span></span><br><span class="line"><span class="string">;;</span> <span class="attr">MSG SIZE  rcvd:</span> <span class="number">94</span><span class="string">)&gt;&gt;&gt;&gt;&gt;&gt;</span></span><br></pre></td></tr></table></figure>
 
         </div>
       </div>
@@ -395,7 +344,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/19/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><a class="page-number" href="/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/21/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/19/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><a class="page-number" href="/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/21/">Next</a>
 </div>
 
   </div>

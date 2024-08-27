@@ -146,51 +146,123 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2016-06-13T05:08:03.000Z" itemprop="datepublished">
-            2016/06/13
+          <time datetime="2016-06-01T05:17:45.000Z" itemprop="datepublished">
+            2016/06/01
           </time>
-          <time datetime="2016-06-13T05:08:03.000Z" itemprop="modified">
-            (更新日: 2016/06/13)
+          <time datetime="2016-06-01T05:17:45.000Z" itemprop="modified">
+            (更新日: 2016/06/01)
           </time>
         </div>
         <h1>
-        <a href="/blog/2016/06/13/learn-base64-encode/">base64エンコードのアルゴリズムをRubyで実装する</a>
+        <a href="/blog/2016/06/01/capistrano-tutorial-and-capistrano-plugins/">Capistranoの導入手順とプラグインの紹介</a>
         </h1>
         <div class="content">
-          <p>Base64とは英数字、記号を用いてマルチバイト文字やバイナリデータ(画像など)を扱うためのエンコード方式です。<br>具体的には<code>A–Z, a–z, 0–9</code> までの62文字と、記号2つ (<code>+</code>,<code>/</code>)、さらにパディング（余った部分を詰める）のための記号として <code>=</code> が用いられます。<br>7ビットの文字コードしか扱うことができない電子メールにおいてよく利用されています。</p>
-<h2 id="変換アルゴリズム"><a href="#変換アルゴリズム" class="headerlink" title="変換アルゴリズム"></a>変換アルゴリズム</h2><p>変換アルゴリズムは以下となります。</p>
-<ol>
-<li>元データを6ビットずつに分割する(6ビットに満たない部分は0を追加して6ビットにする)。</li>
-<li>各6ビットの値を変換表を使って4文字ずつに変換する(4文字に満たない部分は<code>=</code>記号を使って4文字にする)。</li>
-</ol>
-<h2 id="変換例"><a href="#変換例" class="headerlink" title="変換例"></a>変換例</h2><h3 id="1-元データ"><a href="#1-元データ" class="headerlink" title="1. 元データ"></a>1. 元データ</h3><p>文字列: “ABCDEFG”<br>2進数に変換する: “0100 0001 0100 0010 0100 0011 0100 0100 0100 0101 0100 0110 0100 0111”</p>
-<p>rubyでのサンプルコード</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"ABCDEFG"</span>.unpack(<span class="string">"B*"</span>).pop.scan(<span class="regexp">/.&#123;1,4&#125;/</span>).join(<span class="string">" "</span>)</span><br></pre></td></tr></table></figure>
+          <p>Capistranoのインストールと設定、プラグインの紹介をします。</p>
+<h2 id="Capistranoのインストール"><a href="#Capistranoのインストール" class="headerlink" title="Capistranoのインストール"></a>Capistranoのインストール</h2><p>bundle initコマンドでGemfileを作成します。</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$  bundle init</span><br><span class="line">Writing <span class="keyword">new</span> Gemfile to <span class="regexp">/Users/</span>shoyan<span class="regexp">/app/G</span>emfile</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-6ビットずつに分割"><a href="#2-6ビットずつに分割" class="headerlink" title="2. 6ビットずつに分割"></a>2. 6ビットずつに分割</h3><p>“010000 010100 001001 000011 010001 000100 010101 000110 010001 11”</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"ABCDEFG"</span>.unpack(<span class="string">"B*"</span>).<span class="keyword">pop</span>.scan(<span class="regexp">/.&#123;1,6&#125;/</span>).<span class="keyword">join</span>(<span class="string">" "</span>)</span><br></pre></td></tr></table></figure>
+<p>以下のGemfileが作成されます。</p>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ cat Gemfile</span><br><span class="line"><span class="meta"># A sample Gemfile</span></span><br><span class="line">source <span class="string">"https://rubygems.org"</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># gem "rails"</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="3-2ビット余るので、4ビット分0を追加して6ビットにする"><a href="#3-2ビット余るので、4ビット分0を追加して6ビットにする" class="headerlink" title="3. 2ビット余るので、4ビット分0を追加して6ビットにする"></a>3. 2ビット余るので、4ビット分0を追加して6ビットにする</h3><p>“010000 010100 001001 000011 010001 000100 010101 000110 010001 110000”</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">list</span> = <span class="string">"ABCDEFG"</span>.unpack(<span class="string">"B*"</span>).<span class="keyword">pop</span>.scan(/.&#123;<span class="number">1</span>,<span class="number">6</span>&#125;/).<span class="keyword">join</span>(<span class="string">" "</span>).<span class="keyword">split</span>.<span class="keyword">map</span> &#123; |s| sprintf(<span class="string">"%-06s"</span>, s).gsub(<span class="string">" "</span>, <span class="string">"0"</span>)&#125;.<span class="keyword">join</span>(<span class="string">" "</span>)</span><br></pre></td></tr></table></figure>
+<p>GemfileにCapistranoを定義します。</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">group</span> <span class="title">:development</span> do</span><br><span class="line">  gem <span class="string">"capistrano"</span>, <span class="string">"~&gt; 3.4"</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 
+<p>bundle installコマンドでインストールします。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">bundle </span>install</span><br></pre></td></tr></table></figure>
 
-<h3 id="4-変換表により、4文字ずつ変換"><a href="#4-変換表により、4文字ずつ変換" class="headerlink" title="4. 変換表により、4文字ずつ変換"></a>4. 変換表により、4文字ずつ変換</h3><p>“QUJD”, “REVG”, “Rw”</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 変換表を作成する</span><br><span class="line"><span class="built_in">keys</span> = (<span class="number">0</span>..<span class="number">63</span>).<span class="keyword">map</span> &#123;|<span class="keyword">m</span>| sprintf(<span class="string">"%06s"</span>, <span class="keyword">m</span>.to_s(<span class="number">2</span>)).gsub(<span class="string">" "</span>, <span class="string">"0"</span>)&#125;</span><br><span class="line"><span class="built_in">values</span> = [(<span class="string">'A'</span>..<span class="string">'Z'</span>), (<span class="string">'a'</span>..<span class="string">'z'</span>), (<span class="string">'0'</span>..<span class="string">'9'</span>), [<span class="string">'+'</span>, <span class="string">'/'</span>]].<span class="keyword">map</span> &#123; |<span class="keyword">a</span>| <span class="keyword">a</span>.to_a &#125;.flatten</span><br><span class="line">base64_table = Hash[[<span class="built_in">keys</span>, <span class="built_in">values</span>].transpose]</span><br><span class="line"></span><br><span class="line">base64_list = <span class="keyword">list</span>.<span class="keyword">map</span> &#123;|<span class="keyword">a</span>| base64_table[<span class="keyword">a</span>]&#125;.<span class="keyword">join</span>.scan(/.&#123;<span class="number">1</span>,<span class="number">4</span>&#125;/)</span><br><span class="line">=&gt; [<span class="string">"QUJD"</span>, <span class="string">"REVG"</span>, <span class="string">"Rw"</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="Capistranoの設定"><a href="#Capistranoの設定" class="headerlink" title="Capistranoの設定"></a>Capistranoの設定</h2><p>Capistranoがインストールできたので、設定をしていきます。<br>cap installコマンドで雛形を作成します。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> bundle <span class="built_in">exec</span> <span class="built_in">cap</span> install</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="5-2文字余るので、2文字分-記号を追加して4文字にする"><a href="#5-2文字余るので、2文字分-記号を追加して4文字にする" class="headerlink" title="5. 2文字余るので、2文字分 = 記号を追加して4文字にする"></a>5. 2文字余るので、2文字分 = 記号を追加して4文字にする</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">base64_list.<span class="built_in">map</span> &#123;|s| <span class="built_in">sprintf</span>(<span class="string">"%-4s"</span>, s).gsub(<span class="string">" "</span>, <span class="string">"="</span>)&#125;</span><br></pre></td></tr></table></figure>
+<p><code>config/deploy.rb</code>と<code>config/deploy/{production, staging}.rb</code> が作成されているので適宜編集します。</p>
+<p>config/deploy.rb</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># config valid only <span class="keyword">for</span> current <span class="keyword">version</span> of Capistrano</span><br><span class="line">lock '3.5.0'</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span> :application, ‘<span class="keyword">app</span>'</span><br><span class="line"><span class="keyword">set</span> :repo_url, 'git@github.com:shoyan/shoyan.git'</span><br><span class="line"></span><br><span class="line">ask :branch, `git rev-<span class="keyword">parse</span> --abbrev-ref HEAD`.chomp</span><br><span class="line"><span class="keyword">set</span> :deploy_to, '/<span class="keyword">var</span>/www/<span class="keyword">app</span>'</span><br><span class="line"><span class="keyword">set</span> :scm, :git</span><br><span class="line"><span class="keyword">set</span> :<span class="keyword">format</span>, :airbrussh</span><br><span class="line"><span class="keyword">set</span> :keep_releases, 5</span><br></pre></td></tr></table></figure>
 
-<h3 id="6-Base64文字列"><a href="#6-Base64文字列" class="headerlink" title="6. Base64文字列"></a>6. Base64文字列</h3><p>“QUJDREVGRw==”</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">base64_str.scan(/.&#123;<span class="number">1</span>,<span class="number">4</span>&#125;/).map &#123;|s| sprintf(<span class="string">"%-4s"</span>, s).gsub(<span class="string">" "</span>, <span class="string">"="</span>)&#125;.join</span><br><span class="line">=&gt; <span class="string">"QUJDREVGRw=="</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>application</strong>:  アプリケーション名</li>
+<li><strong>repo_url</strong>: リポジトリのURI</li>
+<li><strong>branch</strong>: デプロイ対象のブランチ</li>
+<li><strong>deploy_to</strong>: サーバーのアプリケーションのディレクトリ</li>
+<li><strong>scm</strong>: git or svn</li>
+<li><strong>format</strong>: ログのフォーマット</li>
+<li><strong>keep_releases</strong>: 過去にデプロイしたアプリケーションを何世代保持するか</li>
+</ul>
+<p>デプロイするサーバーを定義します。<br>事前に鍵認証でsshログインできるようにしておくととスムーズです。</p>
+<p>config/deploy/production.rb</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">role </span>:app, %w&#123;shoyan<span class="variable">@server001</span>.example.jp shoyan<span class="variable">@server002</span>.example.jp&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="簡易的なbase64-decodeメソッド"><a href="#簡易的なbase64-decodeメソッド" class="headerlink" title="簡易的なbase64_decodeメソッド"></a>簡易的なbase64_decodeメソッド</h2><p>今までのロジックをメソッドにまとめて簡易的なbase64_decodeメソッドを作成しました。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base64</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">self</span>.<span class="title">base64_encode</span><span class="params">(str)</span></span></span><br><span class="line">    <span class="comment"># 変換表を作成する</span></span><br><span class="line">    keys = (<span class="number">0</span>..<span class="number">63</span>).map &#123;<span class="params">|m|</span> sprintf(<span class="string">"%06s"</span>, m.to_s(<span class="number">2</span>)).gsub(<span class="string">" "</span>, <span class="string">"0"</span>)&#125;</span><br><span class="line">    values = [(<span class="string">'A'</span>..<span class="string">'Z'</span>), (<span class="string">'a'</span>..<span class="string">'z'</span>), (<span class="string">'0'</span>..<span class="string">'9'</span>), [<span class="string">'+'</span>, <span class="string">'/'</span>]].map &#123; <span class="params">|a|</span> a.to_a &#125;.flatten</span><br><span class="line">    base64_table = Hash[[keys, values].transpose]</span><br><span class="line"></span><br><span class="line">    binary = str.unpack(<span class="string">"B*"</span>).pop.scan(<span class="regexp">/.&#123;1,6&#125;/</span>).join(<span class="string">" "</span>).split.map &#123; <span class="params">|s|</span> sprintf(<span class="string">"%-06s"</span>, s).gsub(<span class="string">" "</span>, <span class="string">"0"</span>) &#125;</span><br><span class="line">    base64_list = binary.map &#123;<span class="params">|a|</span> base64_table[a]&#125;.join.scan(<span class="regexp">/.&#123;1,4&#125;/</span>)</span><br><span class="line">    base64_list.map &#123;<span class="params">|s|</span> sprintf(<span class="string">"%-4s"</span>, s).gsub(<span class="string">" "</span>, <span class="string">"="</span>)&#125;.join</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">p Base64.base64_encode(<span class="string">"ABCDEFG"</span>)</span><br><span class="line">=&gt; <span class="string">"QUJDREVGRw=="</span></span><br></pre></td></tr></table></figure>
+<h2 id="Capistranoでデプロイする"><a href="#Capistranoでデプロイする" class="headerlink" title="Capistranoでデプロイする"></a>Capistranoでデプロイする</h2><p>以下のコマンドでデプロイします。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> bundle <span class="built_in">exec</span> <span class="built_in">cap</span> production deploy</span></span><br></pre></td></tr></table></figure>
 
-<p>RubyのBase64ライブラリでencodeした値と比べてみましょう。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">require 'base64'</span><br><span class="line">Base64.encode64(<span class="string">"ABCDEFG"</span>)</span><br><span class="line">=&gt; <span class="string">"QUJDREVGRw==\n"</span></span><br></pre></td></tr></table></figure>
+<h2 id="便利なCapistranoプラグイン"><a href="#便利なCapistranoプラグイン" class="headerlink" title="便利なCapistranoプラグイン"></a>便利なCapistranoプラグイン</h2><p>Capistranoには様々なプラグインがあります。<br>ここでは私が使っているプラグインを紹介します。</p>
+<h3 id="capistrano-github-releases"><a href="#capistrano-github-releases" class="headerlink" title="capistrano-github-releases"></a>capistrano-github-releases</h3><p>デプロイ時にタグをつけたり、PRにリリースコメントをつけれます。</p>
+<p><a href="https://github.com/linyows/capistrano-github-releases" target="_blank" rel="noopener">https://github.com/linyows/capistrano-github-releases</a></p>
+<h3 id="capistrano-slack-notification"><a href="#capistrano-slack-notification" class="headerlink" title="capistrano/slack_notification"></a>capistrano/slack_notification</h3><p>デプロイ時にSlackに通知できるようになります。</p>
+<p><a href="https://github.com/linyows/capistrano-slack_notification" target="_blank" rel="noopener">https://github.com/linyows/capistrano-slack_notification</a></p>
+<h3 id="capistrano-banner"><a href="#capistrano-banner" class="headerlink" title="capistrano_banner"></a>capistrano_banner</h3><p>デプロイ時にASCIIアートを設定できます。<br>また、productionにデプロイする前に確認をしてくれるようになります。</p>
+<p><a href="https://github.com/holysugar/capistrano_banner" target="_blank" rel="noopener">https://github.com/holysugar/capistrano_banner</a></p>
+<h3 id="capistrano-bundler"><a href="#capistrano-bundler" class="headerlink" title="capistrano-bundler"></a>capistrano-bundler</h3><p>デプロイ時にbundle installを実行できるようになります。</p>
+<p><a href="https://github.com/capistrano/bundler" target="_blank" rel="noopener">https://github.com/capistrano/bundler</a></p>
+<h3 id="capistrano3-unicorn"><a href="#capistrano3-unicorn" class="headerlink" title="capistrano3-unicorn"></a>capistrano3-unicorn</h3><p>デプロイ時にunicornのコマンドを実行できるようになります。</p>
+<p><a href="https://github.com/tablexi/capistrano3-unicorn" target="_blank" rel="noopener">https://github.com/tablexi/capistrano3-unicorn</a></p>
+<p>###capistrano-withrsync</p>
+<p>rsyncでデプロイしてくれるプラグインです。<br>デプロイするファイルが大きい場合に便利です。</p>
+<p><a href="https://github.com/linyows/capistrano-withrsync" target="_blank" rel="noopener">https://github.com/linyows/capistrano-withrsync</a></p>
 
-<p>Rubyのencode64は最後に改行が入るようですが、encodeされた値は同じですね！</p>
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-05-31T09:03:46.000Z" itemprop="datepublished">
+            2016/05/31
+          </time>
+          <time datetime="2016-05-31T09:03:46.000Z" itemprop="modified">
+            (更新日: 2016/05/31)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/05/31/tips-for-nginx-cookbook/">NginxのCookbookでハマった</a>
+        </h1>
+        <div class="content">
+          <p>Nginxのcookbookでversionを指定しているのに、指定したバージョンでインストールされない問題でハマった。</p>
+<p><a href="https://supermarket.chef.io/cookbooks/nginx" target="_blank" rel="noopener">https://supermarket.chef.io/cookbooks/nginx</a></p>
+<h2 id="結果としてわかったこと"><a href="#結果としてわかったこと" class="headerlink" title="結果としてわかったこと"></a>結果としてわかったこと</h2><p>パッケージでインストールする場合はバージョンが指定できない。<br>バージョンを指定したい場合はソースでインストールする必要がある。  </p>
+<p>Nginx cookbookはパッケージでのインストールかソースでのインストールのいずれかを選ぶことができる。<br>デフォルトはパッケージである。<br>ソースでインストールしたい場合は、<code>node[&#39;nginx&#39;][&#39;install_method’]=&#39;source&#39;</code> とする必要がある。<br><code>install_method</code>を指定したときにはじめてversionの指定が可能となる。</p>
+<h2 id="立ちはだかる様々な問題"><a href="#立ちはだかる様々な問題" class="headerlink" title="立ちはだかる様々な問題"></a>立ちはだかる様々な問題</h2><h3 id="versionが反映されない"><a href="#versionが反映されない" class="headerlink" title="versionが反映されない"></a>versionが反映されない</h3><p><code>attributes/default.rb</code>にversionを定義してみたが、指定されたバージョンがインストールされない問題にハマった。<br>デフォルトである、1.4.4がインストールされている。</p>
+<h4 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h4><p>rolesのoverride_attributesとして指定すると指定されたバージョンがインストールされた。<br>基本的にvendor cookbookの値の定義はroleのoverride_attributeで指定したほうがいいのかもしれない。<br>とはいえ、パラメーターによっては上書きされる場合もあってそのあたりの挙動がよくわかっていない。</p>
+<h3 id="Checksumを指定しないといけない"><a href="#Checksumを指定しないといけない" class="headerlink" title="Checksumを指定しないといけない"></a>Checksumを指定しないといけない</h3><p>sourceからインストールする場合、checksumを設定する必要がある。<br>checksumは以下のようにして作成できる。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">shasum</span> <span class="selector-tag">-a</span> 256 <span class="selector-tag">nginx-x</span><span class="selector-class">.x</span><span class="selector-class">.x</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></span><br></pre></td></tr></table></figure>
+
+<p>もしくは</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">http:</span><span class="comment">//nginx.org/download/nginx-x.x.x.tar.gz | shasum -a 256</span></span><br></pre></td></tr></table></figure>
+
+<p>checksumは <code>node[&#39;nginx&#39;][&#39;source&#39;][&#39;checksum’]</code> に指定する。</p>
+<h2 id="ChefのAttributeの優先順位について"><a href="#ChefのAttributeの優先順位について" class="headerlink" title="ChefのAttributeの優先順位について"></a>ChefのAttributeの優先順位について</h2><p>マニュアルによると、以下のようになっている(しかし、versionをoverrideで定義しても上書きできなかった)。</p>
+<ul>
+<li>A default attribute located in a cookbook attribute file</li>
+<li>A default attribute located in a recipe</li>
+<li>A default attribute located in an environment</li>
+<li>A default attribute located in role</li>
+<li>A force_default attribute located in a cookbook attribute file</li>
+<li>A force_default attribute located in a recipe</li>
+<li>A normal attribute located in a cookbook attribute file</li>
+<li>A normal attribute located in a recipe</li>
+<li>An override attribute located in a cookbook attribute file</li>
+<li>An override attribute located in a recipe</li>
+<li>An override attribute located in a role</li>
+<li>An override attribute located in an environment</li>
+<li>A force_override attribute located in a cookbook attribute file</li>
+<li>A force_override attribute located in a recipe</li>
+<li>An automatic attribute identified by Ohai at the start of the chef-client run</li>
+</ul>
+<p><a href="https://docs.chef.io/attributes.html#attribute-precedence" target="_blank" rel="noopener">https://docs.chef.io/attributes.html#attribute-precedence</a></p>
+<h2 id="Attributeの使い分けについて"><a href="#Attributeの使い分けについて" class="headerlink" title="Attributeの使い分けについて"></a>Attributeの使い分けについて</h2><p>以下のようにルール決めをしているという記事もあった。</p>
+<blockquote>
+<p>Attributeファイル=&gt;文言変更<br>recipeファイル=&gt;テスト的に変えたいものがある時のみ。本番では消す。<br>Environmentファイル=&gt;development(開発）,alpha(実験用)、staging(テスト)、production（本番）でのIPやOSバージョンの違い。同じ構成が複数台ある時もここで区別。<br>Role=&gt;ミドルウェアのバージョン違い</p>
+</blockquote>
+<p><a href="http://dev.classmethod.jp/server-side/chef/attribute-overrides-pattern/" target="_blank" rel="noopener">http://dev.classmethod.jp/server-side/chef/attribute-overrides-pattern/</a></p>
 <h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
-<li><a href="https://ja.wikipedia.org/wiki/Base64Base64" target="_blank" rel="noopener">Base64 - Wikipedia</a></li>
+<li><a href="http://stackoverflow.com/questions/27366774/chefexceptionschecksummismatch-when-installing-nginx-1-7-8-from-source" target="_blank" rel="noopener">http://stackoverflow.com/questions/27366774/chefexceptionschecksummismatch-when-installing-nginx-1-7-8-from-source</a></li>
 </ul>
 
         </div>
@@ -198,121 +270,89 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2016-06-09T05:04:17.000Z" itemprop="datepublished">
-            2016/06/09
+          <time datetime="2016-05-31T04:58:42.000Z" itemprop="datepublished">
+            2016/05/31
           </time>
-          <time datetime="2016-06-09T05:04:17.000Z" itemprop="modified">
-            (更新日: 2016/06/09)
+          <time datetime="2016-05-31T04:58:42.000Z" itemprop="modified">
+            (更新日: 2016/05/31)
           </time>
         </div>
         <h1>
-        <a href="/blog/2016/06/09/calculate-the-date-of-the-last-week-monday/">先週月曜日の日付を取得するアルゴリズム</a>
+        <a href="/blog/2016/05/31/to-draw-a-graph-using-high-charts/">グラフを描画するHighChartsで平均気温のグラフを描画する</a>
         </h1>
         <div class="content">
-          <h2 id="先週の月曜日を求めるアルゴリズム"><a href="#先週の月曜日を求めるアルゴリズム" class="headerlink" title="先週の月曜日を求めるアルゴリズム"></a>先週の月曜日を求めるアルゴリズム</h2><ul>
-<li>先週(7日前)が月曜日である場合はその日付を返す</li>
-<li>月曜日でない場合<ul>
-<li>月曜日より前であれば日付を1日たす</li>
-<li>月曜日より後であれば日付を1日ひく</li>
-</ul>
-</li>
-</ul>
-<h3 id="Rubyで実装"><a href="#Rubyで実装" class="headerlink" title="Rubyで実装"></a>Rubyで実装</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">last_monday</span><span class="params">(date = Date.today - <span class="number">7</span>)</span></span></span><br><span class="line">  <span class="keyword">return</span> date <span class="keyword">if</span> date.monday?</span><br><span class="line">  <span class="keyword">if</span> date.wday &lt; <span class="number">1</span></span><br><span class="line">    date += <span class="number">1</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    date -= <span class="number">1</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  last_monday(date)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+          <p>グラフを描画する<a href="http://www.highcharts.com/" target="_blank" rel="noopener">HighCharts</a>を紹介します。<br>HighChartsはJavaScriptのグラフ描画ライブラリです。<br>HighChartsを使えば簡単にグラフの描画ができます。</p>
+<h2 id="デモページ"><a href="#デモページ" class="headerlink" title="デモページ"></a>デモページ</h2><p>福岡市の平均気温をグラフで表示してみました。</p>
+<p><a href="http://codepen.io/shoyan/details/jrOjWK/" target="_blank" rel="noopener">http://codepen.io/shoyan/details/jrOjWK/</a></p>
+<h2 id="サンプルを作ってみる"><a href="#サンプルを作ってみる" class="headerlink" title="サンプルを作ってみる"></a>サンプルを作ってみる</h2><p>簡単なサンプルを作ってみましょう。<br>私がサンプルとして利用していた<a href="http://codepen.io/" target="_blank" rel="noopener">CODEPEN</a>を利用すると簡単に作成できるのでオススメです。</p>
+<p>HighChartsを使うには、jQueryとhighCharts.jsが必要です。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://code.highcharts.com/highcharts.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://code.jquery.com/jquery-2.2.4.min.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="先週の金曜日を求める場合"><a href="#先週の金曜日を求める場合" class="headerlink" title="先週の金曜日を求める場合"></a>先週の金曜日を求める場合</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">last_friday</span><span class="params">(date = Date.today - <span class="number">7</span>)</span></span></span><br><span class="line">  <span class="keyword">return</span> date <span class="keyword">if</span> date.friday?</span><br><span class="line">  <span class="keyword">if</span> date.wday &lt; <span class="number">5</span></span><br><span class="line">    date += <span class="number">1</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    date -= <span class="number">1</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  last_friday(date)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>index.htmlのbody部は以下を定義します。<br>div要素にグラフが描画されます。</p>
+<p>index.html</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span> <span class="built_in">id</span>=<span class="string">"container"</span> style=<span class="string">"width:100%; height:400px;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
 
-<h2 id="次の月曜日の日付を求めるアルゴリズム"><a href="#次の月曜日の日付を求めるアルゴリズム" class="headerlink" title="次の月曜日の日付を求めるアルゴリズム"></a>次の月曜日の日付を求めるアルゴリズム</h2><ul>
-<li>明日が月曜日かどうか<ul>
-<li>月曜日であればその日を返す</li>
-<li>月曜日でなければ1日たす</li>
-</ul>
-</li>
-</ul>
-<h3 id="Rubyで実装-1"><a href="#Rubyで実装-1" class="headerlink" title="Rubyで実装"></a>Rubyで実装</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">next_monday</span><span class="params">(date = Date.today + <span class="number">1</span>)</span></span></span><br><span class="line">  <span class="keyword">return</span> date <span class="keyword">if</span> date.monday?</span><br><span class="line">  next_monday(date + <span class="number">1</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>JavaScript tag <code>&lt;script&gt; &lt;/script&gt;</code> に書くか、外部ファイルに定義してください。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">$(function</span> <span class="string">()</span> <span class="string">&#123;</span></span><br><span class="line">    <span class="string">$('#container').highcharts(&#123;</span></span><br><span class="line">        <span class="attr">chart:</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">type:</span> <span class="string">'bar'</span></span><br><span class="line">        <span class="string">&#125;,</span></span><br><span class="line">        <span class="attr">title:</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">text:</span> <span class="string">'Fruit Consumption'</span></span><br><span class="line">        <span class="string">&#125;,</span></span><br><span class="line">        <span class="attr">xAxis:</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">tags:</span> <span class="string">['Apples',</span> <span class="string">'Bananas'</span><span class="string">,</span> <span class="string">'Oranges'</span><span class="string">]</span></span><br><span class="line">        <span class="string">&#125;,</span></span><br><span class="line">        <span class="attr">yAxis:</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">title:</span> <span class="string">&#123;</span></span><br><span class="line">                <span class="attr">text:</span> <span class="string">'Fruit eaten'</span></span><br><span class="line">            <span class="string">&#125;</span></span><br><span class="line">        <span class="string">&#125;,</span></span><br><span class="line">        <span class="attr">series:</span> <span class="string">[&#123;</span></span><br><span class="line">            <span class="attr">name:</span> <span class="string">'Jane'</span><span class="string">,</span></span><br><span class="line">            <span class="attr">data:</span> <span class="string">[1,</span> <span class="number">0</span><span class="string">,</span> <span class="number">4</span><span class="string">]</span></span><br><span class="line">        <span class="string">&#125;,</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">name:</span> <span class="string">'John'</span><span class="string">,</span></span><br><span class="line">            <span class="attr">data:</span> <span class="string">[5,</span> <span class="number">7</span><span class="string">,</span> <span class="number">3</span><span class="string">]</span></span><br><span class="line">        <span class="string">&#125;]</span></span><br><span class="line">    <span class="string">&#125;);</span></span><br><span class="line"><span class="string">&#125;);</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="前回の月曜日の日付を求めるアルゴリズム"><a href="#前回の月曜日の日付を求めるアルゴリズム" class="headerlink" title="前回の月曜日の日付を求めるアルゴリズム"></a>前回の月曜日の日付を求めるアルゴリズム</h2><ul>
-<li>昨日が月曜日かどうか<ul>
-<li>月曜日であればその日を返す</li>
-<li>月曜日でなければ1日ひく</li>
-</ul>
-</li>
-</ul>
-<h3 id="Rubyで実装-2"><a href="#Rubyで実装-2" class="headerlink" title="Rubyで実装"></a>Rubyで実装</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">prev_monday</span><span class="params">(date = Date.today - <span class="number">1</span>)</span></span></span><br><span class="line">  <span class="keyword">return</span> date <span class="keyword">if</span> date.monday?</span><br><span class="line">  prev_monday(date - <span class="number">1</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>あとは、ブラウザでアクセスすればグラフが描画されます。</p>
+<h2 id="構文"><a href="#構文" class="headerlink" title="構文"></a>構文</h2><p>基本的な構文は以下です。</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span>(<span class="string">"グラフを描画するhtml要素"</span>).highcharts(<span class="keyword">option</span>)</span><br></pre></td></tr></table></figure>
 
-<h3 id="実行結果"><a href="#実行結果" class="headerlink" title="実行結果"></a>実行結果</h3><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">puts Date.today.strftime(<span class="string">"%Y-%m-%d (%a)"</span>)</span><br><span class="line">=&gt; <span class="number">2016</span>-<span class="number">06</span>-<span class="number">09</span> (Thu)</span><br><span class="line">puts prev_monday.strftime(<span class="string">"%Y-%m-%d (%a)"</span>)</span><br><span class="line">=&gt; <span class="number">2016</span>-<span class="number">06</span>-<span class="number">06</span> (Mon)</span><br><span class="line">puts next_monday.strftime(<span class="string">"%Y-%m-%d (%a)"</span>)</span><br><span class="line">=&gt; <span class="number">2016</span>-<span class="number">06</span>-<span class="number">13</span> (Mon)</span><br><span class="line">puts last_monday.strftime(<span class="string">"%Y-%m-%d (%a)"</span>)</span><br><span class="line">=&gt; <span class="number">2016</span>-<span class="number">05</span>-<span class="number">30</span> (Mon)</span><br><span class="line">puts last_friday.strftime(<span class="string">"%Y-%m-%d (%a)"</span>)</span><br><span class="line">=&gt; <span class="number">2016</span>-<span class="number">06</span>-<span class="number">03</span> (Fri)</span><br></pre></td></tr></table></figure>
+<h3 id="HighChartsの基本的なパラメーター-option"><a href="#HighChartsの基本的なパラメーター-option" class="headerlink" title="HighChartsの基本的なパラメーター(option)"></a>HighChartsの基本的なパラメーター(option)</h3><p>HighChartsの基本的なパラメーター(option)を紹介します。</p>
+<ul>
+<li><strong>TITLE</strong>: チャートのタイトル</li>
+<li><strong>SERIES</strong>: 描画するデータの値</li>
+<li><strong>TOOLTIP</strong>: チャートにマウスオーバーしたときに表示されるツールチップの設定</li>
+<li><strong>LEGEND</strong>: SERIESの説明</li>
+<li><strong>AXES</strong>: 縦軸と横軸の説明を設定します。</li>
+</ul>
+<h3 id="グラフの種類について"><a href="#グラフの種類について" class="headerlink" title="グラフの種類について"></a>グラフの種類について</h3><p>typeにグラフの種類を設定できます。</p>
+<ul>
+<li>棒グラフ: column</li>
+<li>折れ線グラフ: line</li>
+<li>円グラフ: pie</li>
+<li>帯グラフ: bar</li>
+<li>ヒストグラム: column</li>
+<li>散布図: scatter</li>
+<li>箱ひげ図: boxplot</li>
+<li>三角グラフ: pyramid</li>
+</ul>
+<p>様々なグラフのデモページが用意されており、参考になります。</p>
+<p><a href="http://www.highcharts.com/demo" target="_blank" rel="noopener">http://www.highcharts.com/demo</a></p>
 
         </div>
       </div>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2016-06-08T09:41:16.000Z" itemprop="datepublished">
-            2016/06/08
+          <time datetime="2016-05-30T03:58:52.000Z" itemprop="datepublished">
+            2016/05/30
           </time>
-          <time datetime="2016-06-08T09:41:16.000Z" itemprop="modified">
-            (更新日: 2016/06/08)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/06/08/testing-attachment-for-action-mailer/">ActionMailerの添付ファイルをRspecでテストする</a>
-        </h1>
-        <div class="content">
-          <p>ActionMailerで添付ファイルを送るようにしたのですが、そのテストをするときの情報があまりなかったのでまとめました。</p>
-<p>以下のようにテストしました。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">RSpec.describe AppMailer, <span class="symbol">type:</span> <span class="symbol">:mailer</span> <span class="keyword">do</span></span><br><span class="line"></span><br><span class="line">  before(<span class="symbol">:all</span>) <span class="keyword">do</span></span><br><span class="line">    Archive::Zip.archive(</span><br><span class="line">      <span class="string">"tmp/app.zip"</span>,</span><br><span class="line">      <span class="string">"README.md"</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  after(<span class="symbol">:all</span>) <span class="keyword">do</span></span><br><span class="line">    FileUtils.rm <span class="string">"tmp/app.zip"</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  let(<span class="symbol">:mail</span>) <span class="keyword">do</span></span><br><span class="line">    AppMailer.send_email(zip_path)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  it <span class="string">'assings the attachment file'</span> <span class="keyword">do</span></span><br><span class="line">    attachment = mail.attachments[<span class="number">0</span>]</span><br><span class="line">    expect(attachment).to be_a_kind_of(Mail::Part)</span><br><span class="line">    expect(attachment.content_type).to be_start_with(<span class="string">'application/zip'</span>)</span><br><span class="line">    expect(attachment.filename).to eq <span class="string">"app.zip"</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>まず、before(:all)でテストに使うzipファイルを作成します。<br>zipファイルは<a href="https://github.com/javanthropus/archive-zip" target="_blank" rel="noopener">archive-zip</a>を使って作成しています。<br>アーカイブするファイルは何でもよいですが、この記事ではREADME.mdとしています。<br>テストで作成したzipファイルはafter(:all)で消しています。<br>mail.attachments[0]に添付ファイルが入っているので、その種類やファイル名を確認しています。</p>
-<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
-<li><a href="http://stackoverflow.com/questions/14286179/rails-how-to-test-that-actionmailer-sent-a-specific-attachment" target="_blank" rel="noopener">rails-how-to-test-that-actionmailer-sent-a-specific-attachment</a></li>
-</ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-06-06T10:33:59.000Z" itemprop="datepublished">
-            2016/06/06
-          </time>
-          <time datetime="2016-06-06T10:33:59.000Z" itemprop="modified">
-            (更新日: 2016/06/06)
+          <time datetime="2016-05-30T03:58:52.000Z" itemprop="modified">
+            (更新日: 2016/05/30)
           </time>
         </div>
         <h1>
-        <a href="/blog/2016/06/06/guide-tcpwrappers/">TCPWrappersとは何なのかを調べてみた</a>
+        <a href="/blog/2016/05/30/yum-install-failed-by-insufficient-space-on-docker/">Dockerのコンテナでyum installが失敗する</a>
         </h1>
         <div class="content">
-          <p>sshのハンドシェイクでこけてしまい、その原因がわからずハマりました。<br>原因としては、TCPWrappersで拒否されていました。<br>TCPWrappersとはなんだろうということで調べてみました。</p>
-<h2 id="TCPWrappersとは"><a href="#TCPWrappersとは" class="headerlink" title="TCPWrappersとは"></a>TCPWrappersとは</h2><p>TCPWrapperとは、ネットワークのアクセス制御をする機能です。<br>デフォルトでインストールされています。</p>
-<h2 id="Linuxの基本的なアクセス制御の仕組み"><a href="#Linuxの基本的なアクセス制御の仕組み" class="headerlink" title="Linuxの基本的なアクセス制御の仕組み"></a>Linuxの基本的なアクセス制御の仕組み</h2><p><img src="https://www.centos.org/docs/5/html/Deployment_Guide-en-US/images/tcp-wrappers/tcp_wrap_diagram.png" alt="Access Control to Network Services"></p>
-<p>アクセス制御の仕組みとして、FirewallとTCP Wrappersがあります。<br>Firewallはiptablesで制御します。<br>なぜ2つの仕組みが存在するのかはわかりません（誰か教えてください）。</p>
-<p>クライアント→Firewall→TCPWrappers→サービスという流れで処理を行います。<br>TCPWrappersは接続を許可するかどうかのファイルを参照し、許可リストにあればサービスに処理を受け渡します。</p>
-<p>処理のログはsyslog daemon (syslogd)によってクライアントと接続先サービスの情報を <code>/var/log/secure</code> または <code>/var/log/messages</code> に書き込まれます。</p>
-<h2 id="TCPWrappersのアドバンテージ"><a href="#TCPWrappersのアドバンテージ" class="headerlink" title="TCPWrappersのアドバンテージ"></a>TCPWrappersのアドバンテージ</h2><p>TCPWrappersを使うことで、以下のメリットがあるとのこと。</p>
+          <p>Dockerのコンテナでyum installが失敗する。<br>以下のようなエラーがでていた。  </p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Insufficient space <span class="keyword">in</span> download directory <span class="regexp">/var/</span>cache<span class="regexp">/yum/</span>x86_64<span class="regexp">/6/u</span>pdates<span class="regexp">/packages</span></span><br></pre></td></tr></table></figure>
+
+<p>容量が不足しているらしい。</p>
+<p>ディスク容量を確認したところ、100%になっていた。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">bash<span class="number">-4.2</span># df</span><br><span class="line">Filesystem     <span class="number">1</span>K-blocks     Used Available Use% Mounted on</span><br><span class="line">none            <span class="number">19049892</span> <span class="number">18226752</span>         <span class="number">0</span> <span class="number">100</span>% /</span><br><span class="line">tmpfs             <span class="number">509992</span>        <span class="number">0</span>    <span class="number">509992</span>   <span class="number">0</span>% /dev</span><br><span class="line">tmpfs             <span class="number">509992</span>        <span class="number">0</span>    <span class="number">509992</span>   <span class="number">0</span>% /sys/fs/cgroup</span><br><span class="line">/dev/sda1       <span class="number">19049892</span> <span class="number">18226752</span>         <span class="number">0</span> <span class="number">100</span>% /etc/hosts</span><br><span class="line">shm                <span class="number">65536</span>        <span class="number">0</span>     <span class="number">65536</span>   <span class="number">0</span>% /dev/shm</span><br></pre></td></tr></table></figure>
+
+<p>不要なコンテナが溜まっていて、そのせいでディスク容量を圧迫していたようだ。</p>
+<h3 id="コンテナを消す方法"><a href="#コンテナを消す方法" class="headerlink" title="コンテナを消す方法"></a>コンテナを消す方法</h3><ul>
+<li>docker ps -a でコンテナの一覧が表示される</li>
+<li>docker rm  container_id で消す</li>
+</ul>
+<p>コンテナを消すと、ディスク容量に空きができてyum installできるようになった。</p>
+<p>こちらは類似案件。</p>
 <ul>
-<li>接続したクライアントとそのサービスがログに残る</li>
-<li>様々なプロトコルを集約して管理できる</li>
-</ul>
-<p>##TCPWrappersの設定ファイル</p>
-<p>以下の2つのファイルがあります。</p>
-<ul>
-<li>/etc/hosts.allow</li>
-<li>/etc/hosts.deny</li>
-</ul>
-<p>TCPWrappersはクライアントからのリクエストを受けると、以下の処理を行います。</p>
-<ul>
-<li><code>/etc/hosts.allow</code> を参照します。クライアントがリストに存在した場合、接続を許可します。リストに存在しない場合は次のステップに進みます。</li>
-<li><code>/etc/hosts.deny</code>を参照します。クライアントがリストに存在した場合、接続を拒否します。リストにない場合は接続を許可します。</li>
-</ul>
-<h3 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h3><ul>
-<li><code>/etc/hosts.allow</code>から先に評価され、そこでリストに一致した場合<code>/etc/hosts.deny</code>は評価されません。<code>/etc/hosts.allow</code>と<code>/etc/hosts.deny</code>に同じクライアントを指定した場合は<code>/etc/hosts.allow</code>が優先されます。</li>
-<li>ファイルの上から評価されていき、一致した時点で評価を打ち切ります。順番が重要です。</li>
-<li>TCPWrappersはキャッシュを持ちません。ですので、設定ファイルを書き換えたら即反映されます。デーモンをリスタートする必要はありません。</li>
-<li>最後に改行を含めるとエラーメッセージが出るとのことなので、含めないほうがよさそうです。<code>warning: /etc/hosts.allow, line 20: missing newline or line too long</code>というメッセージが <code>/var/log/messages</code> または <code>/var/log/secure</code>に出力されるとのことです。</li>
-</ul>
-<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
-<li><a href="http://lpi.or.jp/column/linux/linux_m06.shtml" target="_blank" rel="noopener">【第6回】TCPWrappers(hosts.allow,hosts.deny)とSSHの公開鍵認証について</a></li>
-<li><a href="https://www.centos.org/docs/5/html/Deployment_Guide-en-US/ch-tcpwrappers.html" target="_blank" rel="noopener">42.5. TCP Wrappers and xinetd</a></li>
+<li><a href="http://shoyan.github.io/blog/2016/04/13/no-space-left-on-device-on-docker/" target="_blank" rel="noopener">Dockerでno Space Left on Deviceが出てbuildできなくなった</a></li>
 </ul>
 
         </div>
@@ -320,40 +360,55 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2016-06-03T08:45:45.000Z" itemprop="datepublished">
-            2016/06/03
+          <time datetime="2016-05-27T04:48:34.000Z" itemprop="datepublished">
+            2016/05/27
           </time>
-          <time datetime="2016-06-03T08:45:45.000Z" itemprop="modified">
-            (更新日: 2016/06/03)
+          <time datetime="2016-05-27T04:48:34.000Z" itemprop="modified">
+            (更新日: 2016/05/27)
           </time>
         </div>
         <h1>
-        <a href="/blog/2016/06/03/cross-site-scripting-aka-xss/">クロスサイトスクリプティングの脆弱性とその対策</a>
+        <a href="/blog/2016/05/27/sinatra-logger/">Sinatraのロギング機構について調べてみた</a>
         </h1>
         <div class="content">
-          <p>クロスサイトスクリプティングはユーザーの入力を受け付ける動的なアプリケーションに含まれる脆弱性を利用した攻撃です。<br>英語ではCross Site Scriptingと呼ばれその頭文字をとるとCSSとなりますが、「Cascading Style Sheets」との区別が紛らわしいため一般的にXSSの表記が使われています。</p>
-<h2 id="クロスサイトスクリプティングとはどのような脆弱性であるのか"><a href="#クロスサイトスクリプティングとはどのような脆弱性であるのか" class="headerlink" title="クロスサイトスクリプティングとはどのような脆弱性であるのか"></a>クロスサイトスクリプティングとはどのような脆弱性であるのか</h2><p>XSSとは動的なWebサイトのプログラムの脆弱性を利用した攻撃です。<br>この脆弱性を利用することで、攻撃者は悪意のあるJavaScriptコードをサイトに埋め込み、そのコードを実行することができるようになります。</p>
-<p>例えば、XSSの脆弱性がある掲示板があったとします。<br>攻撃者はフィッシングサイトにページを遷移させるJavaScriptコードを投稿しました。<br>すると、他の利用者がこの掲示板を閲覧したときにそのJavaScriptコードが実行され、フィッシングサイトが表示されるようになります。</p>
-<h2 id="この脆弱性を持ったサイトが攻撃されるとどのような被害が起き得るのか"><a href="#この脆弱性を持ったサイトが攻撃されるとどのような被害が起き得るのか" class="headerlink" title="この脆弱性を持ったサイトが攻撃されるとどのような被害が起き得るのか"></a>この脆弱性を持ったサイトが攻撃されるとどのような被害が起き得るのか</h2><p>上記の例のようにXSSはWebサイトの利用者を攻撃の対象とします。</p>
-<p>例えば、以下のような被害が出る可能性があります。</p>
+          <p>Sinatraのloggerヘルパーを使ったところ、なぜか標準エラーの出力先にログが吐かれており、標準出力の出力先にはログが吐かれない。<br>標準出力先にログを吐くものだと思っていたのだが、自分が想定していた挙動と違うので調べてみた。</p>
+<p>まずは、Sinatraのloggerヘルパーのソースコードを確認してみる。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logger</span></span></span><br><span class="line">  request.logger</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p><a href="https://github.com/sinatra/sinatra/blob/939ce04c1b77d24dd78285ba0836768ad57aff6c/lib/sinatra/base.rb#L327" target="_blank" rel="noopener">https://github.com/sinatra/sinatra/blob/939ce04c1b77d24dd78285ba0836768ad57aff6c/lib/sinatra/base.rb#L327</a></p>
+<p>request.loggerを返している。<br>レシーバであるrequestは rack::requestなので、rack::request#loggerは何を返しているかを確認する。</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logger</span></span>; get_header(RACK_LOGGER) <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p><a href="https://github.com/rack/rack/blob/master/lib/rack/request.rb#L136" target="_blank" rel="noopener">https://github.com/rack/rack/blob/master/lib/rack/request.rb#L136</a></p>
+<p>get_headerは@envから引数に与えられた値を返すだけのメソッド。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_header</span><span class="params">(name)</span></span></span><br><span class="line">  @env[name]</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>RACK_LOGGERは以下のように定義されている。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RACK_LOGGER = <span class="string">'rack.logger'</span>.<span class="keyword">freeze</span></span><br></pre></td></tr></table></figure>
+
+<p><a href="https://github.com/rack/rack/blob/9073125f71afd615091f575d74ec468a0b1b79bf/lib/rack.rb#L64" target="_blank" rel="noopener">https://github.com/rack/rack/blob/9073125f71afd615091f575d74ec468a0b1b79bf/lib/rack.rb#L64</a></p>
+<p>ここまでで、loggerヘルパーは<code>env[&#39;rack.logger’]</code>を取得していることがわかった。</p>
+<p>では、rack.loggerには何が設定されているのかという疑問が湧いてくる。<br>rackには3つのロガーがある。</p>
 <ul>
-<li>ユーザーのcookie情報を盗み、その情報を利用してそのユーザーでログインする</li>
-<li>不正なページへユーザーを誘導する</li>
-<li>不正なファイルをダウンロードさせる</li>
+<li>CommonLogger</li>
+<li>Logger</li>
+<li>NullLogger</li>
 </ul>
-<p>Webサイトを直接攻撃することも可能です。<br>JavaScriptのhtmlを書き換える機能を使って、攻撃対象のサイトの内容を書き換えることができてしまいます。</p>
-<h2 id="なぜそのようなセキュリティホールが作り込まれてしまうのか"><a href="#なぜそのようなセキュリティホールが作り込まれてしまうのか" class="headerlink" title="なぜそのようなセキュリティホールが作り込まれてしまうのか"></a>なぜそのようなセキュリティホールが作り込まれてしまうのか</h2><p>HTMLには特殊文字が存在します。<br>具体的には「’”&lt;&gt;&amp;」といった文字です。<br>これらの特殊文字をHTML上に表示するには適切な方法で変換しなければなりません。<br>しかし、XSSの脆弱性のあるプログラムはこのような特殊文字を意識せずに作られてしまっています。</p>
-<h2 id="どのように対策をすればよいのか"><a href="#どのように対策をすればよいのか" class="headerlink" title="どのように対策をすればよいのか"></a>どのように対策をすればよいのか</h2><p>入力時のチェックと出力時のチェックを行います。</p>
-<h3 id="入力時のチェック"><a href="#入力時のチェック" class="headerlink" title="入力時のチェック"></a>入力時のチェック</h3><p>具体的には、入力時に入力できる文字を制限します。<br>例えば、郵便番号を入力するフォームの場合は、数字と-しか入力できないようにします。<br>そうすれば、悪意のあるコード自体が入力できなくなります。<br>入り口でとめる作戦です。</p>
-<p>注意点としては、入力文字のチェックは必ずサーバサイドで行わなければなりません。<br>PHP等のサーバサイドで実行されるプログラムでチェックする必要があるということです。<br>クライアントサイド(JavaScript)のチェックでは攻撃者がそのチェック機構自体を無効にすることが可能です。</p>
-<h3 id="出力時のチェック"><a href="#出力時のチェック" class="headerlink" title="出力時のチェック"></a>出力時のチェック</h3><p>実際には仕様上、入力文字を制限することができないことがあります。<br>例えばフリーフォームの場合、無闇に入力文字を制限するとユーザーは自由に文章を入力することができなくなってしまいます。</p>
-<p>そこで、出力時に文字を無害化（サニタイジング）します。</p>
-<p>サニタイジングについては、プログラム言語やフレームワークに専用の機能が用意されています。<br>その機能を使うことを強く推奨します。</p>
-<p>例えばPHPであれば、<code>htmlspecialchars</code>というhtmlの特殊文字を無害化する関数が用意されています。<br><a href="http://php.net/manual/ja/function.htmlspecialchars.php" target="_blank" rel="noopener">http://php.net/manual/ja/function.htmlspecialchars.php</a></p>
-<p>また、フレームワークはデフォルトでサニタイズされた文字が出力される仕組みになっているはずなので、そのようなフレームワークを使ったほうがよいでしょう。</p>
+<p>このうち、LoggerとNullLoggerがRACK_LOGGERにセットしていた。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Rack::Logger</span></span><br><span class="line"><span class="keyword">require</span> <span class="string">'logger'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Rack</span></span></span><br><span class="line">  <span class="comment"># Sets up rack.logger to write to rack.errors stream</span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Logger</span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initialize</span><span class="params">(app, level = <span class="symbol">:</span><span class="symbol">:Logger</span><span class="symbol">:</span><span class="symbol">:INFO</span>)</span></span></span><br><span class="line">      @app, @level = app, level</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">call</span><span class="params">(env)</span></span></span><br><span class="line">      logger = <span class="symbol">:</span><span class="symbol">:Logger</span>.new(env[RACK_ERRORS])</span><br><span class="line">      logger.level = @level</span><br><span class="line"></span><br><span class="line">      env[RACK_LOGGER] = logger</span><br><span class="line">      @app.call(env)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Rack::NullLogger</span></span><br><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Rack</span></span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">NullLogger</span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initialize</span><span class="params">(app)</span></span></span><br><span class="line">      @app = app</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">call</span><span class="params">(env)</span></span></span><br><span class="line">      env[RACK_LOGGER] = <span class="keyword">self</span></span><br><span class="line">      @app.call(env)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    ...........</span><br></pre></td></tr></table></figure>
+
+<p>通常、Rack::Loggerが使われる。<br>Rack::LoggerはRubyのloggerライブラリのラッパーで、log deviceにenv[RACK_ERRORS]をセットしている。<br>env[RACK_ERRORS]が何かを調べたところ、基本的には$stderrがセットされるようだ。</p>
+<p>(例)webrickの場合は、$stderrがセットされている。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">env.update(</span><br><span class="line">  RACK_VERSION =&gt; Rack::VERSION,</span><br><span class="line">  RACK_INPUT =&gt; rack_input,</span><br><span class="line">  RACK_ERRORS =&gt; $stderr,</span><br><span class="line">  RACK_MULTITHREAD =&gt; <span class="literal">true</span>,</span><br><span class="line">  RACK_MULTIPROCESS =&gt; <span class="literal">false</span>,</span><br><span class="line">  RACK_RUNONCE =&gt; <span class="literal">false</span>,</span><br><span class="line">  RACK_URL_SCHEME =&gt; [<span class="string">"yes"</span>, <span class="string">"on"</span>, <span class="string">"1"</span>].include?(env[HTTPS]) ? <span class="string">"https"</span> : <span class="string">"http"</span>,</span><br><span class="line">  RACK_IS_HIJACK =&gt; <span class="literal">true</span>,</span><br><span class="line">  RACK_HIJACK =&gt; lambda &#123; raise NotImplementedError, <span class="string">"only partial hijack is supported."</span>&#125;,</span><br><span class="line">  RACK_HIJACK_IO =&gt; nil</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://github.com/rack/rack/blob/95172a60fe5c2a3850163fc75e0981fe440c064e/lib/rack/handler/webrick.rb#L68" target="_blank" rel="noopener">https://github.com/rack/rack/blob/95172a60fe5c2a3850163fc75e0981fe440c064e/lib/rack/handler/webrick.rb#L68</a></p>
+<p>ということで、結果的にSinatraのloggerは標準エラーに出力されることになる。</p>
+<h2 id="アプリケーションログを任意のファイルに出力するには"><a href="#アプリケーションログを任意のファイルに出力するには" class="headerlink" title="アプリケーションログを任意のファイルに出力するには"></a>アプリケーションログを任意のファイルに出力するには</h2><p>任意のファイルにログを出力したい場合は、自前でloggerを定義してやればよい。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logger</span></span></span><br><span class="line">  <span class="keyword">return</span> <span class="variable">@logger</span> <span class="keyword">unless</span> <span class="variable">@logger</span>.<span class="keyword">nil</span>?</span><br><span class="line">  file = File.new(<span class="string">"<span class="subst">#&#123;settings.root&#125;</span>/log/<span class="subst">#&#123;settings.environment&#125;</span>.log"</span>, <span class="string">'a+'</span>)</span><br><span class="line">  file.sync = <span class="keyword">true</span></span><br><span class="line">  <span class="variable">@logger</span> = ::Logger.new(file)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">logger.info <span class="string">"Hello"</span></span><br></pre></td></tr></table></figure>
+
 <h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
-<li><a href="http://www.atmarkit.co.jp/ait/articles/0211/09/news001.html" target="_blank" rel="noopener">クロスサイトスクリプティングの脆弱性とは？</a></li>
-<li><a href="http://qiita.com/mpyw/items/565b3670dd0c7f9162fa" target="_blank" rel="noopener">XSS攻撃への対策</a></li>
+<li><a href="http://koseki.hatenablog.com/entry/20120309/SinatraAppLog" target="_blank" rel="noopener">Sinatra でアプリケーションログをファイルに書く方法。</a></li>
+<li><a href="http://recipes.sinatrarb.com/p/middleware/rack_commonlogger" target="_blank" rel="noopener">Sinatra Recipes - Middleware - Rack Commonlogger</a></li>
 </ul>
 
         </div>
@@ -364,7 +419,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/20/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><a class="page-number" href="/page/23/">23</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/22/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/20/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><a class="page-number" href="/page/23/">23</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/22/">Next</a>
 </div>
 
   </div>

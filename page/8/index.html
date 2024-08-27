@@ -146,205 +146,267 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2017-09-01T08:30:56.000Z" itemprop="datepublished">
-            2017/09/01
+          <time datetime="2017-04-14T06:11:53.000Z" itemprop="datepublished">
+            2017/04/14
           </time>
-          <time datetime="2017-09-01T08:30:56.000Z" itemprop="modified">
-            (更新日: 2017/09/01)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2017/09/01/osan-report-vol11/">ハッカソンでチャットBotを作って感じた課題</a>
-        </h1>
-        <div class="content">
-          <p>GMOペパボで開催された<a href="http://osan.pepabo.com/" target="_blank" rel="noopener">ハッカソン</a>に参加するため東京へ行ってきました。<br>チームを作って、2日でプロダクトを作るというイベントです。</p>
-<h2 id="チームについて"><a href="#チームについて" class="headerlink" title="チームについて"></a>チームについて</h2><p><img src="http://img-cdn.jg.jugem.jp/b8d/927914/20170809_1578727.jpg" alt="チーム"></p>
-<p>エンジニア2名とデザイナー、カスタマーサービスの4名で構成されています（農家ではありませんよ！）。<br>チームメンバーについては、なるべく異なった技能を持つ人で構成しようと考えました。<br>チーム名はすいかとかぼちゃです。開催されたのが8月だったので、夏っぽい名前をコンセプトとしましたが、深い意味はありません。</p>
-<h2 id="お産合宿で作ったもの"><a href="#お産合宿で作ったもの" class="headerlink" title="お産合宿で作ったもの"></a>お産合宿で作ったもの</h2><p>チャットBotを作りました。チャットBotにした理由は、チャットBotの作成に関するサービス、オープンソースが充実してきたことです。これらを利用すればそれほどコードを書かずにチャットBotの実装が可能だと考えました。また、どれほどの労力でどれほどのものが作れるかといったことを実際に検証してみたかったという理由もあります。</p>
-<h2 id="お産合宿1日目"><a href="#お産合宿1日目" class="headerlink" title="お産合宿1日目"></a>お産合宿1日目</h2><p>朝6時に家を出て東京に移動しました。朝が早すぎて大変でした。<br>会場に着いたらまずは、事前に担当を決めて実装していたコードをマージしました。<br>チャットBotを各自のPCで動かして、機能の修正、データのチューニングを行いました。<br>デモができる程度には出来たので、24時に就寝しました。</p>
-<h2 id="お産合宿2日目"><a href="#お産合宿2日目" class="headerlink" title="お産合宿2日目"></a>お産合宿2日目</h2><p>朝7時に起床して、外を15分くらい散歩しました。<br>東京は福岡に比べて高層ビルが多いですね。緑が意識的に植えてあって丁寧に管理されてあるんだなぁという印象でした（この写真にはほとんど写っていませんが）。</p>
-<p><img src="/images/osan01.jpeg" alt="osan01"></p>
-<p>朝食を食べて、開発開始。15時から品評会です。<br>今回は19チームの参加があり、たくさんのプロダクトができていました。</p>
-<p><img src="/images/osan02.jpeg" alt="osan02"></p>
-<p>19時の飛行機で福岡へ帰りました。</p>
-<h2 id="チャットBotを作って感じた課題"><a href="#チャットBotを作って感じた課題" class="headerlink" title="チャットBotを作って感じた課題"></a>チャットBotを作って感じた課題</h2><p>実際にチャットBotを作ってみることで、どういうことができて、どこが課題なのかを肌で感じることができました。</p>
-<h3 id="ウェブベースのチャットBotの開発コスト"><a href="#ウェブベースのチャットBotの開発コスト" class="headerlink" title="ウェブベースのチャットBotの開発コスト"></a>ウェブベースのチャットBotの開発コスト</h3><p>今回はウェブブラウザで動作するチャットBotを作ったのですが、チャットのUI自体を自前で用意する必要がありました。LINEやFacebook Messengerのプラットフォーム上で動くボットであればチャットの画面自体の開発が必要ないため、開発コストを削減できます。この点から各種のプラットフォームで動くボットが主流となっていると考えられます。とはいえ、WebベースのチャットBotの需要はあるでしょうから、WebベースのチャットBotを簡単に作れるサービスの需要はあると思います。ちなみに今回は<a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js</a>+<a href="https://socket.io/" target="_blank" rel="noopener">Socket.io</a>と<a href="https://github.com/botui/botui" target="_blank" rel="noopener">BotUI</a>を使って実装しました。</p>
-<h3 id="回答精度の問題"><a href="#回答精度の問題" class="headerlink" title="回答精度の問題"></a>回答精度の問題</h3><p>質問の解析、返答に関してはユーザーローカルが提供している<a href="http://ai.userlocal.jp/" target="_blank" rel="noopener">人工知能チャットボットのAPI</a>を利用しました。<br>単純なキーワード一致であれば対応できますが、少し複雑な質問になると全然関係のない応答を返したりと、精度の点ではまだまだといった印象でした。</p>
-<h2 id="終わりに"><a href="#終わりに" class="headerlink" title="終わりに"></a>終わりに</h2><p>チャットBotの開発に関しては多くのサービスやソフトウェアが提供されており、まさにチャットBot戦国時代といったところでしょうか。このように、チャットBotを作る環境は整ってきつつあります。しかし、自然な会話ができるチャットBotを誰もが作れるわけではなく、まだまだノウハウやコツが必要だと感じます。</p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2017-07-24T09:10:55.000Z" itemprop="datepublished">
-            2017/07/24
-          </time>
-          <time datetime="2017-07-24T09:10:55.000Z" itemprop="modified">
-            (更新日: 2017/07/24)
+          <time datetime="2017-04-14T06:11:53.000Z" itemprop="modified">
+            (更新日: 2017/04/14)
           </time>
         </div>
         <h1>
-        <a href="/blog/2017/07/24/message-from-tim-cook/">いいねの数なんか気にしないで、自分のやりたいことをやりましょう</a>
-        </h1>
-        <div class="content">
-          <p>AppleのCEOであるティム・クック氏がいいことを言っていますね。</p>
-<blockquote>
-<p>自分が人類に与えている影響は「いいね」の数ではなく、どれだけの人の人生に触れたかで測ってください。人気ではなく、どれだけの人の役に立っているかで測ってください。人が自分のことをどう思っているかを気にするのをやめてから、私は自分の人生がより大きなものになったと気が付きました。</p>
-</blockquote>
-<p><a href="https://www.lifehacker.jp/2017/07/170723_message-from-tim-cook.html" target="_blank">ティム・クックが「いいねの数ではなく、人に役立つことを」とMITの学生たちへ語る</a></p>
-<p>SNSって適当に楽しんでおくくらいがいいんですよ。<br>Facebookをやりすぎると不幸になるというレポートもあるくらいですからね。</p>
-<blockquote>
-<p>この傾向は、とくにメンタルヘルスにおいて、強く表れていました。多くの人において、Facebookを一年間使うと、次の年にメンタルヘルスが悪化する傾向が見られたのです。</p>
-</blockquote>
-<p><a href="https://www.lifehacker.jp/2017/07/170719_study-of-shows-this-activity-destroys-you.html" target="_blank">5,000人以上を2年間調査してわかった、心と体の健康を害するある1つの習慣とは？</a></p>
-<p>私自身の生活を振り返って、SNSで幸せを感じたことがあるかというと全くといっていいほどないんですよね。<br>SNSは便利だし、面白いツールだとは思います。けれどもSNSで幸せを感じたことはほとんどありません。</p>
-<p>SNSのいいねの数に一気一憂する時間があれば、自分のやりたいことのために時間を使いましょう。</p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2017-07-13T04:47:27.000Z" itemprop="datepublished">
-            2017/07/13
-          </time>
-          <time datetime="2017-07-13T04:47:27.000Z" itemprop="modified">
-            (更新日: 2017/07/13)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2017/07/13/lolipop-ssl/">SHOYAN BLOGを0円でSSL対応しました</a>
+        <a href="/blog/2017/04/14/aminima-is-minima-with-amp/">JekyllテーマのminimaをAMP対応した</a>
         </h1>
         <div class="content">
           <p>こんにちは、SHOYANです。</p>
-<p>SHOYAN BLOGを0円でSSL対応しました。<br>というのも、SHOYAN BLOGをホスティングしている<a href="https://px.a8.net/svt/ejp?a8mat=2TMZ7J+FNTINM+348+65MEA" target="_blank" rel="nofollow">ロリポップ！</a><img border="0" width="1" height="1" src="https://www19.a8.net/0.gif?a8mat=2TMZ7J+FNTINM+348+65MEA" alt="">が無料SSL証明書の取り扱いを開始したからです。</p>
-<p><a href="https://lolipop.jp/info/news/5759/" target="_blank">2017/07/11 無料の独自SSLがご利用いただけるようになりました！</a></p>
-<p>しかも、HTTP/2という通信速度を速くするテクノロジー(httpsプロトコルでしか使えない)を使っており、httpsにしたことで体感的にも速くなったように感じます。</p>
-<p><a href="https://lolipop.jp/info/news/5657/" target="_blank">2017/04/11 次世代通信プロトコル「HTTP/2」に対応しました！</a></p>
-<p>SSLはSEOの観点でもメリットがあるので、これはもう導入するしかないということで、ささっとSSL対応しました。</p>
-<h3 id="SSLの導入方法"><a href="#SSLの導入方法" class="headerlink" title="SSLの導入方法"></a>SSLの導入方法</h3><p>SSLの導入は簡単です。<br>コントロールパネルのSSLの設定画面でドメインを選択するだけです。</p>
-<p><img src="/images/2017-07-13-02.png" alt="リアルタイムアクセス"></p>
-<p>数分経つとhttpsでアクセスできるようになります。<br>httpのサイトはそのまま使えるので何もデメリットはありません。</p>
-<h3 id="ロリポップ！がコスパ最強のレンタルサーバー"><a href="#ロリポップ！がコスパ最強のレンタルサーバー" class="headerlink" title="ロリポップ！がコスパ最強のレンタルサーバー"></a>ロリポップ！がコスパ最強のレンタルサーバー</h3><p>レンタルサーバーは色々ありますが、無料SSL証明書の導入でコストパフォーマンスではロリポップ！が圧倒的になりました。<br>有料のSSL証明書を購入すると年間20,000円ほどかかりますからね。。</p>
-<p>私はライトプランを使っているので月額250円ほどで複数サイトを運営しています。<br>この金額でSSLやらワードプレスを運用できるのですから、趣味でサイトを運営するならレンタルサーバーはロリポップ！以外は考えられないなーという感じです。</p>
-<h3 id="安定性も問題ない"><a href="#安定性も問題ない" class="headerlink" title="安定性も問題ない"></a>安定性も問題ない</h3><p>安いから安定性が心配という人もいるかと思いますが、全然問題ないと思っています。<br>はてなブックマークのホットエントリーに掲載された時はそれなりのアクセス数がありましたが、全然捌けていたので。</p>
-<p>アクセスが多かった時のGoogle Analyticsのリアルタイムアクセス数のキャプチャです。</p>
-<p><img src="/images/2017-07-13-01.png" alt="リアルタイムアクセス"></p>
-<h3 id="キャンペーン中のお申し込みがお得"><a href="#キャンペーン中のお申し込みがお得" class="headerlink" title="キャンペーン中のお申し込みがお得"></a>キャンペーン中のお申し込みがお得</h3><p>通常、初期費用(1,500円)がかかるのですが、時々キャンペーンをやっていて初期費用が半額や無料になります。<br>いまなら7/20まで初期費用が無料なのでこの機会に申し込んでおくと実質5ヶ月分のお得です。</p>
-<a href="https://px.a8.net/svt/ejp?a8mat=2TMZ7J+FNTINM+348+6H729" target="_blank" rel="nofollow">
-<img border="0" width="300" height="250" alt="" src="https://www20.a8.net/svt/bgt?aid=170713279947&wid=001&eno=01&mid=s00000000404001088000&mc=1"></a>
-<img border="0" width="1" height="1" src="https://www19.a8.net/0.gif?a8mat=2TMZ7J+FNTINM+348+6H729" alt="">
+<p>JekyllテーマのminimaをAMP対応しました。</p>
+<ul>
+<li><a href="https://github.com/shoyan/aminima" target="_blank" rel="noopener">https://github.com/shoyan/aminima</a></li>
+</ul>
+<p>名前は AMP + Minima = AMinima です。</p>
+<p>デモサイトも用意していてこちらで確認できます。</p>
+<ul>
+<li><a href="https://shoyan.github.io/aminima/" target="_blank" rel="noopener">https://shoyan.github.io/aminima/</a></li>
+</ul>
+<h2 id="Minimaとは"><a href="#Minimaとは" class="headerlink" title="Minimaとは"></a>Minimaとは</h2><p>MinimaはJekyllのテーマです。<br>jekyll new で作成した場合にデフォルトでインストールされるテーマです。<br>URLはこちらです。</p>
+<ul>
+<li><a href="https://github.com/jekyll/minima" target="_blank" rel="noopener">https://github.com/jekyll/minima</a></li>
+</ul>
+<h2 id="どのようにAMP対応したのか"><a href="#どのようにAMP対応したのか" class="headerlink" title="どのようにAMP対応したのか"></a>どのようにAMP対応したのか</h2><p>どのようにAMP対応をしたのかを説明します。<br>わりとあっさりできました。</p>
+<p>まず、ampを宣言します。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">amp</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>そして、charsetを定義します。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>次にampランタイムをロードします。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">"https://cdn.ampproject.org/v0.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>また、AMPはcanonicalの宣言が必要なので定義します。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"canonical"</span> <span class="attr">href</span>=<span class="string">"https://shoyan.github.io/aminima/2016/05/20/welcome-to-jekyll.html"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>CSSはインラインで定義しないといけないのでインラインで定義します。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">amp-custom</span></span></span><br><span class="line"><span class="tag">  <span class="attr">h1</span> &#123;</span></span><br><span class="line"><span class="tag">    <span class="attr">color:</span> <span class="attr">red</span>;</span></span><br><span class="line"><span class="tag">  &#125;</span></span><br><span class="line">&lt;/style</span><br></pre></td></tr></table></figure>
+
+<p>次にAMP boilerplateを定義します。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;style amp-boilerplatebody&#123;-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both&#125;@-webkit-keyframes -amp-start&#123;from&#123;visibility:hidden&#125;to&#123;visibility:visible&#125;&#125;@-moz-keyframes -amp-start&#123;from&#123;visibility:hidden&#125;to&#123;visibility:visible&#125;&#125;@-ms-keyframes -amp-start&#123;from&#123;visibility:hidden&#125;to&#123;visibility:visible&#125;&#125;@-o-keyframes -amp-start&#123;from&#123;visibility:hidden&#125;to&#123;visibility:visible&#125;&#125;@keyframes -amp-start&#123;from&#123;visibility:hidden&#125;to&#123;visibility:visible&#125;&#125;&lt;/style&lt;noscript&lt;style amp-boilerplatebody&#123;-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none&#125;&lt;/style&lt;/noscript</span><br></pre></td></tr></table></figure>
+
+<p>これでAMPの基本設定はOKです。</p>
+<p>実際のコードはリポジトリを参照してみてください。</p>
+<ul>
+<li><a href="https://github.com/shoyan/aminima/blob/master/_includes/head.html" target="_blank" rel="noopener">https://github.com/shoyan/aminima/blob/master/_includes/head.html</a></li>
+</ul>
+<h3 id="amp-analyticsを使う"><a href="#amp-analyticsを使う" class="headerlink" title="amp-analyticsを使う"></a>amp-analyticsを使う</h3><p>通常のAnalyticsのタグはAMPでは動かないのでamp-analyticsを使います。<br>amp-analyticsはAMP用に用意されたコンポーネントです。</p>
+<ul>
+<li><a href="https://ampbyexample.com/components/amp-analytics/" target="_blank" rel="noopener">https://ampbyexample.com/components/amp-analytics/</a></li>
+</ul>
+<p>テーマのソースコードはこの辺りです。</p>
+<ul>
+<li><a href="https://github.com/shoyan/aminima/blob/master/_includes/google-analytics.html" target="_blank" rel="noopener">https://github.com/shoyan/aminima/blob/master/_includes/google-analytics.html</a></li>
+</ul>
+<h2 id="Aminimaのインストール方法"><a href="#Aminimaのインストール方法" class="headerlink" title="Aminimaのインストール方法"></a>Aminimaのインストール方法</h2><p>Jekyllをインストールしていない場合はjekyllをインストールしてください。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gem <span class="keyword">install</span> jekyll</span><br></pre></td></tr></table></figure>
+
+<p>ブログを作成します。</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ jekyll <span class="keyword">new</span> blog</span><br></pre></td></tr></table></figure>
+
+<p>Gemfileを編集します。</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">以下のように書き換える</span><br><span class="line"></span><br><span class="line">gem <span class="string">"minima"</span>, <span class="string">"~&gt; 2.0"</span></span><br><span class="line">↓</span><br><span class="line">gem <span class="string">"aminima"</span></span><br></pre></td></tr></table></figure>
+
+<p><code>_config.yml</code> のthemeを編集します。</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">theme:</span> aminima</span><br></pre></td></tr></table></figure>
+
+<p>bundleコマンドを実行します。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>bundle</span><br></pre></td></tr></table></figure>
+
+<p>サーバーを立ち上げます。</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ jekyll <span class="keyword">server</span></span><br></pre></td></tr></table></figure>
+
+<p>ブラウザで <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a> にアクセスすればサイトが表示されます。</p>
+<p>動かない部分や不明な点はコメント欄や<a href="https://twitter.com/sinn_shoyan" target="_blank" rel="noopener">Twitter</a>などでお気軽にご連絡ください！</p>
 
         </div>
       </div>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2017-06-26T01:37:20.000Z" itemprop="datepublished">
-            2017/06/26
+          <time datetime="2017-03-06T09:28:48.000Z" itemprop="datepublished">
+            2017/03/06
           </time>
-          <time datetime="2017-06-26T01:37:20.000Z" itemprop="modified">
-            (更新日: 2017/06/26)
+          <time datetime="2017-03-06T09:28:48.000Z" itemprop="modified">
+            (更新日: 2017/03/06)
           </time>
         </div>
         <h1>
-        <a href="/blog/2017/06/26/introduce-webdb-press-vol99/">WEB+DB PRESS Vol.99に寄稿しました</a>
+        <a href="/blog/2017/03/06/ignored-columns-rails5/">Rails5のignored_columnsで予約語のエラーを回避する</a>
         </h1>
         <div class="content">
           <p>こんにちは、SHOYANです。</p>
-<p>2017年6月24日に発売された<a href="http://gihyo.jp/magazine/wdpress/archive/2017/vol99" target="_blank">WEB+DB PRESS Vol.99</a>に寄稿させていただきました。</p>
-<p><a href="http://gihyo.jp/magazine/wdpress/archive/2017/vol99" target="_blank"><img src="/images/wdpress99.jpg" alt="wdpress99.jpg"></a></p>
-<h2 id="テーマについて"><a href="#テーマについて" class="headerlink" title="テーマについて"></a>テーマについて</h2><p>テーマは「良いコードってなんだろう？」です。</p>
-<p>自分が何となく考えている良いコードを文章にするのは思っていた以上に難しいテーマでした。それでも、自分なりに良いコードとはこういうものではないかということを明文化できたのは非常にいい経験になりました。良いコードに対しての考え方は様々であるのは当然だと考えていて、今回の記事もその考えの1つだと思って読んでいただけるとよいかと思います。</p>
-<h3 id="目次"><a href="#目次" class="headerlink" title="目次"></a>目次</h3><p>［Rubyで学ぶ！］良いコードって何だろう？<br>現場で光る 変数，メソッド，クラス，モジュール活用法</p>
-<ul>
-<li>第1章：良いコードを書く理由<ul>
-<li>10年利用されるソフトウェアに必要なこと  ……髙橋 健一，谷口 禎英</li>
-</ul>
-</li>
-<li>第2章：変数，定数，メソッド<ul>
-<li>意図を伝える書き方，名前の付け方……井本 大登，山崎 勝平</li>
-</ul>
-</li>
-<li>第3章：クラス<ul>
-<li>責務の分割，デザインパターンの活用……山崎 勝平，大和田 純</li>
-</ul>
-</li>
-<li>第4章：モジュール<ul>
-<li>理解しやすい形で振る舞いを共有する……内村 元樹</li>
-</ul>
-</li>
-<li>第5章：チーム開発でのテクニック<ul>
-<li>コードレビュー，開発の指針，アーキテクチャ……坂東 昌哉</li>
-</ul>
-</li>
-</ul>
-<h2 id="執筆について"><a href="#執筆について" class="headerlink" title="執筆について"></a>執筆について</h2><p>執筆は東京と福岡の2拠点で行いました。そちらについては次のブログで紹介しています。</p>
-<ul>
-<li><a href="http://tech.pepabo.com/2017/06/19/webdbpress-vol99/" target="_blank">WEB+DB PRESS Vol.99 の特集＆連載記事を寄稿しました！</a></li>
-</ul>
-<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>紹介した特集以外にも様々な興味深い記事が掲載されています。<br>私はwebpack、Rails5.1、チーム内の対立解消の記事が面白そうだな〜と思っています。<br>ぜひ、書店で手にとってご覧ください！</p>
-<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=syoyama-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4774189871&linkId=8bc1233b7c31524433977a518e28c82d"></iframe>
+<p>Railsには様々な予約語がありますが、歴史の長いシステムを扱っているとDBのカラムがその予約語に該当する場合があります。<br>例えば <code>class</code>というカラム名があった場合、そのカラムの影響で以下のエラーが発生します。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pry(main)&gt; User.all.first</span><br><span class="line"><span class="symbol">NoMethodError:</span> undefined method <span class="string">`fetch_value' for nil:NilClass</span></span><br></pre></td></tr></table></figure>
+
+<p>これを回避する方法の1つがDBのカラム名の変更です。<br>しかし、DBのカラム名の変更は様々な影響が考えられるため簡単に変更できない場合があります。</p>
+<p>その場合はアプリケーション側で回避します。</p>
+<h2 id="Rails5のignored-columnsで予約語のエラーを回避する"><a href="#Rails5のignored-columnsで予約語のエラーを回避する" class="headerlink" title="Rails5のignored_columnsで予約語のエラーを回避する"></a>Rails5のignored_columnsで予約語のエラーを回避する</h2><p>Rails5で追加された <a href="http://api.rubyonrails.org/classes/ActiveRecord/ModelSchema.html#method-c-ignored_columns-3D" target="_blank" rel="noopener">ignored_columns</a> を使えばこのカラム自体が無視されるようになり、エラーを回避できます。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class<span class="built_in"> User </span>&lt; ApplicationRecord</span><br><span class="line">  self.ignored_columns = %w(class)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<p>Rails4であれば以下で同様のことができるようです。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> &lt; ActiveRecord::Base</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">self</span>.<span class="title">columns</span></span></span><br><span class="line">    <span class="keyword">super</span>.reject &#123;<span class="params">|column|</span> column.name == <span class="string">'class'</span>&#125;</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="ignored-columnsで防げないパターン"><a href="#ignored-columnsで防げないパターン" class="headerlink" title="ignored_columnsで防げないパターン"></a>ignored_columnsで防げないパターン</h2><p>ただし、<code>ignored_columns</code> でも完全に防げない場合があります。</p>
+<p><code>to_json</code> メソッドでエラーが発生します。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">pry</span><span class="params">(main)</span></span>&gt; User<span class="selector-class">.all</span>.to_json</span><br><span class="line">SystemStackError: stack level too deep</span><br></pre></td></tr></table></figure>
+
+<p>この場合は、<code>except</code> オプションで回避できます。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="module-access"><span class="module"><span class="identifier">User</span>.</span></span>all.<span class="keyword">to</span><span class="constructor">_json(<span class="params">except</span>: [:<span class="params">class</span>])</span></span><br></pre></td></tr></table></figure>
+
+<p>今回の場合は、classカラム自体が不要だったので <code>ignore_columns</code> で対応しました。<br>classを使いたい場合は、どのように回避すればいいんでしょうか。。。</p>
+<p>どなたか知っている人がいれば情報をいただきたいです。</p>
 
         </div>
       </div>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2017-06-23T04:43:07.000Z" itemprop="datepublished">
-            2017/06/23
+          <time datetime="2017-02-25T13:50:20.000Z" itemprop="datepublished">
+            2017/02/25
           </time>
-          <time datetime="2017-06-23T04:43:07.000Z" itemprop="modified">
-            (更新日: 2017/06/23)
+          <time datetime="2017-02-25T13:50:20.000Z" itemprop="modified">
+            (更新日: 2017/02/25)
           </time>
         </div>
         <h1>
-        <a href="/blog/2017/06/23/why-i-ceased-updating-shoyan-blog-every-day/">毎日技術ブログを書いたらアクセスは増えるの？</a>
+        <a href="/blog/2017/02/25/introduce-twitter-card/">Twitterカードをサイトに設定する手順</a>
         </h1>
         <div class="content">
-          <p><img src="/images/2017-03-08-main.png" alt="2017-03-08-main"></p>
-<p>こんにちは、SHOYANです。</p>
-<p>SHOYAN BLOGでは平日毎日更新を目標としてWeb技術に特化した記事を書いていました。<br>その期間は2016年4月13日〜2016年12月31日です(後半はモチベーションが保てず、週1回程度の更新となっていましたが・・・)。</p>
-<p>毎日更新することでブログのアクセス数はどうなったかということをまとめました。</p>
-<h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>結論ファーストです。結論として毎日記事を公開しても、思ったよりもアクセス数は伸びませんでした。その理由とアクセスを増やすために有効であろう手法をまとめました。</p>
-<h2 id="100記事書いた後と前のアクセス数の比較"><a href="#100記事書いた後と前のアクセス数の比較" class="headerlink" title="100記事書いた後と前のアクセス数の比較"></a>100記事書いた後と前のアクセス数の比較</h2><p>下のグラフは2017年1月1日〜2017年2月1日(青線)と1年前(オレンジ線)のセッションの比較です。</p>
-<p><img src="/images/2017-03-08-01.png" alt="2017-03-08-01"></p>
-<p>記事数が増えたことによりセッションは171%増加しました。なるほど、記事を増やせばアクセスを増やすことができるのかと思われるはずです。しかし、この結果から記事数を増やせばアクセス数は増えると結論づけるのは時期尚早です。</p>
-<h2 id="アクセス数の伸び悩み現象"><a href="#アクセス数の伸び悩み現象" class="headerlink" title="アクセス数の伸び悩み現象"></a>アクセス数の伸び悩み現象</h2><p>下に表示しているのは直近1年のグラフです。グラフを見てもらえばわかる通り、アクセス数の伸び悩みが顕著です。</p>
-<p><img src="/images/2017-03-08-02.png" alt="2017-03-08-02"></p>
-<p>記事数は増えているのになぜでしょうか。</p>
-<h3 id="検索されるキーワードで記事を書かなければアクセスは増えない"><a href="#検索されるキーワードで記事を書かなければアクセスは増えない" class="headerlink" title="検索されるキーワードで記事を書かなければアクセスは増えない"></a>検索されるキーワードで記事を書かなければアクセスは増えない</h3><p>私のブログは検索エンジンとSNSからの流入がほとんどです。そのうち、アクセス数のベースとなっているのは検索エンジンからの流入です。</p>
-<p>検索エンジンからの流入はみなさんが検索エンジンで検索して検索結果に表示され、そのリンクをクリックしていただかない限りは発生しません。ですので、検索結果の上位に表示されない、もしくは、そもそも検索されない記事を書いてもアクセスは増えません。</p>
-<p>私のブログですが、118記事のうち32記事は流入がまったくありません。4分の1の記事にまったくアクセスがないという状態です。</p>
-<p>次に私が実践から学んだSEOの知見を紹介します。</p>
-<h3 id="独自ドメインはキーワードに関係のある名前でないと効果がない"><a href="#独自ドメインはキーワードに関係のある名前でないと効果がない" class="headerlink" title="独自ドメインはキーワードに関係のある名前でないと効果がない"></a>独自ドメインはキーワードに関係のある名前でないと効果がない</h3><p>独自ドメインはSEOに有利と言われていますが、効果はありませんでした。最初はgithub.ioのサブドメイン、<code>shoyan.github.io</code>で運営していましたが、2016年11月29日に独自ドメイン <code>48n.jp</code> を設定しました。グラフを見ればわかる通り、アクセスは変わっていません。キーワードに関係のある独自ドメインでないと効果がないと思われます。</p>
-<p><img src="/images/2017-03-08-02.png" alt="2017-03-08-02"></p>
-<h3 id="ドメインを変更しても適切にリダイレクトの設定を行えばアクセスは減少しない"><a href="#ドメインを変更しても適切にリダイレクトの設定を行えばアクセスは減少しない" class="headerlink" title="ドメインを変更しても適切にリダイレクトの設定を行えばアクセスは減少しない"></a>ドメインを変更しても適切にリダイレクトの設定を行えばアクセスは減少しない</h3><p>2016年11月29日に独自ドメイン <code>48n.jp</code> を設定しました。以前のドメインにアクセスした場合は301リダイレクトするように設定していたのでアクセスの減少は見られませんでした。適切にリダイレクト設定を行うことでアクセスの減少を防ぐことができます。</p>
-<h3 id="有名なサイトのサブドメインかどうかは検索順位に関係ない"><a href="#有名なサイトのサブドメインかどうかは検索順位に関係ない" class="headerlink" title="有名なサイトのサブドメインかどうかは検索順位に関係ない"></a>有名なサイトのサブドメインかどうかは検索順位に関係ない</h3><p>有名なサイトのサブドメインが有利という説があります。例えば私の使っていたgithub.ioドメインは世界中のIT技術者から利用されています。この事実からgithub.ioドメインはIT技術のSEOに強いといった考え方ができるでしょう。</p>
-<p>しかし、私は関係ないと考えています。というのも、github.ioドメインとはいえ、いいサイトもしょぼいサイトもあります。中には不正をしているサイトもあることでしょう。</p>
-<p>はたしてGoogleはそのようなサイトを全部ひっくるめて良いサイトと判断するでしょうか。テック系のサイトであろうという判断くらいはするかもしれません。しかし、あとはコンテンツ次第。あくまでもコンテンツでサイトは評価されるはずです。</p>
-<p>実際にどこの馬の骨ともわからない(Googleからみたら)独自ドメインにしてみましたが、それによるアクセスの減少はありませんでした。</p>
-<h2 id="技術ブログでアクセスを集めるには"><a href="#技術ブログでアクセスを集めるには" class="headerlink" title="技術ブログでアクセスを集めるには"></a>技術ブログでアクセスを集めるには</h2><p>最後に技術ブログでアクセスを集めるために有効ではないかと考えていることを紹介します。</p>
-<h3 id="キーワードを意識してコンテンツを作る"><a href="#キーワードを意識してコンテンツを作る" class="headerlink" title="キーワードを意識してコンテンツを作る"></a>キーワードを意識してコンテンツを作る</h3><p>私はこの基本ができていなかったために誰からも人に読まれない記事をせっせと量産していました。</p>
-<p>以下の2つは押さえておきたいポイントです。</p>
+          <p><img src="/images/Twitter_Logo_White_On_Blue.svg" alt="Twitter_Logo"></p>
+<h2 id="Twitterカードとは"><a href="#Twitterカードとは" class="headerlink" title="Twitterカードとは"></a>Twitterカードとは</h2><p><a href="https://dev.twitter.com/cards/getting-started" target="_blank">Twitterカード</a>はタイムラインに表示される情報をカスタマイズできる機能です。<br>Twitterカードを設定することでタイムラインに表示される情報をよりリッチなものにすることができます。<br>現在はSNSにより拡散されることも多いため、Twitterカードの設定をしておくとより多くの人の目にとまるようになり、記事への流入が期待できます。</p>
+<p>Twitterカードを設定すると以下のようになります。</p>
+<p><img src="/images/introduce_twitter_card_01.png" alt="introduce_twitter_card_01"></p>
+<h2 id="Twitterカードの設定"><a href="#Twitterカードの設定" class="headerlink" title="Twitterカードの設定"></a>Twitterカードの設定</h2><p>Twitterカードの設定手順を紹介します。</p>
+<h3 id="タグを設定する"><a href="#タグを設定する" class="headerlink" title="タグを設定する"></a>タグを設定する</h3><p>Twitterカードのを利用するためにはメタタグの設置が必要です。<br>以下は<a href="/blog/2015/12/01/mathematics-of-advent-calendar/">30歳から始める数学</a>に設定しているTwitterカードのサンプルコードです。</p>
+<h4 id="Sample-Code"><a href="#Sample-Code" class="headerlink" title="Sample Code"></a>Sample Code</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta <span class="attribute">name</span>=<span class="string">"twitter:card"</span> <span class="attribute">content</span>=<span class="string">"summary_large_image"</span> /&gt;</span><br><span class="line">&lt;meta <span class="attribute">name</span>=<span class="string">"twitter:site"</span> <span class="attribute">content</span>=<span class="string">"@sinn_shoyan"</span> /&gt;</span><br><span class="line">&lt;meta <span class="attribute">name</span>=<span class="string">"twitter:title"</span> <span class="attribute">content</span>=<span class="string">"30歳から始める数学"</span> /&gt;</span><br><span class="line">&lt;meta <span class="attribute">name</span>=<span class="string">"twitter:description"</span> <span class="attribute">content</span>=<span class="string">"とあることから、30歳にして数学を学び始めました。いまは毎日楽しく数学の書籍を読んだり方程式を解いたりしています。本記事では、僕と同じようにもう一度数学を学びたいなと思っている人向けに、数学の魅力を再発見する方法を紹介します。"</span> /&gt;</span><br><span class="line">&lt;meta <span class="attribute">name</span>=<span class="string">"twitter:image"</span> <span class="attribute">content</span>=<span class="string">"http://48n.jp/images/math-1547018_640.jpg"</span> /&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Twitterカードのメタタグのプロパティは以下となります。</p>
+<table>
+<thead>
+<tr>
+<th>プロパティ</th>
+<th>必須</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>twitter:card</td>
+<td>Yes</td>
+<td>twitterカードの種類を設定します</td>
+</tr>
+<tr>
+<td>twitter:site</td>
+<td>No</td>
+<td>twitterの@usernameを設定します</td>
+</tr>
+<tr>
+<td>twitter:title</td>
+<td>Yes</td>
+<td>記事のタイトルを設定します</td>
+</tr>
+<tr>
+<td>twitter: description</td>
+<td>Yes</td>
+<td>記事の説明を設定します</td>
+</tr>
+<tr>
+<td>twitter:image</td>
+<td>No</td>
+<td>画像を設定します。サイズは横幅280px以上 × 縦幅150px以上です。サイズは1MB以下でないといけません。</td>
+</tr>
+</tbody></table>
+<p>他にも設定できるオプションがありますが長くなるのでここでは割愛します。<br>詳しくはドキュメントを参照してください。</p>
 <ul>
-<li>検索されそうなキーワードを選定すること</li>
-<li>タイトルにキーワードを含めること</li>
+<li><a href="https://dev.twitter.com/cards/markup" target="_blank" rel="noopener">https://dev.twitter.com/cards/markup</a></li>
 </ul>
-<p>キーワードの検索ボリュームはGoogleが提供している<a href="https://adwords.google.co.jp/KeywordPlanner" target="_blank" rel="noopener">キーワードプランナー</a>で確認できます。また<a href="http://keywordtool.io/" target="_blank" rel="noopener">Keyword Tool</a>でどんなキーワードが検索されているかを確認することができます。</p>
-<p>この2つのツールを使って検索されているキーワードを確認して、そのキーワードをタイトルに含めてください。</p>
-<h3 id="良質なコンテンツを作る"><a href="#良質なコンテンツを作る" class="headerlink" title="良質なコンテンツを作る"></a>良質なコンテンツを作る</h3><p>良質なコンテンツを作ることがアクセスを集める大前提であることに異論がある人は少ないでしょう。有益な情報を継続して発信することで読者が増えていくのは自然なことです。私は<a href="https://slack.com/" target="_blank" rel="noopener">Slack</a>のRSSインテグレーションを使って面白いと思ったブログを購読しています。</p>
-<h3 id="購読してもらえる仕組みを用意する"><a href="#購読してもらえる仕組みを用意する" class="headerlink" title="購読してもらえる仕組みを用意する"></a>購読してもらえる仕組みを用意する</h3><p>ブログを購読してもらえる仕組みを用意しましょう。はてなブログであれば購読機能がついていますし、RSSのリンクを設置することでRSSリーダーに登録してもらいやすくなります。ブログを作成するサービスやツールにはRSSの機能が備わっているので、それを使うとよいでしょう。</p>
-<h3 id="SNSで拡散してもらいやすくする"><a href="#SNSで拡散してもらいやすくする" class="headerlink" title="SNSで拡散してもらいやすくする"></a>SNSで拡散してもらいやすくする</h3><p>良質なコンテンツを書いてバズるとアクセスが爆発的に増えます。技術系のブログだとはてなブックマークのホットエントリーに掲載されることで結構なアクセスを稼ぐことができます。</p>
-<p>はてなブックマークに掲載された時のアクセスです。</p>
-<p><img src="/images/2017-03-08-03.png" alt="2017-03-08-03"></p>
-<p>1日で私のブログの2ヶ月分くらいのアクセスを叩き出しています。また、外部リンクを得ることができるのでサイトの評価にも良い影響があると思われます。ちなみに2件ブクマしてもらえると、はてなブックマークの新着に掲載されるとのことです。セルフブクマ(自分自身でのブクマ)もカウントされるので、実質誰か1人にブクマしてもらえばいいわけです。</p>
-<p>はてなブックマークとTwitterのSNSボタンは用意しておきましょう。Twitterカードも設定しておくとよいと思います。設定方法をまとめているので参考にしてください。</p>
+<h3 id="Twitterが提供しているCard-Validatorで申請を行う"><a href="#Twitterが提供しているCard-Validatorで申請を行う" class="headerlink" title="Twitterが提供しているCard Validatorで申請を行う"></a>Twitterが提供しているCard Validatorで申請を行う</h3><p>Twitterカードを有効にするにはTwitterが提供しているCard Validatorで申請を行う必要があります。<br>こちらの作業は1度行えば今後は必要ありません。</p>
 <ul>
-<li><a href="/blog/2017/02/25/introduce-twitter-card/">Twitterカードをサイトに設定する手順</a></li>
+<li><a href="https://cards-dev.twitter.com/validator" target="_blank" rel="noopener">https://cards-dev.twitter.com/validator</a></li>
 </ul>
-<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>技術ブログを2年ほど書いてきましたが、単純に記事を書けばアクセスが増えるわけではないのでなかなか難しいですね。あまりアクセスにこだわることなく記事の内容にこだわったほうが良いように思っているこの頃です。とはいえ、この記事に書いていることはアクセスアップにそれなりの効果があるはずなので参考にしてみてください。</p>
+<p>テキストフォームに確認したいページのURLを入力します。<br>エラーがなければ以下のように表示され、Twitterカードが有効になります。</p>
+<p><img src="/images/introduce_twitter_card_02.png" alt="introduce_twitter_card_02"></p>
+<p>一度認証が成功するとそのドメインでTwitterカードの利用が有効となります(サブドメインも含む)。</p>
+<h2 id="Twitterカードの種類"><a href="#Twitterカードの種類" class="headerlink" title="Twitterカードの種類"></a>Twitterカードの種類</h2><p>最後にTwitterカードの種類を紹介します。<br>仕様変更が行われたようで、現在は以下の4つのTwitterカードが利用できます。</p>
+<ul>
+<li>Summary Card</li>
+<li>Summary Card with Large Image</li>
+<li>App Card</li>
+<li>Player Card</li>
+</ul>
+<h3 id="Summary-Card"><a href="#Summary-Card" class="headerlink" title="Summary Card"></a>Summary Card</h3><p>URLの概要をまとめて表示してくれるTwitterカードです。</p>
+<p><img src="/images/summary_card.png" alt="summary_card_example"></p>
+<h3 id="Summary-Card-with-Large-Image"><a href="#Summary-Card-with-Large-Image" class="headerlink" title="Summary Card with Large Image"></a>Summary Card with Large Image</h3><p>Summary Cardとほとんど同じですが、画像がより大きなサイズで表示されます。</p>
+<p><img src="/images/summary_card_with_large_image.png" alt="summary_card_with_large_image_example"></p>
+<h3 id="App-Card"><a href="#App-Card" class="headerlink" title="App Card"></a>App Card</h3><p>モバイルのアプリを紹介するためのTwitterカードです。ダウンロードリンクも表示されます。</p>
+<p><img src="/images/app_card.png" alt="app_card_example"></p>
+<h3 id="Player-Card"><a href="#Player-Card" class="headerlink" title="Player Card"></a>Player Card</h3><p>ツイートに動画、オーディオを埋め込めるTwitterカードです。</p>
+<p><img src="/images/player_card.png" alt="player_card_example"></p>
+<h2 id="おわりに"><a href="#おわりに" class="headerlink" title="おわりに"></a>おわりに</h2><p>以上がTwitterカードの導入に関する説明となります。<br>Twitterカードについての詳しい情報は<a href="https://dev.twitter.com/ja/cards/overview" target="_blank" rel="noopener">公式ドキュメント</a>をご覧ください。<br>また、Twitterカードの設置に関して疑問点などあれば、ブログのコメント欄やTwitterでお気軽にご連絡ください。</p>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2017-01-13T06:44:48.000Z" itemprop="datepublished">
+            2017/01/13
+          </time>
+          <time datetime="2017-01-13T06:44:48.000Z" itemprop="modified">
+            (更新日: 2017/01/13)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2017/01/13/belongs-to-should-default-to-required-true-rails5/">Rails5からbelongs_toアソシエーションの挙動が変わった</a>
+        </h1>
+        <div class="content">
+          <p>Rails5から <code>belogs_to</code> アソシエーションの挙動が変わった。</p>
+<p>親モデルに属している子モデルは親モデルの外部キーが存在しないとバリデーションエラーになるのがデフォルトの挙動となっている。<br>参照先レコードのidをnullで登録しようとした場合は以下のようなバリデーションエラーが出る。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">ActiveRecord:</span>:<span class="string">RecordInvalid:</span> Validation <span class="string">failed:</span> Post  must exist</span><br></pre></td></tr></table></figure>
+
+<p>DHHの一声で <code>belogs_to</code> の挙動が変わる様が垣間見れるイシュー。</p>
+<ul>
+<li><a href="https://github.com/rails/rails/issues/18233" target="_blank" rel="noopener">https://github.com/rails/rails/issues/18233</a></li>
+</ul>
+<p>DHHの言い分としては「普通 belongs_to って、参照先テーブルのIDは必ずもってるだろ。ならデフォルト required: true でよくね？」という話。</p>
+<p>この挙動をRails4と同じにしたい場合は <code>optional: true</code> を使う(<code>required: false</code> は廃止予定なので使わないほうがいい)。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Post</span> &lt; ApplicationRecord</span></span><br><span class="line">  belongs_to <span class="symbol">:article</span> , <span class="symbol">optional:</span> <span class="literal">true</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p><code>belongs_to</code> のオプションの詳細については以下のドキュメントで参照できる。</p>
+<ul>
+<li><a href="http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-belongs_to" target="_blank" rel="noopener">http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-belongs_to</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2017-01-10T08:53:25.000Z" itemprop="datepublished">
+            2017/01/10
+          </time>
+          <time datetime="2017-01-10T08:53:25.000Z" itemprop="modified">
+            (更新日: 2017/01/10)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2017/01/10/think-agriculture-and-iot/">4億円調達したゼロアグリと農業の未来</a>
+        </h1>
+        <div class="content">
+          <p>Iotの技術を使った<a href="http://www.zero-agri.jp/" target="_blank" rel="noopener">ゼロアグリ</a>を開発している<a href="http://www.routrek.co.jp/" target="_blank" rel="noopener">ルートレック・ネットワークス</a>が4億円の資金調達をした。<br>ゼロアグリは農作物の水や肥料の管理を独自のアルゴリズムとIoTの技術を使って機械化する取り組みを行っている。</p>
+<ul>
+<li><a href="http://jp.techcrunch.com/2016/12/26/zero-agri-raises-400m-yen/" target="_blank" rel="noopener">http://jp.techcrunch.com/2016/12/26/zero-agri-raises-400m-yen/</a></li>
+</ul>
+<p>私は農業とIoTの分野に大きな可能性を感じておりウォッチしているのだが、ゼロアグリのように進めているところはしっかり進めているように感じる。<br>まだまだ開発段階のものが多いが10年後には実用化レベルに達するものが結構出てくると思っており、新しい農業の形が形成されていくのではと思う。</p>
+<p>ゼロアグリの佐々木氏は「農場に関するデータを可視化するものだけだと農家に受け入れられなかった」と語っているが、まさにその通りだと思う。<br>農業は数値ではなく感覚で判断するものだと思う。<br>そこにいきなり数値が出てきても受け入れられるのはなかなか難しいだろう。</p>
+<p>私は家庭菜園をしているが、土がよければ放っておいても野菜は育つ。<br>そういうものだから、土の水分や養分をモニタリングしてもあまり意味がない。</p>
+<p>じゃあ、何が必要かというと、目の前の農家が困っていることを解決出来る仕組みだと思う。<br>その問題を解決するにあたってどうしても物理的に制御が必要なものが出てくるはずだ。<br>IoTの技術の進化でその技術を多くの人が使えるようになってきている。<br>実際に困っていることを解決するためのものをそこらの人が作る。<br>そういうことができる時代がやってきていることに可能性を感じる。</p>
+<p>私の友人は農家をやっているが、有機農法なので除草に手間がかかっているようだ。<br>その除草の手間をIoTの技術を使って軽減できないだろうかと考える(いいアイデアはない)。<br>また配達が手間のようなので、配達の手間を省けるような仕組みを考えるといいかもしれない。<br>例えばドローンを使って郵送するとか。<br>実際やろうとしたらものすごく大変そうだけど(野菜って重いんですよね)。</p>
 
         </div>
       </div>
@@ -354,7 +416,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/7/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/9/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/7/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/9/">Next</a>
 </div>
 
   </div>

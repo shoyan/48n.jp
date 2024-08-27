@@ -146,123 +146,207 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2016-09-02T04:36:58.000Z" itemprop="datepublished">
-            2016/09/02
+          <time datetime="2016-08-08T04:30:30.000Z" itemprop="datepublished">
+            2016/08/08
           </time>
-          <time datetime="2016-09-02T04:36:58.000Z" itemprop="modified">
-            (更新日: 2016/09/02)
+          <time datetime="2016-08-08T04:30:30.000Z" itemprop="modified">
+            (更新日: 2016/08/08)
           </time>
         </div>
         <h1>
-        <a href="/blog/2016/09/02/isucon2016/">社内ISUCONに参加して優勝した</a>
+        <a href="/blog/2016/08/08/php-lint-with-ci/">PHPの構文チェックを自動で行う方法</a>
         </h1>
         <div class="content">
-          <p>社内ISUCONが開催されたので参加してみた。<br>参加チームは全10チーム。<br>ISUCONは今回初めての参加だったが、思っていた以上に楽しかった。<br>参加するまではそんなに楽しいものなのかと懐疑的だったのだが、ほかのチームとスコアを競い一喜一憂するのは楽しいものだった。</p>
-<p>社内のプライベートクラウド上で行い、PHPとRubyのアプリケーションを選択することができた。<br>最初はRubyでやったが、スコアがあがらなかったのでPHPのアプリケーションに変更した。</p>
-<p>効果があったのが、クエリのチューニング。<br>select句でアプリケーションに使うカラムに絞ることでIOを減らしたり、結果をセッションにキャッシュすることでクエリの実行回数を減らした。<br>また、テーブルのカラムにインデックスを作成してチューニングした。<br>そのほか、php-fpmの子プロセスの数を増やしたり、mysqlのパラメーターをチューニングするのも効果があった(具体的にはinnodb_buffer_pool_size,read_rnd_buffer_size,sort_buffer_size,query_cache_sizeあたり)。</p>
-<p>サーバ側はほかのメンバーに任せきりといった感じだったので、どこがボトルネックになっているかを素早く探すスキルやミドルウェアをパパッと導入できるスキルを身につけたいと思った。<br>優勝できたのは他のメンバーが頑張ってくれたのと運がよかったのだと思う。<br>個人的には反省の多いISUCONだった。<br>課題が見つかったのとISUCONを楽しめたのが収穫だ。</p>
+          <p>私のチームではCIで自動的にLINTをする仕組みを構築しています。<br>この仕組みにより、レガシーコードでテストコードがない環境でもシンタックスエラーの混入を防ぐことができます。</p>
+<p>中身はシンプルで以下のスクリプトを作成して、CIプラットホームで実行するようにします。</p>
+<p>php-lint.sh</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line">RESULT=`find . -<span class="built_in">type</span> f -name <span class="string">"*.php"</span> -<span class="built_in">exec</span> php -l &#123;&#125; \; 2&gt;&amp;1 | grep <span class="string">"PHP Parse error"</span>`</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$RESULT</span>"</span> != <span class="string">""</span> ];<span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$RESULT</span>"</span></span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<p>例えば、Droneでチェックする場合は以下のように設定します。</p>
+<p>.drone.yml</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">scrip</span><span class="variable">t:</span></span><br><span class="line">  - ./php-lint.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure>
 
         </div>
       </div>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2016-08-31T04:36:11.000Z" itemprop="datepublished">
-            2016/08/31
+          <time datetime="2016-08-03T04:42:38.000Z" itemprop="datepublished">
+            2016/08/03
           </time>
-          <time datetime="2016-08-31T04:36:11.000Z" itemprop="modified">
-            (更新日: 2016/08/31)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/08/31/pokemon-go/">ポケモンGOが自分を変えたこと</a>
-        </h1>
-        <div class="content">
-          <p>ポケモンGOが日本で遊べるようになったのが2016/6/21。<br>およそ2ヶ月が経ちスタート当時のブームは落ち着いてきた。</p>
-<p>自分はコツコツと続けていて、最近ようやくレベル20になった。<br>レベル20になるとポケストップでハイパーボールが出てくるようになる。</p>
-<p>今更だが、ポケモンGOの開発者のメッセージをみた。<br>目指しているのはみんなが外に出てもっと歩き、新しい場所へ行き、友達と楽しむゲームという言葉が印象的だった。<br>そんなゲームで遊ぶことで、人生が豊かになると信じていると話していた。</p>
-<p>自分はポケモンGOをやりだしてから、ほんの少しだが人生が豊かになったと思う。</p>
-<p>家の近くのポケモンを息子と一緒に探しにいったことがある。<br>カビゴンを見つけたときは2人で歓声をあげたものだ。</p>
-<p>ポケモンGOにはポケストップがいたるところにある。<br>今まで気づかず、素通りしていたものに気付かされた。<br>身近なところにこんなものがあったのかと。</p>
-<p>最近は道を歩くときに、なにか面白いものはないかと気にするようになった。<br>少しだけ自分も変わっているのだと思う。</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/hdpYBEJMfy0" frameborder="0" allowfullscreen></iframe>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-08-24T08:32:51.000Z" itemprop="datepublished">
-            2016/08/24
-          </time>
-          <time datetime="2016-08-24T08:32:51.000Z" itemprop="modified">
-            (更新日: 2016/08/24)
+          <time datetime="2016-08-03T04:42:38.000Z" itemprop="modified">
+            (更新日: 2016/08/03)
           </time>
         </div>
         <h1>
-        <a href="/blog/2016/08/24/sets-locale-on-docker/">Dockerでlocaleを設定する</a>
+        <a href="/blog/2016/08/03/docker-auto-build-tutorial/">GitHubにpushしたらDockerイメージを自動ビルドする</a>
         </h1>
         <div class="content">
-          <p>Dockerでlocaleを設定したいときがある。<br>例えばマルチバイトを扱うときだ。<br>localeを設定していないイメージで処理を行うと <code>ArgumentError: invalid byte sequence in US-ASCII</code> のようなエラーが発生することがある。<br>Dockerでlocaleを設定する場合は、以下のようにDockerfileに定義する。</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">RUN</span><span class="bash"> locale-gen ja_JP.UTF-8</span></span><br><span class="line"><span class="keyword">ENV</span> LANG ja_JP.UTF-<span class="number">8</span></span><br><span class="line"><span class="keyword">ENV</span> LANGUAGE ja_JP:en</span><br><span class="line"><span class="keyword">ENV</span> LC_ALL ja_JP.UTF-<span class="number">8</span></span><br></pre></td></tr></table></figure>
-
-<p>タイムゾーンも変えたい場合は以下も追記しておく。</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RUN ln -fs <span class="regexp">/usr/</span>share<span class="regexp">/zoneinfo/</span>Asia<span class="regexp">/Tokyo /</span>etc<span class="regexp">/localtime</span></span><br></pre></td></tr></table></figure>
-
-<p>コンテナに入ってlocaleを表示すると以下のようになった。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">root@e893a5fa3eea:/# locale</span><br><span class="line"><span class="attribute">LANG</span>=ja_JP.UTF-8</span><br><span class="line"><span class="attribute">LANGUAGE</span>=ja_JP:en</span><br><span class="line"><span class="attribute">LC_CTYPE</span>=<span class="string">"ja_JP.UTF-8"</span></span><br><span class="line"><span class="attribute">LC_NUMERIC</span>=<span class="string">"ja_JP.UTF-8"</span></span><br><span class="line"><span class="attribute">LC_TIME</span>=<span class="string">"ja_JP.UTF-8"</span></span><br><span class="line"><span class="attribute">LC_COLLATE</span>=<span class="string">"ja_JP.UTF-8"</span></span><br><span class="line"><span class="attribute">LC_MONETARY</span>=<span class="string">"ja_JP.UTF-8"</span></span><br><span class="line"><span class="attribute">LC_MESSAGES</span>=<span class="string">"ja_JP.UTF-8"</span></span><br><span class="line"><span class="attribute">LC_PAPER</span>=<span class="string">"ja_JP.UTF-8"</span></span><br><span class="line"><span class="attribute">LC_NAME</span>=<span class="string">"ja_JP.UTF-8"</span></span><br><span class="line"><span class="attribute">LC_ADDRESS</span>=<span class="string">"ja_JP.UTF-8"</span></span><br><span class="line"><span class="attribute">LC_TELEPHONE</span>=<span class="string">"ja_JP.UTF-8"</span></span><br><span class="line"><span class="attribute">LC_MEASUREMENT</span>=<span class="string">"ja_JP.UTF-8"</span></span><br><span class="line"><span class="attribute">LC_IDENTIFICATION</span>=<span class="string">"ja_JP.UTF-8"</span></span><br><span class="line"><span class="attribute">LC_ALL</span>=ja_JP.UTF-8</span><br></pre></td></tr></table></figure>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-08-23T04:37:27.000Z" itemprop="datepublished">
-            2016/08/23
-          </time>
-          <time datetime="2016-08-23T04:37:27.000Z" itemprop="modified">
-            (更新日: 2016/08/23)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/08/23/last-comment-is-deprecated/">Rails 4.2.7.1 に更新した後に [DEPRECATION] last_comment is deprecated. が発生した</a>
-        </h1>
-        <div class="content">
-          <p>Railsを4.2.7.1にアップデートをしてrspecを実行すると、以下のエラーが発生するようになった。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ bundle exec rspec spec</span><br><span class="line">[DEPRECATION] `last_comment` is deprecated.  Please use `last_description` instead.</span><br><span class="line">[DEPRECATION] `last_comment` is deprecated.  Please use `last_description` instead.</span><br><span class="line">[DEPRECATION] `last_comment` is deprecated.  Please use `last_description` instead.</span><br><span class="line">[DEPRECATION] `last_comment` is deprecated.  Please use `last_description` instead.</span><br><span class="line">[DEPRECATION] `last_comment` is deprecated.  Please use `last_description` instead.</span><br><span class="line"><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span></span><br><span class="line"></span><br><span class="line">Finished <span class="keyword">in</span> 2.33 seconds (files took 8.78 seconds <span class="keyword">to</span> load)</span><br><span class="line">102 examples, 0 failures</span><br></pre></td></tr></table></figure>
-
-<p>grepしてみたところ、rspecで使用していた。</p>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hw last_comment vendor/bundle</span><br><span class="line">vendor/bundle/ruby/<span class="number">2.2</span>.<span class="number">0</span>/gems/rspec-core-<span class="number">3.2</span>.<span class="number">2</span>/<span class="class"><span class="keyword">lib</span>/<span class="title">rspec</span>/<span class="title">core</span>/<span class="title">rake_task</span>.<span class="title">rb</span></span></span><br><span class="line"><span class="number">84</span>:        desc <span class="string">"Run RSpec code examples"</span> <span class="keyword">unless</span> ::Rake.application.last_comment</span><br></pre></td></tr></table></figure>
-
-<p>rspecをアップデートしたら出なくなった。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ bundle update rspec-rails</span><br><span class="line"></span><br><span class="line">$ bundle exec rspec spec</span><br><span class="line"><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span></span><br><span class="line"></span><br><span class="line">Finished <span class="keyword">in</span> 2.33 seconds (files took 8.85 seconds <span class="keyword">to</span> load)</span><br><span class="line">102 examples, 0 failures</span><br></pre></td></tr></table></figure>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-08-22T04:53:14.000Z" itemprop="datepublished">
-            2016/08/22
-          </time>
-          <time datetime="2016-08-22T04:53:14.000Z" itemprop="modified">
-            (更新日: 2016/08/22)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/08/22/freeze-iphone6/">iPhone6の画面が真っ暗で反応しなくなった</a>
-        </h1>
-        <div class="content">
-          <p>iPhone6の画面が真っ暗になり操作できなくなった。<br>画面は真っ暗だが、Siriが反応するので電源は入っている模様。</p>
-<p>電源ケーブルを挿してみたが症状は変わらず。<br>電源ボタンを押しても反応がない。</p>
-<p>修理となるとショップまで足を運ぶのが面倒くさいし、色々とクリアしないといけない問題が浮かんでくる。<br>まずは、家から出るのが1つめの難関だ。<br>高い確率で上の子がついてくるとダダをこね、下の子は泣くだろう。それを見た妻からは怪訝な顔をされる。<br>なんとか家を出れたとしても、近くのショップの駐車場が空いていないかもしれないし、駐車できたとしても待ち時間があるかもしれない。以前、近くのドコモショップにいったら1時間くらい待ち時間がかかりますと言われたことがある。<br>また、ショップ店員に見せても要領の得ない回答をされて、無駄に時間がかかってしまう可能性もありそうだ。<br>そういうことを考えるとショップに行くのがとても億劫になる。</p>
-<p>自分でなんとかできないだろうかと自宅のPCでググった。そして、iPhoneを強制再起動する方法を見つけた。<br>やりかたは、電源ボタンとホームボタンを10秒以上長押しする。<br>するとアップルのリンゴマークが表示されるので、そのまま待っていると再起動する。<br>見事、このやり方で復活した。</p>
-<p>iPhoneが操作不能になった場合、以下のことを試してみるとよい。</p>
+          <p>Docker HubとGitHubを使ってDockerイメージの自動ビルドを行う方法を紹介します。</p>
+<h2 id="自動ビルドのメリット"><a href="#自動ビルドのメリット" class="headerlink" title="自動ビルドのメリット"></a>自動ビルドのメリット</h2><p>自動ビルドのメリットは以下です。</p>
 <ul>
-<li>電源ボタンで電源を切って再起動</li>
-<li>電源コードを挿す</li>
-<li>強制再起動する</li>
-<li>どうしようもないのでショップに相談する</li>
+<li>常に最新のイメージがDocker Hubに用意される</li>
+<li>Dockerfileが公開され使う人が安心できる</li>
+<li>READMEも常に最新のものがDocker Hubに公開される</li>
+</ul>
+<p>Docker Hubを利用するには事前にアカウントの作成が必要です。<br>Docker Hubのアカウントの作成は以下を参考にしてください。</p>
+<ul>
+<li><a href="https://docs.docker.com/engine/getstarted/step_five/" target="_blank" rel="noopener">Create a Docker Hub account &amp; repository</a></li>
+</ul>
+<h2 id="Docker-Hubで自動ビルドの設定をする"><a href="#Docker-Hubで自動ビルドの設定をする" class="headerlink" title="Docker Hubで自動ビルドの設定をする"></a>Docker Hubで自動ビルドの設定をする</h2><p>すでにDockerfileがGitHubで管理されていることを前提に話しを進めます。</p>
+<p>Docker Hubにログインしたら「Profile &gt; Settings &gt; Linked Accounts &amp; Services.」を選択します。</p>
+<p>GitHubを使うのでGitHubのパネルを選択し、認証をしてください。<br>認証が成功すると、以下のような画面になります。</p>
+<p><img src="/images/docker-auto-build-01.png" alt="docker-auto-build-01"></p>
+<p>認証が済んだら、Docker Hubにリポジトリを作成します。</p>
+<p>「 Create &gt; Create Automated Build」を選択します。<br><img src="/images/docker-auto-build-02.png" alt="docker-auto-build-02"></p>
+<p>すると以下の画面が表示されます。</p>
+<p><img src="/images/docker-auto-build-03.png" alt="docker-auto-build-03"></p>
+<p>GitHubを選択すると 「Users/Organizations」とリポジトリを選択できる画面になるので、自動ビルドを行うリポジトリを選択します。</p>
+<p>Createボタンを押すと登録され、Docker Hubに表示されるようになります。</p>
+<p><img src="/images/docker-auto-build-04.png" alt="docker-auto-build-04"></p>
+<p><img src="/images/docker-auto-build-05.png" alt="docker-auto-build-05"></p>
+<p>リポジトリの「Build Settings」でビルドの設定ができます。</p>
+<p>Triggerボタンを押すとビルドが始まります。</p>
+<p><img src="/images/docker-auto-build-06.png" alt="docker-auto-build-06"></p>
+<p>ビルドの状態は「Build Details」で確認できます。</p>
+<p><img src="/images/docker-auto-build-07.png" alt="docker-auto-build-07"></p>
+<p>Queuedはビルド待ちのステータス。<br>Buildingはビルド中のステータスです。</p>
+<p>GitHubにpushすればBuild Settingsで設定したブランチが自動的にビルドされます。</p>
+<p>以上、簡単ですがDockerの自動ビルドの設定方法の紹介でした。<br>英語版ですが、詳しい方法が書いてあるのでこちらも参考にしてください。</p>
+<ul>
+<li><a href="https://docs.docker.com/docker-hub/builds/" target="_blank" rel="noopener">Automated Builds on Docker Hub</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-08-02T04:40:25.000Z" itemprop="datepublished">
+            2016/08/02
+          </time>
+          <time datetime="2024-08-27T07:17:56.210Z" itemprop="modified">
+            (更新日: 2024/08/27)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/08/02/README/">Botsインテグレーションを使って手軽にRubotyをSlackで動かす</a>
+        </h1>
+        <div class="content">
+          <p>前回は<a href="/blog/2016/07/29/first-step-ruboty/">Rubotyのインストールとプラグインチュートリアル</a>でRubotyの導入方法を紹介しました。<br>今回はRubotyをSlackで動かす方法を紹介します。</p>
+<p>RubotyにはSlackアダプターが用意してありますが、新しくユーザーの作成が必要です。<br>ユーザーの作成が必要のない、Botsインテグレーションと<a href="https://github.com/rosylilly/ruboty-slack_rtm" target="_blank" rel="noopener">ruboty-slack_rtm</a>を使ってRubotyをSlackで動かす方法を紹介します。</p>
+<h2 id="ruboty-slack-rtmのインストール"><a href="#ruboty-slack-rtmのインストール" class="headerlink" title="ruboty-slack_rtmのインストール"></a>ruboty-slack_rtmのインストール</h2><p>Gemfileに以下を定義します。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">gem</span> <span class="string">"ruboty-slack_rtm"</span></span><br></pre></td></tr></table></figure>
+
+<p><code>bundle install</code> コマンドでインストールします。</p>
+<h2 id="SlackのBotsインテグレーションを設定する"><a href="#SlackのBotsインテグレーションを設定する" class="headerlink" title="SlackのBotsインテグレーションを設定する"></a>SlackのBotsインテグレーションを設定する</h2><p>Slackの管理画面でBotsインテグレーションを登録します。</p>
+<p><img src="/images/bots-integration.png" alt="bots-integration"></p>
+<p>登録するとTokenが発行されるので、そのTokenをSLACK_TOKENという名前で環境変数に設定します。<br>Rubotyは dotenv に対応しているので、<code>.env</code> ファイルを作成し、そこにTOKENを登録しておくと便利です。</p>
+<p>.env</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">SLACK_TOKEN</span>=&lt;slack token&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Ruboty を起動します。<code>.env</code> ファイルを読み込むように <code>—dotenv</code> オプションをつけて起動します。</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bundle exec ruby <span class="comment">--dotenv</span></span><br></pre></td></tr></table></figure>
+
+<p>起動すると SlackのRubotyがログインマークに変わります。</p>
+<p>あとは、チャンネルにinviteすればSlackでRubotyが使えます！<br>ちなみにrubotyではなく、Botsインテグレーションで登録したユーザー名に反応します。</p>
+<h3 id="関連記事"><a href="#関連記事" class="headerlink" title="関連記事"></a>関連記事</h3><ul>
+<li><a href="/blog/2016/07/29/first-step-ruboty/">Rubotyのインストールとプラグインチュートリアル</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-08-02T04:40:25.000Z" itemprop="datepublished">
+            2016/08/02
+          </time>
+          <time datetime="2016-08-02T04:40:25.000Z" itemprop="modified">
+            (更新日: 2016/08/02)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/08/02/ruboty-and-slack/">Botsインテグレーションを使って手軽にRubotyをSlackで動かす</a>
+        </h1>
+        <div class="content">
+          <p>前回は<a href="/blog/2016/07/29/first-step-ruboty/">Rubotyのインストールとプラグインチュートリアル</a>でRubotyの導入方法を紹介しました。<br>今回はRubotyをSlackで動かす方法を紹介します。</p>
+<p>RubotyにはSlackアダプターが用意してありますが、新しくユーザーの作成が必要です。<br>ユーザーの作成が必要のない、Botsインテグレーションと<a href="https://github.com/rosylilly/ruboty-slack_rtm" target="_blank" rel="noopener">ruboty-slack_rtm</a>を使ってRubotyをSlackで動かす方法を紹介します。</p>
+<h2 id="ruboty-slack-rtmのインストール"><a href="#ruboty-slack-rtmのインストール" class="headerlink" title="ruboty-slack_rtmのインストール"></a>ruboty-slack_rtmのインストール</h2><p>Gemfileに以下を定義します。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">gem</span> <span class="string">"ruboty-slack_rtm"</span></span><br></pre></td></tr></table></figure>
+
+<p><code>bundle install</code> コマンドでインストールします。</p>
+<h2 id="SlackのBotsインテグレーションを設定する"><a href="#SlackのBotsインテグレーションを設定する" class="headerlink" title="SlackのBotsインテグレーションを設定する"></a>SlackのBotsインテグレーションを設定する</h2><p>Slackの管理画面でBotsインテグレーションを登録します。</p>
+<p><img src="/images/bots-integration.png" alt="bots-integration"></p>
+<p>登録するとTokenが発行されるので、そのTokenをSLACK_TOKENという名前で環境変数に設定します。<br>Rubotyは dotenv に対応しているので、<code>.env</code> ファイルを作成し、そこにTOKENを登録しておくと便利です。</p>
+<p>.env</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">SLACK_TOKEN</span>=&lt;slack token&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Ruboty を起動します。<code>.env</code> ファイルを読み込むように <code>—dotenv</code> オプションをつけて起動します。</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bundle exec ruby <span class="comment">--dotenv</span></span><br></pre></td></tr></table></figure>
+
+<p>起動すると SlackのRubotyがログインマークに変わります。</p>
+<p>あとは、チャンネルにinviteすればSlackでRubotyが使えます！<br>ちなみにrubotyではなく、Botsインテグレーションで登録したユーザー名に反応します。</p>
+<h3 id="関連記事"><a href="#関連記事" class="headerlink" title="関連記事"></a>関連記事</h3><ul>
+<li><a href="/blog/2016/07/29/first-step-ruboty/">Rubotyのインストールとプラグインチュートリアル</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-07-29T04:55:33.000Z" itemprop="datepublished">
+            2016/07/29
+          </time>
+          <time datetime="2016-07-29T04:55:33.000Z" itemprop="modified">
+            (更新日: 2016/07/29)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/07/29/first-step-ruboty/">5分でできるRubotyのインストールとプラグインチュートリアル</a>
+        </h1>
+        <div class="content">
+          <p><a href="https://github.com/r7kamura/ruboty/" target="_blank" rel="noopener">Ruboty</a>はhubotクローンでRubyで書けるbotです。<br>このチュートリアルではRubotyのインストールとプラグインの作成方法を紹介します。<br>冗長な説明をあえて除きRubotyを動かすために重要な部分のみ解説することでスピーディにRubotyを動作できるようにしています。</p>
+<h2 id="Rubotyをローカルで動かす"><a href="#Rubotyをローカルで動かす" class="headerlink" title="Rubotyをローカルで動かす"></a>Rubotyをローカルで動かす</h2><p>以下のコマンドでinstallします。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gem <span class="keyword">install</span> ruboty</span><br></pre></td></tr></table></figure>
+
+<p>以下のコマンドでひな形を作成します。<br><code>ruboty/</code> ディレクトリとその配下にGemfileが作成されます。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ruboty --<span class="keyword">generate</span></span><br></pre></td></tr></table></figure>
+
+<p>Rubotyを起動してみます。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ruboty</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> bundle install</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> bundle <span class="built_in">exec</span> ruboty</span></span><br></pre></td></tr></table></figure>
+
+<p>すると対話型のプロンプトが起動します。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ bundle exec ruboty</span><br><span class="line">Type `exit` <span class="keyword">or</span> `quit` <span class="keyword">to</span> end the session.</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+
+<p>ruboty pingコマンドを実行します。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; ruboty ping</span><br><span class="line">pong</span><br></pre></td></tr></table></figure>
+
+<p>ruby helpコマンドで一覧が見れます。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; ruboty help</span><br><span class="line">ruboty /help( me)?(?: (?&lt;filter&gt;.+))?\z/i - Show this help message</span><br><span class="line">ruboty /ping\z/i - Return PONG <span class="keyword">to</span> PING</span><br><span class="line">ruboty /who am i\?/i - Answer who you are</span><br></pre></td></tr></table></figure>
+
+<h2 id="Rubotyプラグインを作成する"><a href="#Rubotyプラグインを作成する" class="headerlink" title="Rubotyプラグインを作成する"></a>Rubotyプラグインを作成する</h2><p>Ruboty はhubotと同様にプラグインで拡張できます。</p>
+<p>Helloプラグインを作成してみましょう。<br>Helloプラグインはhelloと挨拶すると、helloと挨拶を返すだけのプラグインです。</p>
+<p>hello.rb</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Ruboty</span></span></span><br><span class="line">  <span class="class"><span class="keyword">module</span> <span class="title">Handlers</span></span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Hello</span> &lt; Base</span></span><br><span class="line">      on(<span class="regexp">/hello/i</span>, <span class="symbol">name:</span> “hello”, <span class="symbol">description:</span> <span class="string">"こんにちは"</span>)</span><br><span class="line"></span><br><span class="line">      <span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">(message)</span></span></span><br><span class="line">        message.reply(<span class="string">"Hello!!"</span>)</span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p><code>Ruby::handlers</code>の名前空間の下にプラグインの名前でクラスを作成し、<code>on</code> メソッドを定義します。<br><code>on</code> メソッドの第1引数はコマンドです。正規表現で定義できます。<br>第2引数は呼び出すメソッド名、コマンドの説明等のオプションを指定します。</p>
+<p>実行してみましょう。<br><code>-l</code> オプションで読み込むファイルを指定することができます。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">⇒  bundle exec ruboty -l hello.rb</span><br><span class="line">Type `exit` <span class="keyword">or</span> `quit` <span class="keyword">to</span> end the session.</span><br><span class="line">&gt; ruboty hello</span><br><span class="line">Hello!!</span><br></pre></td></tr></table></figure>
+
+<p>また、bot名のprefixなしに実行することもできます。<br>allオプションを使って実装します。</p>
+<p>サンプルとして、ぬるぽプラグインを実装します。<br>これはぬるぽという言葉に反応するプラグインです。</p>
+<p>nullpo.rb</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Ruboty</span></span></span><br><span class="line">  <span class="class"><span class="keyword">module</span> <span class="title">Handlers</span></span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">NullPoHandler</span> &lt; Base</span></span><br><span class="line">      on(<span class="regexp">/.*(ぬるぽ|ヌルポ).*/</span>, <span class="symbol">name:</span> <span class="string">'nullpo'</span>, <span class="symbol">description:</span><span class="string">'ぬるぽに反応します'</span>, <span class="symbol">all:</span> <span class="literal">true</span>)</span><br><span class="line"></span><br><span class="line">      <span class="function"><span class="keyword">def</span> <span class="title">nullpo</span><span class="params">(message)</span></span></span><br><span class="line">        message.reply(<span class="string">"ガッ!!!!"</span>)</span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>実行してみましょう。<br><code>-l</code> オプションで読み込むファイルを指定することができます。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ bundle exec ruboty -l nullpo.rb</span><br><span class="line">Type `exit` <span class="keyword">or</span> `quit` <span class="keyword">to</span> end the session.</span><br><span class="line">&gt; ほげ ぬるぽ ほげ</span><br><span class="line">ガッ!!!!</span><br></pre></td></tr></table></figure>
+
+<p>bot名のprefixがなくても反応していることが確認できます。</p>
+<p>次回はSlackと連携させる方法を紹介します。</p>
+<ul>
+<li><a href="/blog/2016/08/02/ruboty-and-slack/">Botsインテグレーションを使って手軽にRubotyをSlackで動かす</a></li>
 </ul>
 
         </div>
@@ -273,7 +357,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/13/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/15/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/13/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/15/">Next</a>
 </div>
 
   </div>

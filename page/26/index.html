@@ -146,239 +146,242 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2016-04-27T04:37:10.000Z" itemprop="datepublished">
-            2016/04/27
+          <time datetime="2016-04-19T08:21:17.000Z" itemprop="datepublished">
+            2016/04/19
           </time>
-          <time datetime="2016-04-27T04:37:10.000Z" itemprop="modified">
-            (更新日: 2016/04/27)
+          <time datetime="2016-04-19T08:21:17.000Z" itemprop="modified">
+            (更新日: 2016/04/19)
           </time>
         </div>
         <h1>
-        <a href="/blog/2016/04/27/introduce-site-parser/">Webサイトのメタタグを取得するsite-parserをつくった</a>
+        <a href="/blog/2016/04/19/tips-for-capistrano3-unicorn/">capistrano3-unicornを使う</a>
         </h1>
         <div class="content">
-          <p>Webサイトのメタデータを抽出するツールを作成しました。<br><a href="https://github.com/shoyan/site-parser" target="_blank" rel="noopener">https://github.com/shoyan/site-parser</a></p>
-<h2 id="使い方"><a href="#使い方" class="headerlink" title="使い方"></a>使い方</h2><ol>
-<li>git clone <a href="mailto:git@github.com">git@github.com</a>:shoyan/site-parser.git</li>
-<li>cd site-parser</li>
-<li>bundle install</li>
-<li>site.csv をテキストエディタで編集</li>
-<li>ruby site-parser.rb</li>
-</ol>
-<p>site.csv にパースしたいURLを記入して <code>ruby site-parse.rb</code> とすればメタデータが表示されます。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ ruby site-parser.rb</span><br><span class="line"><span class="string">"http://www.yahoo.co.jp/"</span></span><br><span class="line">[</span><br><span class="line">    [<span class="number">0</span>] &#123;</span><br><span class="line">                             <span class="string">"url"</span> =&gt; <span class="string">"http://www.yahoo.co.jp/"</span>,</span><br><span class="line">                           <span class="string">"title"</span> =&gt; <span class="string">"Yahoo! JAPAN"</span>,</span><br><span class="line">                     <span class="string">"description"</span> =&gt; <span class="string">"日本最大級のポータルサイト。検索、オークション、ニュース、メール、コミュニティ、ショッピング、など80以上のサービスを展開。あなたの生活をより豊かにする「ライフ・エンジ ン」を目指していきます。"</span>,</span><br><span class="line">                          <span class="string">"robots"</span> =&gt; <span class="string">"noodp"</span>,</span><br><span class="line">        <span class="string">"google-site-verification"</span> =&gt; <span class="string">"fsLMOiigp5fIpCDMEVodQnQC7jIY1K3UXW5QkQcBmVs"</span></span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+          <p>capistrano3-unicornとは、capistranoでデプロイしたときにunicornのstart/restartをしてくれるgemです。<br><a href="https://github.com/tablexi/capistrano3-unicorn" target="_blank" rel="noopener">https://github.com/tablexi/capistrano3-unicorn</a></p>
+<h3 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h3><p><code>Gemfile</code>に以下を追記して<code>bundle install</code>します。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">group <span class="symbol">:development</span> <span class="keyword">do</span></span><br><span class="line">  gem <span class="string">'capistrano3-unicorn'</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
-<p>また、サーバーを起動してAPIとして利用することもできます。</p>
-<h3 id="サーバーを起動"><a href="#サーバーを起動" class="headerlink" title="サーバーを起動"></a>サーバーを起動</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ruby server.rb</span><br><span class="line">== Sinatra (v1.4.7) has taken the stage on 4567 <span class="keyword">for</span> development with backup <span class="keyword">from</span> Thin</span><br><span class="line">Thin web<span class="built_in"> server </span>(v1.6.4 codename Gob Bluth)</span><br><span class="line">Maximum connections <span class="builtin-name">set</span> <span class="keyword">to</span> 1024</span><br><span class="line">Listening on 0.0.0.0:4567, CTRL+C <span class="keyword">to</span> stop</span><br></pre></td></tr></table></figure>
+<p><code>Capfile</code>に以下を追記します。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">'capistrano3/unicorn'</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="APIを実行"><a href="#APIを実行" class="headerlink" title="APIを実行"></a>APIを実行</h3><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl ht<span class="symbol">tp:</span>//localho<span class="symbol">st:4567</span> -X POST -d <span class="string">"url=http://www.yahoo.co.jp/"</span></span><br><span class="line">=&gt; &#123;<span class="string">"url"</span><span class="symbol">:</span><span class="string">"http://www.yahoo.co.jp/"</span>,<span class="string">"title"</span><span class="symbol">:</span><span class="string">"Yahoo! JAPAN"</span>,<span class="string">"description"</span><span class="symbol">:</span><span class="string">"日本最大級のポータルサイト。検索、オークション、ニュース、メール、コミュニティ、ショッピング、など80以上のサービスを展開。あなたの生活をより豊かにする「ライフ・エンジン」を目指していきます。"</span>,<span class="string">"robots"</span><span class="symbol">:</span><span class="string">"noodp"</span>,<span class="string">"google-site-verification"</span><span class="symbol">:</span><span class="string">"fsLMOiigp5fIpCDMEVodQnQC7jIY1K3UXW5QkQcBmVs"</span>&#125;</span><br></pre></td></tr></table></figure>
+<p><code>config/deploy.rb</code>に以下を追記します。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">after <span class="string">'deploy:publishing'</span>, <span class="string">'deploy:restart'</span></span><br><span class="line">namespace <span class="symbol">:deploy</span> <span class="keyword">do</span></span><br><span class="line">  task <span class="symbol">:restart</span> <span class="keyword">do</span></span><br><span class="line">    invoke <span class="string">'unicorn:restart'</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="その他"><a href="#その他" class="headerlink" title="その他"></a>その他</h2><p>内部的にはNokogiriを使ってhtmlをパースしています。</p>
-<p>文字化けして内容がみれない場合があったので、以下のワークアラウンドをいれました。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">html = URI.parse(url).read</span><br><span class="line">node = Nokogiri::HTML(html.toutf8, <span class="literal">nil</span>, <span class="string">'utf-8'</span>)</span><br></pre></td></tr></table></figure>
+<p>これで設定完了です。<br>cap deployすればunicorn restartが実行されるようになります。</p>
+<h3 id="注意点ポイント"><a href="#注意点ポイント" class="headerlink" title="注意点ポイント"></a>注意点ポイント</h3><p>設定していて少しわかり辛かった点があります。</p>
+<p>unicorn.rbがデフォルトでは<code>CURRENT_PATH/config/unicorn/RAILS_ENV.rb</code>に設定されています。<br>sinatraなどのrails以外のアプリケーションの場合は、RAILS_ENVがセットされていないため、<code>CURRENT_PATH/config/unicorn/.rb</code>のようになってしまいます。<br>ですので、明示的に設定が必要です。<br>しかし、設定方法についてドキュメントに明記されてないので少し戸惑いました。</p>
+<p>設定はソースを参考にしました。</p>
+<p><a href="https://github.com/tablexi/capistrano3-unicorn/blob/master/lib/capistrano3/tasks/unicorn.rake#L4" target="_blank" rel="noopener">https://github.com/tablexi/capistrano3-unicorn/blob/master/lib/capistrano3/tasks/unicorn.rake#L4</a></p>
+<h4 id="unicorn-config-pathの設定"><a href="#unicorn-config-pathの設定" class="headerlink" title="unicorn_config_pathの設定"></a>unicorn_config_pathの設定</h4><p>以下のようにlambdaを使って設定します。<br>config/unicorn.rbをunicorn_config_pathとして設定しています。<br>config/deploy.rb</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set <span class="symbol">:unicorn_config_path</span>, -&gt; &#123; File.join(current_path, <span class="string">"config"</span>, <span class="string">"unicorn.rb"</span>) &#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="参考資料"><a href="#参考資料" class="headerlink" title="参考資料"></a>参考資料</h2><p>以下が参考になりました。ありがとうございます。</p>
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-04-18T04:43:40.000Z" itemprop="datepublished">
+            2016/04/18
+          </time>
+          <time datetime="2016-04-18T04:43:40.000Z" itemprop="modified">
+            (更新日: 2016/04/18)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/04/18/cookbook-not-found-error-has-occurred/">cookbook_fileリソースでCookbookNotFoundが発生した</a>
+        </h1>
+        <div class="content">
+          <p>cookbook_fileでCookbookNotFoundというエラーがでた。<br>しかし、どこをどうみても合っているようにしか見えず、2時間ほどハマった。</p>
+<p>エラーは以下。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">* cookbook_file[/etc/nginx/nginx.conf] action create</span><br><span class="line"></span><br><span class="line">  ================================================================================</span><br><span class="line">  <span class="builtin-name">Error</span> executing action `create` on<span class="built_in"> resource </span><span class="string">'cookbook_file[/etc/nginx/nginx.conf]'</span></span><br><span class="line">  ================================================================================</span><br><span class="line"></span><br><span class="line">  Chef::Exceptions::CookbookNotFound</span><br><span class="line">  ----------------------------------</span><br><span class="line">  Cookbook cookbooks <span class="keyword">not</span> found. <span class="keyword">If</span> you<span class="string">'re loading cookbooks from another cookbook, make sure you configure the dependency in your metadata</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  Resource Declaration:</span></span><br><span class="line"><span class="string">  ---------------------</span></span><br><span class="line"><span class="string">  # In /var/chef/cache/cookbooks/cookbooks/recipes/default.rb</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">   25: cookbook_file '</span>/etc/nginx/nginx.conf<span class="string">' do</span></span><br><span class="line"><span class="string">   26:   source '</span>nginx.conf<span class="string">'</span></span><br><span class="line"><span class="string">   27:   owner '</span>root<span class="string">'</span></span><br><span class="line"><span class="string">   28:   group '</span>root<span class="string">'</span></span><br><span class="line"><span class="string">   29:   mode '</span>0755<span class="string">'</span></span><br><span class="line"><span class="string">   30: end</span></span><br><span class="line"><span class="string">   31:</span></span><br></pre></td></tr></table></figure>
+
+<p>原因はmetadata.rbの名前。<br>cookbooks/site という構成でcookbookを作成しているのだが、cookbooks/site/metadata.rbのnameが’cookbooks’となっていた。<br>これによりcookbook_fileリソースがcookbooksというcookbookを参照していたが、そんなものはないのでCookbookNotFoundエラーが発生していた。<br>nameを’site’と変更してやることでうまくいくようになった。</p>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-04-14T11:10:46.000Z" itemprop="datepublished">
+            2016/04/14
+          </time>
+          <time datetime="2016-04-14T11:10:46.000Z" itemprop="modified">
+            (更新日: 2016/04/14)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/04/14/start-systemctl-on-docker/">Dockerでsystemctlでserviceが起動できない</a>
+        </h1>
+        <div class="content">
+          <p>centos7からsystemctlでserviceを起動するようになったが、Dockerで起動すると「Failed to get D-Bus connection: No connection to service manager.」というエラーメッセージがでて起動できないという問題が起こった。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="builtin-name">run</span> -it centos:centos7 /bin/bash</span><br><span class="line"><span class="comment"># systemctl</span></span><br><span class="line">Failed <span class="keyword">to</span> <span class="builtin-name">get</span> D-Bus connection: <span class="literal">No</span><span class="built_in"> connection </span><span class="keyword">to</span><span class="built_in"> service </span>manager.</span><br></pre></td></tr></table></figure>
+
+<p>サービスを起動するためには以下の方法でコンテナを起動すればよい。</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run <span class="params">--privileged</span> -d <span class="params">--name</span> httpd centos<span class="function">:centos7</span> <span class="string">/sbin/init</span></span><br></pre></td></tr></table></figure>
+
+<p>起動したコンテナでhttpdをinstallして起動する。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker <span class="built_in">exec</span> -it httpd /bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> yum install httpd -y</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> systemctl <span class="built_in">enable</span> httpd.service</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> systemctl start httpd.service</span></span><br></pre></td></tr></table></figure>
+
+<p>プロセスを確認。起動できている。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ps aux | grep apache</span><br><span class="line"></span><br><span class="line">bash<span class="number">-4.2</span># ps aux | grep apache</span><br><span class="line">apache     <span class="number">168</span>  <span class="number">0.0</span>  <span class="number">0.3</span> <span class="number">221912</span>  <span class="number">4028</span> ?        S    <span class="number">05</span>:<span class="number">41</span>   <span class="number">0</span>:<span class="number">00</span> /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">apache     <span class="number">169</span>  <span class="number">0.0</span>  <span class="number">0.3</span> <span class="number">221912</span>  <span class="number">4028</span> ?        S    <span class="number">05</span>:<span class="number">41</span>   <span class="number">0</span>:<span class="number">00</span> /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">apache     <span class="number">170</span>  <span class="number">0.0</span>  <span class="number">0.3</span> <span class="number">221912</span>  <span class="number">4028</span> ?        S    <span class="number">05</span>:<span class="number">41</span>   <span class="number">0</span>:<span class="number">00</span> /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">apache     <span class="number">171</span>  <span class="number">0.0</span>  <span class="number">0.3</span> <span class="number">221912</span>  <span class="number">4028</span> ?        S    <span class="number">05</span>:<span class="number">41</span>   <span class="number">0</span>:<span class="number">00</span> /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">apache     <span class="number">172</span>  <span class="number">0.0</span>  <span class="number">0.3</span> <span class="number">221912</span>  <span class="number">4028</span> ?        S    <span class="number">05</span>:<span class="number">41</span>   <span class="number">0</span>:<span class="number">00</span> /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">root       <span class="number">180</span>  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">9044</span>   <span class="number">808</span> ?        S+   <span class="number">05</span>:<span class="number">49</span>   <span class="number">0</span>:<span class="number">00</span> grep apache</span><br></pre></td></tr></table></figure>
+
+<p>yunanoさんの記事が大変参考になった。  </p>
 <ul>
-<li>Nokogiri を使った Rubyスクレイピング [初心者向けチュートリアル]<ul>
-<li><a href="http://morizyun.github.io/blog/ruby-nokogiri-scraping-tutorial/" target="_blank" rel="noopener">http://morizyun.github.io/blog/ruby-nokogiri-scraping-tutorial/</a></li>
+<li><a href="http://qiita.com/yunano/items/9637ee21a71eba197345" target="_blank" rel="noopener">CentOS 7のDockerコンテナ内でsystemdを使ってサービスを起動する</a></li>
 </ul>
-</li>
-<li>kogiriで文字化けを防ぐ<ul>
-<li><a href="http://qiita.com/foloinfo/items/435f0409a6e33929ef3c" target="_blank" rel="noopener">http://qiita.com/foloinfo/items/435f0409a6e33929ef3c</a></li>
-</ul>
-</li>
-<li>[Ruby]スクレイピングのためのNokogiri利用メモ<ul>
-<li><a href="http://d.hatena.ne.jp/otn/20090509/p1" target="_blank" rel="noopener">http://d.hatena.ne.jp/otn/20090509/p1</a></li>
-</ul>
-</li>
-</ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-04-26T04:52:30.000Z" itemprop="datepublished">
-            2016/04/26
-          </time>
-          <time datetime="2016-04-26T04:52:30.000Z" itemprop="modified">
-            (更新日: 2016/04/26)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/04/26/sets-body-and-status-code-and-header-with-sinatra/">Sinatraのレスポンスの設定とストリーミングヘルパー</a>
-        </h1>
-        <div class="content">
-          <p>通常はルーティングブロックの戻り値にセットした文字列がbodyにセットされます。<br>任意の評価フローでbodyをセットしたい場合はどうすればいいでしょうか。<br>Sinatraには任意の評価フローでbodyをセットできる、bodyヘルパーが用意されています。  </p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">get <span class="string">'/foo'</span> <span class="keyword">do</span></span><br><span class="line">  body <span class="string">"bar"</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">after <span class="keyword">do</span></span><br><span class="line">  puts body</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>Status Codeを設定するstatusヘルパー、headerを設定するheadersヘルパーも用意されています。</p>
-<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">get</span> <span class="string">'/foo'</span> <span class="keyword">do</span></span><br><span class="line">  status <span class="number">418</span></span><br><span class="line">  headers \</span><br><span class="line">    <span class="string">"Allow"</span>   =&gt; <span class="string">"BREW, POST, GET, PROPFIND, WHEN"</span>,</span><br><span class="line">    <span class="string">"Refresh"</span> =&gt; <span class="string">"Refresh: 20; http://www.ietf.org/rfc/rfc2324.txt"</span></span><br><span class="line">  body <span class="string">"I'm a tea pot!"</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-
-<p>引数の伴わないbody, status, headersは現在の値を確認するために使えます。</p>
-<h3 id="Streamingヘルパー"><a href="#Streamingヘルパー" class="headerlink" title="Streamingヘルパー"></a>Streamingヘルパー</h3><p>streamヘルパーを使うとおもしろいことができます。<br>レスポンスボディの部分を生成している段階でデータを送信することができます。<br>この仕組みを使ってストリーミングAPIを実装することもできます。  </p>
-<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">get</span> <span class="string">'/'</span> <span class="keyword">do</span></span><br><span class="line">  stream <span class="keyword">do</span> |<span class="keyword">out</span>|</span><br><span class="line">    <span class="keyword">out</span> &lt;&lt; "It's gonna be legen -\n"</span><br><span class="line">    sleep <span class="number">0.5</span></span><br><span class="line">    <span class="keyword">out</span> &lt;&lt; " (wait for it) \n"</span><br><span class="line">    sleep <span class="number">1</span></span><br><span class="line">    <span class="keyword">out</span> &lt;&lt; "- dary!\n"</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>以下は、ストリーミングAPIのサンプルです。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># app.rb</span></span><br><span class="line"><span class="comment"># long polling</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span> :<span class="keyword">server</span>, :thin</span><br><span class="line">connections = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">get</span> <span class="string">'/subscribe'</span> <span class="keyword">do</span></span><br><span class="line">  <span class="comment"># register a client's interest in server events</span></span><br><span class="line">  stream(:keep_open) <span class="keyword">do</span> |<span class="keyword">out</span>|</span><br><span class="line">    connections &lt;&lt; <span class="keyword">out</span></span><br><span class="line">    <span class="comment"># purge dead connections</span></span><br><span class="line">    connections.reject!(&amp;:closed?)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">post <span class="string">'/message'</span> <span class="keyword">do</span></span><br><span class="line">  connections.each <span class="keyword">do</span> |<span class="keyword">out</span>|</span><br><span class="line">    <span class="comment"># notify client that a new message has arrived</span></span><br><span class="line">    <span class="keyword">out</span> &lt;&lt; params[<span class="string">'message'</span>] &lt;&lt; <span class="string">"\n"</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># indicate client to connect again</span></span><br><span class="line">    out.close</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># acknowledge</span></span><br><span class="line">  <span class="string">"message received"</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>ストリーミングはThinやRainbowsなどのイベント型サーバーでないと動かないので注意が必要です。  </p>
-<p>サーバーを起動させてみます。</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>gem insatall thin</span><br><span class="line"><span class="variable">$ </span>ruby app.rb</span><br></pre></td></tr></table></figure>
-
-<p>別のターミナルを開いて、以下を実行します。</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>curl <span class="symbol">http:</span>/<span class="regexp">/localhost:4567/subscribe</span></span><br></pre></td></tr></table></figure>
-
-<p>何もレスポンスがありませんが、接続が維持された状態となります。</p>
-<p>別のタブを開いて以下の実行してみましょう。</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>curl <span class="symbol">http:</span>/<span class="regexp">/localhost:4567/message</span> -X POST -d <span class="string">"message=hello"</span></span><br></pre></td></tr></table></figure>
-
-<p>すると、subscribeのほうにhelloと表示されて接続が切れます。<br>これは、/messageのout.closeを実行しているからです。<br>試しに、out.closeをコメントアウトしてサーバーを起動すると接続維持されたままになります。</p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-04-25T05:05:02.000Z" itemprop="datepublished">
-            2016/04/25
-          </time>
-          <time datetime="2016-04-25T05:05:02.000Z" itemprop="modified">
-            (更新日: 2016/04/25)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/04/25/introduce-http-gem/">rubyでhttp通信をするhttp gem</a>
-        </h1>
-        <div class="content">
-          <p>rubyでhttp通信をする際に便利なhttp gemというものがあるので紹介します。<br><a href="https://github.com/httprb/http" target="_blank" rel="noopener">https://github.com/httprb/http</a></p>
-<h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gem <span class="keyword">install</span> <span class="keyword">http</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="getしてみる"><a href="#getしてみる" class="headerlink" title="getしてみる"></a>getしてみる</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ pry</span><br><span class="line">$ <span class="keyword">require</span> ’http<span class="string">'</span></span><br><span class="line"><span class="string">$ response = HTTP.get("https://github.com")</span></span><br><span class="line"><span class="string">$ response.status</span></span><br><span class="line"><span class="string">=&gt; 200</span></span><br><span class="line"><span class="string">$ response.body.to_s</span></span><br><span class="line"><span class="string">=&gt; "&lt;html&gt;&lt;head&gt;&lt;meta http-equiv=\"content-type\" content=..."</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="http-メソッドを指定する"><a href="#http-メソッドを指定する" class="headerlink" title="http メソッドを指定する"></a>http メソッドを指定する</h2><p>以下のように指定します。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;</span> response = HTTP.post(<span class="string">'https://restapi.com/objects'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;</span> response = HTTP.put(<span class="string">'https://restapi.com/put'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;</span> response = HTTP.patch(<span class="string">'https://restapi.com/put'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;</span> response = HTTP.delete(<span class="string">'https://restapi.com/put'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;</span> response = HTTP.head(<span class="string">'https://restapi.com/put'</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="クエリストリングを指定する"><a href="#クエリストリングを指定する" class="headerlink" title="クエリストリングを指定する"></a>クエリストリングを指定する</h2><p>以下のように paramsオプションで指定します。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ get = HTTP.get(<span class="string">"http://example.com/resource"</span>, <span class="symbol">:pa</span>rams =&gt; &#123;<span class="symbol">:fo</span>o =&gt; <span class="string">"bar"</span>&#125;)</span><br><span class="line">=&gt; <span class="string">"#&lt;HTTP::Response/1.1 404 Not …"</span></span><br><span class="line"></span><br><span class="line"># 以下のように生成されたuriを確認できます</span><br><span class="line">$ get.uri</span><br><span class="line">=&gt; #&lt;HT<span class="symbol">TP:</span><span class="symbol">:UR</span><span class="symbol">I:0</span>x007fce62a33aa8 U<span class="symbol">RI:ht</span><span class="symbol">tp:</span>//example.com/resource?foo=bar&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="bodyを指定する"><a href="#bodyを指定する" class="headerlink" title="bodyを指定する"></a>bodyを指定する</h2><p>formオプションに設定します。<br>URLエンコードされたパラメーターが設定されます。</p>
-<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HTTP.post(<span class="string">"http://example.com/resource"</span>, :<span class="function"><span class="params">form</span> =&gt;</span> &#123;:<span class="function"><span class="params">foo</span> =&gt;</span> <span class="string">"42"</span>&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>生データを渡したいときは、bodyオプションを使います。</p>
-<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HTTP.post(<span class="string">"http://example.com/resource"</span>, :<span class="function"><span class="params">body</span> =&gt;</span> <span class="string">"foo=42&amp;bar=baz"</span>)</span><br></pre></td></tr></table></figure>
-
-<h3 id="ネストしたbodyの渡し方"><a href="#ネストしたbodyの渡し方" class="headerlink" title="ネストしたbodyの渡し方"></a>ネストしたbodyの渡し方</h3><p>ネストした配列を渡したい場合はjsonを使って以下のように指定できます。</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">HTTP</span><span class="selector-class">.put</span>(<span class="string">"http://example.com/resource"</span>, :params =&gt; &#123;<span class="attribute">foo</span>: <span class="string">"A"</span>&#125;, <span class="attribute">json</span>: &#123; <span class="attribute">bar</span>: &#123; <span class="attribute">hoge</span>: <span class="string">"ok!"</span>&#125; &#125;)</span><br></pre></td></tr></table></figure>
-
-<h2 id="Basic認証に対応する"><a href="#Basic認証に対応する" class="headerlink" title="Basic認証に対応する"></a>Basic認証に対応する</h2><p>以下のように設定ができます。</p>
-<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http = <span class="module-access"><span class="module"><span class="identifier">HTTP</span>.</span></span>basic<span class="constructor">_auth(<span class="params">user</span>: '<span class="params">user_name</span>', <span class="params">pass</span>: '<span class="params">password</span>')</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="SSL証明書の検証を無効にする"><a href="#SSL証明書の検証を無効にする" class="headerlink" title="SSL証明書の検証を無効にする"></a>SSL証明書の検証を無効にする</h2><p>開発環境の場合などでSSL証明書の検証を無視したい場合は以下のように設定できます。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ctx = OpenSSL::SSL::SSLContext.<span class="keyword">new</span></span><br><span class="line">ctx.verify_mode = OpenSSL::SSL::VERIFY_NONE</span><br><span class="line">HTTP.get(<span class="string">"https://example.com"</span>, :ssl_context =&gt; ctx)</span><br></pre></td></tr></table></figure>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-04-22T04:59:35.000Z" itemprop="datepublished">
-            2016/04/22
-          </time>
-          <time datetime="2016-04-22T04:59:35.000Z" itemprop="modified">
-            (更新日: 2016/04/22)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/04/22/what-is-nat/">NAT・NAPT・ポートフォワーディングの違いとは</a>
-        </h1>
-        <div class="content">
-          <p>ネットワークの話しによくNATという言葉が出てくるので整理した。<br>また、NAPT・ポートフォワーディングについても理解しておいたほうが理解が深まると思ったのでまとめておいた。</p>
-<h2 id="NATとは"><a href="#NATとは" class="headerlink" title="NATとは"></a>NATとは</h2><p>NAT(Network Address Translation)はIPアドレスを変換する技術である。<br>具体的にはプライベートIPアドレスをグローバルIPアドレスに変換する、もしくは、グローバルIPアドレスをプライベートIPアドレスに変換する。</p>
-<h3 id="なぜNATが必要か"><a href="#なぜNATが必要か" class="headerlink" title="なぜNATが必要か"></a>なぜNATが必要か</h3><p>グローバルIPアドレスを節約するためである。<br>インターネットに接続するにはグローバルIPアドレスが必要である。<br>プライベートIPアドレスではインターネットに接続することができないという決まりになっている。</p>
-<p>インターネットに接続するには、PC全てにグローバルIPを割り振るのが最も単純な方法である。<br>しかし、全てにグローバルIPアドレスを割り振っていてはすぐにIPアドレスは枯渇してしまう。</p>
-<p>では、どうするか。<br>LANからインターネットに通信するときにプライベートIPアドレスをグローバルIPアドレスに変換してやればいいのではないか。<br>それを実現するのがNATである。  </p>
-<p>具体的にはLANからインターネットに通信するときは、ヘッダの送信元IPをグローバルIPに書き換える。<br>インターネットからLANに通信するときは、ヘッダの宛先IPをプライベートIPに書き換える。</p>
-<p>NATがやることはこれだけである(多分)。</p>
-<p>しかし、NATには大きな問題がある。<br>複数のクライアントPCがある場合、NATはどのプライベートIPに変換すればいいかわからないのだ。</p>
-<p>その問題を解決するのが、NAPT(Network Address Port Translation)である。</p>
-<h2 id="NAPTとは"><a href="#NAPTとは" class="headerlink" title="NAPTとは"></a>NAPTとは</h2><p>複数のクライアントPCがある場合、NATはどのプライベートIPに変換すればいいかわからない。<br>その問題を解決するのがNAPTである。</p>
-<p>NAPTはIPアドレスに加えてポートも管理する。<br>このポートを使ってクライアントPCを特定する。<br>例えば、PC(A)の場合は通信のポート番号を100、PC(B)の場合は通信のポート番号を200とする。<br>すると、通信先のサーバーから異なったポート番号宛にデータが戻って来る。<br>ポート番号100に戻ってきたデータはPC(A)に戻してやればいいわけである。  </p>
-<p>NAPTはIPマスカレードとも呼ばれる。</p>
-<h2 id="NATの弊害"><a href="#NATの弊害" class="headerlink" title="NATの弊害"></a>NATの弊害</h2><p>NATを使うとインターネットからLANへの通信ができないという問題がある。<br>インターネットからの通信の場合、どのクライアントPCのプライベートIPアドレスに変換すればいいかがわからないため、クライアントPCに通信が届かないのだ。<br>これは、セキュリティ的にみると安全だ。<br>NATの内側にいるクライアントPCには外部からの通信が届かないからである。</p>
-<p>外部からの通信を届けたい場合はどうすればいいか。<br>ポートフォワーディングを使えばいい。</p>
-<h2 id="ポートフォワーディングとは"><a href="#ポートフォワーディングとは" class="headerlink" title="ポートフォワーディングとは"></a>ポートフォワーディングとは</h2><p>インターネットから特定のポート番号宛に通信が届いたときにあらかじめ設定しておいたLAN側の機器にパケットを転送する機能である。<br>例えば、宛先ポートが80宛のパケットは、LAN側の192.168.1.1の機器へ転送するといった設定ができる。<br>このようにあらかじめ転送するポートとクライアントPCのIPアドレスを登録しておくことで外部からの通信が行えるようになる。</p>
-<p>ポートフォワーディングは静的IPマスカレードとも呼ばれる。</p>
-<h2 id="おすすめの書籍"><a href="#おすすめの書籍" class="headerlink" title="おすすめの書籍"></a>おすすめの書籍</h2><p>ネットワークについては様々な書籍があるが私は以下の書籍をおすすめする。</p>
-<h3 id="ネットワークはなぜつながるのか"><a href="#ネットワークはなぜつながるのか" class="headerlink" title="ネットワークはなぜつながるのか"></a>ネットワークはなぜつながるのか</h3><p>ネットワークの概要についてわかりやすく解説してある。初学者にお勧め。</p>
-<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=syoyama-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4822283119&linkId=f0180a64f0c324f0f26456536a0feed3"></iframe>
-
-<h3 id="マスタリングTCP-IP-入門編"><a href="#マスタリングTCP-IP-入門編" class="headerlink" title="マスタリングTCP/IP 入門編"></a>マスタリングTCP/IP 入門編</h3><p>ネットワークの理論についてわかりやすく解説してある。知人のネットワークの専門家もこの書籍をおすすめしていた。</p>
-<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=syoyama-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4274068765&linkId=394f3cca6b2bd67ea0333de41b8980c5"></iframe>
-
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
-<li>1.2.4 NAT・NAPTとIPアドレス<ul>
-<li><a href="http://www.arearesearch.co.jp/learn/ip/07.html" target="_blank" rel="noopener">http://www.arearesearch.co.jp/learn/ip/07.html</a></li>
-</ul>
-</li>
-<li>アドレス変換の弊害<ul>
-<li><a href="http://www.itbook.info/study/nat5.html" target="_blank" rel="noopener">http://www.itbook.info/study/nat5.html</a></li>
-</ul>
-</li>
-</ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-04-21T09:19:01.000Z" itemprop="datepublished">
-            2016/04/21
-          </time>
-          <time datetime="2016-04-21T09:19:01.000Z" itemprop="modified">
-            (更新日: 2016/04/21)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/04/21/nginx-and-ruby-on-docker/">DockerコンテナにChefを流してみた</a>
-        </h1>
-        <div class="content">
-          <p>Chefのレシピを書くとき、Dockerコンテナにレシピを流せると気軽に確認ができてよいなと思い、DockerコンテナにChefを流せるようにしてみました。</p>
-<p>リポジトリを作ったので参考にどうぞ。<br><a href="https://github.com/shoyan/nginx-and-ruby-on-docker" target="_blank" rel="noopener">https://github.com/shoyan/nginx-and-ruby-on-docker</a></p>
-<h3 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h3><p>DockerとChefをインストールしている必要があるので、以下からインストールしてください。</p>
-<p>Docker</p>
+<h2 id="Dockerについて学ぶ"><a href="#Dockerについて学ぶ" class="headerlink" title="Dockerについて学ぶ"></a>Dockerについて学ぶ</h2><p>Dockerについてはいくつか書籍が出ているが、<a href="http://amzn.to/2qiMHAN" target="_blank" rel="noopener">プログラマのためのDocker教科書 インフラの基礎知識&amp;コードによる環境構築の自動化</a>が良さそうに思う。<br>目次を見てみると、インフラの基礎知識からDockerfileを使ったDockerの構築、Docker Composeの使い方、Docker Swarmを使ったマルチホスト環境でのDocker運用まで網羅してある。<br>また、Dockerの基礎的なことに加え、インフラの基礎とコンテナ仮想化技術についても説明してあるのでDockerを学びつつもインフラについても学べそうだ。</p>
+<h3 id="目次"><a href="#目次" class="headerlink" title="目次"></a>目次</h3><p>第1章: 抑えておきたいシステム / インフラの知識<br>第2章: コンテナ仮想化技術とDocker<br>第3章: Dockerのインストールと基本コマンド<br>第4章: Dockerfileを使ったコードによるサーバ構築<br>第5章: Dockerイメージの共有 - Docker Registry<br>第6章: 複数コンテナの一元管理 - Docker Compose<br>第7章: マルチホスト環境でのDocker運用 - Docker Machine, Docker Swarm<br>第8章: クラウドでのDocker運用</p>
+<p><a href="https://www.amazon.co.jp/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9E%E3%81%AE%E3%81%9F%E3%82%81%E3%81%AEDocker%E6%95%99%E7%A7%91%E6%9B%B8-%E3%82%A4%E3%83%B3%E3%83%95%E3%83%A9%E3%81%AE%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98-%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%82%88%E3%82%8B%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%E3%81%AE%E8%87%AA%E5%8B%95%E5%8C%96-%E9%98%BF%E4%BD%90-%E5%BF%97%E4%BF%9D/dp/479814102X/ref=as_li_ss_il?ie=UTF8&qid=1495788976&sr=8-1&keywords=docker&linkCode=li3&tag=syoyama-22&linkId=057e48e0a549d45b25dd7dca15a6eef7" target="_blank"><img border="0" src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=479814102X&Format=_SL250_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=syoyama-22" ></a><img src="https://ir-jp.amazon-adsystem.com/e/ir?t=syoyama-22&l=li3&o=9&a=479814102X" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></p>
+<h2 id="Dockerの記事一覧"><a href="#Dockerの記事一覧" class="headerlink" title="Dockerの記事一覧"></a>Dockerの記事一覧</h2><p>SHOYAN BLOGではDockerについていくつか記事を書いているので興味があれば見てほしい。</p>
 <ul>
-<li><a href="https://www.docker.com/products/docker-toolbox" target="_blank" rel="noopener">https://www.docker.com/products/docker-toolbox</a></li>
+<li><a href="/blog/2016/10/05/fix-unable-to-connect-to-docker-daemon/">Macを引っ越ししたらDockerデーモンが起動しなくなった</a> </li>
+<li><a href="/blog/2016/09/27/links-container-with-docker-compose/">docker-composeを使ってPHPコンテナとMySQLコンテナを連携させる</a> </li>
+<li><a href="/blog/2016/09/16/links-container-for-docker/">Dockerのコンテナ間を繋ぐLinksを使ってPHPとMySQLコンテナを連携させる</a> </li>
+<li><a href="/blog/2016/08/24/sets-locale-on-docker/">Dockerでlocaleを設定する</a> </li>
+<li><a href="/blog/2016/08/03/docker-auto-build-tutorial/">GitHubにpushしたらDockerイメージを自動ビルドする</a> </li>
+<li><a href="/blog/2016/05/30/yum-install-failed-by-insufficient-space-on-docker/">Dockerのコンテナでyum Installが失敗する</a> </li>
+<li><a href="/blog/2016/04/21/nginx-and-ruby-on-docker/">DockerコンテナにChefを流してみた</a> </li>
+<li><a href="/blog/2016/04/13/no-space-left-on-device-on-docker/">Dockerでno Space Left on Deviceが出てbuildできなくなった</a> </li>
 </ul>
-<p>Chef</p>
+<h2 id="Dockerのサンプルコード"><a href="#Dockerのサンプルコード" class="headerlink" title="Dockerのサンプルコード"></a>Dockerのサンプルコード</h2><p>githubでDockerを使ったサンプルコードを公開しているのでこちらも参考にしてほしい。</p>
+<p>DockerでRubyアプリケーションをホスティングするサンプルコード</p>
 <ul>
-<li><a href="https://downloads.chef.io/chef-client/" target="_blank" rel="noopener">https://downloads.chef.io/chef-client/</a></li>
+<li><a href="https://github.com/shoyan/theme-builder" target="_blank" rel="noopener">theme-builder</a></li>
 </ul>
-<h3 id="DockerコンテナにChefを流す"><a href="#DockerコンテナにChefを流す" class="headerlink" title="DockerコンテナにChefを流す"></a>DockerコンテナにChefを流す</h3><p>まずは、Docker QuickStart TerminalをクリックしてDockerを起動します(アプリケーションにあります)。</p>
-<p>Dockerを起動したらNginxとrubyをインストールするCookbookを実行します。</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git clone http<span class="variable">s:</span>//github.<span class="keyword">com</span>/shoyan/nginx-<span class="built_in">and</span>-<span class="keyword">ruby</span>-<span class="keyword">on</span>-docker</span><br><span class="line">$ <span class="keyword">cd</span> nginx-<span class="built_in">and</span>-<span class="keyword">ruby</span>-<span class="keyword">on</span>-docker</span><br></pre></td></tr></table></figure>
+<p>docker-composeを使ってPHPコンテナとMySQLコンテナを連携させるサンプルコード</p>
+<ul>
+<li><a href="https://github.com/shoyan/docker-compose-with-link-sample" target="_blank" rel="noopener">docker-compose-with-link-sample</a></li>
+</ul>
+<p>nginxとrubyをChefを使ってインストールするサンプルコード</p>
+<ul>
+<li><a href="https://github.com/shoyan/nginx-and-ruby-on-docker" target="_blank" rel="noopener">nginx-and-ruby-on-docker</a></li>
+</ul>
 
-<p>以下のコマンドでimageをbuildします。</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="keyword">build </span>-t nginx-<span class="keyword">and-ruby </span>.</span><br></pre></td></tr></table></figure>
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-04-13T07:14:05.000Z" itemprop="datepublished">
+            2016/04/13
+          </time>
+          <time datetime="2016-04-13T07:14:05.000Z" itemprop="modified">
+            (更新日: 2016/04/13)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/04/13/no-space-left-on-device-on-docker/">Dockerでno space left on deviceが出てbuildできなくなった</a>
+        </h1>
+        <div class="content">
+          <p>Dockerのbuild時に以下のエラーが発生するようになった。</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$  docker build -t docker-and-chef .</span><br><span class="line">Sending build context to Docker daemon <span class="number">131.6</span> kB</span><br><span class="line">Error response from <span class="symbol">daemon:</span> mkdir /mnt/sda1/var/<span class="class"><span class="keyword">lib</span>/<span class="title">docker</span>/<span class="title">tmp</span>/<span class="title">docker</span>-<span class="title">builder670782655</span>: <span class="title">no</span> <span class="title">space</span> <span class="title">left</span> <span class="title">on</span> <span class="title">device</span></span></span><br></pre></td></tr></table></figure>
 
-<p>imageを確認</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$  docker images</span><br><span class="line">REPOSITORY             TAG                            IMAGE ID            CREATED             SIZE</span><br><span class="line">nginx-<span class="keyword">and</span>-ruby         latest                         <span class="number">6</span>b4d5602119f        <span class="number">36</span> seconds ago      <span class="number">382.2</span> MB</span><br></pre></td></tr></table></figure>
+<p>PCを再起動してみても直らず、どうしたものかとググっていたら以下の情報を見つけた。<br><a href="http://stackoverflow.com/questions/30604846/docker-error-no-space-left-on-device" target="_blank" rel="noopener">http://stackoverflow.com/questions/30604846/docker-error-no-space-left-on-device</a></p>
+<p>やることは以下</p>
+<ul>
+<li><code>docker ps -a</code>して表示されたコンテナを消す。</li>
+<li><code>docker images</code> して表示されたイメージを消す。</li>
+</ul>
+<p>コンテナは<code>docker rm container_id</code>で消すことができる。<br>イメージは<code>docker rim image_id</code>で消すことができる。</p>
+<p>VMのディスク容量がないときに発生するエラーのようだ。<br>不要なコンテナがたくさんあったので、それらのコンテナを消すとエラーはでなくなった。</p>
 
-<p>Dockerのコンテナを起動します。<br>image_idは docker imagesのIMAGE IDを指定します。<br>今回の場合は6b4d5602119fです(場合により変わります)。</p>
-<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run <span class="params">--privileged</span> -d <span class="params">--name</span> nginx-and-ruby image_id <span class="string">/sbin/init</span></span><br></pre></td></tr></table></figure>
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-03-16T15:41:01.000Z" itemprop="datepublished">
+            2016/03/17
+          </time>
+          <time datetime="2016-03-16T15:41:01.000Z" itemprop="modified">
+            (更新日: 2016/03/17)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/03/16/php-coding-rule/">PHPコーディング規約とサポートするツール</a>
+        </h1>
+        <div class="content">
+          <h2 id="この記事の内容"><a href="#この記事の内容" class="headerlink" title="この記事の内容"></a>この記事の内容</h2><p>PHPのコーディング規約とそれをサポートするツールの紹介です。<br>座学形式で説明していきます。</p>
+<p>概要を知りたい場合は以下のスライドを参照ください。</p>
+<script async class="speakerdeck-embed" data-id="1d8ea4db4cd746b0857ab03889710555" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
 
-<p>–privilegedはCentOS7のimageでserviceコマンドを起動するおまじないです。<br><a href="http://shoyan.github.io/blog/2016/04/14/start-systemctl-on-docker/" target="_blank" rel="noopener">Dockerでsystemctlでserviceが起動できない</a></p>
-<p>起動したDockerのコンテナにログインします。</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker exec -<span class="keyword">it </span>nginx-<span class="keyword">and-ruby </span><span class="keyword">bash</span></span><br></pre></td></tr></table></figure>
+<h3 id="はじまり、はじまり"><a href="#はじまり、はじまり" class="headerlink" title="はじまり、はじまり"></a>はじまり、はじまり</h3><p>みなさん、こんにちは。<br>PHPが大好きなプログラマことshoyanです。</p>
+<p>今回、PHPのコーディング規約とそれをサポートするツールの紹介をしたいと思います。</p>
+<h3 id="なぜ必要か"><a href="#なぜ必要か" class="headerlink" title="なぜ必要か"></a>なぜ必要か</h3><p>まずはなぜコーディング規約が必要なのでしょうか？</p>
+<p>みんなに質問してみる<br>しばらく沈黙</p>
+<p>目のあった人に質問する<br>なんか適当に答えてくれる</p>
+<p>ありがとうございます。<br>正解です。<br>補足として、なぜコーディング規約が必要になったかを説明します。</p>
+<p>そもそもコーディング規約は一人で開発する場合には必要ありません。<br>二人以上で開発を行う場合に必要となってきます。</p>
+<p>たとえば、太郎くんとドナルドさんが二人で開発をしていたとします。<br>太郎くんがコードレビューを依頼しました。<br>30分後に確認するとコメントがついていました。</p>
+<p>1行で書いていたif文のコードにドナルドさんからコメントがついていました。<br>少し下にスクロールすると、if文のあとにスペースが必要だとコメントが入っていました。<br>少し下にスクロールすると、else ifのスペースは不要だとコメントが。<br>また更にその下には改行は不要とのコメントが…<br>なんと全部で30個のコメントがついていたのです。<br>30個のコメントの27個はコーディングスタイルに関するコメントでした。  </p>
+<p>さて、このレビューは有益でしょうか。<br>お互いにとってあまり有益ではありませんね。</p>
+<p>じゃあ、どうしましょう。</p>
+<p>そこでコーディング規約です。<br>コーディング規約という共通のルールを作ることにより、お互いが納得できるコードを書く指標をつくります。</p>
+<p>さて、コーディング規約に則ったコードを書くぞ！となったとしましょう。<br>では、PHPのコーディング規約を探してみましょう。<br>ところが、PHPの本家にはコーディング規約のドキュメントがありません。  </p>
+<p>ということは、共通ルールがないということになります。<br>PHPの本家はコーディングルールなんて知ったこっちゃない。<br>開発者が勝手にやってくれ。ということです。</p>
+<p>その要望に答えてPHPにはコーディング規約が乱立しています。<br>たとえば、以下のような感じです。</p>
+<ul>
+<li>Flow Framework<ul>
+<li><a href="http://flowframework.readthedocs.org/en/stable/TheDefinitiveGuide/PartV/CodingGuideLines/PHP.html" target="_blank" rel="noopener">http://flowframework.readthedocs.org/en/stable/TheDefinitiveGuide/PartV/CodingGuideLines/PHP.html</a></li>
+</ul>
+</li>
+<li>WordPress<ul>
+<li><a href="https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/" target="_blank" rel="noopener">https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/</a></li>
+</ul>
+</li>
+<li>ZendFramework<ul>
+<li><a href="http://framework.zend.com/manual/1.12/en/coding-standard.coding-style.html" target="_blank" rel="noopener">http://framework.zend.com/manual/1.12/en/coding-standard.coding-style.html</a></li>
+</ul>
+</li>
+<li>PEAR<ul>
+<li><a href="https://pear.php.net/manual/en/standards.php" target="_blank" rel="noopener">https://pear.php.net/manual/en/standards.php</a></li>
+</ul>
+</li>
+<li>FuelPHP<ul>
+<li><a href="http://fuelphp.com/docs/general/coding_standards.html" target="_blank" rel="noopener">http://fuelphp.com/docs/general/coding_standards.html</a></li>
+</ul>
+</li>
+</ul>
+<p>このようにフレームワークごとにコーディングルールが定められています。</p>
+<p>1つのフレームワークであれば問題はありません。<br>しかし、2つのプロジェクトがあって、別々のフレームワークを使っていたらどうでしょう。<br>開発者はそれぞれのフレームワークの規約を切り替えながら開発をしないといけません。<br>これは考えるだけでも面倒くさそうですね。</p>
+<h3 id="PSR"><a href="#PSR" class="headerlink" title="PSR"></a>PSR</h3><p>このような現状をなんとかしようと策定されたのがPSRです。<br>PSRはPHP Standards Recommendations の頭文字をとったものです。<br>日本語にするとPHP標準勧告です。<br>PHP Framework Interop Groupが策定しています。  </p>
+<h3 id="PSRのゴール"><a href="#PSRのゴール" class="headerlink" title="PSRのゴール"></a>PSRのゴール</h3><blockquote>
+<p>We’re a group of established PHP projects whose goal is to talk about commonalities between our projects and find ways we can work better together.</p>
+</blockquote>
+<p>要するにフレームワークに依存しないルールを作って、どのプロジェクト（どのフレームワークを使っているプロジェクト）でも<br>同じようにコードを書くことをできるようにしましょうということです。(意訳)</p>
+<p>ちなみにPSRには状態が色々あって、正式なものはACCEPTEDです。<br>ほかにも、DEPRECATED、REVIEW、DRAFTがあります。<br>以下のページで見ることができます。<br><a href="http://www.php-fig.org/psr/" target="_blank" rel="noopener">http://www.php-fig.org/psr/</a></p>
+<p>StatusがACCEPTEDなPSRは1〜7があります。<br>その中のPSR1とPSR2をここでは紹介します。<br>PSR1はBasic Coding Standardが定義してあります。<br>PSR2はCoding Style Guideで、PSR1を拡張したものです。<br>詳細は以下のページをご覧ください。</p>
+<ul>
+<li><a href="http://www.php-fig.org/psr/psr-1/" target="_blank" rel="noopener">http://www.php-fig.org/psr/psr-1/</a></li>
+<li><a href="http://www.php-fig.org/psr/psr-2/" target="_blank" rel="noopener">http://www.php-fig.org/psr/psr-2/</a></li>
+</ul>
+<h3 id="PHP-Code-Snifferについて"><a href="#PHP-Code-Snifferについて" class="headerlink" title="PHP Code Snifferについて"></a>PHP Code Snifferについて</h3><p>PHPのコーディング規約をチェックするツールはいくつかありますが、ここではPHP_CodeSnifferを紹介します。</p>
+<p>Snifferは嗅覚性探知機という意味です。</p>
+<p>たとえば、捜索犬はsniffer dog 、ガス探知機はgas snifferと英語でいいます。<br>要するにPHP Code探索機です。</p>
+<p>PHP Code Snifferにはツールが2つあります。<br>1つめはphpcsです。</p>
+<p>phpcsはコーディングスタイルのチェックをするツールで、PHP Code Snifferを略したものです。<br>コーディングスタイルを指定することができます。<br>指定できるコーディングスタイルは、MySource, PEAR, PHPCS, PSR1, PSR2, Squiz and Zend です。<br>また、コーディングルールを自分で設定することもできます。</p>
+<p>実行コマンド</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpcs <span class="attribute">--standard</span>=PSR2 check_file <span class="keyword">or</span> check_dir/</span><br></pre></td></tr></table></figure>
 
-<p>ログインしたらDockerコンテナでChefを実行します。</p>
-<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># chef-client -z -j nodes/bootstrap.json -c client.rb</span></span><br></pre></td></tr></table></figure>
+<p>2つめはphpcbfです。</p>
+<p>PHP Code Beautifier and Fixerを略したツールです。<br>これは自動でコードを修正してくれるツールです。</p>
+<p>実行コマンド</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpcbf <span class="attribute">--standard</span>=PSR2 check_file <span class="keyword">or</span> check_dir/</span><br></pre></td></tr></table></figure>
 
-<p>Dockerを使うとChefを実行→コンテナを消す→真っさらな状態からもう一度Chefを流すというサイクルが気軽にできるので便利です。</p>
-<p>もう一度真っさらな状態のコンテナを作りたいときは、以下のようにします。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> doker ps</span><br><span class="line">CONTAINER ID        IMAGE                  COMMAND              CREATED             STATUS                        PORTS                                           NAMES</span><br><span class="line"><span class="number">17</span>a11c4b6ce8        <span class="number">6</span>b4d5602119f           <span class="string">"/sbin/init"</span>         <span class="number">2</span> hours ago         Exited (<span class="number">137</span>) <span class="number">12</span> seconds ago                                                   nginx<span class="operator">-and</span><span class="literal">-ruby</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Dockerコンテナを消す</span></span><br><span class="line"><span class="variable">$</span> docker rm <span class="operator">-f</span> <span class="number">17</span>a11c4b6ce8</span><br><span class="line"></span><br><span class="line"><span class="comment"># dockerコンテナを起動する</span></span><br><span class="line"><span class="variable">$</span> docker run -<span class="literal">-privileged</span> <span class="literal">-d</span> -<span class="literal">-name</span> nginx<span class="operator">-and</span><span class="literal">-ruby</span> image_id /sbin/init</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://github.com/shoyan/nginx-and-ruby-on-docker" target="_blank" rel="noopener">https://github.com/shoyan/nginx-and-ruby-on-docker</a></p>
+<p>PHP Code Snifferのいいところは、チェックと修正のツールがわかれているところです。<br>それにより、CIによるチェックとその修正が簡単に行えます。</p>
+<p>PHP Code Snifferの詳しい使い方はWikiを参照ください。<br><a href="https://github.com/squizlabs/PHP_CodeSniffer/wiki&#39;" target="_blank" rel="noopener">https://github.com/squizlabs/PHP_CodeSniffer/wiki&#39;</a></p>
+<h3 id="コーディング規約の運用"><a href="#コーディング規約の運用" class="headerlink" title="コーディング規約の運用"></a>コーディング規約の運用</h3><p>コーディング規約を運用していくにあたっての問題点はなんだと思いますか？</p>
+<p>しばらく沈黙</p>
+<p>「コーディング規約が存在してもあまり守られない」ことです。</p>
+<p>多分、みんな納得</p>
+<p>では、どうすればコーディング規約を守れるようになるでしょうか。</p>
+<p>CIでチェックするのが1番です。</p>
+<p>コーディング規約に違反しているコードがあればエラーにします。<br>そうすればコーディング規約を違反しているコードがmasterにマージされることはありません。</p>
+<p>コーディング規約の導入はプロジェクトの初期から始めるのがベストですが、<br>途中からでも自動修正ツールを使えば大半は修正することができます。<br>また、CIのプラットホームが最近は充実しているのでチェックの自動化も容易に行えます。</p>
+<p>実際に導入した記事を書きましたので、こちらも参考にしてください。</p>
+<ul>
+<li><a href="/blog/2016/06/23/php-syntax-check/">修正した部分だけPHP構文チェックをする</a></li>
+</ul>
 
         </div>
       </div>
@@ -388,7 +391,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/25/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><a class="page-number" href="/page/28/">28</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/27/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/25/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><a class="page-number" href="/page/28/">28</a><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/27/">Next</a>
 </div>
 
   </div>

@@ -146,923 +146,288 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2016-07-20T09:42:04.000Z" itemprop="datepublished">
-            2016/07/20
+          <time datetime="2016-07-05T08:21:32.000Z" itemprop="datepublished">
+            2016/07/05
           </time>
-          <time datetime="2016-07-20T09:42:04.000Z" itemprop="modified">
-            (更新日: 2016/07/20)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/07/20/ruby-configuration-pattern/">[Ruby]オブジェクトの設定情報を保持するパターンの紹介</a>
-        </h1>
-        <div class="content">
-          <p>オブジェクトの設定情報を保持するパターンを紹介します。<br>このパターンを使えば設定情報を管理するクラスに集約することができ、コードの見通しがよくなります。また、初期設定の定義ができるようになります。</p>
-<p>名前空間で区切ってConfigurationモデルに設定を持たせるようにします。<br>そして、トップにconfigurationとconfigureメソッドを定義します。<br>クラスメソッドで定義するのがポイントです。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hoge</span></span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Configuration</span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initialize</span></span></span><br><span class="line">      @name = <span class="literal">nil</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">attr_accessor</span> <span class="symbol">:name</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">self</span>.<span class="title">configuration</span></span></span><br><span class="line">    @configuration <span class="params">||</span>= Hoge::Configuration.new</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">self</span>.<span class="title">configure</span></span></span><br><span class="line">    <span class="keyword">yield</span> configuration <span class="keyword">if</span> block_given?</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p><code>configure</code>メソッドは以下のように初期設定したいパラメーターを設定するために使います。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Hope.configure <span class="keyword">do</span> |config|</span><br><span class="line">  config.name = <span class="string">'shoyan'</span></span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">config = Hoge.configuration</span><br><span class="line">config.name</span><br><span class="line">=&gt; <span class="string">"shoyan"</span></span><br></pre></td></tr></table></figure>
-
-<p><code>configure</code>メソッドで設定した情報が保持されています。<br>初期設定はできるようになりました。</p>
-<p>次はこの設定情報を内部で参照するようにします。</p>
-<p>Hopeクラスのinitializeメソッドで設定情報をインスタンス変数に保存します。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hoge</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialize</span></span></span><br><span class="line">    @config = Hoge.configuration</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">greeting</span></span></span><br><span class="line">    puts <span class="string">"Hello <span class="subst">#&#123;@config.name&#125;</span>"</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<p>実行してみます。<br>Hope::Configurationの値が出力されていますね。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hoge = Hoge.new</span><br><span class="line">hope.greeting</span><br><span class="line">=&gt; Hello shoyan</span><br></pre></td></tr></table></figure>
-
-
-<p>Hoge.rb</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hoge</span></span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Configuration</span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initialize</span></span></span><br><span class="line">      @name = <span class="literal">nil</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">attr_accessor</span> <span class="symbol">:name</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialize</span></span></span><br><span class="line">    @config = Hoge.configuration</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">greeting</span></span></span><br><span class="line">    puts <span class="string">"Hello <span class="subst">#&#123;@config.name&#125;</span>"</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">self</span>.<span class="title">configuration</span></span></span><br><span class="line">    @configuration <span class="params">||</span>= Hoge::Configuration.new</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">self</span>.<span class="title">configure</span></span></span><br><span class="line">    <span class="keyword">yield</span> configuration <span class="keyword">if</span> block_given?</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-07-19T05:07:16.000Z" itemprop="datepublished">
-            2016/07/19
-          </time>
-          <time datetime="2016-07-19T05:07:16.000Z" itemprop="modified">
-            (更新日: 2016/07/19)
+          <time datetime="2016-07-05T08:21:32.000Z" itemprop="modified">
+            (更新日: 2016/07/05)
           </time>
         </div>
         <h1>
-        <a href="/blog/2016/07/19/ruby-load/">Rubyのロード機構について</a>
+        <a href="/blog/2016/07/05/introduce-to-fluentd-elasticsearch-kibana/">Fluentd、ElasticsearchとKibanaでログ検索とグラフ表示を可能にする</a>
         </h1>
         <div class="content">
-          <p>Rubyはロード機構として、以下を備えています。</p>
-<ul>
-<li>require</li>
-<li>load</li>
-<li>autoload</li>
-<li>require_relative</li>
-</ul>
-<h2 id="require"><a href="#require" class="headerlink" title="require"></a>require</h2><p>requireは以下の特徴を備えています。</p>
-<ul>
-<li>ロードパスからファイルを探してくる</li>
-<li>拡張ライブラリもロードできる</li>
-<li>拡張子 .rb / .so を省略できる</li>
-<li>同じファイルは2度以上ロードしない</li>
-</ul>
-<p>Rubyのロードパスは <code>$:</code>に入っています。<br>私の環境では以下のように表示されました。</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>] pry(main)&gt; puts <span class="string">$:</span></span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>rbenv.d<span class="regexp">/exec/</span>gem-rehash</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>gems<span class="regexp">/2.3.0/</span>gems<span class="regexp">/did_you_mean-1.0.0/</span>lib</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>gems<span class="regexp">/2.3.0/</span>gems<span class="regexp">/coderay-1.1.1/</span>lib</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>gems<span class="regexp">/2.3.0/</span>gems<span class="regexp">/slop-3.6.0/</span>lib</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>gems<span class="regexp">/2.3.0/</span>gems<span class="regexp">/method_source-0.8.2/</span>lib</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>gems<span class="regexp">/2.3.0/</span>gems<span class="regexp">/pry-0.10.3/</span>lib</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>site_ruby/<span class="number">2.3</span><span class="number">.0</span></span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>site_ruby<span class="regexp">/2.3.0/</span>x86_64-darwin14</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>site_ruby</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>vendor_ruby/<span class="number">2.3</span><span class="number">.0</span></span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>vendor_ruby<span class="regexp">/2.3.0/</span>x86_64-darwin14</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>vendor_ruby</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span><span class="number">2.3</span><span class="number">.0</span></span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span><span class="number">2.3</span><span class="number">.0</span>/x86_64-darwin14</span><br></pre></td></tr></table></figure>
+          <p><a href="/blog/2016/07/04/fluentd-tutorial/">前回の記事</a>で<a href="http://www.fluentd.org/" target="_blank" rel="noopener">Fluentd</a>を使ってログをログ収集サーバに転送する方法を紹介しました。<br>今回は転送されたログを<a href="https://www.elastic.co/jp/products/elasticsearch" target="_blank" rel="noopener">Elasticsearch</a>に登録し、<a href="https://www.elastic.co/jp/products/kibana" target="_blank" rel="noopener">Kibana</a>でログ検索とグラフ表示する方法を紹介します。</p>
+<p>ログ収集サーバー(前回の記事でいうVagrant)の変更を行っていきます。</p>
+<h2 id="FluentdのElasticsearchプラグインをインストール"><a href="#FluentdのElasticsearchプラグインをインストール" class="headerlink" title="FluentdのElasticsearchプラグインをインストール"></a>FluentdのElasticsearchプラグインをインストール</h2><p>まずは、FluetndのElasticsearchプラグインをインストールしておきます。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo /usr/sbin/td-agent-gem <span class="keyword">install</span> fluent-<span class="keyword">plugin</span>-elasticsearch</span><br></pre></td></tr></table></figure>
 
-<h2 id="load"><a href="#load" class="headerlink" title="load"></a>load</h2><p>loadもrequireと同じくロードパスからファイルを探してロードします。<br>しかし、requireのように拡張ライブラリはロードできません。<br>また、ロードできるファイルもRubyプログラムだけです。<br>requireのように2回以上の読み込みを制御する機構もなく、callされた回数分ファイルは読み込まれます。</p>
-<h2 id="autoload"><a href="#autoload" class="headerlink" title="autoload"></a>autoload</h2><p>autoloadはrequireと似ていますが、すぐには読み込まれず、必要になった段階でrequrieされます。以下、サンプルコードです。</p>
-<p>autoload.rb</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">autoload <span class="symbol">:Outer</span>, <span class="string">'./outer'</span></span><br><span class="line">puts Outer.new</span><br></pre></td></tr></table></figure>
+<h2 id="Javaのインストール"><a href="#Javaのインストール" class="headerlink" title="Javaのインストール"></a>Javaのインストール</h2><p>Elasticsearchを動かすにはJavaが必要なのでJavaをインストールします。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum <span class="keyword">install</span> <span class="keyword">java</span><span class="number">-1.7</span><span class="number">.0</span>-openjdk</span><br><span class="line">$ sudo yum <span class="keyword">install</span> <span class="keyword">java</span><span class="number">-1.7</span><span class="number">.0</span>-openjdk-devel</span><br><span class="line">$ <span class="keyword">java</span> -<span class="keyword">version</span></span><br><span class="line"><span class="keyword">java</span> <span class="keyword">version</span> <span class="string">"1.7.0_101"</span></span><br></pre></td></tr></table></figure>
 
-<p>outer.rb</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="symbol">Outer</span></span><br><span class="line"><span class="symbol">end</span></span><br><span class="line"></span><br><span class="line"><span class="symbol">puts</span> '<span class="symbol">Outer</span> <span class="symbol">loaded</span>!'</span><br></pre></td></tr></table></figure>
+<h2 id="Elasticsearchのインストールと起動"><a href="#Elasticsearchのインストールと起動" class="headerlink" title="Elasticsearchのインストールと起動"></a>Elasticsearchのインストールと起動</h2><p>今回はアーカイブをダウンロードしてきてインストールします。<br>インストールといっても特に設定は不要でアーカイブを展開して<code>bin/elasticsearch</code>を実行するだけです。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>curl -O <span class="symbol">https:</span>/<span class="regexp">/download.elastic.co/elasticsearch</span><span class="regexp">/release/org</span><span class="regexp">/elasticsearch/distribution</span><span class="regexp">/tar/elasticsearch</span><span class="regexp">/2.3.3/elasticsearch</span><span class="number">-2.3</span>.<span class="number">3</span>.tar.gz</span><br><span class="line"><span class="variable">$ </span>cd elastic search<span class="number">-2.3</span>.<span class="number">3</span></span><br><span class="line"><span class="variable">$ </span>./bin/elasticsearch</span><br></pre></td></tr></table></figure>
 
-<p>実行すると、Outerがloadされているのが確認できます。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">⇒  ruby <span class="built_in">auto</span>load.rb</span><br><span class="line">Outer loaded!</span><br><span class="line">#&lt;Outer:<span class="number">0x007fcc14040e60</span>&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="kibanaのインストールと起動"><a href="#kibanaのインストールと起動" class="headerlink" title="kibanaのインストールと起動"></a>kibanaのインストールと起動</h2><p>Kibanaも同じようにアーカイブをダウンロードして起動します。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>curl -O <span class="symbol">https:</span>/<span class="regexp">/download.elastic.co/kibana</span><span class="regexp">/kibana/kibana</span><span class="number">-4.5</span>.<span class="number">1</span>-linux-x64.tar.gz</span><br><span class="line"><span class="variable">$ </span>cd kibana<span class="number">-4.5</span>.<span class="number">1</span>-linux-x64</span><br><span class="line"><span class="variable">$ </span>./bin/kibana</span><br></pre></td></tr></table></figure>
 
-<p>autoloadはネストされたクラスやモジュールもloadすることができます。</p>
-<p>autoload.rb</p>
-<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">autoload :<span class="keyword">Outer</span>, <span class="string">'./outer'</span></span><br><span class="line">puts <span class="keyword">Outer</span>.<span class="built_in">new</span></span><br><span class="line">puts <span class="keyword">Outer</span>::<span class="keyword">Inner</span>.<span class="built_in">new</span></span><br></pre></td></tr></table></figure>
+<p><code>http://192.168.33.10:5601</code> にブラウザでアクセスするとKibanaの管理画面が表示されます。<br>Indexの設定が必要ですが、ここでは何もせず次に進みます。</p>
+<h2 id="syslogのログをElasticsearchに格納する"><a href="#syslogのログをElasticsearchに格納する" class="headerlink" title="syslogのログをElasticsearchに格納する"></a>syslogのログをElasticsearchに格納する</h2><p>syslogのログをElasticsearchに格納し、Kibanaで参照します。</p>
+<p><code>/etc/td-agent/td-agent.conf</code>に以下を追記します。</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;source&gt;</span></span><br><span class="line">  @<span class="keyword">type</span> syslog <span class="comment"># syslogプラグイン</span></span><br><span class="line">  port <span class="number">42185</span>   <span class="comment"># portは42185を指定</span></span><br><span class="line">  <span class="keyword">tag</span> <span class="title">syslog</span>   <span class="comment"># syslogというtagをつける</span></span><br><span class="line"><span class="tag">&lt;/source&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;match syslog.**&gt;</span></span><br><span class="line">  @<span class="keyword">type</span> elasticsearch <span class="comment"># elasticsearchプラグインを使う</span></span><br><span class="line">  logstash_format <span class="literal">true</span> <span class="comment"># ログのフォーマット</span></span><br><span class="line">  flush_interval <span class="number">10s</span> <span class="comment"># 10秒ごとに登録する</span></span><br><span class="line"><span class="tag">&lt;/match&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>outer.rb</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Outer</span></span></span><br><span class="line">  autoload <span class="symbol">:Inner</span>, <span class="string">'./inner'</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">puts <span class="string">'Outer loaded!'</span></span><br></pre></td></tr></table></figure>
+<p>fluendをリスタートします。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo<span class="built_in"> service </span>td-agent restart</span><br></pre></td></tr></table></figure>
 
-<p>inner.rb</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="symbol">Outer</span></span><br><span class="line">  <span class="symbol">class</span> <span class="symbol">Inner</span></span><br><span class="line">  <span class="symbol">end</span></span><br><span class="line"><span class="symbol">end</span></span><br><span class="line"></span><br><span class="line"><span class="symbol">puts</span> "<span class="symbol">Outer::<span class="symbol">Inner</span></span> <span class="symbol">loaded</span>!"</span><br></pre></td></tr></table></figure>
+<p>次にsyslogの設定をします。</p>
+<p><code>/etc/rsyslog.conf</code> に以下を追記します。<br>syslogが出力するログをFlutedがlistenするポート、42185に転送するための設定です。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*.* @<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">42185</span></span><br></pre></td></tr></table></figure>
 
-<p>実行すると、Outer::Innerがloadされているのが確認できます。</p>
-<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">⇒  ruby autoload.rb</span><br><span class="line"><span class="keyword">Outer</span> loaded!</span><br><span class="line">#&lt;<span class="keyword">Outer</span>:<span class="number">0x007f9fd4054df0</span>&gt;</span><br><span class="line"><span class="keyword">Outer</span>::<span class="keyword">Inner</span> loaded!</span><br><span class="line">#&lt;<span class="keyword">Outer</span>::<span class="keyword">Inner</span>:<span class="number">0x007f9fd404f990</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>設定を反映させるため、syslogをリスタートします。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo <span class="regexp">/etc/i</span>nit.d<span class="regexp">/rsyslog restart</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="require-relative"><a href="#require-relative" class="headerlink" title="require_relative"></a>require_relative</h2><p>あまり見かけることがありませんが、<code>require_relative</code> というメソッドがRuby1.9.2から追加されています。<br>例えば<code>require</code>で同じ階層のファイルをロードする場合は、<code>require &#39;./filename&#39;</code> のように明示的に<code>./</code>を指定する必要があります。<br><code>require_relative</code>を使えば、<code>require_relative &#39;filename&#39;</code> のように定義することができます。</p>
+<p>先ほど確認した <code>http://192.168.33.10:5601</code> に戻ります。<br>syslogの出力がElasticsearchに登録されると、Indexを登録できるようになります。<br>Indexは<code>logstash-2016.07.05</code> のような名前で作成されます。<br>セレクトボックスからIndexを選択し、Createボタンを押下後にKibanaでログの表示、検索が行えます。</p>
+<p>手動でElasticsearchにログを送りたい場合は以下のコマンドで登録できます。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> logger -t <span class="built_in">test</span> foobar</span></span><br></pre></td></tr></table></figure>
 
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-07-15T05:05:31.000Z" itemprop="datepublished">
-            2016/07/15
-          </time>
-          <time datetime="2016-07-15T05:05:31.000Z" itemprop="modified">
-            (更新日: 2016/07/15)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/07/15/learn-iptables/">iptablesことはじめ</a>
-        </h1>
-        <div class="content">
-          <p>iptablesの概念と設定方法を調べました。</p>
-<h2 id="iptablesとは"><a href="#iptablesとは" class="headerlink" title="iptablesとは"></a>iptablesとは</h2><p>iptablesとはパケットをフィルタリングするためのツールです。<br>また、NATとしても使えます。</p>
-<h2 id="iptablesの用語"><a href="#iptablesの用語" class="headerlink" title="iptablesの用語"></a>iptablesの用語</h2><p>iptablesを理解するにあたって必要な用語をまとめました。</p>
-<h3 id="TARGETS"><a href="#TARGETS" class="headerlink" title="TARGETS"></a>TARGETS</h3><p>iptablesのルールを設定する際に、targetを指定します。<br>targetはユーザー定義のものと特別なtargetである、ACCEPT, DROP, QUEUE or RETURNがあります。<br>パケットに対してどんな操作をするかを定義します。</p>
-<p>代表的なtargetです。</p>
-<p>ACCEPT<br>パケットを通す<br>DROP<br>パケットを破棄する<br>QUEUE<br>パケットをキューにためる<br>RETURN<br>チェインを辿るのをストップして、評価を行う<br>REJECT<br>パケットを破棄し、エラーパケットを返す<br>DNAT<br>送信先IPアドレスを変更する<br>SNAT<br>送信元IPアドレスを変更する<br>MASQUERADE<br>複数の送信元IPアドレスを変更（マスカレード）する<br>LOG<br>ログを出力する</p>
-<h3 id="Chain"><a href="#Chain" class="headerlink" title="Chain"></a>Chain</h3><p>iptablesを設定する際にchainを指定します。<br>chainにはビルトインchainとユーザー定義chainがあります。<br>chainはパケットに対する実行条件を定義します。</p>
-<p>ビルトインchainは以下です。</p>
-<p>INPUT<br>FORWARD<br>OUTPUT<br>PREROUTING<br>POSTROUTING</p>
-<h3 id="TABLES"><a href="#TABLES" class="headerlink" title="TABLES"></a>TABLES</h3><p>一般的にはフィルタリングとして使われることが多いiptablesですが、他にも様々な機能があります。<br>iptablesにはそれをtableという概念で扱っており、5つのtableがあります。</p>
-<p><em>filter</em><br>パケットのフィルタリングを設定するためのテーブルです。<br>デフォルトのテーブルです。tableオプションを明示的に指定しない場合は、filterが指定されたことになります。<br>INPUT、FORWARD、OUTPUTのChainを含みます。</p>
-<p><em>nat</em><br>IPアドレスの変換を設定するためのテーブルです。<br>PREROUTING、POSTROUTING のChainを含みます。</p>
-<p><em>mangle</em><br>パケットの書き換えを設定するためのテーブルです。</p>
-<p><em>raw</em><br>接続の追跡の除外の設定をするためのテーブルです。</p>
-<p><em>security</em><br>アクセスコントロールの設定をするためのテーブルです。</p>
-<h2 id="OPTIONS"><a href="#OPTIONS" class="headerlink" title="OPTIONS"></a>OPTIONS</h2><p>iptablesのコマンドにオプションを指定できます。<br>オプションはいくつかのグループに区別されます。</p>
-<h3 id="COMMANDS"><a href="#COMMANDS" class="headerlink" title="COMMANDS"></a>COMMANDS</h3><p>iptablesに実行してほしいコマンドを指定します。<br>以下のようなコマンドがあります。</p>
-<p>-A, –append<br>選択したチェインにルールを追加します。</p>
-<p>-C, –check<br>指定したチェインにルールが存在するかをチェックします。</p>
-<p>-D, –delete<br>チェインからルールを消します。</p>
-<p>詳細はiptablesのmanをご覧ください。</p>
-<h3 id="PARAMETERS"><a href="#PARAMETERS" class="headerlink" title="PARAMETERS"></a>PARAMETERS</h3><p>ルールを作成する際に指定するパラメーターです。</p>
-<p>-p, –protocol<br>ルールの対象となるプロトコルを指定します。</p>
-<p>-j, –jump<br>ルールの対象となるtargetを指定します。</p>
-<p>-s, –source<br>ルールの対象となるアドレスを指定します。<br>例えば、IPアドレス、ホスト名、ネットワーク名などを指定します。</p>
-<p>詳細はiptablesのmanをご覧ください。</p>
-<h3 id="OTHER-OPTIONS"><a href="#OTHER-OPTIONS" class="headerlink" title="OTHER OPTIONS"></a>OTHER OPTIONS</h3><p>追加オプションです。</p>
-<p>-v, –verbose<br>詳細表示のオプションです。</p>
-<p>詳細はiptablesのmanを参照ください。</p>
-<h2 id="iptablesの基本的な構文"><a href="#iptablesの基本的な構文" class="headerlink" title="iptablesの基本的な構文"></a>iptablesの基本的な構文</h2><p>基本的には以下のように指定します。</p>
-<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables [-t <span class="keyword">table</span>] command <span class="comment">chain options target</span></span><br></pre></td></tr></table></figure>
+<p>もしくは、Fluentdのhttpポートにリクエストします。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X POST -d <span class="symbol">'json</span>=&#123;<span class="string">"json"</span>:<span class="string">"Hello"</span>&#125;' http:<span class="comment">//localhost:8888/syslog.test</span></span><br></pre></td></tr></table></figure>
 
-<p>例えば、ローカルホストからのping(icmp)を許可する場合は以下となります。</p>
-<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -p icmp -j <span class="keyword">ACCEPT</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="iptablesの基本的な読み方"><a href="#iptablesの基本的な読み方" class="headerlink" title="iptablesの基本的な読み方"></a>iptablesの基本的な読み方</h2><p>現在のiptablesの設定を表示するには、iptables -L コマンドを使います。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Example: Input Chain Rule Table Listing</span><br><span class="line">Chain INPUT (policy <span class="keyword">DROP</span>)</span><br><span class="line">target     prot opt <span class="keyword">source</span>               destination</span><br><span class="line"><span class="keyword">ACCEPT</span>     <span class="keyword">all</span>  <span class="comment">--  anywhere             anywhere             ctstate RELATED,ESTABLISHED</span></span><br><span class="line"><span class="keyword">ACCEPT</span>     <span class="keyword">all</span>  <span class="comment">--  anywhere             anywhere</span></span><br><span class="line"><span class="keyword">DROP</span>       <span class="keyword">all</span>  <span class="comment">--  anywhere             anywhere             ctstate INVALID</span></span><br><span class="line">UDP        udp  <span class="comment">--  anywhere             anywhere             ctstate NEW</span></span><br><span class="line">TCP        tcp  <span class="comment">--  anywhere             anywhere             tcp flags:FIN,SYN,RST,ACK/SYN ctstate NEW</span></span><br><span class="line">ICMP       icmp <span class="comment">--  anywhere             anywhere             ctstate NEW</span></span><br><span class="line"><span class="keyword">REJECT</span>     udp  <span class="comment">--  anywhere             anywhere             reject-with icmp-port-unreachable</span></span><br><span class="line"><span class="keyword">REJECT</span>     tcp  <span class="comment">--  anywhere             anywhere             reject-with tcp-reset</span></span><br><span class="line"><span class="keyword">REJECT</span>     <span class="keyword">all</span>  <span class="comment">--  anywhere             anywhere             reject-with icmp-proto-unreachable</span></span><br></pre></td></tr></table></figure>
-
-<p>1行目がChainの名前で、次にデフォルトポリシーが表示されています(DROP)。<br>2行目がカラム名です。</p>
-<p><em>target</em>: target名<br><em>prot</em>: プロトコル名。例えば、tcp, udp, icmp, or all<br><em>opt</em>: めったに使われません。<br><em>source</em>: 接続元のIPアドレス or サブネット or anywhere<br><em>destination</em>: 接続先のIPアドレス or サブネット or anywhere</p>
-<h2 id="iptablesコマンドの使い方"><a href="#iptablesコマンドの使い方" class="headerlink" title="iptablesコマンドの使い方"></a>iptablesコマンドの使い方</h2><p>いくつかの例を紹介します。</p>
-<h3 id="特定のサーバーからのhttp通信を許可する"><a href="#特定のサーバーからのhttp通信を許可する" class="headerlink" title="特定のサーバーからのhttp通信を許可する"></a>特定のサーバーからのhttp通信を許可する</h3><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># iptables -A INPUT -p tcp -s 192.168.1.1 --dport 80 -j ACCEPT</span></span><br><span class="line"><span class="meta"># 設定を保存</span></span><br><span class="line"><span class="meta"># service iptables save</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="ルールを消す"><a href="#ルールを消す" class="headerlink" title="ルールを消す"></a>ルールを消す</h3><p>iptables -D ルール で消すことができます。<br><code>iptables -S</code> でルール一覧がでるので、そのルールを指定すれば簡単です。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># iptables -S</span><br><span class="line">-A INPUT -s <span class="number">157.7</span><span class="number">.105</span><span class="number">.69</span>/<span class="number">32</span> -p tcp -m tcp --dport <span class="number">80</span> -j ACCEPT</span><br></pre></td></tr></table></figure>
-
-<p>以下のコマンドで消します。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -D INPUT -s <span class="number">157.7</span><span class="number">.105</span><span class="number">.69</span>/<span class="number">32</span> -p tcp -m tcp --dport <span class="number">80</span> -j ACCEPT</span><br></pre></td></tr></table></figure>
-
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
-<li><a href="http://linux.die.net/man/8/iptables" target="_blank" rel="noopener">Man page of IPTABLES</a></li>
-<li><a href="https://linuxjm.osdn.jp/html/iptables/man8/iptables.8.html" target="_blank" rel="noopener">日本語訳</a></li>
-<li><a href="http://qiita.com/kmikmy/items/d279b1b993661ba7dbe4" target="_blank" rel="noopener">iptablesの読み方覚え書き</a></li>
-<li><a href="http://murayama.hatenablog.com/entry/20100206/1265444193" target="_blank" rel="noopener">iptablesの設定 入門編</a></li>
-<li><a href="https://help.sakura.ad.jp/app/answers/detail/a_id/2423/~/iptables%E3%81%AE%E8%A8%AD%E5%AE%9A%E6%96%B9%E6%B3%95" target="_blank" rel="noopener">iptablesの設定方法</a></li>
-<li><a href="https://www.digitalocean.com/community/tutorials/how-to-list-and-delete-iptables-firewall-rules" target="_blank" rel="noopener">How To List and Delete Iptables Firewall Rules</a></li>
-</ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-07-14T04:43:40.000Z" itemprop="datepublished">
-            2016/07/14
-          </time>
-          <time datetime="2016-07-14T04:43:40.000Z" itemprop="modified">
-            (更新日: 2016/07/14)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/07/14/useful-ruby-tips/">知っていると便利なRubyの小技集</a>
-        </h1>
-        <div class="content">
-          <h3 id="a-zの文字列を作成する"><a href="#a-zの文字列を作成する" class="headerlink" title="a-zの文字列を作成する"></a>a-zの文字列を作成する</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">'a'</span>..<span class="string">'z'</span>).to_a.join</span><br><span class="line">=&gt; <span class="string">"abcdefghijklmnopqrstuvwxyz"</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="特定のkeyのみ抽出する"><a href="#特定のkeyのみ抽出する" class="headerlink" title="特定のkeyのみ抽出する"></a>特定のkeyのみ抽出する</h3><p>特定のkeyのみ抽出するにはvalues_atメソッドを使います。</p>
-<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">h = &#123; <span class="string">"cat"</span> = <span class="string">"feline"</span>, <span class="string">"dog"</span> = <span class="string">"canine"</span>, <span class="string">"cow"</span> = <span class="string">"bovine"</span> &#125;</span><br><span class="line">h.values_at(<span class="string">"cow"</span>, <span class="string">"cat"</span>)  <span class="meta">#=&gt; [<span class="string">"bovine"</span>, <span class="string">"feline"</span>]</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="keyとvalueの配列からhashを作成する"><a href="#keyとvalueの配列からhashを作成する" class="headerlink" title="keyとvalueの配列からhashを作成する"></a>keyとvalueの配列からhashを作成する</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">keys</span>   = [<span class="string">"suzuki"</span>, <span class="string">"itou"</span>, <span class="string">"yamada"</span>]</span><br><span class="line"><span class="attr">values</span> = [<span class="number">87</span>, <span class="number">76</span>, <span class="number">69</span>]</span><br><span class="line"><span class="attr">ary</span> = [keys, values].transpose</span><br><span class="line"><span class="attr">h</span> = Hash[*ary.flatten]</span><br></pre></td></tr></table></figure>
-
-<h3 id="特定の範囲の要素を取得する"><a href="#特定の範囲の要素を取得する" class="headerlink" title="特定の範囲の要素を取得する"></a>特定の範囲の要素を取得する</h3><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>][<span class="number">0</span>..<span class="number">2</span>]</span><br><span class="line">=&gt; [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>]</span><br></pre></td></tr></table></figure>
-
-<h3 id="配列からnilを取り除く"><a href="#配列からnilを取り除く" class="headerlink" title="配列からnilを取り除く"></a>配列からnilを取り除く</h3><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">2</span>, nil, <span class="number">3</span>, <span class="number">4</span>, nil].compact</span><br><span class="line">=&gt; [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br></pre></td></tr></table></figure>
-
-<h3 id="配列から特定の条件に一致する要素を取り除く"><a href="#配列から特定の条件に一致する要素を取り除く" class="headerlink" title="配列から特定の条件に一致する要素を取り除く"></a>配列から特定の条件に一致する要素を取り除く</h3><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>].delete_if &#123; |x| x % <span class="number">2</span> == <span class="number">0</span> &#125;</span><br><span class="line">=&gt; [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>]</span><br></pre></td></tr></table></figure>
-
-<h3 id="10進数を基数変換する"><a href="#10進数を基数変換する" class="headerlink" title="10進数を基数変換する"></a>10進数を基数変換する</h3><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">255</span>.to_s(<span class="number">2</span>)</span><br><span class="line">=&gt; <span class="string">"11111111"</span></span><br><span class="line"><span class="number">255</span>.to_s(<span class="number">8</span>)</span><br><span class="line">=&gt; <span class="string">"377"</span></span><br><span class="line"><span class="number">255</span>.to_s(<span class="number">16</span>)</span><br><span class="line">=&gt; <span class="string">"ff"</span></span><br></pre></td></tr></table></figure>
-
-<p>逆の操作を行う場合は<code>to_i</code>メソッドを使います。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"11111111"</span>.to_i(<span class="number">2</span>)</span><br><span class="line">=&gt; <span class="number">255</span></span><br><span class="line"><span class="string">"377"</span>.to_i(<span class="number">8</span>)</span><br><span class="line">=&gt; <span class="number">255</span></span><br><span class="line"><span class="string">"ff"</span>.to_i(<span class="number">16</span>)</span><br><span class="line">=&gt; <span class="number">255</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="ハッシュのvalueでソートする"><a href="#ハッシュのvalueでソートする" class="headerlink" title="ハッシュのvalueでソートする"></a>ハッシュのvalueでソートする</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scores = &#123; <span class="string">'Carol'</span> =&gt; <span class="number">90</span>, <span class="string">'Alice'</span> =&gt; <span class="number">50</span>, <span class="string">'Bob'</span> =&gt; <span class="number">60</span>, <span class="string">'David'</span> =&gt; <span class="number">40</span> &#125;</span><br><span class="line">scores.sort &#123;|(k1, v1), (k2, v2)| v2 &lt;=&gt; v1 &#125;</span><br><span class="line">=&gt; [[<span class="string">"Carol"</span>, <span class="number">90</span>], [<span class="string">"Bob"</span>, <span class="number">60</span>], [<span class="string">"Alice"</span>, <span class="number">50</span>], [<span class="string">"David"</span>, <span class="number">40</span>]]</span><br></pre></td></tr></table></figure>
-
-<h3 id="同じ値を数える"><a href="#同じ値を数える" class="headerlink" title="同じ値を数える"></a>同じ値を数える</h3><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"b"</span>].each_with_object(Hash.new(<span class="number">0</span>)) &#123;|r, arr| arr[r]+=<span class="number">1</span> &#125;</span><br><span class="line">=&gt; &#123;<span class="string">"a"</span>=&gt;<span class="number">2</span>, <span class="string">"b"</span>=&gt;<span class="number">3</span>, <span class="string">"c"</span>=&gt;<span class="number">1</span>&#125;</span><br></pre></td></tr></table></figure>
-
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-07-12T05:45:29.000Z" itemprop="datepublished">
-            2016/07/12
-          </time>
-          <time datetime="2022-12-18T04:42:29.000Z" itemprop="modified">
-            (更新日: 2022/12/18)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/07/12/sample-of-formula/">LATEXチートシート - 数式記号の読み方・表し方</a>
-        </h1>
-        <div class="content">
-          <p>LATEXを使った数式記号の読み方・表し方をまとめました。<br><a href="http://izumi-math.jp/sanae/report/suusiki/suusiki.htm" target="_blank" rel="noopener">数式記号の読み方・表し方</a>の数式を実際にLATEXで表示しています。</p>
-<ul>
-<li>数学初心者の私が30歳で数学を学び直したときの経験を書きました。<a href="/blog/2015/11/30/mathematics-of-advent-calendar/">30歳から始める数学</a></li>
-</ul>
-<h2 id="1-数と式"><a href="#1-数と式" class="headerlink" title="1. 数と式"></a>1. 数と式</h2><table>
-<thead>
-<tr>
-<th>記号</th>
-<th>読み方</th>
-<th>LATEX表記</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>$$ a \times b $$</td>
-<td>aかけるb</td>
-<td>a \times b</td>
-</tr>
-<tr>
-<td>$$ a \div b $$</td>
-<td>a割るb</td>
-<td>a \div b</td>
-</tr>
-<tr>
-<td>$$ a \pm b $$</td>
-<td>aプラスマイナスb</td>
-<td>a \pm b</td>
-</tr>
-<tr>
-<td>$$ a \times b $$</td>
-<td>aかけるb</td>
-<td>a \times b</td>
-</tr>
-<tr>
-<td>$$ a \div b $$</td>
-<td>a割るb</td>
-<td>a \div b</td>
-</tr>
-<tr>
-<td>$$ a \pm b $$</td>
-<td>aプラスマイナスb</td>
-<td>a \pm b</td>
-</tr>
-<tr>
-<td>$$ a \mp b $$</td>
-<td>aマイナスプラスb</td>
-<td>a \mp b</td>
-</tr>
-<tr>
-<td>$$ a \cdot b $$</td>
-<td>aかけるb</td>
-<td>a \cdot b</td>
-</tr>
-<tr>
-<td>$$ a &lt; b $$</td>
-<td>a小なりb<br>aはbより小さい</td>
-<td>a &lt; b</td>
-</tr>
-<tr>
-<td>$$ a &gt; b $$</td>
-<td>a大なりb<br>aはbより大きい</td>
-<td>a &gt; b</td>
-</tr>
-<tr>
-<td>$$ a \leqq b $$</td>
-<td>a小なりイコールb<br>aはb以下</td>
-<td>a \leqq b</td>
-</tr>
-<tr>
-<td>$$ a \geqq b $$</td>
-<td>a大なりイコールb<br>aはb以上</td>
-<td>a \geqq b</td>
-</tr>
-<tr>
-<td>$$ a \neq b $$</td>
-<td>aはbと等しくない<br>aノットイコールb</td>
-<td>a \neq b</td>
-</tr>
-<tr>
-<td>$$ a \fallingdotseq b $$</td>
-<td>aニアリーイコールb<br>aはbにほぼ等しい</td>
-<td>a \fallingdotseq b</td>
-</tr>
-<tr>
-<td>$$ a^n $$</td>
-<td>aのn乗</td>
-<td>a^n</td>
-</tr>
-<tr>
-<td>$$ ( a^m ) ^n $$</td>
-<td>aのm乗のn乗</td>
-<td>( a^m ) ^n</td>
-</tr>
-<tr>
-<td>$$ \sqrt{a} $$</td>
-<td>ルートa<br>平方根a</td>
-<td>\sqrt{a}</td>
-</tr>
-<tr>
-<td>$$ \sqrt[n]{a} $$</td>
-<td>n乗根a</td>
-<td>\sqrt[n]{a}</td>
-</tr>
-<tr>
-<td>$$ \frac{b}{a} $$</td>
-<td>a分のb<br>b割るa</td>
-<td>\frac{b}{a}</td>
-</tr>
-<tr>
-<td>$$ \mid a \mid $$</td>
-<td>絶対値a<br>aの絶対値</td>
-<td>\mid a \mid</td>
-</tr>
-<tr>
-<td>$$ [x] $$</td>
-<td>xを越えない最大の整数<br>ガウスx</td>
-<td>[x]</td>
-</tr>
-<tr>
-<td>$$ a,b,c,\cdots $$</td>
-<td>a,b,c,…</td>
-<td>a,b,c,\cdots</td>
-</tr>
-</tbody></table>
-<h2 id="2-関数・写像"><a href="#2-関数・写像" class="headerlink" title="2. 関数・写像"></a>2. 関数・写像</h2><table>
-<thead>
-<tr>
-<th>記号</th>
-<th>読み方</th>
-<th>LATEX表記</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>$$ y=f(x) $$</td>
-<td>yイコールf,x<br>yイコールf,かっこ,x,（かっこ）</td>
-<td>y=f(x)</td>
-</tr>
-<tr>
-<td>$$ f ^{-1} (x) $$</td>
-<td>f,インバースx<br>f,xの逆関数</td>
-<td>f ^{-1} (x)</td>
-</tr>
-<tr>
-<td>$$ \sin x $$</td>
-<td>サインx</td>
-<td>\sin x</td>
-</tr>
-<tr>
-<td>$$ \cos x $$</td>
-<td>コサインx</td>
-<td>\cos x</td>
-</tr>
-<tr>
-<td>$$ \tan x $$</td>
-<td>タンジェントx</td>
-<td>\tan x</td>
-</tr>
-<tr>
-<td>$$ \sin ^2 x $$</td>
-<td>サイン2乗x</td>
-<td>\sin ^2 x</td>
-</tr>
-<tr>
-<td>$$ \log _a x $$</td>
-<td>ログa,b<br>aを底数とするbの対数</td>
-<td>\log _a x</td>
-</tr>
-<tr>
-<td>$$ \log x $$</td>
-<td>ログ,x</td>
-<td>\log x</td>
-</tr>
-<tr>
-<td>$$ f \circ g $$</td>
-<td>fマルg<br>fとgの合成写像</td>
-<td>f \circ g</td>
-</tr>
-<tr>
-<td>$$ f ^{-1} $$</td>
-<td>fインバース<br>fの逆写像</td>
-<td>f ^{-1}</td>
-</tr>
-<tr>
-<td>$$ X \stackrel{f}{\to} Y $$</td>
-<td>XからYへの写像f<br>X矢印,Y,f</td>
-<td>X \stackrel{f}{\to} Y</td>
-</tr>
-<tr>
-<td>$$ a \stackrel{f}{\to} b $$</td>
-<td>aをbに移す写像f<br>a矢印,b,f</td>
-<td>a \stackrel{f}{\to} b</td>
-</tr>
-<tr>
-<td>$$ f: x \to y $$</td>
-<td>xからyへの写像f<br>f,x矢印,y</td>
-<td>f: x \to y</td>
-</tr>
-<tr>
-<td>$$ f(x,y) $$</td>
-<td>f,x,y<br>f,かっこ,x,y,（かっこ）</td>
-<td>f(x,y)</td>
-</tr>
-</tbody></table>
-<h2 id="3-ベクトル・行列"><a href="#3-ベクトル・行列" class="headerlink" title="3. ベクトル・行列"></a>3. ベクトル・行列</h2><table>
-<thead>
-<tr>
-<th>記号</th>
-<th>読み方</th>
-<th>LATEX表記</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>$$ \vec{a} $$</td>
-<td>ベクトルa<br>aベクトル</td>
-<td>\vec{a}</td>
-</tr>
-<tr>
-<td>$$ \overrightarrow{AB} $$</td>
-<td>ベクトルAB<br>ABベクトル</td>
-<td>\overrightarrow{AB}</td>
-</tr>
-<tr>
-<td>$$ \mid \vec{a} \mid $$</td>
-<td>ベクトルaの大きさ<br>ベクトルaの絶対値</td>
-<td>\mid \vec{a} \mid</td>
-</tr>
-<tr>
-<td>$$ \vec{0} $$</td>
-<td>零ベクトル<br>ゼロベクトル</td>
-<td>\vec{0}</td>
-</tr>
-<tr>
-<td>$$ \vec{a} \neq \vec{b} $$</td>
-<td>ベクトルaはベクトルbではない</td>
-<td>\vec{a} \neq \vec{b}</td>
-</tr>
-<tr>
-<td>$$ \vec{a} \parallel \vec{b} $$</td>
-<td>ベクトルa,bは平行<br>ベクトルa平行ベクトルb</td>
-<td>\vec{a} \parallel \vec{b}</td>
-</tr>
-<tr>
-<td>$$ \vec{a} \perp \vec{b} $$</td>
-<td>ベクトルa,bは垂直<br>ベクトルa垂直ベクトルb</td>
-<td>\vec{a} \perp \vec{b}</td>
-</tr>
-<tr>
-<td>$$ \vec{a}=(a_1,a_2) $$</td>
-<td>ベクトルaイコールa1,a2<br>ベクトルaイコール,かっこa1,a2</td>
-<td>\vec{a}=(a_1,a_2)</td>
-</tr>
-<tr>
-<td>$$ \vec{a} \cdot \vec{b} $$</td>
-<td>ベクトルa,bの内積</td>
-<td>\vec{a} \cdot \vec{b}</td>
-</tr>
-<tr>
-<td>$$ ( a \quad b ) $$</td>
-<td>行ベクトルa,b<br>かっこ,a,b,</td>
-<td>( a \quad b )</td>
-</tr>
-<tr>
-<td>$$ \begin{pmatrix} a \ b \end{pmatrix} $$</td>
-<td>列ベクトルa,b<br>かっこ,a,b,</td>
-<td>\begin{pmatrix} a \ b \end{pmatrix}</td>
-</tr>
-<tr>
-<td>$$ m \times n $$</td>
-<td>m,n行列<br>mかけるn行列</td>
-<td>m \times n</td>
-</tr>
-<tr>
-<td>$$ \begin{pmatrix} a &amp; b \ c &amp; d \end{pmatrix} $$</td>
-<td>行列a,b,c,d<br>かっこ,a,b,c,d</td>
-<td>\begin{pmatrix} a &amp; b \ c &amp; d \end{pmatrix}</td>
-</tr>
-<tr>
-<td>$$ A^2 $$</td>
-<td>Aの2乗</td>
-<td>A^2</td>
-</tr>
-<tr>
-<td>$$ A^{-1} $$</td>
-<td>Aの逆行列<br>Aインバース</td>
-<td>A^{-1}</td>
-</tr>
-<tr>
-<td>$$ A \vec{x} $$</td>
-<td>Aベクトルx</td>
-<td>A \vec{x}</td>
-</tr>
-<tr>
-<td>$$ O $$</td>
-<td>零行列</td>
-<td>O</td>
-</tr>
-</tbody></table>
-<h2 id="4-微分・積分"><a href="#4-微分・積分" class="headerlink" title="4. 微分・積分"></a>4. 微分・積分</h2><table>
-<thead>
-<tr>
-<th>記号</th>
-<th>読み方</th>
-<th>LATEX表記</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>$$ { a_n } $$</td>
-<td>数列an</td>
-<td>{ a_n }</td>
-</tr>
-<tr>
-<td>$$ \sum _{k=1} ^{n} {k(k+1)} $$</td>
-<td>シグマ,ak,k=1からnまで<br>シグマ,k=1からnまで,ak</td>
-<td>\sum _{k=1} ^{n} {k(k+1)}</td>
-</tr>
-<tr>
-<td>$$ n \to \infty $$</td>
-<td>n矢印無限大<br>n無限大</td>
-<td>n \to \infty</td>
-</tr>
-<tr>
-<td>$$ \lim {n \to \infty} a_n=\alpha $$</td>
-<td>nが限りなく大きくなるときのanの極限値はα<br> リミット,n→∞,an,イコールα</td>
-<td>\lim {n \to \infty} a_n=\alpha</td>
-</tr>
-<tr>
-<td>$$ x \to a $$</td>
-<td>x矢印a<br>xが限りなくaに近づく</td>
-<td>x \to a</td>
-</tr>
-<tr>
-<td>$$ \lim {x \to a} f(x)=b $$</td>
-<td>xが限りなくaに近づくとき,f(x)の極限値はbである<br>リミット,xがaに近づくときのf(x),イコール,b<br>リミット,x矢印a,f(x),イコールb</td>
-<td>\lim {x \to a} f(x)=b</td>
-</tr>
-<tr>
-<td>$$ \lim {x \to a+0} f(x) $$</td>
-<td>xがaに近づくときのf(x)の右極限値<br>リミット,xが大きい方からaに近づくときのf(x)<br>リミット,x矢印a+0,f(x)</td>
-<td>\lim {x \to a+0} f(x)</td>
-</tr>
-<tr>
-<td>$$ \lim {x \to a-0} f(x) $$</td>
-<td>xがaに近づくときのf(x)の左極限値<br>リミット,xが小さい方からaに近づくときのf(x)<br>リミット,x矢印a-0,f(x)</td>
-<td>\lim {x \to a-0} f(x)</td>
-</tr>
-<tr>
-<td>$$ \Delta x \to 0 $$</td>
-<td>デルタx矢印0<br>デルタxが限りなく0に近づく</td>
-<td>\Delta x \to 0</td>
-</tr>
-<tr>
-<td>$$ f’(x) $$</td>
-<td>f,ダッシュ,x</td>
-<td>f’(x)</td>
-</tr>
-<tr>
-<td>$$ y’ $$</td>
-<td>y,ダッシュ</td>
-<td>y’</td>
-</tr>
-<tr>
-<td>$$ \frac{dy}{dx} $$</td>
-<td>dy,dx</td>
-<td>\frac{dy}{dx}</td>
-</tr>
-<tr>
-<td>$$ \frac{d}{dx} f(x) $$</td>
-<td>d,dx,f(x)</td>
-<td>\frac{d}{dx} f(x)</td>
-</tr>
-<tr>
-<td>$$ \frac{d}{dx} f(x) $$</td>
-<td>d,dx,f(x)</td>
-<td>\frac{d}{dx} f(x)</td>
-</tr>
-<tr>
-<td>$$ ( a,b ) $$</td>
-<td>開区間a,b</td>
-<td>( a,b )</td>
-</tr>
-<tr>
-<td>$$ [ a,b ] $$</td>
-<td>閉区間a,b</td>
-<td>[ a,b ]</td>
-</tr>
-<tr>
-<td>$$ f”(x) $$</td>
-<td>f,トゥーダッシュ,x</td>
-<td>f”(x)</td>
-</tr>
-<tr>
-<td>$$ y” $$</td>
-<td>y,トゥーダッシュ</td>
-<td>y”</td>
-</tr>
-<tr>
-<td>$$ \frac{d^2y}{dx^2} $$</td>
-<td>d,トゥー,y,d,x,トゥー yの第2次導関数</td>
-<td>\frac{d^2y}{dx^2}</td>
-</tr>
-<tr>
-<td>$$ \frac{d^y}{dx^2} f(x) $$</td>
-<td>f(x) d,トゥー,d,x,トゥー,f(x)<br>f(x)の第2次導関数</td>
-<td>\frac{d^y}{dx^2} f(x)</td>
-</tr>
-<tr>
-<td>$$ y^{(n)} $$</td>
-<td>yの第n次導関数</td>
-<td>y^{(n)}</td>
-</tr>
-<tr>
-<td>$$ f^{(n)(x)} $$</td>
-<td>f(x)の第n次導関数</td>
-<td>f^{(n)(x)}</td>
-</tr>
-<tr>
-<td>$$ \frac{d^ny}{dx^n} $$</td>
-<td>d,n,d,x,n,f(x)<br>yの第n次導関数</td>
-<td>\frac{d^ny}{dx^n}</td>
-</tr>
-<tr>
-<td>$$ \frac{d^n}{dx^n} f(x) $$</td>
-<td>d,n,d,x,n,f(x)<br>f(x)の第n次導関数</td>
-<td>\frac{d^n}{dx^n} f(x)</td>
-</tr>
-<tr>
-<td>$$ \int _a ^b f(x) dx $$</td>
-<td>インテグラル,aからbまで,f(x),dx</td>
-<td>\int _a ^b f(x) dx</td>
-</tr>
-<tr>
-<td>$$ [ F(x) ] ^b _a $$</td>
-<td>F(x),a,b</td>
-<td>[ F(x) ] ^b _a</td>
-</tr>
-</tbody></table>
-<h2 id="5-集合・理論"><a href="#5-集合・理論" class="headerlink" title="5. 集合・理論"></a>5. 集合・理論</h2><table>
-<thead>
-<tr>
-<th>記号</th>
-<th>読み方</th>
-<th>LATEX表記</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>$$ A \subset B $$</td>
-<td>AはBの真部分集合である</td>
-<td>A \subset B</td>
-</tr>
-<tr>
-<td>$$ A \supset B $$</td>
-<td>AはBを真部分集合に持つ</td>
-<td>A \supset B</td>
-</tr>
-<tr>
-<td>$$ A \subseteqq B $$</td>
-<td>A含まれるB<br>AはBの部分集合である<br>AはBに含まれる</td>
-<td>A \subseteqq B</td>
-</tr>
-<tr>
-<td>$$ A \supseteqq B $$</td>
-<td>A含むB<br>AはBを含む<br>BはAを部分集合に持つ</td>
-<td>A \supseteqq B</td>
-</tr>
-<tr>
-<td>$$ a \in A $$</td>
-<td>aはAの要素である<br>aはAに属する<br>a属するA</td>
-<td>a \in A</td>
-</tr>
-<tr>
-<td>$$ a \notin A $$</td>
-<td>aはAの要素でない<br>aはAに属さない<br>a属さないA</td>
-<td>a \notin A</td>
-</tr>
-<tr>
-<td>$$ A \ni a $$</td>
-<td>aを要素とする<br>Aの要素</td>
-<td>A \ni a</td>
-</tr>
-<tr>
-<td>$$ { 1,2,3,4 } $$</td>
-<td>集合1,2,3,4<br>1,2,3,4を要素とする集合</td>
-<td>{ 1,2,3,4 }</td>
-</tr>
-<tr>
-<td>$$ { x \mid x&lt;6 } $$</td>
-<td>x（の集合）ただしx&lt;6<br>x&lt;6を満たす集合</td>
-<td>{ x \mid x&lt;6 }</td>
-</tr>
-<tr>
-<td>$$ A \cap B $$</td>
-<td>AキャップB<br>A 交わり<br>AとBの交わり（共通部分）<br>AインターセクションB</td>
-<td>A \cap B</td>
-</tr>
-<tr>
-<td>$$ A \cup B $$</td>
-<td>A カップ B<br>A結びB<br>AとBの結び<br>AユニオンB</td>
-<td>A \cup B</td>
-</tr>
-<tr>
-<td>$$ A=B $$</td>
-<td>AイコールB<br>AはBに等しい</td>
-<td>A=B</td>
-</tr>
-<tr>
-<td>$$ \bar{A} $$</td>
-<td>Aバー<br>Aの補集合</td>
-<td>\bar{A}</td>
-</tr>
-<tr>
-<td>$$ \phi $$</td>
-<td>空集合<br>ファイ</td>
-<td>\phi</td>
-</tr>
-<tr>
-<td>$$ P \Rightarrow Q $$</td>
-<td>PならばQ</td>
-<td>P \Rightarrow Q</td>
-</tr>
-<tr>
-<td>$$ P \Leftrightarrow Q $$</td>
-<td>PとQは同値</td>
-<td>P \Leftrightarrow Q</td>
-</tr>
-<tr>
-<td>$$ \bar{P} $$</td>
-<td>Pでない<br>Pの否定<br>Pバー</td>
-<td>\bar{P}</td>
-</tr>
-</tbody></table>
-<h2 id="6-確率・統計"><a href="#6-確率・統計" class="headerlink" title="6. 確率・統計"></a>6. 確率・統計</h2><table>
-<thead>
-<tr>
-<th>記号</th>
-<th>読み方</th>
-<th>LATEX表記</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>$$ _n P _r $$</td>
-<td>n,P,r<br>Pのn,r<br>パーミュテーション,n,r</td>
-<td>_n P _r</td>
-</tr>
-<tr>
-<td>$$ _n C _r $$</td>
-<td>n,C,r<br>Cのn,r<br>コンビネーション,n,r</td>
-<td>_n C _r</td>
-</tr>
-<tr>
-<td>$$ n! $$</td>
-<td>nの階乗<br>nファクトリアル</td>
-<td>n!</td>
-</tr>
-<tr>
-<td>$$ n(A) $$</td>
-<td>n,A<br>n,かっこ,A,（かっこ）</td>
-<td>n(A)</td>
-</tr>
-<tr>
-<td>$$ P(A) $$</td>
-<td>P,A<br>事象Aの確率</td>
-<td>P(A)</td>
-</tr>
-<tr>
-<td>$$ P _A (B) $$</td>
-<td>P,A,B<br>PのA,B<br>P,A,かっこ,B,（かっこ）</td>
-<td>P _A (B)</td>
-</tr>
-<tr>
-<td>$$ \bar{x} $$</td>
-<td>xバー<br>xの平均</td>
-<td>\bar{x}</td>
-</tr>
-<tr>
-<td>$$ E(X) $$</td>
-<td>E,X<br>Xの平均</td>
-<td>E(X)</td>
-</tr>
-<tr>
-<td>$$ V(X) $$</td>
-<td>V,X<br>Xの分散</td>
-<td>V(X)</td>
-</tr>
-<tr>
-<td>$$ \sigma (X) $$</td>
-<td>シグマ,X<br>Xの標準偏差</td>
-<td>\sigma (X)</td>
-</tr>
-<tr>
-<td>$$ P(X=A) $$</td>
-<td>P,かっこ,X=a,（かっこ）<br>X=aとなる確率</td>
-<td>P(X=A)</td>
-</tr>
-<tr>
-<td>$$ B(n,p) $$</td>
-<td>B,n,p</td>
-<td>B(n,p)</td>
-</tr>
-<tr>
-<td>$$ N(m,\sigma ^2) $$</td>
-<td>N,m,σ2</td>
-<td>N(m,\sigma ^2)</td>
-</tr>
-</tbody></table>
-<h2 id="7-幾何"><a href="#7-幾何" class="headerlink" title="7. 幾何"></a>7. 幾何</h2><table>
-<thead>
-<tr>
-<th>記号</th>
-<th>読み方</th>
-<th>LATEX表記</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>$$ x \circ $$</td>
-<td>x度</td>
-<td>x \circ</td>
-</tr>
-<tr>
-<td>$$ \angle A $$</td>
-<td>角A</td>
-<td>\angle A</td>
-</tr>
-<tr>
-<td>$$ \triangle {ABC} $$</td>
-<td>三角形ABC</td>
-<td>\triangle {ABC}</td>
-</tr>
-<tr>
-<td>$$ l \parallel m $$</td>
-<td>l平行m<br>lとmは平行</td>
-<td>l \parallel m</td>
-</tr>
-<tr>
-<td>$$ l \nparallel m $$</td>
-<td>lとmは平行でない</td>
-<td>l \nparallel m</td>
-</tr>
-<tr>
-<td>$$ \triangle {ABC} \equiv \triangle {DEF} $$</td>
-<td>△ABCと△DEF合同<br> △ABC合同△DEF</td>
-<td>\triangle {ABC} \equiv \triangle {DEF}</td>
-</tr>
-<tr>
-<td>$$ \overline{AB} $$</td>
-<td>ABの長さ<br> ABのバー</td>
-<td>\overline{AB}</td>
-</tr>
-</tbody></table>
-<h2 id="8-ギリシャ文字"><a href="#8-ギリシャ文字" class="headerlink" title="8. ギリシャ文字"></a>8. ギリシャ文字</h2><table>
-<thead>
-<tr>
-<th>記号</th>
-<th>読み方</th>
-<th>LATEX表記</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>$$ \alpha $$</td>
-<td>アルファ</td>
-<td>\alpha</td>
-</tr>
-<tr>
-<td>$$ \beta $$</td>
-<td>ベータ</td>
-<td>\beta</td>
-</tr>
-<tr>
-<td>$$ \gamma $$</td>
-<td>ガンマ</td>
-<td>\gamma</td>
-</tr>
-<tr>
-<td>$$ \theta $$</td>
-<td>シータ</td>
-<td>\theta</td>
-</tr>
-<tr>
-<td>$$ \pi $$</td>
-<td>パイ</td>
-<td>\pi</td>
-</tr>
-<tr>
-<td>$$ \Delta $$</td>
-<td>デルタ</td>
-<td>\Delta</td>
-</tr>
-</tbody></table>
-<h2 id="関連記事"><a href="#関連記事" class="headerlink" title="関連記事"></a>関連記事</h2><ul>
-<li><p>数学初心者の私が30歳で数学を学び直したときの経験を書きました。<a href="/blog/2015/11/30/mathematics-of-advent-calendar/">30歳から始める数学</a></p>
-</li>
-<li><p>数学初心者の私が数学の勉強会で登壇することに！</p>
-<ul>
-<li><a href="/blog/2015/09/08/mathematics-for-programmer/">プログラマのための数学勉強会@福岡に登壇してきました</a></li>
-<li><a href="/blog/2015/11/10/mathematics-for-programmer-second/">プログラマのための数学勉強会@福岡#2に登壇してきました</a></li>
-</ul>
-</li>
-</ul>
 <h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
-<li><a href="http://izumi-math.jp/sanae/report/suusiki/suusiki.htm" target="_blank" rel="noopener">数式記号の読み方・表し方</a></li>
+<li><a href="http://docs.fluentd.org/articles/free-alternative-to-splunk-by-fluentd" target="_blank" rel="noopener">Free Alternative to Splunk Using Fluentd</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-07-04T04:50:35.000Z" itemprop="datepublished">
+            2016/07/04
+          </time>
+          <time datetime="2016-07-04T04:50:35.000Z" itemprop="modified">
+            (更新日: 2016/07/04)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/07/04/fluentd-tutorial/">Fluentdを使ってローカル環境にログ収集サーバを構築する</a>
+        </h1>
+        <div class="content">
+          <p>アプリケーションサーバとログ収集サーバにFluentdをインストールし、アプリケーションサーバからログ収集サーバにログをフォワードする方法を紹介します。<br>ここでは、アプリケーションサーバをMacOS X、ログ収集サーバをVagrantとします。</p>
+<h2 id="Fluentdをホストマシン-Mac-にインストール"><a href="#Fluentdをホストマシン-Mac-にインストール" class="headerlink" title="Fluentdをホストマシン(Mac)にインストール"></a>Fluentdをホストマシン(Mac)にインストール</h2><p>.dmgをダウンロードしてインストールしてください。</p>
+<ul>
+<li><a href="https://td-agent-package-browser.herokuapp.com/2/macosx" target="_blank" rel="noopener">ダウンロード</a></li>
+</ul>
+<p>以下でFluentdを起動します。</p>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo launchctl <span class="keyword">load</span> /<span class="keyword">Library</span>/LaunchDaemons/td-agent.plist</span><br></pre></td></tr></table></figure>
+
+<p>Fluentdのログは <code>/var/log/td-agent/td-agent.log</code> に出力されます。</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span> less /var/<span class="built-in">log</span>/td-agent/td-agent.<span class="built-in">log</span></span><br></pre></td></tr></table></figure>
+
+<p>停止は以下です。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo launchctl unload <span class="regexp">/Library/</span>LaunchDaemons<span class="regexp">/td-agent.plist</span></span><br></pre></td></tr></table></figure>
+
+<p>設定ファイルは <code>/etc/td-agent/td-agent.conf</code> です。<br>設定を反映させるには、以下のコマンドで行います。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo launchctl <span class="keyword">stop</span> td-<span class="keyword">agent</span></span><br><span class="line">$ sudo launchctl <span class="keyword">start</span> td-<span class="keyword">agent</span></span><br></pre></td></tr></table></figure>
+
+<p>以下でFluentdにリクエストします。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X POST -d <span class="symbol">'json</span>=&#123;<span class="string">"json"</span>:<span class="string">"message"</span>&#125;' http:<span class="comment">//localhost:8888/debug.test</span></span><br></pre></td></tr></table></figure>
+
+<p><code>/var/log/td-agent/td-agent.log</code> にログが出力されているはずです。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ tail -n <span class="number">1</span> /var/log/td-agent/td-agent.log</span><br><span class="line"><span class="number">2016</span><span class="number">-07</span><span class="number">-01</span> <span class="number">16</span>:<span class="number">51</span>:<span class="number">47</span> <span class="number">-0700</span> debug.test: &#123;<span class="string">"json"</span>:<span class="string">"message"</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="ログ収集サーバにFluentdをインストール"><a href="#ログ収集サーバにFluentdをインストール" class="headerlink" title="ログ収集サーバにFluentdをインストール"></a>ログ収集サーバにFluentdをインストール</h2><p>次にログ収集サーバにFluentdをインストールします。<br>OSはCentos6.5を使いました。<br>vagrantの使い方は割愛します。<br>networkはprivate_networkとし、192.168.33.10でアクセスできることとします。</p>
+<p>以下でログ収集サーバにログインします。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> vagrant ssh</span><br><span class="line"></span><br><span class="line"><span class="comment"># iptablesは無効にしておきます</span></span><br><span class="line"><span class="variable">$</span> sudo service iptables stop</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以下のコマンドでFluentdインストールします。</span></span><br><span class="line"><span class="variable">$</span> curl <span class="literal">-L</span> https://toolbelt.treasuredata.com/sh/<span class="built_in">install-redhat</span><span class="literal">-td</span><span class="literal">-agent2</span>.sh | sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># Fluentdを起動します</span></span><br><span class="line"><span class="variable">$</span> sudo /etc/init.d/td<span class="literal">-agent</span> start</span><br></pre></td></tr></table></figure>
+
+<p>ログ収集サーバでも同じように確認してみます。</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X <span class="keyword">POST</span> -<span class="keyword">d</span> 'json=&#123;<span class="string">"json"</span>:<span class="string">"message"</span>&#125;' http:<span class="comment">//localhost:8888/debug.test</span></span><br><span class="line">$ tail -<span class="keyword">n</span> 1 /<span class="keyword">var</span>/<span class="keyword">log</span>/td-agent/td-agent.<span class="keyword">log</span></span><br><span class="line">2016-07-01 16:51:47 -0700 debug.<span class="keyword">test</span>: &#123;<span class="string">"json"</span>:<span class="string">"message"</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="アプリケーションサーバからログ収集サーバのFluentdにリクエストを送る"><a href="#アプリケーションサーバからログ収集サーバのFluentdにリクエストを送る" class="headerlink" title="アプリケーションサーバからログ収集サーバのFluentdにリクエストを送る"></a>アプリケーションサーバからログ収集サーバのFluentdにリクエストを送る</h2><p>アプリケーションサーバからログ収集サーバのFluentdにリクエストを送れるかを確認します。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X POST -d <span class="symbol">'json</span>=&#123;<span class="string">"json"</span>:<span class="string">"message"</span>&#125;' http:<span class="comment">//192.168.33.10:8888/debug.test</span></span><br></pre></td></tr></table></figure>
+
+<p>ログ収集サーバでログを確認します。<br>Fluentdは出力をバッファするのでフォワードされるまでにタイムログがある場合があります。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ tail -<span class="built_in">n</span> <span class="number">1</span> /<span class="built_in">var</span>/<span class="built_in">log</span>/td-agent/td-agent.log</span><br></pre></td></tr></table></figure>
+
+<p>疎通を確認できたら、アプリケーションサーバからログ収集サーバのFluentdにログをforwardしてみましょう。</p>
+<p>アプリケーションサーバの<code>/etc/td-agent/td-agent.conf</code> を以下のように編集します。</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">&lt;source&gt;</span></span><br><span class="line">  <span class="built_in">type</span> http</span><br><span class="line">  port <span class="number">8888</span></span><br><span class="line">&lt;/<span class="keyword">source</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="symbol">&lt;source&gt;</span></span><br><span class="line">  @type forward</span><br><span class="line">  port <span class="number">24224</span></span><br><span class="line">&lt;/<span class="keyword">source</span>&gt;</span><br><span class="line"></span><br><span class="line"># <span class="keyword">tag</span>がvagrantの場合はvagrantのFluentdにフォワードする</span><br><span class="line">&lt;<span class="keyword">match</span> <span class="keyword">tag</span> vagrant.**&gt;</span><br><span class="line">  <span class="built_in">type</span> forward</span><br><span class="line">  <span class="symbol">&lt;server&gt;</span></span><br><span class="line">    host <span class="number">192.168</span>.<span class="number">33.10</span></span><br><span class="line">    port <span class="number">24224</span></span><br><span class="line">  &lt;/server&gt;</span><br><span class="line">&lt;/<span class="keyword">match</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;<span class="keyword">match</span> <span class="keyword">debug</span>.**&gt;</span><br><span class="line">  <span class="built_in">type</span> stdout</span><br><span class="line">&lt;/<span class="keyword">match</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>ログ収集サーバの<code>/etc/td-agent/td-agent.conf</code>に以下の設定を追加します。<br>tagがvagrantで送られてきたものをログに出力します。</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">match</span> vagrant.**&gt;</span><br><span class="line">  <span class="class"><span class="keyword">type</span> <span class="title">stdout</span></span></span><br><span class="line">&lt;/<span class="keyword">match</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>以下のコマンドでログ収集サーバのFluentdにデータがフォワードされます。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X POST -d <span class="symbol">'json</span>=&#123;<span class="string">"json"</span>:<span class="string">"Fluentd!!!"</span>&#125;' http:<span class="comment">//localhost:8888/vagrant.test</span></span><br></pre></td></tr></table></figure>
+
+<p>以上で基本的なフォワードの設定ができました。</p>
+<h2 id="ファイルを監視してログ収集サーバにフォワードする"><a href="#ファイルを監視してログ収集サーバにフォワードする" class="headerlink" title="ファイルを監視してログ収集サーバにフォワードする"></a>ファイルを監視してログ収集サーバにフォワードする</h2><p>次はファイルを監視してファイルにデータが追加されたらその内容をログ収集サーバにフォワードするようにします。<br><code>in_tail</code>プラグインを使います。<br><code>in_tail</code>プラグインを使うにはtypeにtailを使います。</p>
+<p>アプリケーションサーバの<code>/etc/td-agent/td-agent.conf</code>に以下を追記します。</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;source&gt;</span></span><br><span class="line">  <span class="keyword">type</span> tail <span class="comment"># in_tailプラグインを指定</span></span><br><span class="line">  path /tmp/access_log <span class="comment"># 監視するファイルの指定</span></span><br><span class="line">  <span class="keyword">tag</span> <span class="title">vagrant</span>.access_log <span class="comment"># ログにつけるタグを指定</span></span><br><span class="line">  pos_file /tmp/access_log.pos <span class="comment"># ファイル内のどの行までを読んだかを記録しておくファイルを指定</span></span><br><span class="line">  format none <span class="comment"># フォーマットはnoneを指定</span></span><br><span class="line"><span class="tag">&lt;/source&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>設定を反映させるには、以下のコマンドで行います。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo launchctl <span class="keyword">stop</span> td-<span class="keyword">agent</span></span><br><span class="line">$ sudo launchctl <span class="keyword">start</span> td-<span class="keyword">agent</span></span><br></pre></td></tr></table></figure>
+
+<p><code>/tmp/access_log</code> に追記してみましょう。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>echo <span class="string">"hello"</span> &gt;&gt; <span class="regexp">/tmp/access</span>_log</span><br></pre></td></tr></table></figure>
+
+<p>すると、ログ収集サーバのFluentdに内容がフォワードされます。</p>
+<p>参考リンク</p>
+<ul>
+<li><a href="http://knowledge.sakura.ad.jp/tech/1336/" target="_blank" rel="noopener">柔軟なログ収集を可能にする「Fluentd」入門</a></li>
+<li><a href="http://docs.fluentd.org/articles/install-by-dmg" target="_blank" rel="noopener">Installing Fluentd using .dmg Installer (MacOS X)</a></li>
+<li><a href="http://docs.Fluentd.org/articles/config-file" target="_blank" rel="noopener">Configuration File</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-06-30T01:23:38.000Z" itemprop="datepublished">
+            2016/06/30
+          </time>
+          <time datetime="2016-06-30T01:23:38.000Z" itemprop="modified">
+            (更新日: 2016/06/30)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/06/30/learn-huffman-coding-and-entropy/">ハフマン符号化のアルゴリズムとエントロピーを学ぶ</a>
+        </h1>
+        <div class="content">
+          <p>ハフマン符号とは1952年にデビッド・ハフマンという人が考え出したアルゴリズムです。<br>文字列をはじめとするデータの可逆圧縮に使われます。<br>よく使われる文字には短いビットを、あまり使われない文字には長いビットを割り当てることで全体としてサイズが削減されることを狙ったアルゴリズムです。</p>
+<h2 id="符号化の原理"><a href="#符号化の原理" class="headerlink" title="符号化の原理"></a>符号化の原理</h2><p>実際にアルゴリズムを確認していきます。</p>
+<p><code>DAEBCBACBBBC</code> という12文字のメッセージをハフマン符号化します。</p>
+<p>このメッセージでは、ABCDEという5種類の文字が使われているため、それぞれの文字を固有のビット長で表す場合は、3ビットが必要です。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">A:</span> <span class="number">000</span></span><br><span class="line"><span class="attr">B:</span> <span class="number">001</span></span><br><span class="line"><span class="attr">C:</span> <span class="number">010</span></span><br><span class="line"><span class="attr">D:</span> <span class="number">011</span></span><br><span class="line"><span class="attr">E:</span> <span class="number">100</span></span><br></pre></td></tr></table></figure>
+
+<p>上記の対応表をもとに、文字列をビットに変換します。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DAEBCBACBBBC</span><br><span class="line"><span class="number">011</span> <span class="number">000</span> <span class="number">100</span> <span class="number">001</span> <span class="number">010</span> <span class="number">001</span> <span class="number">000</span> <span class="number">010</span> <span class="number">001</span> <span class="number">001</span> <span class="number">001</span> <span class="number">010</span></span><br></pre></td></tr></table></figure>
+
+<p>1文字3ビットで12文字あることから全体のビット数は36ビットとなります。</p>
+<p>ここで、よく出てくる文字には短いビットを、あまりでてこない文字には短いビットを与えます。<br>対応表を以下のように作ります。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">A:</span> <span class="number">110</span></span><br><span class="line"><span class="attr">B:</span> <span class="number">0</span></span><br><span class="line"><span class="attr">C:</span> <span class="number">10</span></span><br><span class="line"><span class="attr">D:</span> <span class="number">1110</span></span><br><span class="line"><span class="attr">E:</span> <span class="number">1111</span></span><br></pre></td></tr></table></figure>
+
+<p>メッセージ全体では以下のようになります。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DAEBCBACBBBC</span><br><span class="line"><span class="number">1110</span> <span class="number">110</span> <span class="number">1111</span> <span class="number">0</span> <span class="number">10</span> <span class="number">0</span> <span class="number">110</span> <span class="number">10</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+<p>全体のビット数は25ビットとなり、固定長の方式と比べると70%ほどのデータ量に抑えられています。</p>
+<h3 id="対応表をつくる"><a href="#対応表をつくる" class="headerlink" title="対応表をつくる"></a>対応表をつくる</h3><p>以下の手順で文字とビット列の対応表をつくります。</p>
+<ul>
+<li>データに出現する文字の出現回数を求める</li>
+<li>それをもとにハフマン木とよばれる二分木(バイナリツリー)を構成する</li>
+</ul>
+<p>ハフマン木の構成の仕方は次のアルゴリズムとなります。</p>
+<ol>
+<li>各記号に対応する葉を作成する。この葉には、記号の出現頻度をあらかじめ格納しておく。</li>
+<li>出現頻度の最も少ない2つの葉をとりだす。取り出した2つの葉を格納する節をつくり、左右の枝に記号0と1を割り当てる。この節には2つの葉の出現頻度を足した値を格納し、新しい葉として追加する</li>
+<li>葉が1つになるまで手順2を繰り返す。</li>
+</ol>
+<p><code>DAEBCBACBBBC</code> を題材に、ハフマン木を作ります。</p>
+<h3 id="1-各記号に対応する葉を作成する"><a href="#1-各記号に対応する葉を作成する" class="headerlink" title="1. 各記号に対応する葉を作成する"></a>1. 各記号に対応する葉を作成する</h3><p>まずは、各記号に対応する葉を作成し、データの出現回数をあらかじめ格納しておきます。</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">"B"</span>=&gt;<span class="number">5</span>, <span class="string">"C"</span>=&gt;<span class="number">3</span>, <span class="string">"A"</span>=&gt;<span class="number">2</span>, <span class="string">"D"</span>=&gt;<span class="number">1</span>, <span class="string">"E"</span>=&gt;<span class="number">1</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-出現頻度が少ない2つの葉をとりだす"><a href="#2-出現頻度が少ない2つの葉をとりだす" class="headerlink" title="2.出現頻度が少ない2つの葉をとりだす"></a>2.出現頻度が少ない2つの葉をとりだす</h3><p>DとEが1番小さいので、この2つを取り出します。<br>そして、DとEの葉を足し合わせた節を1つ作ります。<br>この手順を最終的に葉が1つになるまで繰り返します。</p>
+<h3 id="ハフマン木が作られる工程"><a href="#ハフマン木が作られる工程" class="headerlink" title="ハフマン木が作られる工程"></a>ハフマン木が作られる工程</h3><script async class="speakerdeck-embed" data-id="cf8ab792cb9742cdb5e492dc98c2931b" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+
+<p><code>DAEBCBACBBBC</code> を作成した対応表で符号化します。</p>
+<p>文字 | 個数 | 符号<br>B | 5 | 0<br>C | 3 | 10<br>A | 2 | 110<br>D | 1 | 1110<br>E | 1 | 1111</p>
+<h2 id="データ圧縮アルゴリズムについて"><a href="#データ圧縮アルゴリズムについて" class="headerlink" title="データ圧縮アルゴリズムについて"></a>データ圧縮アルゴリズムについて</h2><p>一般的にデータ圧縮アルゴリズムは「モデル化」と「符号化」の2つにわけて考えることができます。<br>「モデル化」は入力された記号(データ)から各記号の出現確率を求めます。<br>「符号化」は出現確率に基づいて符号語を割り当て、入力されたデータを各符号語に変換して出力します。<br>モデル化についてはいろいろな方法がありますが、ハフマン符号のように記号の出現確率を求めそれに基づいて符号語を割り当てるモデルを「無記憶情報源モデル」といいます。<br>「情報源」は記号を生成する基となるデータのことです。<br>情報源が記号を生成するとき、以前に生成した記号との間に関連性がないことを「無記憶」といいます。<br>記号aの次は記号bが生成されるといった関係性はなく、確率でのみ記号が作成されるということです。</p>
+<p>データ圧縮アルゴリズムを評価する場合、圧縮率のほかに「平均符号長」という尺度があります。<br>これは、符号化された記号列のビット長を入力された記号数で割った値として定義されます。</p>
+<p>たとえば <code>DAEBCBACBBBC</code> をハフマン符号化すると<code>1110110111101001101000010</code>となります。<br>符号化された記号列のビット長(1110110111101001101000010)を入力された記号数(DAEBCBACBBBC)で割ると平均符号長は 25 / 12 = 2.0833333 となります。</p>
+<p>無記憶情報源モデルの場合、各記号 $$ a_i $$ の出現確率 $$ p(a_i) $$ がわかると、次の式で平均符号長の下限値を求めることができます。  </p>
+<p>$$ H=-\sum_{i=1}^n p(a_i) \log _2 p(a_i) $$</p>
+<p>$$ H $$ を平均情報量、またはエントロピー(Entropy)と呼びます。</p>
+<p>情報源符号化定理によると、平均符号長はエントロピーより短くすることができません。  </p>
+<h3 id="情報源符号化定理"><a href="#情報源符号化定理" class="headerlink" title="情報源符号化定理"></a>情報源符号化定理</h3><blockquote>
+<p>意復号可能な平均符号長 L は、無記憶情報源のエントロピー H よりも小さくすることができない。すなわち不等式 H &lt;= L が成り立つ。また、平均符号長 L が H &lt;= L &lt; H + 1 を満足する瞬時に復号可能な符号が構成できる。</p>
+</blockquote>
+<p>先ほどの記号列のエントロピーを求めてみます。</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">記号列: DAEBCBACBBBC</span><br><span class="line">記号: 確率: -p(ai) / log2 p(ai)</span><br><span class="line">------------------------------------------</span><br><span class="line">D: 1 / 12: 0.29874687506009634</span><br><span class="line">A: 2 / 12: 0.430827083453526</span><br><span class="line">E: 1 / 12: 0.29874687506009634</span><br><span class="line">B: 5 / 12: 0.5262643357640807</span><br><span class="line">C: 3 / 12: 0.5</span><br><span class="line">------------------------------------------</span><br><span class="line">エントロピー = 2.054585169337799</span><br><span class="line">12 * 2.054585169337799 = 24.65502203205359 bit</span><br></pre></td></tr></table></figure>
+
+<p>したがって、この記号列では平均符号長を 2.05 ビット以下にすることはできません。<br>いいかえると、この記号列を表すには少なくても 12 * 2.054585169337799 = 24.65502203205359 ビット以上が必要になる、ということです。</p>
+<h3 id="エントロピーの算出コード"><a href="#エントロピーの算出コード" class="headerlink" title="エントロピーの算出コード"></a>エントロピーの算出コード</h3><p>エントロピーを算出するコードをRubyで書きました。</p>
+<script src="https://gist.github.com/shoyan/cfa5528ccd9388eee25b2e120c4c452b.js"></script>
+
+<p>以下のように使います。</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span> ./<span class="built-in">entropy</span> <span class="keyword">file</span>.txt</span><br><span class="line"><span class="number">2.054585169337799</span></span><br></pre></td></tr></table></figure>
+
+<p>文字列を渡す場合はパイプで繋ぎます。</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span> echo <span class="string">"DAEBCBACBBBC"</span> | ./<span class="built-in">entropy</span></span><br><span class="line"><span class="number">2.054585169337799</span></span><br></pre></td></tr></table></figure>
+
+<p>また、 <code>-v</code> オプションで詳細を表示できます。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ ./entropy -v file.txt</span><br><span class="line">記号: 確率 : 値</span><br><span class="line">D: <span class="number">1</span> / <span class="number">12</span>: <span class="number">0.29874687506009634</span></span><br><span class="line">A: <span class="number">2</span> / <span class="number">12</span>: <span class="number">0.430827083453526</span></span><br><span class="line">E: <span class="number">1</span> / <span class="number">12</span>: <span class="number">0.29874687506009634</span></span><br><span class="line">B: <span class="number">5</span> / <span class="number">12</span>: <span class="number">0.5262643357640807</span></span><br><span class="line">C: <span class="number">3</span> / <span class="number">12</span>: <span class="number">0.5</span></span><br><span class="line"></span><br><span class="line">サイズ エントロピー 下限値</span><br><span class="line"><span class="number">12</span> <span class="number">2.054585169337799</span> <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<p>ファイルサイズ * エントロピー で圧縮の下限値を計算することができます。<br>上記の場合は3バイトよりも圧縮することはできないということです。</p>
+<p>ただし、この結果は無記憶情報源モデルの場合であり、モデル化によってエントロピーの値は異なることに注意してください。エントロピーをより小さくするモデルを作成することがでれきば、これよりも高い圧縮率を達成することができます。</p>
+<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
+<li><a href="http://www.geocities.jp/m_hiroi/light/pyalgo31.html" target="_blank" rel="noopener">Algorithms with Python / シャノン・ファノ符号とハフマン符号</a></li>
+<li><a href="http://fussy.web.fc2.com/algo/compress3_huffman.htm" target="_blank" rel="noopener">圧縮アルゴリズム (3) ハフマン符号化 - 静的ハフマン圧縮</a></li>
+<li><a href="http://www.infonet.co.jp/ueyama/ip/concept/entropy.html" target="_blank" rel="noopener">平均情報量／エントロピー</a></li>
 </ul>
 <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-06-29T08:01:36.000Z" itemprop="datepublished">
+            2016/06/29
+          </time>
+          <time datetime="2016-06-29T08:01:36.000Z" itemprop="modified">
+            (更新日: 2016/06/29)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/06/29/extract-string-with-sed-and-awk/">sedやawkを使ってテキストから必要な列のみ取得する</a>
+        </h1>
+        <div class="content">
+          <p>以下のような文字列(ファイルに保存されているとする)からsedやawkを使ってlabelだけとるshell芸を紹介します。</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">+-------------------------+-------+</span><br><span class="line">|<span class="string"> label                   </span>|<span class="string"> state </span>|</span><br><span class="line">+-------------------------+-------+</span><br><span class="line">|<span class="string"> A                       </span>|<span class="string">     0 </span>|</span><br><span class="line">|<span class="string"> B                       </span>|<span class="string">     0 </span>|</span><br><span class="line">|<span class="string"> C                       </span>|<span class="string">     0 </span>|</span><br><span class="line">|<span class="string"> D                       </span>|<span class="string">     0 </span>|</span><br><span class="line">|<span class="string"> E                       </span>|<span class="string">     0 </span>|</span><br><span class="line">|<span class="string"> F                       </span>|<span class="string">     0 </span>|</span><br><span class="line">|<span class="string"> G                       </span>|<span class="string">     0 </span>|</span><br><span class="line">|<span class="string"> H                       </span>|<span class="string">     2 </span>|</span><br><span class="line">|<span class="string"> I                       </span>|<span class="string">     0 </span>|</span><br><span class="line">|<span class="string"> J                       </span>|<span class="string">     0 </span>|</span><br><span class="line">|<span class="string"> K                       </span>|<span class="string">     0 </span>|</span><br><span class="line">+-------------------------+----———+</span><br></pre></td></tr></table></figure>
+
+<h3 id="label列のみ取得"><a href="#label列のみ取得" class="headerlink" title="label列のみ取得"></a>label列のみ取得</h3><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">⇒  sed -n <span class="string">'4,14p'</span> <span class="keyword">table</span>.txt |<span class="comment"> awk</span> <span class="comment">'&#123;print $2&#125;'</span></span><br><span class="line">A</span><br><span class="line">B</span><br><span class="line">C</span><br><span class="line">D</span><br><span class="line">E</span><br><span class="line">F</span><br><span class="line">G</span><br><span class="line">H</span><br><span class="line">I</span><br><span class="line">J</span><br><span class="line">K</span><br></pre></td></tr></table></figure>
+
+<h3 id="スペース区切りに加工する"><a href="#スペース区切りに加工する" class="headerlink" title="スペース区切りに加工する"></a>スペース区切りに加工する</h3><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">⇒  sed -n <span class="string">'4,14p'</span> <span class="keyword">table</span>.txt |<span class="comment"> awk</span> <span class="comment">'&#123;print $2 " "&#125;'</span> |<span class="comment"> tr -d</span> <span class="comment">'\n'</span></span><br><span class="line">A B C D E F G H I J K</span><br></pre></td></tr></table></figure>
+
+<p><code>sed -n &#39;4,14p’</code> で指定した行数のみ取得しています<br>次に<code>awk &#39;{print $2}’</code> でlabel列のみ抽出しています。<br>改行を消すのは <code>tr -d &#39;\n’</code> が便利です。</p>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-06-27T07:01:52.000Z" itemprop="datepublished">
+            2016/06/27
+          </time>
+          <time datetime="2016-06-27T07:01:52.000Z" itemprop="modified">
+            (更新日: 2016/06/27)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/06/27/available-kramdown-code-highlight/">Rdiscountからkramdownへmarkdownのparserを変更した</a>
+        </h1>
+        <div class="content">
+          <p>数式を扱うために<a href="/blog/2016/06/27/use-math-syntax-on-jekyll/">前回の記事</a>で、markdownをkramdownに変更したのですが、コードのシンタックスハイライトが効かなくなってしまいました。</p>
+<p>kramdownのparserをGFMにしてやるとうまくいきました。</p>
+<p>_config.yml</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">kramdown:</span></span><br><span class="line"><span class="symbol">  input:</span> GFM</span><br></pre></td></tr></table></figure>
+
+<p>GFMを使わない場合は、プラグインがあるのでそちらでも対応できます。</p>
+<p><a href="https://github.com/mvdbos/kramdown-with-pygments" target="_blank" rel="noopener">kramdown-with-pygments</a></p>
+<p>使い方ですが、pluginsディレクトリにkramdown_pygments.rbを置きます。<br>そして、<code>_config.yml</code>のmarkdownを以下のように修正します。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">markdown: </span>KramdownPygments</span><br></pre></td></tr></table></figure>
+
+
+<p>また、parserにkramdownを使う場合はRdiscountとkramdownでcodeのmarkdownのフォーマットが違うのでgenerate時にエラーがでるかもしれません。</p>
+<p>自分は以下のワンライナーで書き換えました。</p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">find</span> source/<span class="variable">_posts</span> -<span class="built_in">type</span> f -<span class="built_in">name</span> <span class="string">"*.markdown"</span> | xargs sed -i <span class="string">''</span> -e <span class="string">'s/\`\`\`/\</span></span><br><span class="line"><span class="string">~~~/g'</span></span><br></pre></td></tr></table></figure>
+
+<p>また、URLに自動でリンクを付与してくれる機能がRdiscountにはあったのですが、kramdownでは明示的に指定する必要があります。<br>Rdiscountのように自動的にリンクを付与するプラグインを作成しました。</p>
+<ul>
+<li><a href="https://github.com/shoyan/kramdown_easy_link" target="_blank" rel="noopener">kramdown_easy_link</a></li>
+</ul>
+<p>使い方は<code>kramdown_easy_link.rb</code>を<code>plugins/</code>ディレクトリに置いて、<code>_config.yml</code>を以下のように修正します。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">markdown:</span> kramdown</span><br><span class="line"><span class="symbol">kramdown:</span></span><br><span class="line">  <span class="symbol">input:</span> KramdownEasyLink</span><br></pre></td></tr></table></figure>
 
         </div>
       </div>
@@ -1072,7 +437,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/16/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/18/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/16/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/18/">Next</a>
 </div>
 
   </div>
