@@ -146,151 +146,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2016-04-25T05:05:02.000Z" itemprop="datepublished">
-            2016/04/25
-          </time>
-          <time datetime="2016-04-25T05:05:02.000Z" itemprop="modified">
-            (更新日: 2016/04/25)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/04/25/introduce-http-gem/">rubyでhttp通信をするhttp gem</a>
-        </h1>
-        <div class="content">
-          <p>rubyでhttp通信をする際に便利なhttp gemというものがあるので紹介します。<br><a href="https://github.com/httprb/http" target="_blank" rel="noopener">https://github.com/httprb/http</a></p>
-<h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gem <span class="keyword">install</span> <span class="keyword">http</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="getしてみる"><a href="#getしてみる" class="headerlink" title="getしてみる"></a>getしてみる</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ pry</span><br><span class="line">$ <span class="keyword">require</span> ’http<span class="string">'</span></span><br><span class="line"><span class="string">$ response = HTTP.get("https://github.com")</span></span><br><span class="line"><span class="string">$ response.status</span></span><br><span class="line"><span class="string">=&gt; 200</span></span><br><span class="line"><span class="string">$ response.body.to_s</span></span><br><span class="line"><span class="string">=&gt; "&lt;html&gt;&lt;head&gt;&lt;meta http-equiv=\"content-type\" content=..."</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="http-メソッドを指定する"><a href="#http-メソッドを指定する" class="headerlink" title="http メソッドを指定する"></a>http メソッドを指定する</h2><p>以下のように指定します。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;</span> response = HTTP.post(<span class="string">'https://restapi.com/objects'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;</span> response = HTTP.put(<span class="string">'https://restapi.com/put'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;</span> response = HTTP.patch(<span class="string">'https://restapi.com/put'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;</span> response = HTTP.delete(<span class="string">'https://restapi.com/put'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;</span> response = HTTP.head(<span class="string">'https://restapi.com/put'</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="クエリストリングを指定する"><a href="#クエリストリングを指定する" class="headerlink" title="クエリストリングを指定する"></a>クエリストリングを指定する</h2><p>以下のように paramsオプションで指定します。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ get = HTTP.get(<span class="string">"http://example.com/resource"</span>, <span class="symbol">:pa</span>rams =&gt; &#123;<span class="symbol">:fo</span>o =&gt; <span class="string">"bar"</span>&#125;)</span><br><span class="line">=&gt; <span class="string">"#&lt;HTTP::Response/1.1 404 Not …"</span></span><br><span class="line"></span><br><span class="line"># 以下のように生成されたuriを確認できます</span><br><span class="line">$ get.uri</span><br><span class="line">=&gt; #&lt;HT<span class="symbol">TP:</span><span class="symbol">:UR</span><span class="symbol">I:0</span>x007fce62a33aa8 U<span class="symbol">RI:ht</span><span class="symbol">tp:</span>//example.com/resource?foo=bar&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="bodyを指定する"><a href="#bodyを指定する" class="headerlink" title="bodyを指定する"></a>bodyを指定する</h2><p>formオプションに設定します。<br>URLエンコードされたパラメーターが設定されます。</p>
-<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HTTP.post(<span class="string">"http://example.com/resource"</span>, :<span class="function"><span class="params">form</span> =&gt;</span> &#123;:<span class="function"><span class="params">foo</span> =&gt;</span> <span class="string">"42"</span>&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>生データを渡したいときは、bodyオプションを使います。</p>
-<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HTTP.post(<span class="string">"http://example.com/resource"</span>, :<span class="function"><span class="params">body</span> =&gt;</span> <span class="string">"foo=42&amp;bar=baz"</span>)</span><br></pre></td></tr></table></figure>
-
-<h3 id="ネストしたbodyの渡し方"><a href="#ネストしたbodyの渡し方" class="headerlink" title="ネストしたbodyの渡し方"></a>ネストしたbodyの渡し方</h3><p>ネストした配列を渡したい場合はjsonを使って以下のように指定できます。</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">HTTP</span><span class="selector-class">.put</span>(<span class="string">"http://example.com/resource"</span>, :params =&gt; &#123;<span class="attribute">foo</span>: <span class="string">"A"</span>&#125;, <span class="attribute">json</span>: &#123; <span class="attribute">bar</span>: &#123; <span class="attribute">hoge</span>: <span class="string">"ok!"</span>&#125; &#125;)</span><br></pre></td></tr></table></figure>
-
-<h2 id="Basic認証に対応する"><a href="#Basic認証に対応する" class="headerlink" title="Basic認証に対応する"></a>Basic認証に対応する</h2><p>以下のように設定ができます。</p>
-<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http = <span class="module-access"><span class="module"><span class="identifier">HTTP</span>.</span></span>basic<span class="constructor">_auth(<span class="params">user</span>: '<span class="params">user_name</span>', <span class="params">pass</span>: '<span class="params">password</span>')</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="SSL証明書の検証を無効にする"><a href="#SSL証明書の検証を無効にする" class="headerlink" title="SSL証明書の検証を無効にする"></a>SSL証明書の検証を無効にする</h2><p>開発環境の場合などでSSL証明書の検証を無視したい場合は以下のように設定できます。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ctx = OpenSSL::SSL::SSLContext.<span class="keyword">new</span></span><br><span class="line">ctx.verify_mode = OpenSSL::SSL::VERIFY_NONE</span><br><span class="line">HTTP.get(<span class="string">"https://example.com"</span>, :ssl_context =&gt; ctx)</span><br></pre></td></tr></table></figure>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-04-22T04:59:35.000Z" itemprop="datepublished">
-            2016/04/22
-          </time>
-          <time datetime="2016-04-22T04:59:35.000Z" itemprop="modified">
-            (更新日: 2016/04/22)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/04/22/what-is-nat/">NAT・NAPT・ポートフォワーディングの違いとは</a>
-        </h1>
-        <div class="content">
-          <p>ネットワークの話しによくNATという言葉が出てくるので整理した。<br>また、NAPT・ポートフォワーディングについても理解しておいたほうが理解が深まると思ったのでまとめておいた。</p>
-<h2 id="NATとは"><a href="#NATとは" class="headerlink" title="NATとは"></a>NATとは</h2><p>NAT(Network Address Translation)はIPアドレスを変換する技術である。<br>具体的にはプライベートIPアドレスをグローバルIPアドレスに変換する、もしくは、グローバルIPアドレスをプライベートIPアドレスに変換する。</p>
-<h3 id="なぜNATが必要か"><a href="#なぜNATが必要か" class="headerlink" title="なぜNATが必要か"></a>なぜNATが必要か</h3><p>グローバルIPアドレスを節約するためである。<br>インターネットに接続するにはグローバルIPアドレスが必要である。<br>プライベートIPアドレスではインターネットに接続することができないという決まりになっている。</p>
-<p>インターネットに接続するには、PC全てにグローバルIPを割り振るのが最も単純な方法である。<br>しかし、全てにグローバルIPアドレスを割り振っていてはすぐにIPアドレスは枯渇してしまう。</p>
-<p>では、どうするか。<br>LANからインターネットに通信するときにプライベートIPアドレスをグローバルIPアドレスに変換してやればいいのではないか。<br>それを実現するのがNATである。  </p>
-<p>具体的にはLANからインターネットに通信するときは、ヘッダの送信元IPをグローバルIPに書き換える。<br>インターネットからLANに通信するときは、ヘッダの宛先IPをプライベートIPに書き換える。</p>
-<p>NATがやることはこれだけである(多分)。</p>
-<p>しかし、NATには大きな問題がある。<br>複数のクライアントPCがある場合、NATはどのプライベートIPに変換すればいいかわからないのだ。</p>
-<p>その問題を解決するのが、NAPT(Network Address Port Translation)である。</p>
-<h2 id="NAPTとは"><a href="#NAPTとは" class="headerlink" title="NAPTとは"></a>NAPTとは</h2><p>複数のクライアントPCがある場合、NATはどのプライベートIPに変換すればいいかわからない。<br>その問題を解決するのがNAPTである。</p>
-<p>NAPTはIPアドレスに加えてポートも管理する。<br>このポートを使ってクライアントPCを特定する。<br>例えば、PC(A)の場合は通信のポート番号を100、PC(B)の場合は通信のポート番号を200とする。<br>すると、通信先のサーバーから異なったポート番号宛にデータが戻って来る。<br>ポート番号100に戻ってきたデータはPC(A)に戻してやればいいわけである。  </p>
-<p>NAPTはIPマスカレードとも呼ばれる。</p>
-<h2 id="NATの弊害"><a href="#NATの弊害" class="headerlink" title="NATの弊害"></a>NATの弊害</h2><p>NATを使うとインターネットからLANへの通信ができないという問題がある。<br>インターネットからの通信の場合、どのクライアントPCのプライベートIPアドレスに変換すればいいかがわからないため、クライアントPCに通信が届かないのだ。<br>これは、セキュリティ的にみると安全だ。<br>NATの内側にいるクライアントPCには外部からの通信が届かないからである。</p>
-<p>外部からの通信を届けたい場合はどうすればいいか。<br>ポートフォワーディングを使えばいい。</p>
-<h2 id="ポートフォワーディングとは"><a href="#ポートフォワーディングとは" class="headerlink" title="ポートフォワーディングとは"></a>ポートフォワーディングとは</h2><p>インターネットから特定のポート番号宛に通信が届いたときにあらかじめ設定しておいたLAN側の機器にパケットを転送する機能である。<br>例えば、宛先ポートが80宛のパケットは、LAN側の192.168.1.1の機器へ転送するといった設定ができる。<br>このようにあらかじめ転送するポートとクライアントPCのIPアドレスを登録しておくことで外部からの通信が行えるようになる。</p>
-<p>ポートフォワーディングは静的IPマスカレードとも呼ばれる。</p>
-<h2 id="おすすめの書籍"><a href="#おすすめの書籍" class="headerlink" title="おすすめの書籍"></a>おすすめの書籍</h2><p>ネットワークについては様々な書籍があるが私は以下の書籍をおすすめする。</p>
-<h3 id="ネットワークはなぜつながるのか"><a href="#ネットワークはなぜつながるのか" class="headerlink" title="ネットワークはなぜつながるのか"></a>ネットワークはなぜつながるのか</h3><p>ネットワークの概要についてわかりやすく解説してある。初学者にお勧め。</p>
-<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=syoyama-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4822283119&linkId=f0180a64f0c324f0f26456536a0feed3"></iframe>
-
-<h3 id="マスタリングTCP-IP-入門編"><a href="#マスタリングTCP-IP-入門編" class="headerlink" title="マスタリングTCP/IP 入門編"></a>マスタリングTCP/IP 入門編</h3><p>ネットワークの理論についてわかりやすく解説してある。知人のネットワークの専門家もこの書籍をおすすめしていた。</p>
-<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=syoyama-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4274068765&linkId=394f3cca6b2bd67ea0333de41b8980c5"></iframe>
-
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
-<li>1.2.4 NAT・NAPTとIPアドレス<ul>
-<li><a href="http://www.arearesearch.co.jp/learn/ip/07.html" target="_blank" rel="noopener">http://www.arearesearch.co.jp/learn/ip/07.html</a></li>
-</ul>
-</li>
-<li>アドレス変換の弊害<ul>
-<li><a href="http://www.itbook.info/study/nat5.html" target="_blank" rel="noopener">http://www.itbook.info/study/nat5.html</a></li>
-</ul>
-</li>
-</ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-04-21T09:19:01.000Z" itemprop="datepublished">
-            2016/04/21
-          </time>
-          <time datetime="2016-04-21T09:19:01.000Z" itemprop="modified">
-            (更新日: 2016/04/21)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/04/21/nginx-and-ruby-on-docker/">DockerコンテナにChefを流してみた</a>
-        </h1>
-        <div class="content">
-          <p>Chefのレシピを書くとき、Dockerコンテナにレシピを流せると気軽に確認ができてよいなと思い、DockerコンテナにChefを流せるようにしてみました。</p>
-<p>リポジトリを作ったので参考にどうぞ。<br><a href="https://github.com/shoyan/nginx-and-ruby-on-docker" target="_blank" rel="noopener">https://github.com/shoyan/nginx-and-ruby-on-docker</a></p>
-<h3 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h3><p>DockerとChefをインストールしている必要があるので、以下からインストールしてください。</p>
-<p>Docker</p>
-<ul>
-<li><a href="https://www.docker.com/products/docker-toolbox" target="_blank" rel="noopener">https://www.docker.com/products/docker-toolbox</a></li>
-</ul>
-<p>Chef</p>
-<ul>
-<li><a href="https://downloads.chef.io/chef-client/" target="_blank" rel="noopener">https://downloads.chef.io/chef-client/</a></li>
-</ul>
-<h3 id="DockerコンテナにChefを流す"><a href="#DockerコンテナにChefを流す" class="headerlink" title="DockerコンテナにChefを流す"></a>DockerコンテナにChefを流す</h3><p>まずは、Docker QuickStart TerminalをクリックしてDockerを起動します(アプリケーションにあります)。</p>
-<p>Dockerを起動したらNginxとrubyをインストールするCookbookを実行します。</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git clone http<span class="variable">s:</span>//github.<span class="keyword">com</span>/shoyan/nginx-<span class="built_in">and</span>-<span class="keyword">ruby</span>-<span class="keyword">on</span>-docker</span><br><span class="line">$ <span class="keyword">cd</span> nginx-<span class="built_in">and</span>-<span class="keyword">ruby</span>-<span class="keyword">on</span>-docker</span><br></pre></td></tr></table></figure>
-
-<p>以下のコマンドでimageをbuildします。</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="keyword">build </span>-t nginx-<span class="keyword">and-ruby </span>.</span><br></pre></td></tr></table></figure>
-
-<p>imageを確認</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$  docker images</span><br><span class="line">REPOSITORY             TAG                            IMAGE ID            CREATED             SIZE</span><br><span class="line">nginx-<span class="keyword">and</span>-ruby         latest                         <span class="number">6</span>b4d5602119f        <span class="number">36</span> seconds ago      <span class="number">382.2</span> MB</span><br></pre></td></tr></table></figure>
-
-<p>Dockerのコンテナを起動します。<br>image_idは docker imagesのIMAGE IDを指定します。<br>今回の場合は6b4d5602119fです(場合により変わります)。</p>
-<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run <span class="params">--privileged</span> -d <span class="params">--name</span> nginx-and-ruby image_id <span class="string">/sbin/init</span></span><br></pre></td></tr></table></figure>
-
-<p>–privilegedはCentOS7のimageでserviceコマンドを起動するおまじないです。<br><a href="http://shoyan.github.io/blog/2016/04/14/start-systemctl-on-docker/" target="_blank" rel="noopener">Dockerでsystemctlでserviceが起動できない</a></p>
-<p>起動したDockerのコンテナにログインします。</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker exec -<span class="keyword">it </span>nginx-<span class="keyword">and-ruby </span><span class="keyword">bash</span></span><br></pre></td></tr></table></figure>
-
-<p>ログインしたらDockerコンテナでChefを実行します。</p>
-<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># chef-client -z -j nodes/bootstrap.json -c client.rb</span></span><br></pre></td></tr></table></figure>
-
-<p>Dockerを使うとChefを実行→コンテナを消す→真っさらな状態からもう一度Chefを流すというサイクルが気軽にできるので便利です。</p>
-<p>もう一度真っさらな状態のコンテナを作りたいときは、以下のようにします。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> doker ps</span><br><span class="line">CONTAINER ID        IMAGE                  COMMAND              CREATED             STATUS                        PORTS                                           NAMES</span><br><span class="line"><span class="number">17</span>a11c4b6ce8        <span class="number">6</span>b4d5602119f           <span class="string">"/sbin/init"</span>         <span class="number">2</span> hours ago         Exited (<span class="number">137</span>) <span class="number">12</span> seconds ago                                                   nginx<span class="operator">-and</span><span class="literal">-ruby</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Dockerコンテナを消す</span></span><br><span class="line"><span class="variable">$</span> docker rm <span class="operator">-f</span> <span class="number">17</span>a11c4b6ce8</span><br><span class="line"></span><br><span class="line"><span class="comment"># dockerコンテナを起動する</span></span><br><span class="line"><span class="variable">$</span> docker run -<span class="literal">-privileged</span> <span class="literal">-d</span> -<span class="literal">-name</span> nginx<span class="operator">-and</span><span class="literal">-ruby</span> image_id /sbin/init</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://github.com/shoyan/nginx-and-ruby-on-docker" target="_blank" rel="noopener">https://github.com/shoyan/nginx-and-ruby-on-docker</a></p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
           <time datetime="2016-04-20T04:53:28.000Z" itemprop="datepublished">
             2016/04/20
           </time>
@@ -379,12 +234,122 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
     
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-04-18T04:43:40.000Z" itemprop="datepublished">
+            2016/04/18
+          </time>
+          <time datetime="2016-04-18T04:43:40.000Z" itemprop="modified">
+            (更新日: 2016/04/18)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/04/18/cookbook-not-found-error-has-occurred/">cookbook_fileリソースでCookbookNotFoundが発生した</a>
+        </h1>
+        <div class="content">
+          <p>cookbook_fileでCookbookNotFoundというエラーがでた。<br>しかし、どこをどうみても合っているようにしか見えず、2時間ほどハマった。</p>
+<p>エラーは以下。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">* cookbook_file[/etc/nginx/nginx.conf] action create</span><br><span class="line"></span><br><span class="line">  ================================================================================</span><br><span class="line">  <span class="builtin-name">Error</span> executing action `create` on<span class="built_in"> resource </span><span class="string">'cookbook_file[/etc/nginx/nginx.conf]'</span></span><br><span class="line">  ================================================================================</span><br><span class="line"></span><br><span class="line">  Chef::Exceptions::CookbookNotFound</span><br><span class="line">  ----------------------------------</span><br><span class="line">  Cookbook cookbooks <span class="keyword">not</span> found. <span class="keyword">If</span> you<span class="string">'re loading cookbooks from another cookbook, make sure you configure the dependency in your metadata</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  Resource Declaration:</span></span><br><span class="line"><span class="string">  ---------------------</span></span><br><span class="line"><span class="string">  # In /var/chef/cache/cookbooks/cookbooks/recipes/default.rb</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">   25: cookbook_file '</span>/etc/nginx/nginx.conf<span class="string">' do</span></span><br><span class="line"><span class="string">   26:   source '</span>nginx.conf<span class="string">'</span></span><br><span class="line"><span class="string">   27:   owner '</span>root<span class="string">'</span></span><br><span class="line"><span class="string">   28:   group '</span>root<span class="string">'</span></span><br><span class="line"><span class="string">   29:   mode '</span>0755<span class="string">'</span></span><br><span class="line"><span class="string">   30: end</span></span><br><span class="line"><span class="string">   31:</span></span><br></pre></td></tr></table></figure>
+
+<p>原因はmetadata.rbの名前。<br>cookbooks/site という構成でcookbookを作成しているのだが、cookbooks/site/metadata.rbのnameが’cookbooks’となっていた。<br>これによりcookbook_fileリソースがcookbooksというcookbookを参照していたが、そんなものはないのでCookbookNotFoundエラーが発生していた。<br>nameを’site’と変更してやることでうまくいくようになった。</p>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-04-14T11:10:46.000Z" itemprop="datepublished">
+            2016/04/14
+          </time>
+          <time datetime="2016-04-14T11:10:46.000Z" itemprop="modified">
+            (更新日: 2016/04/14)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/04/14/start-systemctl-on-docker/">Dockerでsystemctlでserviceが起動できない</a>
+        </h1>
+        <div class="content">
+          <p>centos7からsystemctlでserviceを起動するようになったが、Dockerで起動すると「Failed to get D-Bus connection: No connection to service manager.」というエラーメッセージがでて起動できないという問題が起こった。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="builtin-name">run</span> -it centos:centos7 /bin/bash</span><br><span class="line"><span class="comment"># systemctl</span></span><br><span class="line">Failed <span class="keyword">to</span> <span class="builtin-name">get</span> D-Bus connection: <span class="literal">No</span><span class="built_in"> connection </span><span class="keyword">to</span><span class="built_in"> service </span>manager.</span><br></pre></td></tr></table></figure>
+
+<p>サービスを起動するためには以下の方法でコンテナを起動すればよい。</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run <span class="params">--privileged</span> -d <span class="params">--name</span> httpd centos<span class="function">:centos7</span> <span class="string">/sbin/init</span></span><br></pre></td></tr></table></figure>
+
+<p>起動したコンテナでhttpdをinstallして起動する。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker <span class="built_in">exec</span> -it httpd /bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> yum install httpd -y</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> systemctl <span class="built_in">enable</span> httpd.service</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> systemctl start httpd.service</span></span><br></pre></td></tr></table></figure>
+
+<p>プロセスを確認。起動できている。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ps aux | grep apache</span><br><span class="line"></span><br><span class="line">bash<span class="number">-4.2</span># ps aux | grep apache</span><br><span class="line">apache     <span class="number">168</span>  <span class="number">0.0</span>  <span class="number">0.3</span> <span class="number">221912</span>  <span class="number">4028</span> ?        S    <span class="number">05</span>:<span class="number">41</span>   <span class="number">0</span>:<span class="number">00</span> /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">apache     <span class="number">169</span>  <span class="number">0.0</span>  <span class="number">0.3</span> <span class="number">221912</span>  <span class="number">4028</span> ?        S    <span class="number">05</span>:<span class="number">41</span>   <span class="number">0</span>:<span class="number">00</span> /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">apache     <span class="number">170</span>  <span class="number">0.0</span>  <span class="number">0.3</span> <span class="number">221912</span>  <span class="number">4028</span> ?        S    <span class="number">05</span>:<span class="number">41</span>   <span class="number">0</span>:<span class="number">00</span> /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">apache     <span class="number">171</span>  <span class="number">0.0</span>  <span class="number">0.3</span> <span class="number">221912</span>  <span class="number">4028</span> ?        S    <span class="number">05</span>:<span class="number">41</span>   <span class="number">0</span>:<span class="number">00</span> /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">apache     <span class="number">172</span>  <span class="number">0.0</span>  <span class="number">0.3</span> <span class="number">221912</span>  <span class="number">4028</span> ?        S    <span class="number">05</span>:<span class="number">41</span>   <span class="number">0</span>:<span class="number">00</span> /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">root       <span class="number">180</span>  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">9044</span>   <span class="number">808</span> ?        S+   <span class="number">05</span>:<span class="number">49</span>   <span class="number">0</span>:<span class="number">00</span> grep apache</span><br></pre></td></tr></table></figure>
+
+<p>yunanoさんの記事が大変参考になった。  </p>
+<ul>
+<li><a href="http://qiita.com/yunano/items/9637ee21a71eba197345" target="_blank" rel="noopener">CentOS 7のDockerコンテナ内でsystemdを使ってサービスを起動する</a></li>
+</ul>
+<h2 id="Dockerについて学ぶ"><a href="#Dockerについて学ぶ" class="headerlink" title="Dockerについて学ぶ"></a>Dockerについて学ぶ</h2><p>Dockerについてはいくつか書籍が出ているが、<a href="http://amzn.to/2qiMHAN" target="_blank" rel="noopener">プログラマのためのDocker教科書 インフラの基礎知識&amp;コードによる環境構築の自動化</a>が良さそうに思う。<br>目次を見てみると、インフラの基礎知識からDockerfileを使ったDockerの構築、Docker Composeの使い方、Docker Swarmを使ったマルチホスト環境でのDocker運用まで網羅してある。<br>また、Dockerの基礎的なことに加え、インフラの基礎とコンテナ仮想化技術についても説明してあるのでDockerを学びつつもインフラについても学べそうだ。</p>
+<h3 id="目次"><a href="#目次" class="headerlink" title="目次"></a>目次</h3><p>第1章: 抑えておきたいシステム / インフラの知識<br>第2章: コンテナ仮想化技術とDocker<br>第3章: Dockerのインストールと基本コマンド<br>第4章: Dockerfileを使ったコードによるサーバ構築<br>第5章: Dockerイメージの共有 - Docker Registry<br>第6章: 複数コンテナの一元管理 - Docker Compose<br>第7章: マルチホスト環境でのDocker運用 - Docker Machine, Docker Swarm<br>第8章: クラウドでのDocker運用</p>
+<p><a href="https://www.amazon.co.jp/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9E%E3%81%AE%E3%81%9F%E3%82%81%E3%81%AEDocker%E6%95%99%E7%A7%91%E6%9B%B8-%E3%82%A4%E3%83%B3%E3%83%95%E3%83%A9%E3%81%AE%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98-%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%82%88%E3%82%8B%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%E3%81%AE%E8%87%AA%E5%8B%95%E5%8C%96-%E9%98%BF%E4%BD%90-%E5%BF%97%E4%BF%9D/dp/479814102X/ref=as_li_ss_il?ie=UTF8&qid=1495788976&sr=8-1&keywords=docker&linkCode=li3&tag=syoyama-22&linkId=057e48e0a549d45b25dd7dca15a6eef7" target="_blank"><img border="0" src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=479814102X&Format=_SL250_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=syoyama-22" ></a><img src="https://ir-jp.amazon-adsystem.com/e/ir?t=syoyama-22&l=li3&o=9&a=479814102X" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></p>
+<h2 id="Dockerの記事一覧"><a href="#Dockerの記事一覧" class="headerlink" title="Dockerの記事一覧"></a>Dockerの記事一覧</h2><p>SHOYAN BLOGではDockerについていくつか記事を書いているので興味があれば見てほしい。</p>
+<ul>
+<li><a href="/blog/2016/10/05/fix-unable-to-connect-to-docker-daemon/">Macを引っ越ししたらDockerデーモンが起動しなくなった</a> </li>
+<li><a href="/blog/2016/09/27/links-container-with-docker-compose/">docker-composeを使ってPHPコンテナとMySQLコンテナを連携させる</a> </li>
+<li><a href="/blog/2016/09/16/links-container-for-docker/">Dockerのコンテナ間を繋ぐLinksを使ってPHPとMySQLコンテナを連携させる</a> </li>
+<li><a href="/blog/2016/08/24/sets-locale-on-docker/">Dockerでlocaleを設定する</a> </li>
+<li><a href="/blog/2016/08/03/docker-auto-build-tutorial/">GitHubにpushしたらDockerイメージを自動ビルドする</a> </li>
+<li><a href="/blog/2016/05/30/yum-install-failed-by-insufficient-space-on-docker/">Dockerのコンテナでyum Installが失敗する</a> </li>
+<li><a href="/blog/2016/04/21/nginx-and-ruby-on-docker/">DockerコンテナにChefを流してみた</a> </li>
+<li><a href="/blog/2016/04/13/no-space-left-on-device-on-docker/">Dockerでno Space Left on Deviceが出てbuildできなくなった</a> </li>
+</ul>
+<h2 id="Dockerのサンプルコード"><a href="#Dockerのサンプルコード" class="headerlink" title="Dockerのサンプルコード"></a>Dockerのサンプルコード</h2><p>githubでDockerを使ったサンプルコードを公開しているのでこちらも参考にしてほしい。</p>
+<p>DockerでRubyアプリケーションをホスティングするサンプルコード</p>
+<ul>
+<li><a href="https://github.com/shoyan/theme-builder" target="_blank" rel="noopener">theme-builder</a></li>
+</ul>
+<p>docker-composeを使ってPHPコンテナとMySQLコンテナを連携させるサンプルコード</p>
+<ul>
+<li><a href="https://github.com/shoyan/docker-compose-with-link-sample" target="_blank" rel="noopener">docker-compose-with-link-sample</a></li>
+</ul>
+<p>nginxとrubyをChefを使ってインストールするサンプルコード</p>
+<ul>
+<li><a href="https://github.com/shoyan/nginx-and-ruby-on-docker" target="_blank" rel="noopener">nginx-and-ruby-on-docker</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-04-13T07:14:05.000Z" itemprop="datepublished">
+            2016/04/13
+          </time>
+          <time datetime="2016-04-13T07:14:05.000Z" itemprop="modified">
+            (更新日: 2016/04/13)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/04/13/no-space-left-on-device-on-docker/">Dockerでno space left on deviceが出てbuildできなくなった</a>
+        </h1>
+        <div class="content">
+          <p>Dockerのbuild時に以下のエラーが発生するようになった。</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$  docker build -t docker-and-chef .</span><br><span class="line">Sending build context to Docker daemon <span class="number">131.6</span> kB</span><br><span class="line">Error response from <span class="symbol">daemon:</span> mkdir /mnt/sda1/var/<span class="class"><span class="keyword">lib</span>/<span class="title">docker</span>/<span class="title">tmp</span>/<span class="title">docker</span>-<span class="title">builder670782655</span>: <span class="title">no</span> <span class="title">space</span> <span class="title">left</span> <span class="title">on</span> <span class="title">device</span></span></span><br></pre></td></tr></table></figure>
+
+<p>PCを再起動してみても直らず、どうしたものかとググっていたら以下の情報を見つけた。<br><a href="http://stackoverflow.com/questions/30604846/docker-error-no-space-left-on-device" target="_blank" rel="noopener">http://stackoverflow.com/questions/30604846/docker-error-no-space-left-on-device</a></p>
+<p>やることは以下</p>
+<ul>
+<li><code>docker ps -a</code>して表示されたコンテナを消す。</li>
+<li><code>docker images</code> して表示されたイメージを消す。</li>
+</ul>
+<p>コンテナは<code>docker rm container_id</code>で消すことができる。<br>イメージは<code>docker rim image_id</code>で消すことができる。</p>
+<p>VMのディスク容量がないときに発生するエラーのようだ。<br>不要なコンテナがたくさんあったので、それらのコンテナを消すとエラーはでなくなった。</p>
+
+        </div>
+      </div>
+    
   </div>
 
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/26/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><a class="page-number" href="/page/26/">26</a><span class="page-number current">27</span><a class="page-number" href="/page/28/">28</a><a class="page-number" href="/page/29/">29</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><a class="extend next" rel="next" href="/page/28/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/26/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><a class="page-number" href="/page/26/">26</a><span class="page-number current">27</span><a class="page-number" href="/page/28/">28</a><a class="page-number" href="/page/29/">29</a><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/28/">Next</a>
 </div>
 
   </div>

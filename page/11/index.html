@@ -146,116 +146,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2016-12-07T04:55:09.000Z" itemprop="datepublished">
-            2016/12/07
-          </time>
-          <time datetime="2016-12-07T04:55:09.000Z" itemprop="modified">
-            (更新日: 2016/12/07)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/12/07/guard-rubocop/">Guardでrubocopを自動化する</a>
-        </h1>
-        <div class="content">
-          <p>RubyのシンタックスチェックにRubocopを使っていて、リポジトリにpushした時にチェックするようにしている。<br>push→シンタックスエラー→直してもう1回pushというのがまどろこしいので<a href="https://github.com/yujinakayama/guard-rubocop" target="_blank" rel="noopener">guard-rubocop</a>を使ってファイルを保存する度にチェックするようにしてみた。<br>ストレスが軽減され、良い感じだったので紹介する。</p>
-<h2 id="guard-rubocopの導入"><a href="#guard-rubocopの導入" class="headerlink" title="guard-rubocopの導入"></a>guard-rubocopの導入</h2><p>gurad-rubocopを導入するにはまず、rubocopを導入している必要がある。<br>この記事ではrubocopは導入済みという前提で進める。</p>
-<p>gurad-rubocopの導入はいたって簡単。<br>3分で導入できるので是非やってほしい。</p>
-<p>Gemfileに以下を定義する。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">group <span class="symbol">:development</span> <span class="keyword">do</span></span><br><span class="line">  gem <span class="string">'guard'</span></span><br><span class="line">  gem <span class="string">'guard-rubocop'</span>, <span class="symbol">require:</span> <span class="literal">false</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p><code>bundle install</code> を行うと、guardコマンドが利用できるようになる。<br><code>bundle exec guard init rubocop</code> で <code>Guardfile</code> が生成される。</p>
-<p>これでインストール完了。</p>
-<p>あとはターミナルで <code>bundle exec guard</code> コマンドを実行する。<br>その状態でファイルを変更するとそのファイルを対象にrubocopコマンドが実行される。</p>
-<h2 id="オプション"><a href="#オプション" class="headerlink" title="オプション"></a>オプション</h2><p>デフォルトだとgurad起動時にrubocopコマンドが実行されるようになっている。<br>起動時に実行したくない時はGuardfileに以下の設定を行えばよい。</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">guard <span class="symbol">:rubocop</span> <span class="keyword">do</span></span><br></pre></td></tr></table></figure>
-
-<p>以下のように変更する。</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">guard <span class="symbol">:rubocop</span>, <span class="symbol">all_on_start:</span> <span class="keyword">false</span> <span class="keyword">do</span></span><br></pre></td></tr></table></figure>
-
-<p>他にもオプションがあるので詳しくはREADMEを参照してほしい。</p>
-<ul>
-<li><a href="https://github.com/yujinakayama/guard-rubocop#options" target="_blank" rel="noopener">https://github.com/yujinakayama/guard-rubocop#options</a></li>
-</ul>
-<h3 id="関連記事"><a href="#関連記事" class="headerlink" title="関連記事"></a>関連記事</h3><ul>
-<li><a href="/blog/2016/05/24/introduce-guard-gem-and-guard-rspec/">Guardでrspecのテストを自動化する</a></li>
-</ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-12-06T14:49:36.000Z" itemprop="datepublished">
-            2016/12/06
-          </time>
-          <time datetime="2016-12-06T14:49:36.000Z" itemprop="modified">
-            (更新日: 2016/12/06)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/12/06/jekyll-tutorial-01/">Jekyllチュートリアル</a>
-        </h1>
-        <div class="content">
-          <p>最近、ブログをリニューアルしようとJekyllをちょこちょこ触っている。<br>ブログを作る上でJekyllで知っておいたほうが良いことをまとめていきたいと思う。</p>
-<h2 id="Jekyllとは"><a href="#Jekyllとは" class="headerlink" title="Jekyllとは"></a>Jekyllとは</h2><p>Jekyllは静的なサイトを作ることに特化したツールだ。<br>Ruby製でGithub pagesでも利用されている。<br>内部的には<a href="https://github.com/Shopify/liquid/wiki" target="_blank" rel="noopener">Liquid</a>が使われている。<br>Liquidはテンプレートエンジンで変数や制御文(foreachとか)を使うことができる。<br>Jekyllはそれをラップしたものだ。<br>Jekyllの何が便利かというと、サイトの設定をymlファイルで管理したりJekyllコマンドでMarkdownからhtmlファイルを生成したりすることができるという点だ。<br>また、サードパーティ製のテーマを利用できたりもする。</p>
-<h2 id="ドキュメント"><a href="#ドキュメント" class="headerlink" title="ドキュメント"></a>ドキュメント</h2><p>Jekyllはドキュメントがなかなかしっかりしているので、公式のドキュメントを見るのがよい。</p>
-<ul>
-<li><a href="https://jekyllrb.com/" target="_blank" rel="noopener">https://jekyllrb.com/</a></li>
-</ul>
-<p>日本語版も用意してある。</p>
-<ul>
-<li><a href="https://jekyllrb-ja.github.io/" target="_blank" rel="noopener">https://jekyllrb-ja.github.io/</a></li>
-</ul>
-<p>まずドキュメントを探してみて、わからなければググるという感じで自分は調べている。</p>
-<h2 id="目次"><a href="#目次" class="headerlink" title="目次"></a>目次</h2><ul>
-<li>Jekyllをはじめよう</li>
-<li>Jekyllの構成について</li>
-<li>Jekyllのテーマを作成する</li>
-</ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-11-11T05:13:32.000Z" itemprop="datepublished">
-            2016/11/11
-          </time>
-          <time datetime="2016-11-11T05:13:32.000Z" itemprop="modified">
-            (更新日: 2016/11/11)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/11/11/machine-learning-01/">機械学習ことはじめ</a>
-        </h1>
-        <div class="content">
-          <p>機械学習をやるぞ！と息巻いてから半年が経とうとしている。<br>進捗はてんでダメ。ほとんど勉強せずに時間だけが過ぎてしまった。<br>さすがにこれではいけないと学習を始めた。</p>
-<p>とりあえず学ぶにも何かしらの教材がないと効率が悪いと思い、基礎的な理論が勉強できそうな 「機械学習理論入門」を買った(半年前に)。<br>機械学習の理論を優しく書いてあるはずなのだが、高校数学の理解もままならない自分の数学力では理解に苦しみ、本棚の肥やしとなっていた。<br>この段階では機械学習にも色々種類があるんだなということがわかった。</p>
-<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=syoyama-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4774176982&linkId=f54a583abd60635f4ad56b5e2705933b"></iframe>
-
-<p>次に機械学習理論の入門としてわかりやすそうなやる夫シリーズを読みだした。</p>
-<ul>
-<li><a href="http://tkengo.github.io/blog/2016/01/03/yaruo-machine-learning1/" target="_blank" rel="noopener">やる夫で学ぶ機械学習 - 序章 -</a></li>
-<li><a href="http://tkengo.github.io/blog/2016/01/04/yaruo-machine-learning2/" target="_blank" rel="noopener">やる夫で学ぶ機械学習 - 単回帰問題 -</a></li>
-</ul>
-<p>まずは最小二乗法についての話が出てきた。<br>これはそれとなく理解できたので、最小二乗法を使って誤差を求めるプログラムをRubyで実装してみたりもした。</p>
-<ul>
-<li><a href="https://github.com/shoyan/machine_learning/blob/master/01.rb" target="_blank" rel="noopener">https://github.com/shoyan/machine_learning/blob/master/01.rb</a></li>
-</ul>
-<p>しかし、最急降下法でつまづいてしまった。<br>最急降下法に出てくる合成関数の微分がよく分からない</p>
-<p>そもそも合成関数ってなんだというところで、合成関数について勉強した。<br>合成関数は関数の引数が関数になっている関数だった。</p>
-<p>関数: y=g(x)<br>合成関数: y=g(f(x)) ←こういう感じで引数が関数となっている</p>
-<p>やる夫シリーズを理解するには微分の知識が必要だということがわかったので、微分について勉強するために数学ガールを読んでいる。微分について会話形式で学んでいけるので、なかなかわかりやすい。</p>
-<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=syoyama-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4797382317&linkId=d26bd243cf2a37dd3f63507bea574228"></iframe>
-
-<p>というところで、現状は微分を学んでいる。</p>
-<p>だいぶ遠回りしている感がある。<br>道のりは険しい。</p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
           <time datetime="2016-11-10T09:28:31.000Z" itemprop="datepublished">
             2016/11/10
           </time>
@@ -321,12 +211,90 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
     
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-10-31T08:17:19.000Z" itemprop="datepublished">
+            2016/10/31
+          </time>
+          <time datetime="2016-10-31T08:17:19.000Z" itemprop="modified">
+            (更新日: 2016/10/31)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/10/31/study-english-fifth-month/">StudyPlusを使った英語の勉強をはじめて５ヶ月目の記録</a>
+        </h1>
+        <div class="content">
+          <p>StudyPlusに英語の勉強を記録し始めて５ヶ月。<br>幸運なことに継続して学習を続けることができている。</p>
+<p>勉強時間は128時間(累計)。<br>覚えた単語数は4600。<br>前回が3500だったので１ヶ月で1100、語彙数が増えた。<br>だんだん単語が覚えやすくなってきた感じがしている。</p>
+<p>前回から変わった点としては洋書を読み始めたことがあげられる。<br>Kindle Unlimitedを契約したので、洋書の入手に事欠かなくなったからだ。</p>
+<p>最近読んだのは以下の本。<br>英語の効果的な勉強法を英語で勉強できるので1粒で2度おいしい。</p>
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=syoyama-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B00WGZ38EC&linkId=4a85af93a9eabd53705c3c8a4d7c1305"></iframe>
+
+<p>Kindle Unlimitedは洋書が132万冊あるので、これから存分に活用させてもらうつもりだ。<br>ちなみにLearn Englishによると、知っている映画の本を読むのがリーディングに最適だそうだ。</p>
+<p>また、洋画を観ることも始めた。<br>こちらはまだ習慣化するところまで至っていないが、基本的には同じ映画のセリフを覚えるまで何回も繰り返し観るということをやろうと考えている。<br>題材はThe Devil Wears Plada(プラダを着た悪魔)だ。<br>これにした理由はニューヨークを舞台とした映画が良いと思っていて（これについては完全なる好みの問題）たまたま手元にあったのがプラダを着た悪魔だった。</p>
+<h2 id="過去の英語の勉強記録"><a href="#過去の英語の勉強記録" class="headerlink" title="過去の英語の勉強記録"></a>過去の英語の勉強記録</h2><ul>
+<li><a href="http://localhost:4000/blog/2016/09/12/study-english-four-month/" target="_blank" rel="noopener">英語の勉強をはじめて4ヶ月の記録</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-10-31T07:58:56.000Z" itemprop="datepublished">
+            2016/10/31
+          </time>
+          <time datetime="2016-10-31T07:58:56.000Z" itemprop="modified">
+            (更新日: 2016/10/31)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/10/31/run-regular-basis-the-ruboty/">Slackで定期的にRubotyに仕事をさせる</a>
+        </h1>
+        <div class="content">
+          <p>ChatOpsの一環としてSlackにRubotyを常駐させているのだが、Rubotyに定期的にタスクを実行させたいことがあった。<br>最初はruby-cronを使ってみたのだが、Slackだとうまく動かなかった。<br>具体的にはジョブの登録はできるのだがジョブの実行(通知)がされない。</p>
+<p>うまくいかなかったのでSlackのリマインダー機能を使ってみることにした。<br>Slackのリマインダー機能を使うと <code>Reminder:</code> と言うプレフィックスが入るのでRubotyが反応せず、こちらもうまくいかなかった。</p>
+<p>最終的にはcronでスクリプトを定期実行させることにした。<br>Slackに通知するスクリプトを作って、それをcronで定期的に実行させる。<br>メッセージを拾ったRubotyがタスクを実行するといった感じだ。</p>
+<h3 id="サンプルコード"><a href="#サンプルコード" class="headerlink" title="サンプルコード"></a>サンプルコード</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">"faraday"</span></span><br><span class="line"></span><br><span class="line">username = <span class="string">'your name'</span></span><br><span class="line">channel = <span class="string">'your channel'</span></span><br><span class="line">slack_token = <span class="string">'your slack token'</span></span><br><span class="line">icon_url = <span class="string">'your icon url'</span></span><br><span class="line"></span><br><span class="line">body = &#123;</span><br><span class="line">  <span class="symbol">username:</span> username,</span><br><span class="line">  <span class="symbol">channel:</span> channel,</span><br><span class="line">  <span class="symbol">icon_url:</span> icon_url,</span><br><span class="line">  <span class="symbol">text:</span> <span class="string">"ruboty ping"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Faraday.new(<span class="string">'https://slack.com'</span>) <span class="keyword">do</span> <span class="params">|c|</span></span><br><span class="line">  c.request <span class="symbol">:url_encoded</span></span><br><span class="line">  c.adapter Faraday.default_adapter</span><br><span class="line"><span class="keyword">end</span>.post(<span class="string">"/api/chat.postMessage?token=<span class="subst">#&#123;slack_token&#125;</span>"</span>, body)</span><br></pre></td></tr></table></figure>
+
+<p>これでRubotyに定期的に仕事をさせることができるようになった。</p>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-10-25T05:17:29.000Z" itemprop="datepublished">
+            2016/10/25
+          </time>
+          <time datetime="2016-10-25T05:17:29.000Z" itemprop="modified">
+            (更新日: 2016/10/25)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/10/25/introduce-gem-push/">RubyGems.orgに反映させるRakeタスクの紹介</a>
+        </h1>
+        <div class="content">
+          <p>Gemを更新した場合はRubyGems.orgに反映させる手続きが必要だ。<br>Gemを更新することはそんなに多くないので（私の場合）よく手順を忘れてしまう。<br>毎回手順を探すのはストレスなので以下のようなRakeタスクを作成した。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">"bundler/gem_tasks"</span></span><br><span class="line"><span class="keyword">require</span> <span class="string">"rspec/core/rake_task"</span></span><br><span class="line"></span><br><span class="line">RSpec::Core::RakeTask.new(<span class="symbol">:spec</span>)</span><br><span class="line"></span><br><span class="line">task <span class="symbol">:default</span> =&gt; <span class="symbol">:spec</span></span><br><span class="line"></span><br><span class="line">namespace <span class="string">"gem"</span> <span class="keyword">do</span></span><br><span class="line">  desc <span class="string">'Build a gem package'</span></span><br><span class="line">  task <span class="symbol">:build</span> <span class="keyword">do</span></span><br><span class="line">    sh <span class="string">"gem build your_gem_name.gemspec"</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  desc <span class="string">'Push a gem package'</span></span><br><span class="line">  task <span class="symbol">:push</span> <span class="keyword">do</span></span><br><span class="line">    Rake::Task[<span class="string">"gem:build"</span>].execute</span><br><span class="line">    sh <span class="string">"gem push your_gem_name-<span class="subst">#&#123;YourGemName::VERSION&#125;</span>.gem"</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>公開する時は以下のタスクを実行すればいい。</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rake gem:<span class="keyword">push</span></span><br></pre></td></tr></table></figure>
+
+<p>以下は実際のソースだ。<br>参考にしてほしい。</p>
+<ul>
+<li><a href="https://github.com/shoyan/git_find_committer/blob/master/Rakefile" target="_blank" rel="noopener">https://github.com/shoyan/git_find_committer/blob/master/Rakefile</a></li>
+</ul>
+
+        </div>
+      </div>
+    
   </div>
 
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/10/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><a class="extend next" rel="next" href="/page/12/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/10/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/12/">Next</a>
 </div>
 
   </div>

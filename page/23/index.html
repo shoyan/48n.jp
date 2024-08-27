@@ -146,153 +146,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2016-05-31T09:03:46.000Z" itemprop="datepublished">
-            2016/05/31
-          </time>
-          <time datetime="2016-05-31T09:03:46.000Z" itemprop="modified">
-            (更新日: 2016/05/31)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/05/31/tips-for-nginx-cookbook/">NginxのCookbookでハマった</a>
-        </h1>
-        <div class="content">
-          <p>Nginxのcookbookでversionを指定しているのに、指定したバージョンでインストールされない問題でハマった。</p>
-<p><a href="https://supermarket.chef.io/cookbooks/nginx" target="_blank" rel="noopener">https://supermarket.chef.io/cookbooks/nginx</a></p>
-<h2 id="結果としてわかったこと"><a href="#結果としてわかったこと" class="headerlink" title="結果としてわかったこと"></a>結果としてわかったこと</h2><p>パッケージでインストールする場合はバージョンが指定できない。<br>バージョンを指定したい場合はソースでインストールする必要がある。  </p>
-<p>Nginx cookbookはパッケージでのインストールかソースでのインストールのいずれかを選ぶことができる。<br>デフォルトはパッケージである。<br>ソースでインストールしたい場合は、<code>node[&#39;nginx&#39;][&#39;install_method’]=&#39;source&#39;</code> とする必要がある。<br><code>install_method</code>を指定したときにはじめてversionの指定が可能となる。</p>
-<h2 id="立ちはだかる様々な問題"><a href="#立ちはだかる様々な問題" class="headerlink" title="立ちはだかる様々な問題"></a>立ちはだかる様々な問題</h2><h3 id="versionが反映されない"><a href="#versionが反映されない" class="headerlink" title="versionが反映されない"></a>versionが反映されない</h3><p><code>attributes/default.rb</code>にversionを定義してみたが、指定されたバージョンがインストールされない問題にハマった。<br>デフォルトである、1.4.4がインストールされている。</p>
-<h4 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h4><p>rolesのoverride_attributesとして指定すると指定されたバージョンがインストールされた。<br>基本的にvendor cookbookの値の定義はroleのoverride_attributeで指定したほうがいいのかもしれない。<br>とはいえ、パラメーターによっては上書きされる場合もあってそのあたりの挙動がよくわかっていない。</p>
-<h3 id="Checksumを指定しないといけない"><a href="#Checksumを指定しないといけない" class="headerlink" title="Checksumを指定しないといけない"></a>Checksumを指定しないといけない</h3><p>sourceからインストールする場合、checksumを設定する必要がある。<br>checksumは以下のようにして作成できる。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">shasum</span> <span class="selector-tag">-a</span> 256 <span class="selector-tag">nginx-x</span><span class="selector-class">.x</span><span class="selector-class">.x</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></span><br></pre></td></tr></table></figure>
-
-<p>もしくは</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">http:</span><span class="comment">//nginx.org/download/nginx-x.x.x.tar.gz | shasum -a 256</span></span><br></pre></td></tr></table></figure>
-
-<p>checksumは <code>node[&#39;nginx&#39;][&#39;source&#39;][&#39;checksum’]</code> に指定する。</p>
-<h2 id="ChefのAttributeの優先順位について"><a href="#ChefのAttributeの優先順位について" class="headerlink" title="ChefのAttributeの優先順位について"></a>ChefのAttributeの優先順位について</h2><p>マニュアルによると、以下のようになっている(しかし、versionをoverrideで定義しても上書きできなかった)。</p>
-<ul>
-<li>A default attribute located in a cookbook attribute file</li>
-<li>A default attribute located in a recipe</li>
-<li>A default attribute located in an environment</li>
-<li>A default attribute located in role</li>
-<li>A force_default attribute located in a cookbook attribute file</li>
-<li>A force_default attribute located in a recipe</li>
-<li>A normal attribute located in a cookbook attribute file</li>
-<li>A normal attribute located in a recipe</li>
-<li>An override attribute located in a cookbook attribute file</li>
-<li>An override attribute located in a recipe</li>
-<li>An override attribute located in a role</li>
-<li>An override attribute located in an environment</li>
-<li>A force_override attribute located in a cookbook attribute file</li>
-<li>A force_override attribute located in a recipe</li>
-<li>An automatic attribute identified by Ohai at the start of the chef-client run</li>
-</ul>
-<p><a href="https://docs.chef.io/attributes.html#attribute-precedence" target="_blank" rel="noopener">https://docs.chef.io/attributes.html#attribute-precedence</a></p>
-<h2 id="Attributeの使い分けについて"><a href="#Attributeの使い分けについて" class="headerlink" title="Attributeの使い分けについて"></a>Attributeの使い分けについて</h2><p>以下のようにルール決めをしているという記事もあった。</p>
-<blockquote>
-<p>Attributeファイル=&gt;文言変更<br>recipeファイル=&gt;テスト的に変えたいものがある時のみ。本番では消す。<br>Environmentファイル=&gt;development(開発）,alpha(実験用)、staging(テスト)、production（本番）でのIPやOSバージョンの違い。同じ構成が複数台ある時もここで区別。<br>Role=&gt;ミドルウェアのバージョン違い</p>
-</blockquote>
-<p><a href="http://dev.classmethod.jp/server-side/chef/attribute-overrides-pattern/" target="_blank" rel="noopener">http://dev.classmethod.jp/server-side/chef/attribute-overrides-pattern/</a></p>
-<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
-<li><a href="http://stackoverflow.com/questions/27366774/chefexceptionschecksummismatch-when-installing-nginx-1-7-8-from-source" target="_blank" rel="noopener">http://stackoverflow.com/questions/27366774/chefexceptionschecksummismatch-when-installing-nginx-1-7-8-from-source</a></li>
-</ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-05-31T04:58:42.000Z" itemprop="datepublished">
-            2016/05/31
-          </time>
-          <time datetime="2016-05-31T04:58:42.000Z" itemprop="modified">
-            (更新日: 2016/05/31)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/05/31/to-draw-a-graph-using-high-charts/">グラフを描画するHighChartsで平均気温のグラフを描画する</a>
-        </h1>
-        <div class="content">
-          <p>グラフを描画する<a href="http://www.highcharts.com/" target="_blank" rel="noopener">HighCharts</a>を紹介します。<br>HighChartsはJavaScriptのグラフ描画ライブラリです。<br>HighChartsを使えば簡単にグラフの描画ができます。</p>
-<h2 id="デモページ"><a href="#デモページ" class="headerlink" title="デモページ"></a>デモページ</h2><p>福岡市の平均気温をグラフで表示してみました。</p>
-<p><a href="http://codepen.io/shoyan/details/jrOjWK/" target="_blank" rel="noopener">http://codepen.io/shoyan/details/jrOjWK/</a></p>
-<h2 id="サンプルを作ってみる"><a href="#サンプルを作ってみる" class="headerlink" title="サンプルを作ってみる"></a>サンプルを作ってみる</h2><p>簡単なサンプルを作ってみましょう。<br>私がサンプルとして利用していた<a href="http://codepen.io/" target="_blank" rel="noopener">CODEPEN</a>を利用すると簡単に作成できるのでオススメです。</p>
-<p>HighChartsを使うには、jQueryとhighCharts.jsが必要です。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://code.highcharts.com/highcharts.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://code.jquery.com/jquery-2.2.4.min.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>index.htmlのbody部は以下を定義します。<br>div要素にグラフが描画されます。</p>
-<p>index.html</p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span> <span class="built_in">id</span>=<span class="string">"container"</span> style=<span class="string">"width:100%; height:400px;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<p>JavaScript tag <code>&lt;script&gt; &lt;/script&gt;</code> に書くか、外部ファイルに定義してください。</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">$(function</span> <span class="string">()</span> <span class="string">&#123;</span></span><br><span class="line">    <span class="string">$('#container').highcharts(&#123;</span></span><br><span class="line">        <span class="attr">chart:</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">type:</span> <span class="string">'bar'</span></span><br><span class="line">        <span class="string">&#125;,</span></span><br><span class="line">        <span class="attr">title:</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">text:</span> <span class="string">'Fruit Consumption'</span></span><br><span class="line">        <span class="string">&#125;,</span></span><br><span class="line">        <span class="attr">xAxis:</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">tags:</span> <span class="string">['Apples',</span> <span class="string">'Bananas'</span><span class="string">,</span> <span class="string">'Oranges'</span><span class="string">]</span></span><br><span class="line">        <span class="string">&#125;,</span></span><br><span class="line">        <span class="attr">yAxis:</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">title:</span> <span class="string">&#123;</span></span><br><span class="line">                <span class="attr">text:</span> <span class="string">'Fruit eaten'</span></span><br><span class="line">            <span class="string">&#125;</span></span><br><span class="line">        <span class="string">&#125;,</span></span><br><span class="line">        <span class="attr">series:</span> <span class="string">[&#123;</span></span><br><span class="line">            <span class="attr">name:</span> <span class="string">'Jane'</span><span class="string">,</span></span><br><span class="line">            <span class="attr">data:</span> <span class="string">[1,</span> <span class="number">0</span><span class="string">,</span> <span class="number">4</span><span class="string">]</span></span><br><span class="line">        <span class="string">&#125;,</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">name:</span> <span class="string">'John'</span><span class="string">,</span></span><br><span class="line">            <span class="attr">data:</span> <span class="string">[5,</span> <span class="number">7</span><span class="string">,</span> <span class="number">3</span><span class="string">]</span></span><br><span class="line">        <span class="string">&#125;]</span></span><br><span class="line">    <span class="string">&#125;);</span></span><br><span class="line"><span class="string">&#125;);</span></span><br></pre></td></tr></table></figure>
-
-<p>あとは、ブラウザでアクセスすればグラフが描画されます。</p>
-<h2 id="構文"><a href="#構文" class="headerlink" title="構文"></a>構文</h2><p>基本的な構文は以下です。</p>
-<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span>(<span class="string">"グラフを描画するhtml要素"</span>).highcharts(<span class="keyword">option</span>)</span><br></pre></td></tr></table></figure>
-
-<h3 id="HighChartsの基本的なパラメーター-option"><a href="#HighChartsの基本的なパラメーター-option" class="headerlink" title="HighChartsの基本的なパラメーター(option)"></a>HighChartsの基本的なパラメーター(option)</h3><p>HighChartsの基本的なパラメーター(option)を紹介します。</p>
-<ul>
-<li><strong>TITLE</strong>: チャートのタイトル</li>
-<li><strong>SERIES</strong>: 描画するデータの値</li>
-<li><strong>TOOLTIP</strong>: チャートにマウスオーバーしたときに表示されるツールチップの設定</li>
-<li><strong>LEGEND</strong>: SERIESの説明</li>
-<li><strong>AXES</strong>: 縦軸と横軸の説明を設定します。</li>
-</ul>
-<h3 id="グラフの種類について"><a href="#グラフの種類について" class="headerlink" title="グラフの種類について"></a>グラフの種類について</h3><p>typeにグラフの種類を設定できます。</p>
-<ul>
-<li>棒グラフ: column</li>
-<li>折れ線グラフ: line</li>
-<li>円グラフ: pie</li>
-<li>帯グラフ: bar</li>
-<li>ヒストグラム: column</li>
-<li>散布図: scatter</li>
-<li>箱ひげ図: boxplot</li>
-<li>三角グラフ: pyramid</li>
-</ul>
-<p>様々なグラフのデモページが用意されており、参考になります。</p>
-<p><a href="http://www.highcharts.com/demo" target="_blank" rel="noopener">http://www.highcharts.com/demo</a></p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-05-30T03:58:52.000Z" itemprop="datepublished">
-            2016/05/30
-          </time>
-          <time datetime="2016-05-30T03:58:52.000Z" itemprop="modified">
-            (更新日: 2016/05/30)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/05/30/yum-install-failed-by-insufficient-space-on-docker/">Dockerのコンテナでyum installが失敗する</a>
-        </h1>
-        <div class="content">
-          <p>Dockerのコンテナでyum installが失敗する。<br>以下のようなエラーがでていた。  </p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Insufficient space <span class="keyword">in</span> download directory <span class="regexp">/var/</span>cache<span class="regexp">/yum/</span>x86_64<span class="regexp">/6/u</span>pdates<span class="regexp">/packages</span></span><br></pre></td></tr></table></figure>
-
-<p>容量が不足しているらしい。</p>
-<p>ディスク容量を確認したところ、100%になっていた。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">bash<span class="number">-4.2</span># df</span><br><span class="line">Filesystem     <span class="number">1</span>K-blocks     Used Available Use% Mounted on</span><br><span class="line">none            <span class="number">19049892</span> <span class="number">18226752</span>         <span class="number">0</span> <span class="number">100</span>% /</span><br><span class="line">tmpfs             <span class="number">509992</span>        <span class="number">0</span>    <span class="number">509992</span>   <span class="number">0</span>% /dev</span><br><span class="line">tmpfs             <span class="number">509992</span>        <span class="number">0</span>    <span class="number">509992</span>   <span class="number">0</span>% /sys/fs/cgroup</span><br><span class="line">/dev/sda1       <span class="number">19049892</span> <span class="number">18226752</span>         <span class="number">0</span> <span class="number">100</span>% /etc/hosts</span><br><span class="line">shm                <span class="number">65536</span>        <span class="number">0</span>     <span class="number">65536</span>   <span class="number">0</span>% /dev/shm</span><br></pre></td></tr></table></figure>
-
-<p>不要なコンテナが溜まっていて、そのせいでディスク容量を圧迫していたようだ。</p>
-<h3 id="コンテナを消す方法"><a href="#コンテナを消す方法" class="headerlink" title="コンテナを消す方法"></a>コンテナを消す方法</h3><ul>
-<li>docker ps -a でコンテナの一覧が表示される</li>
-<li>docker rm  container_id で消す</li>
-</ul>
-<p>コンテナを消すと、ディスク容量に空きができてyum installできるようになった。</p>
-<p>こちらは類似案件。</p>
-<ul>
-<li><a href="http://shoyan.github.io/blog/2016/04/13/no-space-left-on-device-on-docker/" target="_blank" rel="noopener">Dockerでno Space Left on Deviceが出てbuildできなくなった</a></li>
-</ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
           <time datetime="2016-05-27T04:48:34.000Z" itemprop="datepublished">
             2016/05/27
           </time>
@@ -400,12 +253,171 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
     
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-05-20T08:40:56.000Z" itemprop="datepublished">
+            2016/05/20
+          </time>
+          <time datetime="2016-05-20T08:40:56.000Z" itemprop="modified">
+            (更新日: 2016/05/20)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/05/20/does-not-proceed-worker-is-blocked-processing-of-chef/">Chefのworkerが詰まって処理が進まなくなった</a>
+        </h1>
+        <div class="content">
+          <p>chefを実行したらこんなメッセージがでた。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARN: Chef<span class="built_in"> client </span>24431 is running, will wait <span class="keyword">for</span> it <span class="keyword">to</span> finish <span class="keyword">and</span> then run.</span><br></pre></td></tr></table></figure>
+
+<p>前回実行したChefが途中で詰まってしまい、ウンともスンとも言わなくなったので Ctrl + Cでとめたが、プロセス自体は残ってしまっている。</p>
+<p>こんな感じで2つchef-clientのworkerが立ち上がっている状態。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[<span class="symbol">shoyan@</span>server01 ~]$ ps aux | grep chef</span><br><span class="line">root     <span class="number">24373</span>  <span class="number">0.0</span>  <span class="number">0.1</span> <span class="number">178168</span>  <span class="number">2992</span> ?        Ss   <span class="number">10</span>:<span class="number">22</span>   <span class="number">0</span>:<span class="number">00</span> sudo -p knife sudo password:  chef-client -S http:<span class="comment">//127.0.0.1:18889</span></span><br><span class="line">root     <span class="number">24426</span>  <span class="number">0.0</span>  <span class="number">3.1</span> <span class="number">262164</span> <span class="number">61072</span> ?        Sl   <span class="number">10</span>:<span class="number">22</span>   <span class="number">0</span>:<span class="number">01</span> /opt/chef/embedded/bin/ruby /usr/bin/chef-client -S http:<span class="comment">//127.0.0.1:18889</span></span><br><span class="line">root     <span class="number">24431</span>  <span class="number">0.0</span>  <span class="number">7.1</span> <span class="number">1078932</span> <span class="number">138052</span> ?      Sl   <span class="number">10</span>:<span class="number">22</span>   <span class="number">0</span>:<span class="number">03</span> chef-client worker: ppid=<span class="number">24426</span>;start=<span class="number">10</span>:<span class="number">22</span>:<span class="number">49</span>;</span><br><span class="line">root     <span class="number">26701</span>  <span class="number">0.0</span>  <span class="number">0.1</span> <span class="number">178168</span>  <span class="number">2996</span> pts/<span class="number">3</span>    Ss+  <span class="number">10</span>:<span class="number">50</span>   <span class="number">0</span>:<span class="number">00</span> sudo -p knife sudo password:  chef-client -S http:<span class="comment">//127.0.0.1:18889</span></span><br><span class="line">root     <span class="number">26754</span>  <span class="number">0.0</span>  <span class="number">3.1</span> <span class="number">261996</span> <span class="number">60896</span> pts/<span class="number">3</span>    Sl+  <span class="number">10</span>:<span class="number">50</span>   <span class="number">0</span>:<span class="number">01</span> /opt/chef/embedded/bin/ruby /usr/bin/chef-client -S http:<span class="comment">//127.0.0.1:18889</span></span><br><span class="line">root     <span class="number">26759</span>  <span class="number">0.0</span>  <span class="number">3.0</span> <span class="number">261996</span> <span class="number">57760</span> pts/<span class="number">3</span>    Sl+  <span class="number">10</span>:<span class="number">50</span>   <span class="number">0</span>:<span class="number">00</span> chef-client worker: ppid=<span class="number">26754</span>;start=<span class="number">10</span>:<span class="number">50</span>:<span class="number">38</span>;</span><br></pre></td></tr></table></figure>
+
+<p>1時間ほど経過しても何も進まないので、プロセスをkillしてみた。</p>
+<p>TERMシグナルを送ってみたが、反応なし。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">kill</span> -s TERM 24431</span></span><br></pre></td></tr></table></figure>
+
+<p>killシグナルを送るとプロセスが終了し、ペンディング状態となっていたChefが実行された。</p>
+<figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">kill</span> -<span class="keyword">s</span> <span class="keyword">KILL</span> <span class="number">24431</span></span><br></pre></td></tr></table></figure>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-05-19T05:16:15.000Z" itemprop="datepublished">
+            2016/05/19
+          </time>
+          <time datetime="2016-05-19T05:16:15.000Z" itemprop="modified">
+            (更新日: 2016/05/19)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/05/19/the-server-monitored-by-mackerel/">マカレルでサーバーを監視する</a>
+        </h1>
+        <div class="content">
+          <p>サーバーの監視に<a href="https://mackerel.io/ja/features" target="_blank" rel="noopener">マカレル</a>を導入してみました。<br>使ってみた感想としては、難しい設定もなく簡単に導入することができて、とてもよくできているなぁと関心しました。  </p>
+<h2 id="マカレルエージェントのインストール"><a href="#マカレルエージェントのインストール" class="headerlink" title="マカレルエージェントのインストール"></a>マカレルエージェントのインストール</h2><p>マカレルでサーバーを監視をするには監視対象のサーバーにマカレルエージェントをインストールする必要があります。<br>また、事前に申し込みをして、apikeyを発行しておく必要があります。</p>
+<p>マカレルエージェントのインストールはChefを使って行います。<br><a href="https://github.com/mackerelio/cookbook-mackerel-agent" target="_blank" rel="noopener">cookbook-mackerel-agent</a>を使いました。</p>
+<p>metadata.rb</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">depends</span> <span class="string">'mackerel-agent'</span></span><br></pre></td></tr></table></figure>
+
+<p>recipes/default.rb</p>
+<figure class="highlight sml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">include_recipe <span class="symbol">'mackerel</span>-agent'</span><br><span class="line">include_recipe <span class="symbol">'mackerel</span>-agent::plugins'</span><br><span class="line">yum_package <span class="symbol">'mackerel</span>-check-plugins'</span><br></pre></td></tr></table></figure>
+
+<p>cookbook-mackerel-agentだけだとcheckプラグインが入らなかったので<code>yum_package</code>リソースを使ってインストールしています。  </p>
+<p>attributes/default.rb</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">default[<span class="string">'mackerel-agent'</span>][<span class="symbol">'package-action'</span>] = 'upgrade'</span><br><span class="line">default[<span class="string">'mackerel-agent'</span>][<span class="symbol">'conf'</span>][<span class="string">'apikey'</span>] = ‘API KEYをかく'</span><br><span class="line">default[<span class="string">'mackerel-agent'</span>][<span class="symbol">'conf'</span>][<span class="string">'plugins'</span>] = true</span><br></pre></td></tr></table></figure>
+
+<p>サーバーにレシピを適用するとマカレルの管理画面にサーバーがでてくるのでロールを設定します。<br>これでサーバーのメトリクスを見ることができます。</p>
+<h2 id="プラグインを使う"><a href="#プラグインを使う" class="headerlink" title="プラグインを使う"></a>プラグインを使う</h2><p>マカレルには様々なプラグインが用意されています。<br>使い方はgithubのREADMEに書いてあります。<br><a href="https://github.com/mackerelio/mackerel-agent-plugins" target="_blank" rel="noopener">https://github.com/mackerelio/mackerel-agent-plugins</a></p>
+<p>自分はプラグインを使って以下のことを行っています。</p>
+<h3 id="linuxマカレルプラグインを使って様々なメトリクスをだす"><a href="#linuxマカレルプラグインを使って様々なメトリクスをだす" class="headerlink" title="linuxマカレルプラグインを使って様々なメトリクスをだす"></a>linuxマカレルプラグインを使って様々なメトリクスをだす</h3><p>linuxマカレルプラグインを使えばswapやnetstat、Disk read time 等のグラフを表示することができます。</p>
+<p>attributes/default.rb に以下を定義します。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default[<span class="string">'mackerel-agent'</span>][<span class="symbol">'conf'</span>][<span class="string">'plugin.metrics.linux'</span>][<span class="symbol">'command'</span>] = '/usr/local/bin/mackerel-plugin-linux'</span><br></pre></td></tr></table></figure>
+
+<h3 id="Unicornマカレルプラグインを使ってUnicornのメトリクスをだす"><a href="#Unicornマカレルプラグインを使ってUnicornのメトリクスをだす" class="headerlink" title="Unicornマカレルプラグインを使ってUnicornのメトリクスをだす"></a>Unicornマカレルプラグインを使ってUnicornのメトリクスをだす</h3><p>Unicornマカレルプラグインを使えばダッシュボードにUnicornのメモリとワーカ数のグラフが表示されます。</p>
+<p>attributes/default.rb に以下を定義します。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default[<span class="string">'mackerel-agent'</span>][<span class="symbol">'conf'</span>][<span class="string">'plugin.metrics.unicorn'</span>][<span class="symbol">'command'</span>] = "/usr/local/bin/mackerel-plugin-unicorn -pidfile=/var/www/app/shared/tmp/pids/unicorn.pid"</span><br></pre></td></tr></table></figure>
+
+<h3 id="httpの監視"><a href="#httpの監視" class="headerlink" title="httpの監視"></a>httpの監視</h3><p>httpのレスポンスをチェックして監視を行います。<br>細かい設定を行いたい場合は、<code>check-tcp</code>がよいですが、単純なチェックでよいのであれば<code>http</code>のほうが設定が簡単です。</p>
+<p>attributes/default.rb に以下を定義します。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default[<span class="string">'mackerel-agent'</span>][<span class="symbol">'conf'</span>][<span class="string">'plugin.checks.http'</span>][<span class="symbol">'command'</span>] = "/usr/bin/check-http -u http://localhost"</span><br></pre></td></tr></table></figure>
+
+<h3 id="ログファイルの監視"><a href="#ログファイルの監視" class="headerlink" title="ログファイルの監視"></a>ログファイルの監視</h3><p>nginxのログファイルを監視し、500系のエラーが頻発したときは通知するようにします。</p>
+<p>attributes/default.rb に以下を定義します。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/check-log --file /var/log/nginx/access.log --pattern 'HTTP/1\.[<span class="string">01</span>]" [<span class="string">5</span>][<span class="symbol">0-9</span>][<span class="string">0-9</span>] ' --warning-over 3 --critical-over 10 --return</span><br></pre></td></tr></table></figure>
+
+<h2 id="監視ルールの設定"><a href="#監視ルールの設定" class="headerlink" title="監視ルールの設定"></a>監視ルールの設定</h2><p>監視ルールを設定することで閾値を超えた際に通知をすることができます。<br>CPU、メモリ、ロードアベレージ、ディスク容量等の監視を管理画面より設定できます。<br>詳しい設定方法については以下を参照ください。  </p>
+<ul>
+<li><a href="https://mackerel.io/ja/docs/entry/howto/alerts" target="_blank" rel="noopener">監視・通知を設定する - Mackerel ヘルプ</a></li>
+</ul>
+<h2 id="Slackに通知する"><a href="#Slackに通知する" class="headerlink" title="Slackに通知する"></a>Slackに通知する</h2><p>何か異常が起きた場合はSlackに通知をするようにします。<br>こちらも管理画面から設定できます。<br>具体的な設定方法については、ドキュメントを参照ください。  </p>
+<ul>
+<li><a href="https://mackerel.io/ja/docs/entry/howto/alerts" target="_blank" rel="noopener">監視・通知を設定する - Mackerel ヘルプ</a></li>
+</ul>
+<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
+<li><a href="https://mackerel.io/ja/docs/" target="_blank" rel="noopener">ヘルプ - Mackerel ヘルプ</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-05-18T04:46:32.000Z" itemprop="datepublished">
+            2016/05/18
+          </time>
+          <time datetime="2016-05-18T04:46:32.000Z" itemprop="modified">
+            (更新日: 2016/05/18)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/05/18/tips-of-google-spreadsheets/">Google spreadsheetsを使ってデータの分析をする</a>
+        </h1>
+        <div class="content">
+          <p>データの分析によく使われるエクセルですが、Google Spreadsheetsでも様々な関数が用意されています。<br>関数を使えば日付の差分を調べたり、特定の条件に一致するデータをカウントすることができます。<br>Google Spreadsheetsを使ってデータの集計、分析をするためのTipsの紹介をします。</p>
+<h2 id="日付の差分を調べる"><a href="#日付の差分を調べる" class="headerlink" title="日付の差分を調べる"></a>日付の差分を調べる</h2><p>例えばユーザーの契約日数を調べたいとしましょう。<br><code>DATEVALUE</code>を使って以下のように計算できます。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=<span class="built_in">DATEVALUE</span>(<span class="string">"2016/05/17"</span>) - <span class="built_in">DATEVALUE</span>(<span class="string">"2016/05/01"</span>)</span><br></pre></td></tr></table></figure>
+
+<p>セルを指定することもできます。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=<span class="built_in">DATEVALUE</span>(<span class="symbol">A2</span>) - <span class="built_in">DATEVALUE</span>(<span class="symbol">A1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>月で表示したい場合は30で割ります。<br>FLOORは小数点を切り捨てるために使っています。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=<span class="built_in">FLOOR</span>((<span class="built_in">DATEVALUE</span>(<span class="string">"2016/05/17"</span>) - <span class="built_in">DATEVALUE</span>(<span class="string">"2015/05/01"</span>))/<span class="number">30</span>, <span class="number">0.1</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="特定の条件をカウントする"><a href="#特定の条件をカウントする" class="headerlink" title="特定の条件をカウントする"></a>特定の条件をカウントする</h2><p>例えば、契約期間が1年未満のユーザーをカウントする場合は<code>COUNTIFS</code>を使います。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=<span class="built_in">COUNTIFS</span>(<span class="symbol">A1</span>:<span class="symbol">A1000</span>, <span class="string">"&lt;365"</span>)</span><br></pre></td></tr></table></figure>
+
+<p><code>COUNTIFS</code>は複数条件を指定できます。<br>契約期間が1年以上〜2年未満のユーザーをカウントするということができます。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=<span class="built_in">COUNTIFS</span>(<span class="symbol">A1</span>:<span class="symbol">A1000</span>, <span class="string">"&gt;=365"</span>, <span class="symbol">I3</span>:<span class="symbol">I1009</span>, <span class="string">"&lt;730"</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="点数を分析する"><a href="#点数を分析する" class="headerlink" title="点数を分析する"></a>点数を分析する</h2><p>平均点を求めることは <code>AVERAGE</code> を使えばできます。<br>平均だけでなくばらつきを求めると違った角度でデータを捉えることができます。<br>ばらつきは標準偏差を求める関数 <code>STDEVP</code>で求めることができます。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">= <span class="built_in">STDEVP</span>(<span class="symbol">A1</span>:<span class="symbol">E1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>例えばそれぞれの項目にたいして点数をつけるアンケートがあるとします。<br>以下の2つの項目は平均点は同じですが、標準偏差を求めるとばらつきがあることがわかります。<br>標準偏差を使えばこのようなデータを見つけることができます。</p>
+<table>
+<thead>
+<tr>
+<th>点数</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th>平均点</th>
+<th>標準偏差</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>6</td>
+<td>7</td>
+<td>9</td>
+<td>7</td>
+<td>6</td>
+<td>7</td>
+<td>1.095445115</td>
+</tr>
+<tr>
+<td>8</td>
+<td>5</td>
+<td>10</td>
+<td>7</td>
+<td>5</td>
+<td>7</td>
+<td>1.897366596</td>
+</tr>
+</tbody></table>
+<p>サンプルを用意しました。参考にどうぞ。<br><a href="https://docs.google.com/spreadsheets/d/1bOc3s8ikFcbBPGuzxDbRzd8KVT00lgQUDz275TJAIoE/edit#gid=0" target="_blank" rel="noopener">https://docs.google.com/spreadsheets/d/1bOc3s8ikFcbBPGuzxDbRzd8KVT00lgQUDz275TJAIoE/edit#gid=0</a></p>
+
+        </div>
+      </div>
+    
   </div>
 
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/22/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><a class="extend next" rel="next" href="/page/24/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/22/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/24/">Next</a>
 </div>
 
   </div>

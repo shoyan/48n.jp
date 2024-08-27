@@ -146,164 +146,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2017-03-06T09:28:48.000Z" itemprop="datepublished">
-            2017/03/06
-          </time>
-          <time datetime="2017-03-06T09:28:48.000Z" itemprop="modified">
-            (更新日: 2017/03/06)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2017/03/06/ignored-columns-rails5/">Rails5のignored_columnsで予約語のエラーを回避する</a>
-        </h1>
-        <div class="content">
-          <p>こんにちは、SHOYANです。</p>
-<p>Railsには様々な予約語がありますが、歴史の長いシステムを扱っているとDBのカラムがその予約語に該当する場合があります。<br>例えば <code>class</code>というカラム名があった場合、そのカラムの影響で以下のエラーが発生します。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pry(main)&gt; User.all.first</span><br><span class="line"><span class="symbol">NoMethodError:</span> undefined method <span class="string">`fetch_value' for nil:NilClass</span></span><br></pre></td></tr></table></figure>
-
-<p>これを回避する方法の1つがDBのカラム名の変更です。<br>しかし、DBのカラム名の変更は様々な影響が考えられるため簡単に変更できない場合があります。</p>
-<p>その場合はアプリケーション側で回避します。</p>
-<h2 id="Rails5のignored-columnsで予約語のエラーを回避する"><a href="#Rails5のignored-columnsで予約語のエラーを回避する" class="headerlink" title="Rails5のignored_columnsで予約語のエラーを回避する"></a>Rails5のignored_columnsで予約語のエラーを回避する</h2><p>Rails5で追加された <a href="http://api.rubyonrails.org/classes/ActiveRecord/ModelSchema.html#method-c-ignored_columns-3D" target="_blank" rel="noopener">ignored_columns</a> を使えばこのカラム自体が無視されるようになり、エラーを回避できます。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class<span class="built_in"> User </span>&lt; ApplicationRecord</span><br><span class="line">  self.ignored_columns = %w(class)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-
-<p>Rails4であれば以下で同様のことができるようです。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> &lt; ActiveRecord::Base</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">self</span>.<span class="title">columns</span></span></span><br><span class="line">    <span class="keyword">super</span>.reject &#123;<span class="params">|column|</span> column.name == <span class="string">'class'</span>&#125;</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="ignored-columnsで防げないパターン"><a href="#ignored-columnsで防げないパターン" class="headerlink" title="ignored_columnsで防げないパターン"></a>ignored_columnsで防げないパターン</h2><p>ただし、<code>ignored_columns</code> でも完全に防げない場合があります。</p>
-<p><code>to_json</code> メソッドでエラーが発生します。</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">pry</span><span class="params">(main)</span></span>&gt; User<span class="selector-class">.all</span>.to_json</span><br><span class="line">SystemStackError: stack level too deep</span><br></pre></td></tr></table></figure>
-
-<p>この場合は、<code>except</code> オプションで回避できます。</p>
-<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="module-access"><span class="module"><span class="identifier">User</span>.</span></span>all.<span class="keyword">to</span><span class="constructor">_json(<span class="params">except</span>: [:<span class="params">class</span>])</span></span><br></pre></td></tr></table></figure>
-
-<p>今回の場合は、classカラム自体が不要だったので <code>ignore_columns</code> で対応しました。<br>classを使いたい場合は、どのように回避すればいいんでしょうか。。。</p>
-<p>どなたか知っている人がいれば情報をいただきたいです。</p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2017-02-25T13:50:20.000Z" itemprop="datepublished">
-            2017/02/25
-          </time>
-          <time datetime="2017-02-25T13:50:20.000Z" itemprop="modified">
-            (更新日: 2017/02/25)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2017/02/25/introduce-twitter-card/">Twitterカードをサイトに設定する手順</a>
-        </h1>
-        <div class="content">
-          <p><img src="/images/Twitter_Logo_White_On_Blue.svg" alt="Twitter_Logo"></p>
-<h2 id="Twitterカードとは"><a href="#Twitterカードとは" class="headerlink" title="Twitterカードとは"></a>Twitterカードとは</h2><p><a href="https://dev.twitter.com/cards/getting-started" target="_blank">Twitterカード</a>はタイムラインに表示される情報をカスタマイズできる機能です。<br>Twitterカードを設定することでタイムラインに表示される情報をよりリッチなものにすることができます。<br>現在はSNSにより拡散されることも多いため、Twitterカードの設定をしておくとより多くの人の目にとまるようになり、記事への流入が期待できます。</p>
-<p>Twitterカードを設定すると以下のようになります。</p>
-<p><img src="/images/introduce_twitter_card_01.png" alt="introduce_twitter_card_01"></p>
-<h2 id="Twitterカードの設定"><a href="#Twitterカードの設定" class="headerlink" title="Twitterカードの設定"></a>Twitterカードの設定</h2><p>Twitterカードの設定手順を紹介します。</p>
-<h3 id="タグを設定する"><a href="#タグを設定する" class="headerlink" title="タグを設定する"></a>タグを設定する</h3><p>Twitterカードのを利用するためにはメタタグの設置が必要です。<br>以下は<a href="/blog/2015/12/01/mathematics-of-advent-calendar/">30歳から始める数学</a>に設定しているTwitterカードのサンプルコードです。</p>
-<h4 id="Sample-Code"><a href="#Sample-Code" class="headerlink" title="Sample Code"></a>Sample Code</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta <span class="attribute">name</span>=<span class="string">"twitter:card"</span> <span class="attribute">content</span>=<span class="string">"summary_large_image"</span> /&gt;</span><br><span class="line">&lt;meta <span class="attribute">name</span>=<span class="string">"twitter:site"</span> <span class="attribute">content</span>=<span class="string">"@sinn_shoyan"</span> /&gt;</span><br><span class="line">&lt;meta <span class="attribute">name</span>=<span class="string">"twitter:title"</span> <span class="attribute">content</span>=<span class="string">"30歳から始める数学"</span> /&gt;</span><br><span class="line">&lt;meta <span class="attribute">name</span>=<span class="string">"twitter:description"</span> <span class="attribute">content</span>=<span class="string">"とあることから、30歳にして数学を学び始めました。いまは毎日楽しく数学の書籍を読んだり方程式を解いたりしています。本記事では、僕と同じようにもう一度数学を学びたいなと思っている人向けに、数学の魅力を再発見する方法を紹介します。"</span> /&gt;</span><br><span class="line">&lt;meta <span class="attribute">name</span>=<span class="string">"twitter:image"</span> <span class="attribute">content</span>=<span class="string">"http://48n.jp/images/math-1547018_640.jpg"</span> /&gt;</span><br></pre></td></tr></table></figure>
-
-<p>Twitterカードのメタタグのプロパティは以下となります。</p>
-<table>
-<thead>
-<tr>
-<th>プロパティ</th>
-<th>必須</th>
-<th>説明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>twitter:card</td>
-<td>Yes</td>
-<td>twitterカードの種類を設定します</td>
-</tr>
-<tr>
-<td>twitter:site</td>
-<td>No</td>
-<td>twitterの@usernameを設定します</td>
-</tr>
-<tr>
-<td>twitter:title</td>
-<td>Yes</td>
-<td>記事のタイトルを設定します</td>
-</tr>
-<tr>
-<td>twitter: description</td>
-<td>Yes</td>
-<td>記事の説明を設定します</td>
-</tr>
-<tr>
-<td>twitter:image</td>
-<td>No</td>
-<td>画像を設定します。サイズは横幅280px以上 × 縦幅150px以上です。サイズは1MB以下でないといけません。</td>
-</tr>
-</tbody></table>
-<p>他にも設定できるオプションがありますが長くなるのでここでは割愛します。<br>詳しくはドキュメントを参照してください。</p>
-<ul>
-<li><a href="https://dev.twitter.com/cards/markup" target="_blank" rel="noopener">https://dev.twitter.com/cards/markup</a></li>
-</ul>
-<h3 id="Twitterが提供しているCard-Validatorで申請を行う"><a href="#Twitterが提供しているCard-Validatorで申請を行う" class="headerlink" title="Twitterが提供しているCard Validatorで申請を行う"></a>Twitterが提供しているCard Validatorで申請を行う</h3><p>Twitterカードを有効にするにはTwitterが提供しているCard Validatorで申請を行う必要があります。<br>こちらの作業は1度行えば今後は必要ありません。</p>
-<ul>
-<li><a href="https://cards-dev.twitter.com/validator" target="_blank" rel="noopener">https://cards-dev.twitter.com/validator</a></li>
-</ul>
-<p>テキストフォームに確認したいページのURLを入力します。<br>エラーがなければ以下のように表示され、Twitterカードが有効になります。</p>
-<p><img src="/images/introduce_twitter_card_02.png" alt="introduce_twitter_card_02"></p>
-<p>一度認証が成功するとそのドメインでTwitterカードの利用が有効となります(サブドメインも含む)。</p>
-<h2 id="Twitterカードの種類"><a href="#Twitterカードの種類" class="headerlink" title="Twitterカードの種類"></a>Twitterカードの種類</h2><p>最後にTwitterカードの種類を紹介します。<br>仕様変更が行われたようで、現在は以下の4つのTwitterカードが利用できます。</p>
-<ul>
-<li>Summary Card</li>
-<li>Summary Card with Large Image</li>
-<li>App Card</li>
-<li>Player Card</li>
-</ul>
-<h3 id="Summary-Card"><a href="#Summary-Card" class="headerlink" title="Summary Card"></a>Summary Card</h3><p>URLの概要をまとめて表示してくれるTwitterカードです。</p>
-<p><img src="/images/summary_card.png" alt="summary_card_example"></p>
-<h3 id="Summary-Card-with-Large-Image"><a href="#Summary-Card-with-Large-Image" class="headerlink" title="Summary Card with Large Image"></a>Summary Card with Large Image</h3><p>Summary Cardとほとんど同じですが、画像がより大きなサイズで表示されます。</p>
-<p><img src="/images/summary_card_with_large_image.png" alt="summary_card_with_large_image_example"></p>
-<h3 id="App-Card"><a href="#App-Card" class="headerlink" title="App Card"></a>App Card</h3><p>モバイルのアプリを紹介するためのTwitterカードです。ダウンロードリンクも表示されます。</p>
-<p><img src="/images/app_card.png" alt="app_card_example"></p>
-<h3 id="Player-Card"><a href="#Player-Card" class="headerlink" title="Player Card"></a>Player Card</h3><p>ツイートに動画、オーディオを埋め込めるTwitterカードです。</p>
-<p><img src="/images/player_card.png" alt="player_card_example"></p>
-<h2 id="おわりに"><a href="#おわりに" class="headerlink" title="おわりに"></a>おわりに</h2><p>以上がTwitterカードの導入に関する説明となります。<br>Twitterカードについての詳しい情報は<a href="https://dev.twitter.com/ja/cards/overview" target="_blank" rel="noopener">公式ドキュメント</a>をご覧ください。<br>また、Twitterカードの設置に関して疑問点などあれば、ブログのコメント欄やTwitterでお気軽にご連絡ください。</p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2017-01-13T06:44:48.000Z" itemprop="datepublished">
-            2017/01/13
-          </time>
-          <time datetime="2017-01-13T06:44:48.000Z" itemprop="modified">
-            (更新日: 2017/01/13)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2017/01/13/belongs-to-should-default-to-required-true-rails5/">Rails5からbelongs_toアソシエーションの挙動が変わった</a>
-        </h1>
-        <div class="content">
-          <p>Rails5から <code>belogs_to</code> アソシエーションの挙動が変わった。</p>
-<p>親モデルに属している子モデルは親モデルの外部キーが存在しないとバリデーションエラーになるのがデフォルトの挙動となっている。<br>参照先レコードのidをnullで登録しようとした場合は以下のようなバリデーションエラーが出る。</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">ActiveRecord:</span>:<span class="string">RecordInvalid:</span> Validation <span class="string">failed:</span> Post  must exist</span><br></pre></td></tr></table></figure>
-
-<p>DHHの一声で <code>belogs_to</code> の挙動が変わる様が垣間見れるイシュー。</p>
-<ul>
-<li><a href="https://github.com/rails/rails/issues/18233" target="_blank" rel="noopener">https://github.com/rails/rails/issues/18233</a></li>
-</ul>
-<p>DHHの言い分としては「普通 belongs_to って、参照先テーブルのIDは必ずもってるだろ。ならデフォルト required: true でよくね？」という話。</p>
-<p>この挙動をRails4と同じにしたい場合は <code>optional: true</code> を使う(<code>required: false</code> は廃止予定なので使わないほうがいい)。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Post</span> &lt; ApplicationRecord</span></span><br><span class="line">  belongs_to <span class="symbol">:article</span> , <span class="symbol">optional:</span> <span class="literal">true</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p><code>belongs_to</code> のオプションの詳細については以下のドキュメントで参照できる。</p>
-<ul>
-<li><a href="http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-belongs_to" target="_blank" rel="noopener">http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-belongs_to</a></li>
-</ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
           <time datetime="2017-01-10T08:53:25.000Z" itemprop="datepublished">
             2017/01/10
           </time>
@@ -375,12 +217,122 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
     
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-12-07T04:55:09.000Z" itemprop="datepublished">
+            2016/12/07
+          </time>
+          <time datetime="2016-12-07T04:55:09.000Z" itemprop="modified">
+            (更新日: 2016/12/07)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/12/07/guard-rubocop/">Guardでrubocopを自動化する</a>
+        </h1>
+        <div class="content">
+          <p>RubyのシンタックスチェックにRubocopを使っていて、リポジトリにpushした時にチェックするようにしている。<br>push→シンタックスエラー→直してもう1回pushというのがまどろこしいので<a href="https://github.com/yujinakayama/guard-rubocop" target="_blank" rel="noopener">guard-rubocop</a>を使ってファイルを保存する度にチェックするようにしてみた。<br>ストレスが軽減され、良い感じだったので紹介する。</p>
+<h2 id="guard-rubocopの導入"><a href="#guard-rubocopの導入" class="headerlink" title="guard-rubocopの導入"></a>guard-rubocopの導入</h2><p>gurad-rubocopを導入するにはまず、rubocopを導入している必要がある。<br>この記事ではrubocopは導入済みという前提で進める。</p>
+<p>gurad-rubocopの導入はいたって簡単。<br>3分で導入できるので是非やってほしい。</p>
+<p>Gemfileに以下を定義する。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">group <span class="symbol">:development</span> <span class="keyword">do</span></span><br><span class="line">  gem <span class="string">'guard'</span></span><br><span class="line">  gem <span class="string">'guard-rubocop'</span>, <span class="symbol">require:</span> <span class="literal">false</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p><code>bundle install</code> を行うと、guardコマンドが利用できるようになる。<br><code>bundle exec guard init rubocop</code> で <code>Guardfile</code> が生成される。</p>
+<p>これでインストール完了。</p>
+<p>あとはターミナルで <code>bundle exec guard</code> コマンドを実行する。<br>その状態でファイルを変更するとそのファイルを対象にrubocopコマンドが実行される。</p>
+<h2 id="オプション"><a href="#オプション" class="headerlink" title="オプション"></a>オプション</h2><p>デフォルトだとgurad起動時にrubocopコマンドが実行されるようになっている。<br>起動時に実行したくない時はGuardfileに以下の設定を行えばよい。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">guard <span class="symbol">:rubocop</span> <span class="keyword">do</span></span><br></pre></td></tr></table></figure>
+
+<p>以下のように変更する。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">guard <span class="symbol">:rubocop</span>, <span class="symbol">all_on_start:</span> <span class="keyword">false</span> <span class="keyword">do</span></span><br></pre></td></tr></table></figure>
+
+<p>他にもオプションがあるので詳しくはREADMEを参照してほしい。</p>
+<ul>
+<li><a href="https://github.com/yujinakayama/guard-rubocop#options" target="_blank" rel="noopener">https://github.com/yujinakayama/guard-rubocop#options</a></li>
+</ul>
+<h3 id="関連記事"><a href="#関連記事" class="headerlink" title="関連記事"></a>関連記事</h3><ul>
+<li><a href="/blog/2016/05/24/introduce-guard-gem-and-guard-rspec/">Guardでrspecのテストを自動化する</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-12-06T14:49:36.000Z" itemprop="datepublished">
+            2016/12/06
+          </time>
+          <time datetime="2016-12-06T14:49:36.000Z" itemprop="modified">
+            (更新日: 2016/12/06)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/12/06/jekyll-tutorial-01/">Jekyllチュートリアル</a>
+        </h1>
+        <div class="content">
+          <p>最近、ブログをリニューアルしようとJekyllをちょこちょこ触っている。<br>ブログを作る上でJekyllで知っておいたほうが良いことをまとめていきたいと思う。</p>
+<h2 id="Jekyllとは"><a href="#Jekyllとは" class="headerlink" title="Jekyllとは"></a>Jekyllとは</h2><p>Jekyllは静的なサイトを作ることに特化したツールだ。<br>Ruby製でGithub pagesでも利用されている。<br>内部的には<a href="https://github.com/Shopify/liquid/wiki" target="_blank" rel="noopener">Liquid</a>が使われている。<br>Liquidはテンプレートエンジンで変数や制御文(foreachとか)を使うことができる。<br>Jekyllはそれをラップしたものだ。<br>Jekyllの何が便利かというと、サイトの設定をymlファイルで管理したりJekyllコマンドでMarkdownからhtmlファイルを生成したりすることができるという点だ。<br>また、サードパーティ製のテーマを利用できたりもする。</p>
+<h2 id="ドキュメント"><a href="#ドキュメント" class="headerlink" title="ドキュメント"></a>ドキュメント</h2><p>Jekyllはドキュメントがなかなかしっかりしているので、公式のドキュメントを見るのがよい。</p>
+<ul>
+<li><a href="https://jekyllrb.com/" target="_blank" rel="noopener">https://jekyllrb.com/</a></li>
+</ul>
+<p>日本語版も用意してある。</p>
+<ul>
+<li><a href="https://jekyllrb-ja.github.io/" target="_blank" rel="noopener">https://jekyllrb-ja.github.io/</a></li>
+</ul>
+<p>まずドキュメントを探してみて、わからなければググるという感じで自分は調べている。</p>
+<h2 id="目次"><a href="#目次" class="headerlink" title="目次"></a>目次</h2><ul>
+<li>Jekyllをはじめよう</li>
+<li>Jekyllの構成について</li>
+<li>Jekyllのテーマを作成する</li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-11-11T05:13:32.000Z" itemprop="datepublished">
+            2016/11/11
+          </time>
+          <time datetime="2016-11-11T05:13:32.000Z" itemprop="modified">
+            (更新日: 2016/11/11)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/11/11/machine-learning-01/">機械学習ことはじめ</a>
+        </h1>
+        <div class="content">
+          <p>機械学習をやるぞ！と息巻いてから半年が経とうとしている。<br>進捗はてんでダメ。ほとんど勉強せずに時間だけが過ぎてしまった。<br>さすがにこれではいけないと学習を始めた。</p>
+<p>とりあえず学ぶにも何かしらの教材がないと効率が悪いと思い、基礎的な理論が勉強できそうな 「機械学習理論入門」を買った(半年前に)。<br>機械学習の理論を優しく書いてあるはずなのだが、高校数学の理解もままならない自分の数学力では理解に苦しみ、本棚の肥やしとなっていた。<br>この段階では機械学習にも色々種類があるんだなということがわかった。</p>
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=syoyama-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4774176982&linkId=f54a583abd60635f4ad56b5e2705933b"></iframe>
+
+<p>次に機械学習理論の入門としてわかりやすそうなやる夫シリーズを読みだした。</p>
+<ul>
+<li><a href="http://tkengo.github.io/blog/2016/01/03/yaruo-machine-learning1/" target="_blank" rel="noopener">やる夫で学ぶ機械学習 - 序章 -</a></li>
+<li><a href="http://tkengo.github.io/blog/2016/01/04/yaruo-machine-learning2/" target="_blank" rel="noopener">やる夫で学ぶ機械学習 - 単回帰問題 -</a></li>
+</ul>
+<p>まずは最小二乗法についての話が出てきた。<br>これはそれとなく理解できたので、最小二乗法を使って誤差を求めるプログラムをRubyで実装してみたりもした。</p>
+<ul>
+<li><a href="https://github.com/shoyan/machine_learning/blob/master/01.rb" target="_blank" rel="noopener">https://github.com/shoyan/machine_learning/blob/master/01.rb</a></li>
+</ul>
+<p>しかし、最急降下法でつまづいてしまった。<br>最急降下法に出てくる合成関数の微分がよく分からない</p>
+<p>そもそも合成関数ってなんだというところで、合成関数について勉強した。<br>合成関数は関数の引数が関数になっている関数だった。</p>
+<p>関数: y=g(x)<br>合成関数: y=g(f(x)) ←こういう感じで引数が関数となっている</p>
+<p>やる夫シリーズを理解するには微分の知識が必要だということがわかったので、微分について勉強するために数学ガールを読んでいる。微分について会話形式で学んでいけるので、なかなかわかりやすい。</p>
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=syoyama-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4797382317&linkId=d26bd243cf2a37dd3f63507bea574228"></iframe>
+
+<p>というところで、現状は微分を学んでいる。</p>
+<p>だいぶ遠回りしている感がある。<br>道のりは険しい。</p>
+
+        </div>
+      </div>
+    
   </div>
 
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/9/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><a class="extend next" rel="next" href="/page/11/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/9/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/11/">Next</a>
 </div>
 
   </div>

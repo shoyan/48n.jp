@@ -146,217 +146,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2016-06-23T08:14:34.000Z" itemprop="datepublished">
-            2016/06/23
-          </time>
-          <time datetime="2016-06-23T08:14:34.000Z" itemprop="modified">
-            (更新日: 2016/06/23)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/06/23/php-syntax-check/">レガシーコード向けに修正した部分だけPHP構文チェックをする仕組みを作った</a>
-        </h1>
-        <div class="content">
-          <p>修正した部分だけPHPの構文チェックをする仕組みを作ってみました。<br>構文に問題があればGithubのPull Requestにコメントされます。  </p>
-<p><img src="/images/2016-06-23_php-syntax-check.png" alt="2016-06-23_php-syntax-check"></p>
-<p>この方法のよいところは既存のソースを変えることなくPHPの構文チェックの仕組みを導入できることです。<br>規約に沿っていないコードが大量にあり、かつテストコードがないような環境(レガシー環境)にも導入することができます。</p>
-<p>使用したツールは以下です。</p>
-<ul>
-<li><a href="https://github.com/packsaddle" target="_blank" rel="noopener">packsaddle</a></li>
-<li><a href="https://github.com/squizlabs/PHP_CodeSniffer" target="_blank" rel="noopener">PHP_CodeSniffer</a></li>
-<li><a href="https://circleci.com/" target="_blank" rel="noopener">CircleCI</a></li>
-<li><a href="https://github.com/" target="_blank" rel="noopener">Github</a></li>
-</ul>
-<p>また、packsaddleのツールはRuby製ですので、Rubyが動作する環境が必要です。</p>
-<p>サンプルとしてGithubにphp-syntax-checkというリポジトリを作成しているので参考にしてください。</p>
-<ul>
-<li><a href="https://github.com/shoyan/php-syntax-check" target="_blank" rel="noopener">https://github.com/shoyan/php-syntax-check</a></li>
-</ul>
-<p>以下のスクリプトをCircleCIで実行しています。</p>
-<p>check_syntax.sh</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Start"</span></span><br><span class="line">LIST=`git diff --name-only origin/master | grep -e <span class="string">'.php$'</span>`</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -z <span class="string">"<span class="variable">$LIST</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"PHP file not changed."</span></span><br><span class="line">    <span class="built_in">exit</span> 0</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">"<span class="variable">$CI_PULL_REQUEST</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">    git diff --name-only origin/master \</span><br><span class="line">        | grep -e <span class="string">'.php$'</span> \</span><br><span class="line">        | xargs vendor/bin/phpcs -n --standard=PSR2 --report=checkstyle \</span><br><span class="line">        | bundle <span class="built_in">exec</span> checkstyle_filter-git diff origin/master \</span><br><span class="line">        | bundle <span class="built_in">exec</span> saddler report \</span><br><span class="line">        --require saddler/reporter/github \</span><br><span class="line">        --reporter Saddler::Reporter::Github::PullRequestReviewComment</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="仕組み"><a href="#仕組み" class="headerlink" title="仕組み"></a>仕組み</h2><p>以下の3つのセクションに分類されます。</p>
-<ul>
-<li>対象のファイルを抽出</li>
-<li>構文チェック</li>
-<li>結果をレポート</li>
-</ul>
-<h3 id="1-対象のファイルを抽出"><a href="#1-対象のファイルを抽出" class="headerlink" title="1. 対象のファイルを抽出"></a>1. 対象のファイルを抽出</h3><p>以下のコマンドでmasterと差分のあるファイル名を取得します。</p>
-<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff --<span class="keyword">name</span>-<span class="keyword">only</span> origin/master</span><br></pre></td></tr></table></figure>
-
-<p>さらに grepで拡張子が .phpのファイルのみ対象にします。</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff --name-only origin/<span class="keyword">master</span> <span class="title">| grep</span> -e ‘.php$'</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-構文チェック"><a href="#2-構文チェック" class="headerlink" title="2. 構文チェック"></a>2. 構文チェック</h3><p>構文チェックツールは好きなものを使えます(CheckStyleフォーマットで出力できるものに限りますが)。<br>今回は<a href="https://github.com/squizlabs/PHP_CodeSniffer" target="_blank" rel="noopener">PHP_CodeSniffer</a>を使いました。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xargs vendor/bin/phpcs -n <span class="attribute">--standard</span>=PSR2 <span class="attribute">--report</span>=checkstyle</span><br></pre></td></tr></table></figure>
-
-<p><code>xargs</code>は前のコマンドを引数でとるために必要です。</p>
-<p>以下のコマンドでmasterとブランチの差分をチェックして、差分があるところのエラーを検知対象のエラーとしています。</p>
-<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bundle exec checkstyle_filter-git <span class="built_in">diff</span> <span class="built_in">origin</span>/master</span><br></pre></td></tr></table></figure>
-
-<p>エラーの差分の抽出に<a href="https://github.com/packsaddle/ruby-checkstyle_filter-git" target="_blank" rel="noopener">checkstyle_filter-git</a>というツールを使っています。<br>これは、入力として渡したCheckStyle formatの文字列から、変更した内容の部分のエラーを抽出するツールです。<br>例えばファイルの10行目〜15行目を変更した場合、その行で発生したエラーのみを抽出します。</p>
-<h3 id="3-結果をレポート"><a href="#3-結果をレポート" class="headerlink" title="3. 結果をレポート"></a>3. 結果をレポート</h3><p>saddlerを使って結果をGithubに通知します。</p>
-<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bundle exec saddler report \</span><br><span class="line">        -<span class="ruby">-<span class="keyword">require</span> saddler/reporter/github \</span></span><br><span class="line"><span class="ruby">        --reporter Saddler::Reporter::Github::PullRequestReviewComment</span></span><br></pre></td></tr></table></figure>
-
-<p>注意点としては、PRを作っていないと通知でエラーとなります。</p>
-<p>ですので、Pull Requestがあるかどうかをチェックするif文をいれています。<br><code>$CI_PULL_REQUEST</code> はCIrcleCIの変数で、Pull Requestが作られていればこの変数にURLが格納されています。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if [ -n "$CI_PULL_REQUESTS" ]; then</span><br><span class="line"></span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-
-<p>また、通知には<code>GITHUB_ACCESS_TOKEN</code>を発行して環境変数に登録しておく必要があります。</p>
-<ul>
-<li><a href="https://help.github.com/articles/creating-an-access-token-for-command-line-use/" target="_blank" rel="noopener">https://help.github.com/articles/creating-an-access-token-for-command-line-use/</a></li>
-</ul>
-<p>CircleCIの環境変数の設定については、以下を参照ください。</p>
-<ul>
-<li><a href="https://circleci.com/docs/environment-variables/#custom" target="_blank" rel="noopener">https://circleci.com/docs/environment-variables/#custom</a></li>
-</ul>
-<p>また、通知ではなく単に結果を出力する場合は、<a href="https://github.com/packsaddle/ruby-saddler-reporter-text" target="_blank" rel="noopener">saddler/reporter/text</a>を指定します。</p>
-<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bundle exec saddler report \</span><br><span class="line">  -<span class="ruby">-<span class="keyword">require</span> saddler/reporter/text \</span></span><br><span class="line"><span class="ruby">  --reporter Saddler::Reporter::Text</span></span><br></pre></td></tr></table></figure>
-
-<p>以下は、出力があった場合はエラーにする例です。</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">RESULT=`git diff --name-only origin<span class="regexp">/master \</span></span><br><span class="line"><span class="regexp">    | grep -e '.php$' \</span></span><br><span class="line"><span class="regexp">    | xargs vendor/</span>bin<span class="regexp">/phpcs -n --standard=custom_ruleset.xml --report=checkstyle \</span></span><br><span class="line"><span class="regexp">    | bundle exec checkstyle_filter-git diff origin/m</span>aster \</span><br><span class="line">    | bundle exec saddler report \</span><br><span class="line">      --require saddler<span class="regexp">/reporter/</span>text \</span><br><span class="line">      --reporter Saddler::Reporter::Text`</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">"$RESULT"</span> ]; then</span><br><span class="line">    echo <span class="string">""</span></span><br><span class="line">    echo <span class="string">"An error has been detected,this following:"</span></span><br><span class="line">    echo <span class="string">"$RESULT"</span></span><br><span class="line">    <span class="keyword">exit</span> <span class="number">1</span></span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-
-<h2 id="その他"><a href="#その他" class="headerlink" title="その他"></a>その他</h2><p><del>ファイルのエンコードがEUC-JPのソースコードに適用したところエラーとなりました。<br>リポジトリをフォークして対応しました。</del><br>1.1.0より使えるようになりました！</p>
-<ul>
-<li><a href="https://github.com/shoyan/ruby-checkstyle_filter-git/commit/a11c3c7f4daf1ddf26c0ab4f4ae9d8b1b78bda4b" target="_blank" rel="noopener">https://github.com/shoyan/ruby-checkstyle_filter-git/commit/a11c3c7f4daf1ddf26c0ab4f4ae9d8b1b78bda4b</a></li>
-</ul>
-<p>以下のように設定します。</p>
-<p>Gemfile</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem <span class="string">"checkstyle_filter-git"</span>, <span class="string">git:</span> <span class="string">"https://github.com/shoyan/ruby-checkstyle_filter-git.git"</span>, <span class="string">branch:</span> <span class="string">"implement-exec"</span></span><br></pre></td></tr></table></figure>
-
-<p>iconvでgit diffの出力結果の文字コードを<code>EUC-JP</code>-&gt;<code>UTF-8</code>に変換して渡せるようにしました。</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git diff --name-only origin/<span class="keyword">master</span> <span class="title">\</span></span><br><span class="line"><span class="title">  | grep</span> -e '.php$' \</span><br><span class="line">  | xargs phpcs -n --<span class="attr">standard=</span>custom_ruleset.<span class="keyword">xml</span> <span class="title">--report</span>=checkstyle \</span><br><span class="line">  | bundle exec checkstyle_filter-git exec <span class="string">"git diff origin/master | iconv -f EUCJP -t UTF8"</span></span><br></pre></td></tr></table></figure>
-
-<p><del>PRもしているので直ることに期待です。</del><br>Mergeいただきました。</p>
-<ul>
-<li><a href="https://github.com/packsaddle/ruby-checkstyle_filter-git/pull/11" target="_blank" rel="noopener">https://github.com/packsaddle/ruby-checkstyle_filter-git/pull/11</a></li>
-</ul>
-<p>サンプルとしてGithubにphp-syntax-checkというリポジトリを作成しているので参考にしてください。</p>
-<ul>
-<li><a href="https://github.com/shoyan/php-syntax-check" target="_blank" rel="noopener">https://github.com/shoyan/php-syntax-check</a></li>
-</ul>
-<h2 id="関連記事"><a href="#関連記事" class="headerlink" title="関連記事"></a>関連記事</h2><ul>
-<li><a href="/blog/2016/03/17/php-coding-rule/">PHPコーディング規約とサポートするツール</a></li>
-</ul>
-<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
-<li><a href="http://packsaddle.org/articles/saddler-overview/" target="_blank" rel="noopener">変更したファイルにrubocopやjscsを実行して pull requestに自動でコメントする</a></li>
-<li><a href="http://qiita.com/noboru_i/items/23827b655ac854ba04b2" target="_blank" rel="noopener">規約に沿ってないPHPコードを駆逐する</a></li>
-</ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-06-22T09:16:41.000Z" itemprop="datepublished">
-            2016/06/22
-          </time>
-          <time datetime="2016-06-22T09:16:41.000Z" itemprop="modified">
-            (更新日: 2016/06/22)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/06/22/shell-tips/">ShellのTipsてきなやつ</a>
-        </h1>
-        <div class="content">
-          <p>ShellスクリプトのTipsです。</p>
-<h2 id="シェル変数の初期化をする"><a href="#シェル変数の初期化をする" class="headerlink" title="シェル変数の初期化をする"></a>シェル変数の初期化をする</h2><p>変数に値が設定されていない場合は、指定された値を返します。</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">: <span class="variable">$&#123;VAR:=初期化する値&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="パラメーターを取得する"><a href="#パラメーターを取得する" class="headerlink" title="パラメーターを取得する"></a>パラメーターを取得する</h2><p><code>$@</code> にパラメーターが格納されています。</p>
-<p>例えば以下の記述をした for.sh ファイルを作成します。</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for <span class="keyword">role</span> <span class="title">in</span> <span class="string">"$@"</span>; do</span><br><span class="line">  echo $role</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
-
-<p>以下のように出力されます。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ./for.sh hoge moge</span><br><span class="line">=&gt; hoge</span><br><span class="line">moge</span><br></pre></td></tr></table></figure>
-
-<h2 id="評価結果を変数に格納する"><a href="#評価結果を変数に格納する" class="headerlink" title="評価結果を変数に格納する"></a>評価結果を変数に格納する</h2><p><code>&quot;$()&quot;</code> で囲めば、評価結果を変数に格納することができます。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ name=<span class="string">"$(hostname)"</span></span><br><span class="line">$ echo $name</span><br><span class="line">=&gt; shoyan-pc</span><br><span class="line"></span><br><span class="line"># 以下も同じです。</span><br><span class="line"></span><br><span class="line">$ name=`hostname`</span><br><span class="line">$ echo $name</span><br><span class="line">=&gt; shoyan-pc</span><br></pre></td></tr></table></figure>
-
-<h2 id="if-と-test-コマンドの合わせ技"><a href="#if-と-test-コマンドの合わせ技" class="headerlink" title="if と test コマンドの合わせ技"></a>if と test コマンドの合わせ技</h2><p>ifとtestコマンドを使う場合はtestコマンドを省略した<code>[]</code>がよく使われます。</p>
-<p>[ 文字列1 = 文字列2 ]<br>[ 数値1 オプション 数値2 ]<br>[ オプション 評価対象 ]  </p>
-<p>[ の直後と ] の直前には必ず半角スペースが必要です (無いと正常に動作しません)。</p>
-<p>ちなみに比較は <code>==</code> でなくて <code>=</code>です。</p>
-<p>シェルの比較は文字列の比較と数値の比較があり、それぞれに対応するオペレーターがあります。<br>そのせいで複雑になっている印象があります。</p>
-<h3 id="数値の比較"><a href="#数値の比較" class="headerlink" title="数値の比較"></a>数値の比較</h3><h4 id="数値1と数値2が等しいかどうか"><a href="#数値1と数値2が等しいかどうか" class="headerlink" title="数値1と数値2が等しいかどうか"></a>数値1と数値2が等しいかどうか</h4><p><code>-eq</code>、もしくは <code>=</code>を使います。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$  [ <span class="number">1</span> -eq <span class="number">1</span> ]; echo $?</span><br><span class="line"><span class="number">0</span></span><br><span class="line">$  [ <span class="number">1</span> = <span class="number">1</span> ]; echo $?</span><br><span class="line"><span class="number">0</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="数値1と数値2が等しくないかどうか"><a href="#数値1と数値2が等しくないかどうか" class="headerlink" title="数値1と数値2が等しくないかどうか"></a>数値1と数値2が等しくないかどうか</h4><p><code>-ne</code> を使います。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$  [ <span class="number">1</span> -ne <span class="number">2</span> ]; echo $?</span><br><span class="line"><span class="number">0</span></span><br></pre></td></tr></table></figure>
-
-<p><code>!=</code> でも動作しますが、慣習的にあまり使わないようです。</p>
-<h3 id="文字列の比較"><a href="#文字列の比較" class="headerlink" title="文字列の比較"></a>文字列の比較</h3><h4 id="文字列1と文字列2が等しいかどうか"><a href="#文字列1と文字列2が等しいかどうか" class="headerlink" title="文字列1と文字列2が等しいかどうか"></a>文字列1と文字列2が等しいかどうか</h4><p>同じ場合にtrueを返す<code>=</code>と その否定である <code>!=</code> を使います。</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span> [ <span class="string">"hey"</span> = <span class="string">"hey"</span> ]; echo <span class="variable">$?</span></span><br><span class="line">0</span><br></pre></td></tr></table></figure>
-
-<p>ちなみに数値の比較に使う <code>-eq</code> で比較したところエラーとなりました。</p>
-<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span>  [ <span class="string">"hey"</span> -<span class="keyword">eq</span> <span class="string">"hey"</span> ]; echo <span class="symbol">$</span>?</span><br><span class="line">[: <span class="keyword">integer</span> expression expected: hey</span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="文字列1と文字列2が等しくないかどうか"><a href="#文字列1と文字列2が等しくないかどうか" class="headerlink" title="文字列1と文字列2が等しくないかどうか"></a>文字列1と文字列2が等しくないかどうか</h4><p>文字列比較のNOT条件<br><code>!=</code>を使用します。</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[ <span class="string">"$hoge"</span> != <span class="string">"fuga"</span> ]</span><br></pre></td></tr></table></figure>
-
-<p>数値比較のNOT条件</p>
-<p>数値の比較の場合は <code>-ne</code> オプションを使うのが慣習のようです。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[ <span class="number">1</span> -ne <span class="number">2</span> ]</span><br></pre></td></tr></table></figure>
-
-<h3 id="変数が空かどうか"><a href="#変数が空かどうか" class="headerlink" title="変数が空かどうか"></a>変数が空かどうか</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[ -z <span class="string">"$hoge"</span> ]</span><br></pre></td></tr></table></figure>
-
-<p>空でないかを判定する場合は <code>-n</code> を使います。</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[ -n <span class="string">"$hoge"</span> ]</span><br></pre></td></tr></table></figure>
-
-<h3 id="findで抽出したファイルをreadコマンドで1行ずつ処理する"><a href="#findで抽出したファイルをreadコマンドで1行ずつ処理する" class="headerlink" title="findで抽出したファイルをreadコマンドで1行ずつ処理する"></a>findで抽出したファイルをreadコマンドで1行ずつ処理する</h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find application -<span class="keyword">type</span> f -<span class="type">name</span> "*.ini" | <span class="keyword">while</span> <span class="keyword">read</span> <span class="type">LINE</span>; <span class="keyword">do</span> wc -l $&#123;<span class="type">LINE</span>&#125;; done;</span><br></pre></td></tr></table></figure>
-
-<h3 id="実行ファイルのあるパスを取得する"><a href="#実行ファイルのあるパスを取得する" class="headerlink" title="実行ファイルのあるパスを取得する"></a>実行ファイルのあるパスを取得する</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo <span class="string">"<span class="variable">$</span>(cd <span class="variable">$</span>(dirname <span class="variable">$0</span>);pwd)"</span></span><br></pre></td></tr></table></figure>
-
-<p>1つ上のディレクトリは以下のように取得する</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo <span class="string">"<span class="variable">$</span>(cd <span class="variable">$</span>(dirname <span class="variable">$0</span>);cd ..;pwd)"</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
-<li><a href="http://doi-t.hatenablog.com/entry/2013/12/08/161929" target="_blank" rel="noopener">シェル変数のデフォルト値を設定する、未初期化時にエラーメッセージを出力してスクリプトを強制終了する - 百日半狂乱</a></li>
-<li><a href="http://shellscript.sunone.me/if_and_test.html#数値の比較:ed775c34e441eb16a91481d087cc1a74" target="_blank" rel="noopener">if 文と test コマンド - UNIX &amp; Linux コマンド・シェルスクリプト リファレンス</a></li>
-</ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-06-21T04:26:40.000Z" itemprop="datepublished">
-            2016/06/21
-          </time>
-          <time datetime="2016-06-21T04:26:40.000Z" itemprop="modified">
-            (更新日: 2016/06/21)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/06/21/introduce-treantjs/">Treant.jsでツリーダイアグラムを描画する</a>
-        </h1>
-        <div class="content">
-          <p>Treant.jsとはツリーダイアグラムを描画するためのJavaScriptライブラリです。<br><a href="http://fperucic.github.io/treant-js/" target="_blank" rel="noopener">Treant.js</a>でツリーダイアグラムを描画してみました。</p>
-<p><a href="http://codepen.io/shoyan/details/MeaqzN/" target="_blank" rel="noopener">http://codepen.io/shoyan/details/MeaqzN/</a></p>
-<h2 id="簡単なサンプルを作ってみる"><a href="#簡単なサンプルを作ってみる" class="headerlink" title="簡単なサンプルを作ってみる"></a>簡単なサンプルを作ってみる</h2><p>まずは簡単なサンプルを作ってみましょう。</p>
-<p><a href="http://codepen.io/shoyan/pen/qNOMoN" target="_blank" rel="noopener">http://codepen.io/shoyan/pen/qNOMoN</a></p>
-<p><a href="http://codepen.io/" target="_blank" rel="noopener">codepen.io</a>を使うと簡単にサンプルが作成できるので便利です。</p>
-<p>Treant.jsを利用するには、いくつか必要なモジュールがあります。</p>
-<h4 id="JS"><a href="#JS" class="headerlink" title="JS"></a>JS</h4><ul>
-<li><a href="http://fperucic.github.io/treant-js/Treant.js" target="_blank" rel="noopener">http://fperucic.github.io/treant-js/Treant.js</a></li>
-<li><a href="http://fperucic.github.io/treant-js/vendor/raphael.js" target="_blank" rel="noopener">http://fperucic.github.io/treant-js/vendor/raphael.js</a></li>
-</ul>
-<h4 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h4><ul>
-<li><a href="http://fperucic.github.io/treant-js/Treant.css" target="_blank" rel="noopener">http://fperucic.github.io/treant-js/Treant.css</a></li>
-</ul>
-<h3 id="BaseとなるHTMLのテンプレート"><a href="#BaseとなるHTMLのテンプレート" class="headerlink" title="BaseとなるHTMLのテンプレート"></a>BaseとなるHTMLのテンプレート</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"ja"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- stylesheets --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"http://fperucic.github.io/treant-js/Treant.js"</span> <span class="attr">type</span>=<span class="string">"text/css"</span>/&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">         <span class="selector-tag">body</span>,<span class="selector-tag">div</span>,<span class="selector-tag">dl</span>,<span class="selector-tag">dt</span>,<span class="selector-tag">dd</span>,<span class="selector-tag">ul</span>,<span class="selector-tag">ol</span>,<span class="selector-tag">li</span>,<span class="selector-tag">h1</span>,<span class="selector-tag">h2</span>,<span class="selector-tag">h3</span>,<span class="selector-tag">h4</span>,<span class="selector-tag">h5</span>,<span class="selector-tag">h6</span>,<span class="selector-tag">pre</span>,<span class="selector-tag">form</span>,<span class="selector-tag">fieldset</span>,<span class="selector-tag">input</span>,<span class="selector-tag">textarea</span>,<span class="selector-tag">p</span>,<span class="selector-tag">blockquote</span>,<span class="selector-tag">th</span>,<span class="selector-tag">td</span> &#123; <span class="attribute">margin</span>:<span class="number">0</span>; <span class="attribute">padding</span>:<span class="number">0</span>; &#125;</span></span><br><span class="line"><span class="css">         <span class="selector-tag">body</span> &#123; <span class="attribute">background</span>: <span class="number">#fff</span>; &#125;</span></span><br><span class="line"><span class="css">         <span class="comment">/* optional Container STYLES */</span></span></span><br><span class="line"><span class="css">         <span class="selector-class">.chart</span> &#123; <span class="attribute">height</span>: <span class="number">159px</span>; <span class="attribute">width</span>: <span class="number">332px</span>; <span class="attribute">margin</span>: <span class="number">5px</span>; <span class="attribute">margin</span>: <span class="number">5px</span> auto; <span class="attribute">border</span>: <span class="number">3px</span> solid <span class="number">#DDD</span>; <span class="attribute">border-radius</span>: <span class="number">3px</span>; &#125;</span></span><br><span class="line"><span class="css">         <span class="selector-class">.node</span> &#123; <span class="attribute">color</span>: <span class="number">#9CB5ED</span>; <span class="attribute">border</span>: <span class="number">2px</span> solid <span class="number">#C8C8C8</span>; <span class="attribute">border-radius</span>: <span class="number">3px</span>; &#125;</span></span><br><span class="line"><span class="css">         <span class="selector-class">.node</span> <span class="selector-tag">p</span> &#123; <span class="attribute">font-size</span>: <span class="number">20px</span>; <span class="attribute">line-height</span>: <span class="number">20px</span>; <span class="attribute">height</span>: <span class="number">20px</span>; <span class="attribute">font-weight</span>: bold; <span class="attribute">padding</span>: <span class="number">3px</span>; <span class="attribute">margin</span>: <span class="number">0</span>; &#125;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    &lt;div id="tree-simple" style="width:335px; height: 160px" &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- javascript --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://fperucic.github.io/treant-js/vendor/raphael.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://fperucic.github.io/treant-js/Treant.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="JS-1"><a href="#JS-1" class="headerlink" title="JS"></a>JS</h3><p>JavaScriptファイルです。設定をJSONで定義して、コンストラクタに渡しています。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">simple_chart_config = &#123;</span><br><span class="line">    # chartの設定をします</span><br><span class="line">    chart: &#123;</span><br><span class="line">        container: <span class="string">"#tree-simple"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    # ノードを定義します</span><br><span class="line">    nodeStructure: &#123;</span><br><span class="line">        text: &#123; <span class="attr">name</span>: <span class="string">"Parent node"</span> &#125;,</span><br><span class="line">        children: [</span><br><span class="line">            &#123;</span><br><span class="line">                text: &#123; <span class="attr">name</span>: <span class="string">"First child"</span> &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                text: &#123; <span class="attr">name</span>: <span class="string">"Second child"</span> &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"># コンストラクタ</span><br><span class="line"><span class="keyword">var</span> my_chart = <span class="keyword">new</span> Treant(simple_chart_config);</span><br></pre></td></tr></table></figure>
-
-<p>基本的には、nodeStructureに必要なノードを定義して、CSSで見た目を調整するという感じです。<br>アニメーションにも対応していて、その場合はjQueryが必要だったりするようです。<br>サンプルも色々あるので参考にしてみるとよいと思います。<br><a href="http://fperucic.github.io/treant-js/" target="_blank" rel="noopener">http://fperucic.github.io/treant-js/</a></p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
           <time datetime="2016-06-20T04:23:28.000Z" itemprop="datepublished">
             2016/06/20
           </time>
@@ -475,12 +264,138 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
     
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-06-16T04:46:56.000Z" itemprop="datepublished">
+            2016/06/16
+          </time>
+          <time datetime="2016-06-16T04:46:56.000Z" itemprop="modified">
+            (更新日: 2016/06/16)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/06/16/check-file-encoding/">Rubyでファイルエンコーディングを確認する</a>
+        </h1>
+        <div class="content">
+          <p>Rubyでファイルエンコーディングを確認するにはNKFモジュールを使って確認します。</p>
+<p><a href="http://docs.ruby-lang.org/ja/2.3.0/class/NKF.html" target="_blank" rel="noopener">http://docs.ruby-lang.org/ja/2.3.0/class/NKF.html</a></p>
+<p>NKFモジュールとは、nkf(Network Kanji code conversion Filter, <a href="http://sourceforge.jp/projects/nkf/" target="_blank" rel="noopener">http://sourceforge.jp/projects/nkf/</a>) をRubyから使うためのモジュールです。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">'nkf'</span></span><br><span class="line"></span><br><span class="line">content = File.read(<span class="string">"path/to/file.txt"</span>)</span><br><span class="line">NKF.guess(content).to_s</span><br><span class="line">=&gt; <span class="string">"Shift_JIS"</span></span><br></pre></td></tr></table></figure>
+
+<p>このような感じでrspecでテストするときにも使えます。</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span> <span class="string">'nkf'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">it</span> <span class="string">'file encoding is Shift_JIS'</span> <span class="built_in">do</span></span><br><span class="line"> content = File.<span class="built_in">read</span>(<span class="string">"filename.csv"</span>)</span><br><span class="line"> expect(NKF.guess(content).to_s).<span class="built_in">to</span> eq <span class="string">'Shift_JIS'</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-06-15T04:42:55.000Z" itemprop="datepublished">
+            2016/06/15
+          </time>
+          <time datetime="2016-06-15T04:42:55.000Z" itemprop="modified">
+            (更新日: 2016/06/15)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/06/15/whenever-cannot-load-such-file/">capistrano/wheneverで cannot load such fileがでる</a>
+        </h1>
+        <div class="content">
+          <p>wheneverを導入するため<code>Capfile</code>に <code>require &quot;whenever/capistrano&quot;</code>と定義して <code>bundle exec cap -T</code> とすると以下のエラーがでた。</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">LoadError:</span> cannot load such file -- /Users<span class="meta-keyword">/shoyan/</span>app<span class="meta-keyword">/vendor/</span>bundle<span class="meta-keyword">/ruby/</span><span class="number">2.2</span><span class="number">.0</span><span class="meta-keyword">/gems/</span>whenever<span class="number">-0.9</span><span class="number">.5</span><span class="meta-keyword">/lib/</span>whenever<span class="meta-keyword">/tasks/</span>whenever.rake</span><br></pre></td></tr></table></figure>
+
+<p>実際に<code>vendor/bundle/ruby/2.2.0/gems/whenever-0.9.5/lib/whenever/tasks/whenever.rake</code> を確認してみると、たしかにそのファイルが存在しない。</p>
+<p>wheneverのリポジトリを見てみると、シンボリックリンクがはってあった。  </p>
+<p><code>bundle install</code> したときにはシンボリックリンクがはられないようだ。</p>
+<p>手元のRubyのバージョンは、2.2.4だった。</p>
+<p>ruby2.3.1で実行してみると <code>Gem::Package::PathError</code> が発生した。</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR:  <span class="keyword">While</span> executing gem ... (Gem::<span class="keyword">Package</span>::PathError)</span><br><span class="line">    installing <span class="keyword">into</span> parent path <span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/g</span>ems<span class="regexp">/2.3.0/g</span>ems<span class="regexp">/capistrano/</span>v3<span class="regexp">/tasks/</span>whenever.rake of <span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/g</span>ems<span class="regexp">/2.3.0/g</span>ems<span class="regexp">/whenever-0.9.5 is not allowed</span></span><br></pre></td></tr></table></figure>
+
+<p>このエラーはRuby2.3.2では直っていることが期待される。</p>
+<ul>
+<li><a href="https://github.com/rubygems/rubygems/issues/1448#issuecomment-218355005" target="_blank" rel="noopener">https://github.com/rubygems/rubygems/issues/1448#issuecomment-218355005</a></li>
+</ul>
+<h2 id="回避策"><a href="#回避策" class="headerlink" title="回避策"></a>回避策</h2><p>Capfileでの指定はやめて、<code>lib/capistrano/tasks</code> 以下にwhenever.taskを作成した。<br>これでcapのタスク自体は実行できるようになった。<br>しかし、ruby2.3.1の環境ではbundle installがこけるのでwheneverの導入自体ができないという状況。</p>
+<h2 id="その後"><a href="#その後" class="headerlink" title="その後"></a>その後</h2><p>bundle installがこけるバグは以下のPRがでており0.9.6で修正されていた。</p>
+<ul>
+<li><a href="https://github.com/javan/whenever/pull/633" target="_blank" rel="noopener">https://github.com/javan/whenever/pull/633</a></li>
+</ul>
+<p>また、0.9.5では <code>cap whenever:update_crontab</code> で <code>instance variable @_env not defined</code> が発生してコマンドが正常に実行できないバグがあったが、0.9.7で修正されている。</p>
+<ul>
+<li><a href="https://github.com/javan/whenever/issues/634" target="_blank" rel="noopener">https://github.com/javan/whenever/issues/634</a></li>
+</ul>
+<p>実はこのバグは自分が踏んでおり、その修正案をPRしてCHANGELOGに名前が刻まれた。</p>
+<ul>
+<li><a href="https://github.com/javan/whenever/pull/636" target="_blank" rel="noopener">https://github.com/javan/whenever/pull/636</a></li>
+<li><a href="https://github.com/javan/whenever/commit/5aa0ccfa53e87bda43e92da005d781a4b5a8d5a5" target="_blank" rel="noopener">https://github.com/javan/whenever/commit/5aa0ccfa53e87bda43e92da005d781a4b5a8d5a5</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-06-14T04:34:48.000Z" itemprop="datepublished">
+            2016/06/14
+          </time>
+          <time datetime="2016-06-14T04:34:48.000Z" itemprop="modified">
+            (更新日: 2016/06/14)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/06/14/learn-ssh-kit/">SSHKitを実際に使ってみて理解する</a>
+        </h1>
+        <div class="content">
+          <p>Capistrano/sshkitを紹介します。<br><a href="https://github.com/capistrano/sshkit" target="_blank" rel="noopener">https://github.com/capistrano/sshkit</a></p>
+<p>SSHKitはリモートサーバーに対してコマンドを実行するためのツールキットです。<br>CapistranoやCapistranoプラグインではSSHKitが使われています。</p>
+<h2 id="インストール"><a href="#インストール" class="headerlink" title="インストール"></a>インストール</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem <span class="keyword">install</span> sshkit</span><br></pre></td></tr></table></figure>
+
+<h2 id="コマンドのサンプル"><a href="#コマンドのサンプル" class="headerlink" title="コマンドのサンプル"></a>コマンドのサンプル</h2><p>実際に使ってみて理解していきます。<br>使うには、sshkitをロードする必要があります。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">'sshkit'</span></span><br><span class="line"><span class="keyword">include</span> SSHKit::DSL</span><br></pre></td></tr></table></figure>
+
+<h3 id="ホスト名を取得する"><a href="#ホスト名を取得する" class="headerlink" title="ホスト名を取得する"></a>ホスト名を取得する</h3><p>まずはログインしてホスト名を取得してみましょう。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">on ['deploy@example.com’] do |host|</span><br><span class="line"> puts capture(<span class="symbol">:ho</span>stname)</span><br><span class="line">end</span><br><span class="line">=&gt; example.com</span><br></pre></td></tr></table></figure>
+
+<p><code>on</code> メソッドに対象のサーバーとブロックを渡します。<br>対象のサーバーは複数設定することも可能です。<br>ブロックにはサーバー上で実行するコマンドを設定します。<br><code>capture</code>メソッドは渡された引数をコマンドとして実行し、結果をログに出力します。</p>
+<h3 id="特定のユーザーでコマンドを実行する"><a href="#特定のユーザーでコマンドを実行する" class="headerlink" title="特定のユーザーでコマンドを実行する"></a>特定のユーザーでコマンドを実行する</h3><p>特定のユーザーでコマンドを実行する場合は、<code>as</code>メソッドで指定します。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">on [<span class="string">'example.com'</span>] <span class="keyword">do</span> <span class="params">|host|</span></span><br><span class="line">  as <span class="string">'deploy'</span> <span class="keyword">do</span></span><br><span class="line">  　puts capture(<span class="symbol">:whoami</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="特定のディレクトリを指定する"><a href="#特定のディレクトリを指定する" class="headerlink" title="特定のディレクトリを指定する"></a>特定のディレクトリを指定する</h3><p>特定のディレクトリを指定する場合は、<code>within</code>メソッドを指定します。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">on [<span class="string">'deploy@example.com'</span>] <span class="keyword">do</span> <span class="params">|host|</span></span><br><span class="line">  within <span class="string">'/var/log'</span> <span class="keyword">do</span></span><br><span class="line">    puts capture(<span class="symbol">:head</span>, <span class="string">'-n5'</span>, <span class="string">'messages'</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p><code>/var/log</code> で <code>head -n5 messages</code> を実行します。</p>
+<h3 id="環境変数を指定する"><a href="#環境変数を指定する" class="headerlink" title="環境変数を指定する"></a>環境変数を指定する</h3><p><code>with</code>メソッドで環境変数を指定することができます。</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">on hosts <span class="built_in">do</span> |<span class="type">host</span>|<span class="type"></span></span><br><span class="line"><span class="type">  with</span> rack_env: :test <span class="built_in">do</span></span><br><span class="line">    puts capture(<span class="string">"env"</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>rack_envに<code>:test</code> を設定しています。</p>
+<h3 id="ファイルをチェックして存在すればメッセージを表示、なければファイルを作成する"><a href="#ファイルをチェックして存在すればメッセージを表示、なければファイルを作成する" class="headerlink" title="ファイルをチェックして存在すればメッセージを表示、なければファイルを作成する"></a>ファイルをチェックして存在すればメッセージを表示、なければファイルを作成する</h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">on</span> [<span class="string">'deploy@example.com'</span>] <span class="keyword">do</span> |host|</span><br><span class="line">  f = <span class="string">'/tmp/file'</span></span><br><span class="line">  <span class="keyword">if</span> test("[ -f #&#123;f&#125; ]")</span><br><span class="line">    <span class="keyword">info</span> "#&#123;f&#125; already exist on #&#123;host&#125;!"</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="keyword">execute</span> :touch, f</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">INFO</span> [<span class="number">790</span>b6aaa] Running /usr/bin/env touch /tmp/file <span class="keyword">as</span> deploy@example.com</span><br><span class="line"><span class="keyword">INFO</span> [<span class="number">790</span>b6aaa] Finished <span class="keyword">in</span> <span class="number">0.052</span> seconds <span class="keyword">with</span> <span class="keyword">exit</span> status <span class="number">0</span> (successful).</span><br></pre></td></tr></table></figure>
+
+<p><code>test</code>メソッドでファイルをチェックし、<code>execute</code>メソッドで<code>touch</code>コマンドを実行しています。</p>
+<h3 id="ファイルをアップロードする"><a href="#ファイルをアップロードする" class="headerlink" title="ファイルをアップロードする"></a>ファイルをアップロードする</h3><p>ファイルをアップロードすることもできます。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">on [<span class="string">'deploy@example.com'</span>] <span class="keyword">do</span> <span class="params">|host|</span></span><br><span class="line">  upload! <span class="string">'README.md'</span>, <span class="string">'/tmp/README.md'</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>第1引数がローカルのファイルのパス、第2引数がサーバーに配置するファイルのパスです。</p>
+<p>また、<code>recursive</code>オプションをtrueに設定することでディレクトリをアップロードすることもできます。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">on</span> hosts <span class="keyword">do</span> |host|</span><br><span class="line">  upload! <span class="string">'.'</span>, <span class="string">'/tmp/mypwd'</span>, <span class="keyword">recursive</span>: <span class="keyword">true</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="ローカルで実行する"><a href="#ローカルで実行する" class="headerlink" title="ローカルで実行する"></a>ローカルで実行する</h3><p>ローカルで実行することもできます。</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">run_locally do</span><br><span class="line">  within '/tmp' do</span><br><span class="line">   <span class="built_in"> execute </span>:whoami</span><br><span class="line">  end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line"><span class="comment"># もしくは</span></span><br><span class="line"></span><br><span class="line">on(:local) do</span><br><span class="line">  within '/tmp' do</span><br><span class="line">   <span class="built_in"> execute </span>:whoami</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<h3 id="Rakeタスクで利用する"><a href="#Rakeタスクで利用する" class="headerlink" title="Rakeタスクで利用する"></a>Rakeタスクで利用する</h3><p>RakeタスクでSSHKitのDSLを使うこともできます。<br>この仕組みを利用してCapistranoのプラグインは作成されています。</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">require 'sshkit'</span><br><span class="line"></span><br><span class="line">SSHKit.config.command_map[:rake] = <span class="string">"./bin/rake"</span></span><br><span class="line"></span><br><span class="line">desc <span class="string">"Deploy the site, pulls from Git, migrate the db and precompile assets, then restart Passenger."</span></span><br><span class="line">task<span class="keyword"> :deploy</span> do</span><br><span class="line">  include SSHKit::DSL</span><br><span class="line"></span><br><span class="line">  on <span class="string">"example.com"</span> do |host|</span><br><span class="line">    within <span class="string">"/opt/sites/example.com"</span> do</span><br><span class="line">     <span class="built_in"> execute </span>:git,<span class="keyword"> :pull</span></span><br><span class="line">     <span class="built_in"> execute </span>:bundle,<span class="keyword"> :install</span>, '--deployment'</span><br><span class="line">     <span class="built_in"> execute </span>:rake, 'db:migrate'</span><br><span class="line">     <span class="built_in"> execute </span>:rake, 'assets:precompile'</span><br><span class="line">     <span class="built_in"> execute </span>:touch, 'tmp/restart.txt'</span><br><span class="line">    end</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<p>サンプルがこちらにたくさんあるので、参考になると思います。</p>
+<p><a href="https://github.com/capistrano/sshkit/blob/master/EXAMPLES.md" target="_blank" rel="noopener">https://github.com/capistrano/sshkit/blob/master/EXAMPLES.md</a></p>
+
+        </div>
+      </div>
+    
   </div>
 
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/19/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><a class="page-number" href="/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><a class="extend next" rel="next" href="/page/21/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/19/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><a class="page-number" href="/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/21/">Next</a>
 </div>
 
   </div>
