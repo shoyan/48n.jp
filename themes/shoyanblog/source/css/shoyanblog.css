@@ -1,15 +1,7 @@
 body {
   margin: 0 auto;
-  font-family: -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    "Roboto",
-    "Oxygen",
-    "Ubuntu",
-    "Cantarell",
-    "Fira Sans",
-    "Droid Sans",
-    "Helvetica Neue",
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   min-width: 320px;
   max-width: 1000px;
@@ -29,24 +21,17 @@ h1 {
   line-height: 2rem;
 }
 
-h2 {
+h2,
+h3 {
   font-size: 1.3rem;
+  padding: 10px 0;
   line-height: 2rem;
-  font-weight: 400;
-  border-bottom: 1px solid #eaecef;
-  background-color: #f7f7f7;
-  padding: 10px 20px;
-  border-left: 9px solid #4865b2;
-  margin: 40px 0;
+  font-weight: 600;
+  margin: 20px 0 10px 0;
 }
 
-h3 {
-  font-size: 1.1rem;
-  padding: 10px 20px;
-  line-height: 2rem;
-  font-weight: 400;
-  border-left: 9px solid #4865b2;
-  margin: 40px 0 20px 0;
+h2 {
+  font-size: 1.8rem;
 }
 
 a {
@@ -82,24 +67,24 @@ table {
 td,
 th {
   border: 1px solid #dfe2e5;
-  padding: .6em 1em;
+  padding: 0.6em 1em;
+}
+p {
+  margin: 4px 0;
 }
 
 header h1 {
   text-align: center;
-} 
+}
 
 header h1 a {
   color: #777;
   text-decoration: none;
 }
-ul, ol {
-  background-color: #f8f9ff;
-  border: dashed 1px #4865b2;
-  margin: 20px;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  padding-right: 10px;
+ul,
+ol {
+  margin: 10px;
+  padding: 0 10px;
 }
 .top-message {
   border: dashed 1px gray;
@@ -167,7 +152,7 @@ ul, ol {
   display: inline-block;
   border: 1px solid #cfd4db;
   border-radius: 2rem;
-  font-size: .9rem;
+  font-size: 0.9rem;
   line-height: 2rem;
   padding: 0 1rem;
   outline: none;
@@ -249,7 +234,6 @@ footer a {
 
 /* code */
 
-
 pre .comment,
 pre .title {
   color: #999;
@@ -326,7 +310,7 @@ pre,
   overflow: auto;
   color: #ccc;
   line-height: 22px;
-  font-size: .85rem;
+  font-size: 0.85rem;
 }
 
 .highlight .gutter pre,
@@ -342,10 +326,10 @@ code {
 
 code {
   color: #476582;
-  padding: .25rem .5rem;
+  padding: 0.25rem 0.5rem;
   margin: 0;
-  font-size: .85em;
-  background-color: rgba(27, 31, 35, .05);
+  font-size: 0.85em;
+  background-color: rgba(27, 31, 35, 0.05);
   border-radius: 3px;
 }
 
@@ -453,7 +437,7 @@ details.answer {
 .date-box {
   text-align: center;
 }
-.outbound::after{
+.outbound::after {
   content: "";
   background-image: url("../images/outbound.svg");
   width: 16px;
@@ -465,7 +449,7 @@ details.answer {
   width: 100%;
   margin-bottom: 20px;
 }
-.tutorial-box h2{
+.tutorial-box h2 {
   background-color: #4169e1;
   border-left: none;
   border-radius: 5px;
@@ -474,7 +458,7 @@ details.answer {
 }
 
 .archive-list-count,
-.tag-list-count{
+.tag-list-count {
   color: #777;
 }
 .archive-list-count::before,
@@ -484,7 +468,7 @@ details.answer {
 }
 
 .archive-list-count::after,
-.tag-list-count::after{
+.tag-list-count::after {
   content: ")";
   color: #777;
 }
@@ -521,7 +505,7 @@ details.answer {
   }
 }
 
- /* for PC */
+/* for PC */
 @media screen and (min-width: 980px) {
   #content-outer {
     margin: 40px auto;
@@ -532,7 +516,7 @@ details.answer {
 @media screen and (max-width: 419px) {
   pre,
   .highlight {
-    margin: .85rem -1.5rem;
+    margin: 0.85rem -1.5rem;
     border-radius: 0;
   }
 }
