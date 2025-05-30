@@ -146,6 +146,29 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-09-15T04:46:15.000Z" itemprop="datepublished">
+            2016/09/15
+          </time>
+          <time datetime="2016-09-15T04:46:15.000Z" itemprop="modified">
+            (更新日: 2016/09/15)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/09/15/pomodoro-technique/">ポモドーロ・テクニックを使ってみた感想</a>
+        </h1>
+        <div class="content">
+          <p>最近、仕事中はポモドーロ・テクニックを使っている。<br>ポモドーロ・テクニックは25分集中して5分休憩するサイクルを繰り返すことでメリハリをつけて集中力を高める手法だ。</p>
+<h2 id="どのようにやるのか"><a href="#どのようにやるのか" class="headerlink" title="どのようにやるのか"></a>どのようにやるのか</h2><p>タイマーさえあれば簡単にできる。<br>私は<a href="https://itunes.apple.com/jp/app/pomodoro-time-pomodoro-tekunikku/id973134470?mt=12" target="_blank" rel="noopener">Pomodoro Time</a>というアプリを使っている。</p>
+<p><img src="http://a5.mzstatic.com/jp/r30/Purple6/v4/13/8e/9f/138e9f9f-2795-168f-eec1-dc8d9f4857a1/screen800x500.jpeg" alt="image"></p>
+<h2 id="やってみた感想"><a href="#やってみた感想" class="headerlink" title="やってみた感想"></a>やってみた感想</h2><p>やってみた感想としては、たしかに一定の時間を集中することで集中力が高まることを感じた。<br>気分的にのれなくても25分集中するんだと気合をいれてやれば、けっこう集中できるものだ。<br>効率よく仕事をこなす方法としてポモドーロ・テクニックはよい手法だと思う。</p>
+<p>しかし、走ると歩くを繰り返すと疲れるようにポモドーロ・テクニックを使うと神経を消耗する。<br>実際、途中に長めの休憩をとるようにと解説もしてある。</p>
+<p>ただし、これは慣れもあるのではと思う。<br>走ると歩くことを繰り返すのはたしかにしんどいがそれが習慣化してしまえば、最初に感じた負荷よりもぐっと負担は減るはずだ。<br>もうしばらくポモドーロ・テクニックを使っていくつもりだ。</p>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-09-12T04:56:43.000Z" itemprop="datepublished">
             2016/09/12
           </time>
@@ -263,27 +286,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p><code>mysql_real_escape_string()</code> では上記を防ぐことができない。<br>クエリ内の変数をシングルクォート（<code>&#39;</code>）で囲むことで上記を防ぐことができる。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$id = mysql_real_escape_string(<span class="string">"1 OR 1=1"</span>);</span><br><span class="line">$sql = <span class="string">"SELECT * FROM table_name WHERE id = '$id'"</span>;</span><br></pre></td></tr></table></figure>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-09-02T04:36:58.000Z" itemprop="datepublished">
-            2016/09/02
-          </time>
-          <time datetime="2016-09-02T04:36:58.000Z" itemprop="modified">
-            (更新日: 2016/09/02)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/09/02/isucon2016/">社内ISUCONに参加して優勝した</a>
-        </h1>
-        <div class="content">
-          <p>社内ISUCONが開催されたので参加してみた。<br>参加チームは全10チーム。<br>ISUCONは今回初めての参加だったが、思っていた以上に楽しかった。<br>参加するまではそんなに楽しいものなのかと懐疑的だったのだが、ほかのチームとスコアを競い一喜一憂するのは楽しいものだった。</p>
-<p>社内のプライベートクラウド上で行い、PHPとRubyのアプリケーションを選択することができた。<br>最初はRubyでやったが、スコアがあがらなかったのでPHPのアプリケーションに変更した。</p>
-<p>効果があったのが、クエリのチューニング。<br>select句でアプリケーションに使うカラムに絞ることでIOを減らしたり、結果をセッションにキャッシュすることでクエリの実行回数を減らした。<br>また、テーブルのカラムにインデックスを作成してチューニングした。<br>そのほか、php-fpmの子プロセスの数を増やしたり、mysqlのパラメーターをチューニングするのも効果があった(具体的にはinnodb_buffer_pool_size,read_rnd_buffer_size,sort_buffer_size,query_cache_sizeあたり)。</p>
-<p>サーバ側はほかのメンバーに任せきりといった感じだったので、どこがボトルネックになっているかを素早く探すスキルやミドルウェアをパパッと導入できるスキルを身につけたいと思った。<br>優勝できたのは他のメンバーが頑張ってくれたのと運がよかったのだと思う。<br>個人的には反省の多いISUCONだった。<br>課題が見つかったのとISUCONを楽しめたのが収穫だ。</p>
 
         </div>
       </div>

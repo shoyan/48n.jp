@@ -146,6 +146,49 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2025-05-30T03:33:47.000Z" itemprop="datepublished">
+            2025/05/30
+          </time>
+          <time datetime="2025-05-30T03:51:59.741Z" itemprop="modified">
+            (更新日: 2025/05/30)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2025/05/30/go-error-handling-best-practice/">Goのエラーハンドリングのベストプラクティス</a>
+        </h1>
+        <div class="content">
+          <h2 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h2><p>Goのエラーハンドリングは他の言語と少し異なるアプローチを取ります。例外機構を持たないGoでは、エラーは値として扱われ、関数の戻り値として明示的に返されます。このシンプルなアプローチは強力ですが、効果的に活用するにはいくつかのベストプラクティスを理解する必要があります。</p>
+<p>この記事では、Goのエラーハンドリングの基本から、カスタムエラーの作成、エラーのラッピングとアンラッピング、そして<code>errors.Is()</code>と<code>errors.As()</code>を使用した効果的なエラー判定の方法について解説します。</p>
+<h2 id="Goのエラーハンドリングのベストプラクティス"><a href="#Goのエラーハンドリングのベストプラクティス" class="headerlink" title="Goのエラーハンドリングのベストプラクティス"></a>Goのエラーハンドリングのベストプラクティス</h2><p>Goのエラーハンドリングのベストプラクティスを理解するために、いくつかの具体例を見ていきましょう。</p>
+<h3 id="1-基本的なエラー定義と判定"><a href="#1-基本的なエラー定義と判定" class="headerlink" title="1. 基本的なエラー定義と判定"></a>1. 基本的なエラー定義と判定</h3><p>Goでは、標準パッケージの<code>errors</code>を使って簡単にエラーを定義できます。以下のサンプルコードでは、よく使われるパターンを示しています。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"errors"</span></span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// カスタムエラー型の定義</span></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	ErrNotFound = errors.New(<span class="string">"not found"</span>)</span><br><span class="line">	ErrInvalid  = errors.New(<span class="string">"invalid input"</span>)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// データベース操作を模擬する関数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">findUser</span><span class="params">(id <span class="keyword">string</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="comment">// エラーをラップして返す</span></span><br><span class="line">	<span class="keyword">return</span> fmt.Errorf(<span class="string">"failed to find user: %w"</span>, ErrNotFound)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> NotFoundError <span class="keyword">struct</span> &#123;</span><br><span class="line">	ID <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(e *NotFoundError)</span> <span class="title">Error</span><span class="params">()</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> fmt.Sprintf(<span class="string">"user %s not found"</span>, e.ID)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 悪い例: == 演算子での比較</span></span><br><span class="line">	err := findUser(<span class="string">"123"</span>)</span><br><span class="line">	<span class="keyword">if</span> err == ErrNotFound &#123; <span class="comment">// これは動作しない！</span></span><br><span class="line">		fmt.Println(<span class="string">"== で比較。ユーザーが見つかりませんでした"</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 良い例1: errors.Is() を使用</span></span><br><span class="line">	err = findUser(<span class="string">"123"</span>)</span><br><span class="line">	<span class="keyword">if</span> errors.Is(err, ErrNotFound) &#123;</span><br><span class="line">		fmt.Println(<span class="string">"errors.Is() で比較。ユーザーが見つかりませんでした"</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	err = &amp;NotFoundError&#123;ID: <span class="string">"123"</span>&#125;</span><br><span class="line">	<span class="keyword">var</span> notFoundErr *NotFoundError</span><br><span class="line">	<span class="keyword">if</span> errors.As(err, &amp;notFoundErr) &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"ユーザー %s が見つかりませんでした\n"</span>, notFoundErr.ID)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// エラーのラップと展開の例</span></span><br><span class="line">	err = findUser(<span class="string">"123"</span>)</span><br><span class="line">	fmt.Printf(<span class="string">"元のエラー: %v\n"</span>, err)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ラップされたエラーを展開</span></span><br><span class="line">	unwrapped := errors.Unwrap(err)</span><br><span class="line">	fmt.Printf(<span class="string">"展開されたエラー: %v\n"</span>, unwrapped)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>実行結果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">errors.Is() で比較。ユーザーが見つかりませんでした</span><br><span class="line">ユーザー 123 が見つかりませんでした</span><br><span class="line">元のエラー: failed to find user: not found</span><br><span class="line">展開されたエラー: not found</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-エラー判定の種類と使い分け"><a href="#2-エラー判定の種類と使い分け" class="headerlink" title="2. エラー判定の種類と使い分け"></a>2. エラー判定の種類と使い分け</h3><p>上記のコードには、エラー判定のための重要な方法がいくつか含まれています。それぞれを詳しく解説します。</p>
+<h4 id="エラー比較の落とし穴-演算子"><a href="#エラー比較の落とし穴-演算子" class="headerlink" title="エラー比較の落とし穴: == 演算子"></a>エラー比較の落とし穴: <code>==</code> 演算子</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 悪い例: == 演算子での比較</span></span><br><span class="line">err := findUser(<span class="string">"123"</span>)</span><br><span class="line"><span class="keyword">if</span> err == ErrNotFound &#123; <span class="comment">// これは動作しない！</span></span><br><span class="line">    fmt.Println(<span class="string">"== で比較。ユーザーが見つかりませんでした"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>このコードでは、<code>findUser</code>関数が返すエラーと<code>ErrNotFound</code>を<code>==</code>演算子で直接比較しています。しかし、このアプローチには大きな問題があります。<code>findUser</code>関数は単純に<code>ErrNotFound</code>を返すのではなく、<code>fmt.Errorf(&quot;failed to find user: %w&quot;, ErrNotFound)</code>を使ってエラーをラップしているため、<code>==</code>比較は失敗します。ラップされたエラーは元のエラーと等価ではないからです。</p>
+<h4 id="推奨方法1-errors-Is"><a href="#推奨方法1-errors-Is" class="headerlink" title="推奨方法1: errors.Is()"></a>推奨方法1: <code>errors.Is()</code></h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 良い例1: errors.Is() を使用</span></span><br><span class="line">err = findUser(<span class="string">"123"</span>)</span><br><span class="line"><span class="keyword">if</span> errors.Is(err, ErrNotFound) &#123;</span><br><span class="line">    fmt.Println(<span class="string">"errors.Is() で比較。ユーザーが見つかりませんでした"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Go 1.13以降で導入された<code>errors.Is()</code>関数は、エラーチェーン内のどこかに特定のエラー値が含まれているかを確認します。これにより、ラップされたエラーでも正しく比較できるようになります。<code>errors.Is()</code>は、エラーが同一かどうかを確認する際の推奨方法です。</p>
+<h4 id="推奨方法2-errors-As"><a href="#推奨方法2-errors-As" class="headerlink" title="推奨方法2: errors.As()"></a>推奨方法2: <code>errors.As()</code></h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">err = &amp;NotFoundError&#123;ID: <span class="string">"123"</span>&#125;</span><br><span class="line"><span class="keyword">var</span> notFoundErr *NotFoundError</span><br><span class="line"><span class="keyword">if</span> errors.As(err, &amp;notFoundErr) &#123;</span><br><span class="line">    fmt.Printf(<span class="string">"ユーザー %s が見つかりませんでした\n"</span>, notFoundErr.ID)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>errors.As()</code>関数は、エラーチェーン内のいずれかのエラーが特定の型に一致するかを確認し、一致する場合はその値をターゲット変数に設定します。これは、エラーの型に基づいて処理を分岐させたい場合や、エラー内の追加情報（この例では<code>ID</code>）にアクセスしたい場合に特に有用です。</p>
+<h3 id="3-エラーのラッピングとアンラッピング"><a href="#3-エラーのラッピングとアンラッピング" class="headerlink" title="3. エラーのラッピングとアンラッピング"></a>3. エラーのラッピングとアンラッピング</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// エラーのラップと展開の例</span></span><br><span class="line">err = findUser(<span class="string">"123"</span>)</span><br><span class="line">fmt.Printf(<span class="string">"元のエラー: %v\n"</span>, err)</span><br><span class="line"></span><br><span class="line"><span class="comment">// ラップされたエラーを展開</span></span><br><span class="line">unwrapped := errors.Unwrap(err)</span><br><span class="line">fmt.Printf(<span class="string">"展開されたエラー: %v\n"</span>, unwrapped)</span><br></pre></td></tr></table></figure>
+
+<p>Go 1.13では、<code>%w</code>動詞を使用して元のエラーをラップする機能が<code>fmt.Errorf</code>に追加されました。これにより、より詳細なコンテキスト情報を提供しながら、元のエラー値を保持できます。<code>errors.Unwrap()</code>関数を使用すると、ラップされたエラーから元のエラーを取り出すことができます。</p>
+<h3 id="4-カスタムエラー型の作成"><a href="#4-カスタムエラー型の作成" class="headerlink" title="4. カスタムエラー型の作成"></a>4. カスタムエラー型の作成</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> NotFoundError <span class="keyword">struct</span> &#123;</span><br><span class="line">    ID <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(e *NotFoundError)</span> <span class="title">Error</span><span class="params">()</span> <span class="title">string</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> fmt.Sprintf(<span class="string">"user %s not found"</span>, e.ID)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Goでは、<code>Error()</code>メソッドを実装した任意の型をエラーとして使用できます。カスタムエラー型を作成することで、エラーに追加情報（この例では<code>ID</code>）を含めることができ、より詳細なエラーハンドリングが可能になります。</p>
+<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>Goのエラー判定では、==演算子による比較はラップされたエラーに対して正しく動作しません。<br>そのため、Go1.13以降で導入された<code>errors.Is</code>や<code>errors.As</code>を活用することで、より安全かつ柔軟なエラーハンドリングが可能になります。<br>エラー処理の品質向上のため、ぜひこれらの手法を取り入れてみてください。</p>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2025-02-09T11:58:53.000Z" itemprop="datepublished">
             2025/02/09
           </time>
@@ -376,41 +419,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>私はNode.jsのコミッターがトラディショナルなfor文を使ったコードを書いていることを見たことがあります。そのコードは、これ以上ないくらいシンプルなコードでした。</p>
 <p>現在のプログラムの多くは、今後も多くの変更が入ります。そうであれば、完璧に動くことよりもメンテナンスがしやすいことが大切です。後々、悪い影響を及ぼすコードは複雑で難解なコードです。シンプルで意図が明快なコードが問題を起こすことはありません。</p>
 <p>一般的な技術を有したエンジニアであれば誰でも理解できるコードを書いてください。</p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2019-08-02T08:47:20.000Z" itemprop="datepublished">
-            2019/08/02
-          </time>
-          <time datetime="2019-08-02T08:47:20.000Z" itemprop="modified">
-            (更新日: 2019/08/02)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2019/08/02/why-do-not-i-aim-for-100-test-coverage/">テストカバレッジ100%を目指さない理由</a>
-        </h1>
-        <div class="content">
-          <h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>テストカバレッジ100%は目指さない</p>
-<h2 id="理由"><a href="#理由" class="headerlink" title="理由"></a>理由</h2><p>以前、このようなツイートをしました。</p>
-<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">マージ条件に作成したコードのテストカバレッジが100%であることというプロジェクトを見たことがあります</p>&mdash; しょーやん (@sinn_shoyan) <a href="https://twitter.com/sinn_shoyan/status/1155279098102472705?ref_src=twsrc%5Etfw" target="_blank" rel="noopener">July 28, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-<p>テストカバレッジ100%に違和感を感じない人はもう少し勉強した方がいいですね。</p>
-<p>テストカバレッジ100%を目指すとこのようになってしまいます。</p>
-<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">テストカバレッジ100%を目指すとどうなるかを説明しましょう。
-テストの目的がカバレッジを通すことになってしまい、意味のないテストが乱立します</p>&mdash; しょーやん (@sinn_shoyan) <a href="https://twitter.com/sinn_shoyan/status/1155279684218675201?ref_src=twsrc%5Etfw" target="_blank" rel="noopener">July 28, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-<p>さらにテストの問題も発生します。</p>
-<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">さらに、コードとテストコードが密結合になり、コードを少し変えるとテストが落ちるという状態になります。
-リファクタリングする場合、テストコードも書き直しになります</p>&mdash; しょーやん (@sinn_shoyan) <a href="https://twitter.com/sinn_shoyan/status/1155280247924768772?ref_src=twsrc%5Etfw" target="_blank" rel="noopener">July 28, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-<p>テストカバレッジの問題については次の記事に詳しく書いてあります。</p>
-<ul>
-<li><a herf="https://qiita.com/bremen/items/d02eb38e790b93f44728" target="_blank">テストカバレッジ100%を追求しても品質は高くならない理由と推奨されるカバレッジの目標値について</a></li>
-</ul>
-<p>全てのコードにコメントを書くのは馬鹿げていると感じる人は多いでしょう。全てのコードにテストを書くということも同じように考えるとどうでしょう。何事も過ぎたるは及ばざるが如しです。</p>
 
         </div>
       </div>

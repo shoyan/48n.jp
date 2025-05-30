@@ -146,6 +146,32 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2017-01-10T08:53:25.000Z" itemprop="datepublished">
+            2017/01/10
+          </time>
+          <time datetime="2017-01-10T08:53:25.000Z" itemprop="modified">
+            (更新日: 2017/01/10)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2017/01/10/think-agriculture-and-iot/">4億円調達したゼロアグリと農業の未来</a>
+        </h1>
+        <div class="content">
+          <p>Iotの技術を使った<a href="http://www.zero-agri.jp/" target="_blank" rel="noopener">ゼロアグリ</a>を開発している<a href="http://www.routrek.co.jp/" target="_blank" rel="noopener">ルートレック・ネットワークス</a>が4億円の資金調達をした。<br>ゼロアグリは農作物の水や肥料の管理を独自のアルゴリズムとIoTの技術を使って機械化する取り組みを行っている。</p>
+<ul>
+<li><a href="http://jp.techcrunch.com/2016/12/26/zero-agri-raises-400m-yen/" target="_blank" rel="noopener">http://jp.techcrunch.com/2016/12/26/zero-agri-raises-400m-yen/</a></li>
+</ul>
+<p>私は農業とIoTの分野に大きな可能性を感じておりウォッチしているのだが、ゼロアグリのように進めているところはしっかり進めているように感じる。<br>まだまだ開発段階のものが多いが10年後には実用化レベルに達するものが結構出てくると思っており、新しい農業の形が形成されていくのではと思う。</p>
+<p>ゼロアグリの佐々木氏は「農場に関するデータを可視化するものだけだと農家に受け入れられなかった」と語っているが、まさにその通りだと思う。<br>農業は数値ではなく感覚で判断するものだと思う。<br>そこにいきなり数値が出てきても受け入れられるのはなかなか難しいだろう。</p>
+<p>私は家庭菜園をしているが、土がよければ放っておいても野菜は育つ。<br>そういうものだから、土の水分や養分をモニタリングしてもあまり意味がない。</p>
+<p>じゃあ、何が必要かというと、目の前の農家が困っていることを解決出来る仕組みだと思う。<br>その問題を解決するにあたってどうしても物理的に制御が必要なものが出てくるはずだ。<br>IoTの技術の進化でその技術を多くの人が使えるようになってきている。<br>実際に困っていることを解決するためのものをそこらの人が作る。<br>そういうことができる時代がやってきていることに可能性を感じる。</p>
+<p>私の友人は農家をやっているが、有機農法なので除草に手間がかかっているようだ。<br>その除草の手間をIoTの技術を使って軽減できないだろうかと考える(いいアイデアはない)。<br>また配達が手間のようなので、配達の手間を省けるような仕組みを考えるといいかもしれない。<br>例えばドローンを使って郵送するとか。<br>実際やろうとしたらものすごく大変そうだけど(野菜って重いんですよね)。</p>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-12-26T05:05:53.000Z" itemprop="datepublished">
             2016/12/26
           </time>
@@ -297,36 +323,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p>というところで、現状は微分を学んでいる。</p>
 <p>だいぶ遠回りしている感がある。<br>道のりは険しい。</p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-11-10T09:28:31.000Z" itemprop="datepublished">
-            2016/11/10
-          </time>
-          <time datetime="2016-11-10T09:28:31.000Z" itemprop="modified">
-            (更新日: 2016/11/10)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/11/10/change-date-format-with-i18n/">Railsで日付をいい感じ(スラッシュ区切り)に表示する</a>
-        </h1>
-        <div class="content">
-          <p>日付は日本だと <code>/</code>(スラッシュ)区切りが一般的なのでそのように表示したい。<br>しかし、RailsでDateオブジェクトやDateTimeオブジェクトを表示すると以下のような感じになってしまう。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pry(main)&gt; Date.today.to_s</span><br><span class="line">=&gt; <span class="string">"2016-11-10"</span></span><br><span class="line"></span><br><span class="line">pry(main)&gt; DateTime.now.to_s</span><br><span class="line">=&gt; <span class="string">"2016-11-10T17:47:01+09:00"</span></span><br></pre></td></tr></table></figure>
-
-<p><code>strftime</code>メソッドで書式を指定すれば良いのだが、面倒だしイケてないように感じる。</p>
-<p>Rails国際化APIの<code>I18n</code>にまさにというメソッドがあったので紹介する。<br>その名も<code>localize</code>メソッドだ。<br><code>localize</code>メソッドはDateオブジェクトやDateTimeオブジェクトを現地のフォーマットに変換する。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pry(main)&gt; I18n.localize(Date.today)</span><br><span class="line">=&gt; <span class="string">"2016/11/10"</span></span><br><span class="line"></span><br><span class="line">pry(main)&gt; I18n.localize(DateTime.now)</span><br><span class="line">=&gt; <span class="string">"2016/11/10 18:05:04"</span></span><br></pre></td></tr></table></figure>
-
-<p>ちなみにlocalizeの省略形で <code>l</code> というエイリアスが用意されている。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pry(main)&gt; I18n.l(Date.today)</span><br><span class="line">=&gt; <span class="string">"2016/11/10"</span></span><br><span class="line"></span><br><span class="line">pry(main)&gt; I18n.l(DateTime.now)</span><br><span class="line">=&gt; <span class="string">"2016/11/10 18:07:24"</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><a href="http://railsguides.jp/i18n.html#%E3%83%91%E3%83%96%E3%83%AA%E3%83%83%E3%82%AFi18n-api" target="_blank" rel="noopener">Rails国際化(I18n) API Rails ガイド</a></li>
-</ul>
 
         </div>
       </div>
