@@ -146,6 +146,63 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-06-14T04:34:48.000Z" itemprop="datepublished">
+            2016/06/14
+          </time>
+          <time datetime="2016-06-14T04:34:48.000Z" itemprop="modified">
+            (更新日: 2016/06/14)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/06/14/learn-ssh-kit/">SSHKitを実際に使ってみて理解する</a>
+        </h1>
+        <div class="content">
+          <p>Capistrano/sshkitを紹介します。<br><a href="https://github.com/capistrano/sshkit" target="_blank" rel="noopener">https://github.com/capistrano/sshkit</a></p>
+<p>SSHKitはリモートサーバーに対してコマンドを実行するためのツールキットです。<br>CapistranoやCapistranoプラグインではSSHKitが使われています。</p>
+<h2 id="インストール"><a href="#インストール" class="headerlink" title="インストール"></a>インストール</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem <span class="keyword">install</span> sshkit</span><br></pre></td></tr></table></figure>
+
+<h2 id="コマンドのサンプル"><a href="#コマンドのサンプル" class="headerlink" title="コマンドのサンプル"></a>コマンドのサンプル</h2><p>実際に使ってみて理解していきます。<br>使うには、sshkitをロードする必要があります。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">'sshkit'</span></span><br><span class="line"><span class="keyword">include</span> SSHKit::DSL</span><br></pre></td></tr></table></figure>
+
+<h3 id="ホスト名を取得する"><a href="#ホスト名を取得する" class="headerlink" title="ホスト名を取得する"></a>ホスト名を取得する</h3><p>まずはログインしてホスト名を取得してみましょう。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">on ['deploy@example.com’] do |host|</span><br><span class="line"> puts capture(<span class="symbol">:ho</span>stname)</span><br><span class="line">end</span><br><span class="line">=&gt; example.com</span><br></pre></td></tr></table></figure>
+
+<p><code>on</code> メソッドに対象のサーバーとブロックを渡します。<br>対象のサーバーは複数設定することも可能です。<br>ブロックにはサーバー上で実行するコマンドを設定します。<br><code>capture</code>メソッドは渡された引数をコマンドとして実行し、結果をログに出力します。</p>
+<h3 id="特定のユーザーでコマンドを実行する"><a href="#特定のユーザーでコマンドを実行する" class="headerlink" title="特定のユーザーでコマンドを実行する"></a>特定のユーザーでコマンドを実行する</h3><p>特定のユーザーでコマンドを実行する場合は、<code>as</code>メソッドで指定します。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">on [<span class="string">'example.com'</span>] <span class="keyword">do</span> <span class="params">|host|</span></span><br><span class="line">  as <span class="string">'deploy'</span> <span class="keyword">do</span></span><br><span class="line">  　puts capture(<span class="symbol">:whoami</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="特定のディレクトリを指定する"><a href="#特定のディレクトリを指定する" class="headerlink" title="特定のディレクトリを指定する"></a>特定のディレクトリを指定する</h3><p>特定のディレクトリを指定する場合は、<code>within</code>メソッドを指定します。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">on [<span class="string">'deploy@example.com'</span>] <span class="keyword">do</span> <span class="params">|host|</span></span><br><span class="line">  within <span class="string">'/var/log'</span> <span class="keyword">do</span></span><br><span class="line">    puts capture(<span class="symbol">:head</span>, <span class="string">'-n5'</span>, <span class="string">'messages'</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p><code>/var/log</code> で <code>head -n5 messages</code> を実行します。</p>
+<h3 id="環境変数を指定する"><a href="#環境変数を指定する" class="headerlink" title="環境変数を指定する"></a>環境変数を指定する</h3><p><code>with</code>メソッドで環境変数を指定することができます。</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">on hosts <span class="built_in">do</span> |<span class="type">host</span>|<span class="type"></span></span><br><span class="line"><span class="type">  with</span> rack_env: :test <span class="built_in">do</span></span><br><span class="line">    puts capture(<span class="string">"env"</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>rack_envに<code>:test</code> を設定しています。</p>
+<h3 id="ファイルをチェックして存在すればメッセージを表示、なければファイルを作成する"><a href="#ファイルをチェックして存在すればメッセージを表示、なければファイルを作成する" class="headerlink" title="ファイルをチェックして存在すればメッセージを表示、なければファイルを作成する"></a>ファイルをチェックして存在すればメッセージを表示、なければファイルを作成する</h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">on</span> [<span class="string">'deploy@example.com'</span>] <span class="keyword">do</span> |host|</span><br><span class="line">  f = <span class="string">'/tmp/file'</span></span><br><span class="line">  <span class="keyword">if</span> test("[ -f #&#123;f&#125; ]")</span><br><span class="line">    <span class="keyword">info</span> "#&#123;f&#125; already exist on #&#123;host&#125;!"</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="keyword">execute</span> :touch, f</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">INFO</span> [<span class="number">790</span>b6aaa] Running /usr/bin/env touch /tmp/file <span class="keyword">as</span> deploy@example.com</span><br><span class="line"><span class="keyword">INFO</span> [<span class="number">790</span>b6aaa] Finished <span class="keyword">in</span> <span class="number">0.052</span> seconds <span class="keyword">with</span> <span class="keyword">exit</span> status <span class="number">0</span> (successful).</span><br></pre></td></tr></table></figure>
+
+<p><code>test</code>メソッドでファイルをチェックし、<code>execute</code>メソッドで<code>touch</code>コマンドを実行しています。</p>
+<h3 id="ファイルをアップロードする"><a href="#ファイルをアップロードする" class="headerlink" title="ファイルをアップロードする"></a>ファイルをアップロードする</h3><p>ファイルをアップロードすることもできます。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">on [<span class="string">'deploy@example.com'</span>] <span class="keyword">do</span> <span class="params">|host|</span></span><br><span class="line">  upload! <span class="string">'README.md'</span>, <span class="string">'/tmp/README.md'</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>第1引数がローカルのファイルのパス、第2引数がサーバーに配置するファイルのパスです。</p>
+<p>また、<code>recursive</code>オプションをtrueに設定することでディレクトリをアップロードすることもできます。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">on</span> hosts <span class="keyword">do</span> |host|</span><br><span class="line">  upload! <span class="string">'.'</span>, <span class="string">'/tmp/mypwd'</span>, <span class="keyword">recursive</span>: <span class="keyword">true</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="ローカルで実行する"><a href="#ローカルで実行する" class="headerlink" title="ローカルで実行する"></a>ローカルで実行する</h3><p>ローカルで実行することもできます。</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">run_locally do</span><br><span class="line">  within '/tmp' do</span><br><span class="line">   <span class="built_in"> execute </span>:whoami</span><br><span class="line">  end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line"><span class="comment"># もしくは</span></span><br><span class="line"></span><br><span class="line">on(:local) do</span><br><span class="line">  within '/tmp' do</span><br><span class="line">   <span class="built_in"> execute </span>:whoami</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<h3 id="Rakeタスクで利用する"><a href="#Rakeタスクで利用する" class="headerlink" title="Rakeタスクで利用する"></a>Rakeタスクで利用する</h3><p>RakeタスクでSSHKitのDSLを使うこともできます。<br>この仕組みを利用してCapistranoのプラグインは作成されています。</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">require 'sshkit'</span><br><span class="line"></span><br><span class="line">SSHKit.config.command_map[:rake] = <span class="string">"./bin/rake"</span></span><br><span class="line"></span><br><span class="line">desc <span class="string">"Deploy the site, pulls from Git, migrate the db and precompile assets, then restart Passenger."</span></span><br><span class="line">task<span class="keyword"> :deploy</span> do</span><br><span class="line">  include SSHKit::DSL</span><br><span class="line"></span><br><span class="line">  on <span class="string">"example.com"</span> do |host|</span><br><span class="line">    within <span class="string">"/opt/sites/example.com"</span> do</span><br><span class="line">     <span class="built_in"> execute </span>:git,<span class="keyword"> :pull</span></span><br><span class="line">     <span class="built_in"> execute </span>:bundle,<span class="keyword"> :install</span>, '--deployment'</span><br><span class="line">     <span class="built_in"> execute </span>:rake, 'db:migrate'</span><br><span class="line">     <span class="built_in"> execute </span>:rake, 'assets:precompile'</span><br><span class="line">     <span class="built_in"> execute </span>:touch, 'tmp/restart.txt'</span><br><span class="line">    end</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<p>サンプルがこちらにたくさんあるので、参考になると思います。</p>
+<p><a href="https://github.com/capistrano/sshkit/blob/master/EXAMPLES.md" target="_blank" rel="noopener">https://github.com/capistrano/sshkit/blob/master/EXAMPLES.md</a></p>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-06-13T05:08:03.000Z" itemprop="datepublished">
             2016/06/13
           </time>
@@ -313,47 +370,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
 <li><a href="http://lpi.or.jp/column/linux/linux_m06.shtml" target="_blank" rel="noopener">【第6回】TCPWrappers(hosts.allow,hosts.deny)とSSHの公開鍵認証について</a></li>
 <li><a href="https://www.centos.org/docs/5/html/Deployment_Guide-en-US/ch-tcpwrappers.html" target="_blank" rel="noopener">42.5. TCP Wrappers and xinetd</a></li>
-</ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-06-03T08:45:45.000Z" itemprop="datepublished">
-            2016/06/03
-          </time>
-          <time datetime="2016-06-03T08:45:45.000Z" itemprop="modified">
-            (更新日: 2016/06/03)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/06/03/cross-site-scripting-aka-xss/">クロスサイトスクリプティングの脆弱性とその対策</a>
-        </h1>
-        <div class="content">
-          <p>クロスサイトスクリプティングはユーザーの入力を受け付ける動的なアプリケーションに含まれる脆弱性を利用した攻撃です。<br>英語ではCross Site Scriptingと呼ばれその頭文字をとるとCSSとなりますが、「Cascading Style Sheets」との区別が紛らわしいため一般的にXSSの表記が使われています。</p>
-<h2 id="クロスサイトスクリプティングとはどのような脆弱性であるのか"><a href="#クロスサイトスクリプティングとはどのような脆弱性であるのか" class="headerlink" title="クロスサイトスクリプティングとはどのような脆弱性であるのか"></a>クロスサイトスクリプティングとはどのような脆弱性であるのか</h2><p>XSSとは動的なWebサイトのプログラムの脆弱性を利用した攻撃です。<br>この脆弱性を利用することで、攻撃者は悪意のあるJavaScriptコードをサイトに埋め込み、そのコードを実行することができるようになります。</p>
-<p>例えば、XSSの脆弱性がある掲示板があったとします。<br>攻撃者はフィッシングサイトにページを遷移させるJavaScriptコードを投稿しました。<br>すると、他の利用者がこの掲示板を閲覧したときにそのJavaScriptコードが実行され、フィッシングサイトが表示されるようになります。</p>
-<h2 id="この脆弱性を持ったサイトが攻撃されるとどのような被害が起き得るのか"><a href="#この脆弱性を持ったサイトが攻撃されるとどのような被害が起き得るのか" class="headerlink" title="この脆弱性を持ったサイトが攻撃されるとどのような被害が起き得るのか"></a>この脆弱性を持ったサイトが攻撃されるとどのような被害が起き得るのか</h2><p>上記の例のようにXSSはWebサイトの利用者を攻撃の対象とします。</p>
-<p>例えば、以下のような被害が出る可能性があります。</p>
-<ul>
-<li>ユーザーのcookie情報を盗み、その情報を利用してそのユーザーでログインする</li>
-<li>不正なページへユーザーを誘導する</li>
-<li>不正なファイルをダウンロードさせる</li>
-</ul>
-<p>Webサイトを直接攻撃することも可能です。<br>JavaScriptのhtmlを書き換える機能を使って、攻撃対象のサイトの内容を書き換えることができてしまいます。</p>
-<h2 id="なぜそのようなセキュリティホールが作り込まれてしまうのか"><a href="#なぜそのようなセキュリティホールが作り込まれてしまうのか" class="headerlink" title="なぜそのようなセキュリティホールが作り込まれてしまうのか"></a>なぜそのようなセキュリティホールが作り込まれてしまうのか</h2><p>HTMLには特殊文字が存在します。<br>具体的には「’”&lt;&gt;&amp;」といった文字です。<br>これらの特殊文字をHTML上に表示するには適切な方法で変換しなければなりません。<br>しかし、XSSの脆弱性のあるプログラムはこのような特殊文字を意識せずに作られてしまっています。</p>
-<h2 id="どのように対策をすればよいのか"><a href="#どのように対策をすればよいのか" class="headerlink" title="どのように対策をすればよいのか"></a>どのように対策をすればよいのか</h2><p>入力時のチェックと出力時のチェックを行います。</p>
-<h3 id="入力時のチェック"><a href="#入力時のチェック" class="headerlink" title="入力時のチェック"></a>入力時のチェック</h3><p>具体的には、入力時に入力できる文字を制限します。<br>例えば、郵便番号を入力するフォームの場合は、数字と-しか入力できないようにします。<br>そうすれば、悪意のあるコード自体が入力できなくなります。<br>入り口でとめる作戦です。</p>
-<p>注意点としては、入力文字のチェックは必ずサーバサイドで行わなければなりません。<br>PHP等のサーバサイドで実行されるプログラムでチェックする必要があるということです。<br>クライアントサイド(JavaScript)のチェックでは攻撃者がそのチェック機構自体を無効にすることが可能です。</p>
-<h3 id="出力時のチェック"><a href="#出力時のチェック" class="headerlink" title="出力時のチェック"></a>出力時のチェック</h3><p>実際には仕様上、入力文字を制限することができないことがあります。<br>例えばフリーフォームの場合、無闇に入力文字を制限するとユーザーは自由に文章を入力することができなくなってしまいます。</p>
-<p>そこで、出力時に文字を無害化（サニタイジング）します。</p>
-<p>サニタイジングについては、プログラム言語やフレームワークに専用の機能が用意されています。<br>その機能を使うことを強く推奨します。</p>
-<p>例えばPHPであれば、<code>htmlspecialchars</code>というhtmlの特殊文字を無害化する関数が用意されています。<br><a href="http://php.net/manual/ja/function.htmlspecialchars.php" target="_blank" rel="noopener">http://php.net/manual/ja/function.htmlspecialchars.php</a></p>
-<p>また、フレームワークはデフォルトでサニタイズされた文字が出力される仕組みになっているはずなので、そのようなフレームワークを使ったほうがよいでしょう。</p>
-<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
-<li><a href="http://www.atmarkit.co.jp/ait/articles/0211/09/news001.html" target="_blank" rel="noopener">クロスサイトスクリプティングの脆弱性とは？</a></li>
-<li><a href="http://qiita.com/mpyw/items/565b3670dd0c7f9162fa" target="_blank" rel="noopener">XSS攻撃への対策</a></li>
 </ul>
 
         </div>

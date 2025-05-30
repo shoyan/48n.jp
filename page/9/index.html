@@ -146,6 +146,39 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2017-01-13T06:44:48.000Z" itemprop="datepublished">
+            2017/01/13
+          </time>
+          <time datetime="2017-01-13T06:44:48.000Z" itemprop="modified">
+            (更新日: 2017/01/13)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2017/01/13/belongs-to-should-default-to-required-true-rails5/">Rails5からbelongs_toアソシエーションの挙動が変わった</a>
+        </h1>
+        <div class="content">
+          <p>Rails5から <code>belogs_to</code> アソシエーションの挙動が変わった。</p>
+<p>親モデルに属している子モデルは親モデルの外部キーが存在しないとバリデーションエラーになるのがデフォルトの挙動となっている。<br>参照先レコードのidをnullで登録しようとした場合は以下のようなバリデーションエラーが出る。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">ActiveRecord:</span>:<span class="string">RecordInvalid:</span> Validation <span class="string">failed:</span> Post  must exist</span><br></pre></td></tr></table></figure>
+
+<p>DHHの一声で <code>belogs_to</code> の挙動が変わる様が垣間見れるイシュー。</p>
+<ul>
+<li><a href="https://github.com/rails/rails/issues/18233" target="_blank" rel="noopener">https://github.com/rails/rails/issues/18233</a></li>
+</ul>
+<p>DHHの言い分としては「普通 belongs_to って、参照先テーブルのIDは必ずもってるだろ。ならデフォルト required: true でよくね？」という話。</p>
+<p>この挙動をRails4と同じにしたい場合は <code>optional: true</code> を使う(<code>required: false</code> は廃止予定なので使わないほうがいい)。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Post</span> &lt; ApplicationRecord</span></span><br><span class="line">  belongs_to <span class="symbol">:article</span> , <span class="symbol">optional:</span> <span class="literal">true</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p><code>belongs_to</code> のオプションの詳細については以下のドキュメントで参照できる。</p>
+<ul>
+<li><a href="http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-belongs_to" target="_blank" rel="noopener">http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-belongs_to</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2017-01-10T08:53:25.000Z" itemprop="datepublished">
             2017/01/10
           </time>
@@ -285,44 +318,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <li>Jekyllの構成について</li>
 <li>Jekyllのテーマを作成する</li>
 </ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-11-11T05:13:32.000Z" itemprop="datepublished">
-            2016/11/11
-          </time>
-          <time datetime="2016-11-11T05:13:32.000Z" itemprop="modified">
-            (更新日: 2016/11/11)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/11/11/machine-learning-01/">機械学習ことはじめ</a>
-        </h1>
-        <div class="content">
-          <p>機械学習をやるぞ！と息巻いてから半年が経とうとしている。<br>進捗はてんでダメ。ほとんど勉強せずに時間だけが過ぎてしまった。<br>さすがにこれではいけないと学習を始めた。</p>
-<p>とりあえず学ぶにも何かしらの教材がないと効率が悪いと思い、基礎的な理論が勉強できそうな 「機械学習理論入門」を買った(半年前に)。<br>機械学習の理論を優しく書いてあるはずなのだが、高校数学の理解もままならない自分の数学力では理解に苦しみ、本棚の肥やしとなっていた。<br>この段階では機械学習にも色々種類があるんだなということがわかった。</p>
-<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=syoyama-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4774176982&linkId=f54a583abd60635f4ad56b5e2705933b"></iframe>
-
-<p>次に機械学習理論の入門としてわかりやすそうなやる夫シリーズを読みだした。</p>
-<ul>
-<li><a href="http://tkengo.github.io/blog/2016/01/03/yaruo-machine-learning1/" target="_blank" rel="noopener">やる夫で学ぶ機械学習 - 序章 -</a></li>
-<li><a href="http://tkengo.github.io/blog/2016/01/04/yaruo-machine-learning2/" target="_blank" rel="noopener">やる夫で学ぶ機械学習 - 単回帰問題 -</a></li>
-</ul>
-<p>まずは最小二乗法についての話が出てきた。<br>これはそれとなく理解できたので、最小二乗法を使って誤差を求めるプログラムをRubyで実装してみたりもした。</p>
-<ul>
-<li><a href="https://github.com/shoyan/machine_learning/blob/master/01.rb" target="_blank" rel="noopener">https://github.com/shoyan/machine_learning/blob/master/01.rb</a></li>
-</ul>
-<p>しかし、最急降下法でつまづいてしまった。<br>最急降下法に出てくる合成関数の微分がよく分からない</p>
-<p>そもそも合成関数ってなんだというところで、合成関数について勉強した。<br>合成関数は関数の引数が関数になっている関数だった。</p>
-<p>関数: y=g(x)<br>合成関数: y=g(f(x)) ←こういう感じで引数が関数となっている</p>
-<p>やる夫シリーズを理解するには微分の知識が必要だということがわかったので、微分について勉強するために数学ガールを読んでいる。微分について会話形式で学んでいけるので、なかなかわかりやすい。</p>
-<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=syoyama-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4797382317&linkId=d26bd243cf2a37dd3f63507bea574228"></iframe>
-
-<p>というところで、現状は微分を学んでいる。</p>
-<p>だいぶ遠回りしている感がある。<br>道のりは険しい。</p>
 
         </div>
       </div>

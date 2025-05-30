@@ -146,6 +146,59 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-04-21T09:19:01.000Z" itemprop="datepublished">
+            2016/04/21
+          </time>
+          <time datetime="2016-04-21T09:19:01.000Z" itemprop="modified">
+            (更新日: 2016/04/21)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/04/21/nginx-and-ruby-on-docker/">DockerコンテナにChefを流してみた</a>
+        </h1>
+        <div class="content">
+          <p>Chefのレシピを書くとき、Dockerコンテナにレシピを流せると気軽に確認ができてよいなと思い、DockerコンテナにChefを流せるようにしてみました。</p>
+<p>リポジトリを作ったので参考にどうぞ。<br><a href="https://github.com/shoyan/nginx-and-ruby-on-docker" target="_blank" rel="noopener">https://github.com/shoyan/nginx-and-ruby-on-docker</a></p>
+<h3 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h3><p>DockerとChefをインストールしている必要があるので、以下からインストールしてください。</p>
+<p>Docker</p>
+<ul>
+<li><a href="https://www.docker.com/products/docker-toolbox" target="_blank" rel="noopener">https://www.docker.com/products/docker-toolbox</a></li>
+</ul>
+<p>Chef</p>
+<ul>
+<li><a href="https://downloads.chef.io/chef-client/" target="_blank" rel="noopener">https://downloads.chef.io/chef-client/</a></li>
+</ul>
+<h3 id="DockerコンテナにChefを流す"><a href="#DockerコンテナにChefを流す" class="headerlink" title="DockerコンテナにChefを流す"></a>DockerコンテナにChefを流す</h3><p>まずは、Docker QuickStart TerminalをクリックしてDockerを起動します(アプリケーションにあります)。</p>
+<p>Dockerを起動したらNginxとrubyをインストールするCookbookを実行します。</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git clone http<span class="variable">s:</span>//github.<span class="keyword">com</span>/shoyan/nginx-<span class="built_in">and</span>-<span class="keyword">ruby</span>-<span class="keyword">on</span>-docker</span><br><span class="line">$ <span class="keyword">cd</span> nginx-<span class="built_in">and</span>-<span class="keyword">ruby</span>-<span class="keyword">on</span>-docker</span><br></pre></td></tr></table></figure>
+
+<p>以下のコマンドでimageをbuildします。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="keyword">build </span>-t nginx-<span class="keyword">and-ruby </span>.</span><br></pre></td></tr></table></figure>
+
+<p>imageを確認</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$  docker images</span><br><span class="line">REPOSITORY             TAG                            IMAGE ID            CREATED             SIZE</span><br><span class="line">nginx-<span class="keyword">and</span>-ruby         latest                         <span class="number">6</span>b4d5602119f        <span class="number">36</span> seconds ago      <span class="number">382.2</span> MB</span><br></pre></td></tr></table></figure>
+
+<p>Dockerのコンテナを起動します。<br>image_idは docker imagesのIMAGE IDを指定します。<br>今回の場合は6b4d5602119fです(場合により変わります)。</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run <span class="params">--privileged</span> -d <span class="params">--name</span> nginx-and-ruby image_id <span class="string">/sbin/init</span></span><br></pre></td></tr></table></figure>
+
+<p>–privilegedはCentOS7のimageでserviceコマンドを起動するおまじないです。<br><a href="http://shoyan.github.io/blog/2016/04/14/start-systemctl-on-docker/" target="_blank" rel="noopener">Dockerでsystemctlでserviceが起動できない</a></p>
+<p>起動したDockerのコンテナにログインします。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker exec -<span class="keyword">it </span>nginx-<span class="keyword">and-ruby </span><span class="keyword">bash</span></span><br></pre></td></tr></table></figure>
+
+<p>ログインしたらDockerコンテナでChefを実行します。</p>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># chef-client -z -j nodes/bootstrap.json -c client.rb</span></span><br></pre></td></tr></table></figure>
+
+<p>Dockerを使うとChefを実行→コンテナを消す→真っさらな状態からもう一度Chefを流すというサイクルが気軽にできるので便利です。</p>
+<p>もう一度真っさらな状態のコンテナを作りたいときは、以下のようにします。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> doker ps</span><br><span class="line">CONTAINER ID        IMAGE                  COMMAND              CREATED             STATUS                        PORTS                                           NAMES</span><br><span class="line"><span class="number">17</span>a11c4b6ce8        <span class="number">6</span>b4d5602119f           <span class="string">"/sbin/init"</span>         <span class="number">2</span> hours ago         Exited (<span class="number">137</span>) <span class="number">12</span> seconds ago                                                   nginx<span class="operator">-and</span><span class="literal">-ruby</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Dockerコンテナを消す</span></span><br><span class="line"><span class="variable">$</span> docker rm <span class="operator">-f</span> <span class="number">17</span>a11c4b6ce8</span><br><span class="line"></span><br><span class="line"><span class="comment"># dockerコンテナを起動する</span></span><br><span class="line"><span class="variable">$</span> docker run -<span class="literal">-privileged</span> <span class="literal">-d</span> -<span class="literal">-name</span> nginx<span class="operator">-and</span><span class="literal">-ruby</span> image_id /sbin/init</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://github.com/shoyan/nginx-and-ruby-on-docker" target="_blank" rel="noopener">https://github.com/shoyan/nginx-and-ruby-on-docker</a></p>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-04-20T04:53:28.000Z" itemprop="datepublished">
             2016/04/20
           </time>
@@ -312,34 +365,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <ul>
 <li><a href="https://github.com/shoyan/nginx-and-ruby-on-docker" target="_blank" rel="noopener">nginx-and-ruby-on-docker</a></li>
 </ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-04-13T07:14:05.000Z" itemprop="datepublished">
-            2016/04/13
-          </time>
-          <time datetime="2016-04-13T07:14:05.000Z" itemprop="modified">
-            (更新日: 2016/04/13)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/04/13/no-space-left-on-device-on-docker/">Dockerでno space left on deviceが出てbuildできなくなった</a>
-        </h1>
-        <div class="content">
-          <p>Dockerのbuild時に以下のエラーが発生するようになった。</p>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$  docker build -t docker-and-chef .</span><br><span class="line">Sending build context to Docker daemon <span class="number">131.6</span> kB</span><br><span class="line">Error response from <span class="symbol">daemon:</span> mkdir /mnt/sda1/var/<span class="class"><span class="keyword">lib</span>/<span class="title">docker</span>/<span class="title">tmp</span>/<span class="title">docker</span>-<span class="title">builder670782655</span>: <span class="title">no</span> <span class="title">space</span> <span class="title">left</span> <span class="title">on</span> <span class="title">device</span></span></span><br></pre></td></tr></table></figure>
-
-<p>PCを再起動してみても直らず、どうしたものかとググっていたら以下の情報を見つけた。<br><a href="http://stackoverflow.com/questions/30604846/docker-error-no-space-left-on-device" target="_blank" rel="noopener">http://stackoverflow.com/questions/30604846/docker-error-no-space-left-on-device</a></p>
-<p>やることは以下</p>
-<ul>
-<li><code>docker ps -a</code>して表示されたコンテナを消す。</li>
-<li><code>docker images</code> して表示されたイメージを消す。</li>
-</ul>
-<p>コンテナは<code>docker rm container_id</code>で消すことができる。<br>イメージは<code>docker rim image_id</code>で消すことができる。</p>
-<p>VMのディスク容量がないときに発生するエラーのようだ。<br>不要なコンテナがたくさんあったので、それらのコンテナを消すとエラーはでなくなった。</p>
 
         </div>
       </div>
