@@ -69,6 +69,7 @@ th {
   border: 1px solid #dfe2e5;
   padding: 0.6em 1em;
 }
+
 p {
   margin: 4px 0;
 }
@@ -81,22 +82,27 @@ header h1 a {
   color: #777;
   text-decoration: none;
 }
+
 ul,
 ol {
   margin: 10px;
   padding: 0 10px;
 }
+
 .top-message {
   border: dashed 1px gray;
   margin: 20px;
   padding: 20px;
 }
+
 #menu-outer {
   margin-top: 40px;
 }
+
 #content-outer {
   margin: 0 1rem;
 }
+
 #main-nav {
   display: inline-flex;
   width: 100%;
@@ -388,31 +394,38 @@ pre code {
 .highlight .line.marked {
   background: #515151;
 }
+
 #twitter-timeline {
   max-width: 400px;
   height: 400px;
   overflow: scroll;
 }
+
 #author {
   border-bottom: 1px solid #ddd;
   margin-bottom: 10px;
 }
+
 #author img {
   width: 100px;
   border-radius: 50%;
 }
+
 .author-name {
   font-weight: 500;
 }
+
 .author-introduction {
   text-align: left;
 }
+
 .memo {
   background-color: aliceblue;
   padding: 40px;
   border-left: 2px solid #5280dd;
   margin: 40px 20px;
 }
+
 .apply-btn {
   display: block;
   background-color: deepskyblue;
@@ -422,21 +435,26 @@ pre code {
   margin: 0 auto;
   padding: 10px;
 }
+
 details {
   border: 1px solid #aaa;
   border-radius: 4px;
   padding: 10px;
   margin: 10px 0;
 }
+
 details.hint {
   background-color: #f0f8ff;
 }
+
 details.answer {
   background-color: #ffefe0;
 }
+
 .date-box {
   text-align: center;
 }
+
 .outbound::after {
   content: "";
   background-image: url("../images/outbound.svg");
@@ -449,6 +467,7 @@ details.answer {
   width: 100%;
   margin-bottom: 20px;
 }
+
 .tutorial-box h2 {
   background-color: #4169e1;
   border-left: none;
@@ -461,6 +480,7 @@ details.answer {
 .tag-list-count {
   color: #777;
 }
+
 .archive-list-count::before,
 .tag-list-count::before {
   content: "(";
@@ -472,34 +492,41 @@ details.answer {
   content: ")";
   color: #777;
 }
+
 .post-tags {
   margin-top: 20px;
   text-align: right;
 }
+
 /* for Tablet */
 @media screen and (min-width: 768px) {
   #content-outer {
     margin: 0 auto;
     max-width: 700px;
   }
+
   #main-nav {
     flex-wrap: nowrap;
   }
+
   #author-profile {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 20px;
     grid-auto-rows: 450px;
   }
+
   #author {
     border-bottom: none;
     margin-bottom: 0;
   }
+
   .flex-container {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
   }
+
   .tutorial-box {
     width: 45%;
   }
@@ -514,9 +541,57 @@ details.answer {
 }
 
 @media screen and (max-width: 419px) {
+
   pre,
   .highlight {
     margin: 0.85rem -1.5rem;
     border-radius: 0;
+  }
+}
+
+/* LTech広告のスタイル */
+.ltech-ad {
+  margin: 30px auto;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  max-width: 250px;
+}
+
+.ltech-ad img {
+  border: none;
+  margin-bottom: 10px;
+}
+
+.ltech-ad p {
+  margin: 5px 0 0;
+  color: #333;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.ltech-ad a {
+  text-decoration: none;
+  color: #333;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.ltech-ad a:hover {
+  transform: translateY(-2px);
+}
+
+/* 固定広告表示のためのスタイル */
+@media screen and (min-width: 768px) {
+  .ltech-ad {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    margin: 0;
+    z-index: 100;
+    background-color: white;
   }
 }
