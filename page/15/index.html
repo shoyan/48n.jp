@@ -153,6 +153,43 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2016-08-02T04:40:25.000Z" itemprop="datepublished">
             2016/08/02
           </time>
+          <time datetime="2025-06-03T01:21:21.827Z" itemprop="modified">
+            (更新日: 2025/06/03)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/08/02/README/">Botsインテグレーションを使って手軽にRubotyをSlackで動かす</a>
+        </h1>
+        <div class="content">
+          <p>前回は<a href="/blog/2016/07/29/first-step-ruboty/">Rubotyのインストールとプラグインチュートリアル</a>でRubotyの導入方法を紹介しました。<br>今回はRubotyをSlackで動かす方法を紹介します。</p>
+<p>RubotyにはSlackアダプターが用意してありますが、新しくユーザーの作成が必要です。<br>ユーザーの作成が必要のない、Botsインテグレーションと<a href="https://github.com/rosylilly/ruboty-slack_rtm" target="_blank" rel="noopener">ruboty-slack_rtm</a>を使ってRubotyをSlackで動かす方法を紹介します。</p>
+<h2 id="ruboty-slack-rtmのインストール"><a href="#ruboty-slack-rtmのインストール" class="headerlink" title="ruboty-slack_rtmのインストール"></a>ruboty-slack_rtmのインストール</h2><p>Gemfileに以下を定義します。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">gem</span> <span class="string">"ruboty-slack_rtm"</span></span><br></pre></td></tr></table></figure>
+
+<p><code>bundle install</code> コマンドでインストールします。</p>
+<h2 id="SlackのBotsインテグレーションを設定する"><a href="#SlackのBotsインテグレーションを設定する" class="headerlink" title="SlackのBotsインテグレーションを設定する"></a>SlackのBotsインテグレーションを設定する</h2><p>Slackの管理画面でBotsインテグレーションを登録します。</p>
+<p><img src="/images/bots-integration.png" alt="bots-integration"></p>
+<p>登録するとTokenが発行されるので、そのTokenをSLACK_TOKENという名前で環境変数に設定します。<br>Rubotyは dotenv に対応しているので、<code>.env</code> ファイルを作成し、そこにTOKENを登録しておくと便利です。</p>
+<p>.env</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">SLACK_TOKEN</span>=&lt;slack token&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Ruboty を起動します。<code>.env</code> ファイルを読み込むように <code>—dotenv</code> オプションをつけて起動します。</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bundle exec ruby <span class="comment">--dotenv</span></span><br></pre></td></tr></table></figure>
+
+<p>起動すると SlackのRubotyがログインマークに変わります。</p>
+<p>あとは、チャンネルにinviteすればSlackでRubotyが使えます！<br>ちなみにrubotyではなく、Botsインテグレーションで登録したユーザー名に反応します。</p>
+<h3 id="関連記事"><a href="#関連記事" class="headerlink" title="関連記事"></a>関連記事</h3><ul>
+<li><a href="/blog/2016/07/29/first-step-ruboty/">Rubotyのインストールとプラグインチュートリアル</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-08-02T04:40:25.000Z" itemprop="datepublished">
+            2016/08/02
+          </time>
           <time datetime="2016-08-02T04:40:25.000Z" itemprop="modified">
             (更新日: 2016/08/02)
           </time>
@@ -300,42 +337,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
     
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-07-22T05:12:06.000Z" itemprop="datepublished">
-            2016/07/22
-          </time>
-          <time datetime="2016-07-22T05:12:06.000Z" itemprop="modified">
-            (更新日: 2016/07/22)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/07/22/introduce-to-circle-ci/">CircleCIでお手軽にCI環境をつくる</a>
-        </h1>
-        <div class="content">
-          <p>最近はCIプラットフォームが充実していて、Travice CI、Wercker、Droneなど様々なプラットフォームが開発されています。<br>最近は<a href="https://circleci.com/" target="_blank" rel="noopener">CircleCI</a>を使っているのですが、なかなか便利です。</p>
-<h2 id="CircleCIの便利な点"><a href="#CircleCIの便利な点" class="headerlink" title="CircleCIの便利な点"></a>CircleCIの便利な点</h2><p>CircleCIの便利な点は特別な設定をせずにテストコードさえあればCIができてしまうことです。<br>CircleCIにアカウントを作って、CIを行うリポジトリを設定すればOKです。<br>リポジトリにpushするとCIが実行されます。<br>ソースコードからbundle installなどの必要な前処理をしてくれるので、CIを行うための前準備的な設定が必要ありません。</p>
-<p>私は<a href="https://github.com/shoyan/git_find_committer" target="_blank" rel="noopener">git_find_commiter</a>や<a href="https://github.com/shoyan/php-syntax-check" target="_blank" rel="noopener">php-syntax-check</a>でCircleCIを使っています。</p>
-<h2 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h2><p>デフォルトのRubyのバージョンが古いので(マニュアルによるとUbuntu 12.04 and Ubuntu 14.04 build imagesのもの)、Ruby1.9から導入されたキーワード引数など比較的新しく導入された機構を使うと構文エラーが発生することがあります。<br>その場合は<code>circle.yml</code>ファイルにRubyのバージョンを設定できます。</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">machine:</span></span><br><span class="line">  <span class="attr">ruby:</span></span><br><span class="line">    <span class="attr">version:</span> <span class="number">2.3</span><span class="number">.0</span></span><br></pre></td></tr></table></figure>
-
-<p>また、bundlerのバージョンでエラーが発生することがありました。<br>その場合は、以下のようにバージョンを指定することができます。</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">dependencies:</span></span><br><span class="line">  <span class="attr">pre:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">gem</span> <span class="string">install</span> <span class="string">bundler</span> <span class="string">-v</span> <span class="number">1.12</span><span class="number">.5</span></span><br></pre></td></tr></table></figure>
-
-<p>circle.ymlの構文についてはドキュメントを参考にしてください。</p>
-<ul>
-<li><a href="https://circleci.com/docs/configuration/" target="_blank" rel="noopener">Configuring CircleCI - CircleCI</a></li>
-</ul>
-
-        </div>
-      </div>
-    
   </div>
 
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/14/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/16/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/14/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/16/">Next</a>
 </div>
 
             

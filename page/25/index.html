@@ -150,6 +150,54 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-05-02T05:14:29.000Z" itemprop="datepublished">
+            2016/05/02
+          </time>
+          <time datetime="2016-05-02T05:14:29.000Z" itemprop="modified">
+            (更新日: 2016/05/02)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/05/02/what-is-rack-env-and-unicorn-and-sinatra/">RACK_ENVとUnicorn、SinatraでのRACK_ENVの扱いと注意点</a>
+        </h1>
+        <div class="content">
+          <p>RACK_ENVについて調べた内容とUnicorn、SinatraでのRACK_ENVの扱い方や注意点をまとめました。<br>RACK_ENVとはRACKの環境変数です。<br>何を設定するかによって使用するmiddlewareが変わります。<br>RACK_ENVには、<code>development</code>、<code>deployment</code>、<code>none</code>の3種類があります。</p>
+<p>以下がそれぞれのRACK_ENVで使われるmiddlewareです。</p>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#       - development: CommonLogger, ShowExceptions, and Lint</span></span><br><span class="line"><span class="meta">#       - deployment: CommonLogger</span></span><br><span class="line"><span class="meta">#       - none: なし</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/rack/rack/blob/028438ffffd95ce1f6197d38c04fa5ea6a034a85/lib/rack/server.rb#L157" target="_blank" rel="noopener">https://github.com/rack/rack/blob/028438ffffd95ce1f6197d38c04fa5ea6a034a85/lib/rack/server.rb#L157</a></p>
+<p><code>development</code>と<code>deployment</code>に該当しない場合はmiddlewareは何も使われないようです。</p>
+<p><a href="https://github.com/rack/rack/blob/028438ffffd95ce1f6197d38c04fa5ea6a034a85/lib/rack/server.rb#L228" target="_blank" rel="noopener">https://github.com/rack/rack/blob/028438ffffd95ce1f6197d38c04fa5ea6a034a85/lib/rack/server.rb#L228</a></p>
+<p>ここを間違えて<code>production</code>と設定する例を時々見るのですが、<code>production</code>は存在しないので、<code>none</code>と同じ挙動となります。<br>capistrano3-unicornのソースコードを見てみると、<code>production</code>を指定した場合<code>deployment</code>を設定するようになっていました。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set <span class="symbol">:unicorn_rack_env</span>, -&gt; &#123; fetch(<span class="symbol">:rails_env</span>) == <span class="string">"development"</span> ? <span class="string">"development"</span> : <span class="string">"deployment"</span> &#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/tablexi/capistrano3-unicorn/blob/master/lib/capistrano3/tasks/unicorn.rake#L7" target="_blank" rel="noopener">https://github.com/tablexi/capistrano3-unicorn/blob/master/lib/capistrano3/tasks/unicorn.rake#L7</a></p>
+<p>unicornはちょっと挙動を変えていて、<code>development</code>と<code>deployment</code>のときは ShowExceptionsとLintは読み込まないようです。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> ENV[<span class="string">"RACK_ENV"</span>]</span><br><span class="line"><span class="keyword">when</span> <span class="string">"development"</span></span><br><span class="line"><span class="keyword">when</span> <span class="string">"deployment"</span></span><br><span class="line">  middleware.delete(<span class="symbol">:ShowExceptions</span>)</span><br><span class="line">  middleware.delete(<span class="symbol">:Lint</span>)</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="keyword">return</span> inner_app</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/defunkt/unicorn/blob/master/lib/unicorn.rb#L79" target="_blank" rel="noopener">https://github.com/defunkt/unicorn/blob/master/lib/unicorn.rb#L79</a></p>
+<h3 id="Sinatraの環境変数"><a href="#Sinatraの環境変数" class="headerlink" title="Sinatraの環境変数"></a>Sinatraの環境変数</h3><p>SinatraはRACK_ENVとenvironmentという環境変数が2つありややこしいです。<br>基本的には、environmentを定義して使います。<br>異なる環境で実行したい場合、RACK_ENVを指定することができます(これが混乱のもと)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">異なる環境を走らせるには、RACK_ENV環境変数を設定します。</span><br><span class="line">RACK_ENV&#x3D;production ruby my_app.rb</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/sinatra/sinatra/blob/4c7d38eb1b2cc02ce51029f28e0c3c34ca12ccfd/README.ja.md#%E7%92%B0%E5%A2%83%E8%A8%AD%E5%AE%9Aenvironments" target="_blank" rel="noopener">https://github.com/sinatra/sinatra/blob/4c7d38eb1b2cc02ce51029f28e0c3c34ca12ccfd/README.ja.md#%E7%92%B0%E5%A2%83%E8%A8%AD%E5%AE%9Aenvironments</a></p>
+<p><code>set :environment, :production</code> と定義して、<code>RACK_ENV=development ruby my_app.rb</code> を実行してみました。<br>このときの <code>settings.production?</code>の戻り値は何になるでしょうか。<br>trueとなり、productionと判定されます。<br>set :environmentで指定されたもので判定されるようです。</p>
+<p>まとめると以下のような挙動になります。</p>
+<ul>
+<li>set :environment が指定されているときは指定された値が使われる</li>
+<li>set :environment が指定されていないときは RACK_ENVが使われる</li>
+<li>set :environment も RACK_ENVも指定されていないときは developmentになる</li>
+</ul>
+<p>ここで1つ気になることがでてきました。<br>capistrano3-unicornを使った場合は、RACK_ENVはdeploymentが指定されます。<br>Sinatraで <code>set :environment</code> を設定しなかった場合はRACK_ENVの値が優先されます。<br>ということは、本番環境でも<code>settings.production?</code>がfalseとなってしまいます。<br>これは意図しない挙動ですね。<br>また、テンプレートのキャッシュについても効かなくなってしまいます。</p>
+<h3 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h3><p>Sinatraではset :environment を明示的に指定しましょう。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set <span class="symbol">:environment</span>, ENV[<span class="string">"RACK_ENV"</span>] == <span class="string">"deployment"</span>? <span class="symbol">:production</span> : ENV[<span class="string">"RACK_ENV"</span>].to_sym</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li><a href="https://blog.kksg.net/posts/unicorn-environment" target="_blank" rel="noopener">https://blog.kksg.net/posts/unicorn-environment</a></li>
+<li><a href="http://unicorn.bogomips.org/unicorn_1.html#TOC" target="_blank" rel="noopener">http://unicorn.bogomips.org/unicorn_1.html#TOC</a></li>
+<li><a href="https://github.com/sinatra/sinatra/blob/4c7d38eb1b2cc02ce51029f28e0c3c34ca12ccfd/README.ja.md#%E7%92%B0%E5%A2%83%E8%A8%AD%E5%AE%9Aenvironments" target="_blank" rel="noopener">https://github.com/sinatra/sinatra/blob/4c7d38eb1b2cc02ce51029f28e0c3c34ca12ccfd/README.ja.md#%E7%92%B0%E5%A2%83%E8%A8%AD%E5%AE%9Aenvironments</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-04-28T04:36:36.000Z" itemprop="datepublished">
             2016/04/28
           </time>
@@ -361,62 +409,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
     
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-04-22T04:59:35.000Z" itemprop="datepublished">
-            2016/04/22
-          </time>
-          <time datetime="2016-04-22T04:59:35.000Z" itemprop="modified">
-            (更新日: 2016/04/22)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/04/22/what-is-nat/">NAT・NAPT・ポートフォワーディングの違いとは</a>
-        </h1>
-        <div class="content">
-          <p>ネットワークの話しによくNATという言葉が出てくるので整理した。<br>また、NAPT・ポートフォワーディングについても理解しておいたほうが理解が深まると思ったのでまとめておいた。</p>
-<h2 id="NATとは"><a href="#NATとは" class="headerlink" title="NATとは"></a>NATとは</h2><p>NAT(Network Address Translation)はIPアドレスを変換する技術である。<br>具体的にはプライベートIPアドレスをグローバルIPアドレスに変換する、もしくは、グローバルIPアドレスをプライベートIPアドレスに変換する。</p>
-<h3 id="なぜNATが必要か"><a href="#なぜNATが必要か" class="headerlink" title="なぜNATが必要か"></a>なぜNATが必要か</h3><p>グローバルIPアドレスを節約するためである。<br>インターネットに接続するにはグローバルIPアドレスが必要である。<br>プライベートIPアドレスではインターネットに接続することができないという決まりになっている。</p>
-<p>インターネットに接続するには、PC全てにグローバルIPを割り振るのが最も単純な方法である。<br>しかし、全てにグローバルIPアドレスを割り振っていてはすぐにIPアドレスは枯渇してしまう。</p>
-<p>では、どうするか。<br>LANからインターネットに通信するときにプライベートIPアドレスをグローバルIPアドレスに変換してやればいいのではないか。<br>それを実現するのがNATである。  </p>
-<p>具体的にはLANからインターネットに通信するときは、ヘッダの送信元IPをグローバルIPに書き換える。<br>インターネットからLANに通信するときは、ヘッダの宛先IPをプライベートIPに書き換える。</p>
-<p>NATがやることはこれだけである(多分)。</p>
-<p>しかし、NATには大きな問題がある。<br>複数のクライアントPCがある場合、NATはどのプライベートIPに変換すればいいかわからないのだ。</p>
-<p>その問題を解決するのが、NAPT(Network Address Port Translation)である。</p>
-<h2 id="NAPTとは"><a href="#NAPTとは" class="headerlink" title="NAPTとは"></a>NAPTとは</h2><p>複数のクライアントPCがある場合、NATはどのプライベートIPに変換すればいいかわからない。<br>その問題を解決するのがNAPTである。</p>
-<p>NAPTはIPアドレスに加えてポートも管理する。<br>このポートを使ってクライアントPCを特定する。<br>例えば、PC(A)の場合は通信のポート番号を100、PC(B)の場合は通信のポート番号を200とする。<br>すると、通信先のサーバーから異なったポート番号宛にデータが戻って来る。<br>ポート番号100に戻ってきたデータはPC(A)に戻してやればいいわけである。  </p>
-<p>NAPTはIPマスカレードとも呼ばれる。</p>
-<h2 id="NATの弊害"><a href="#NATの弊害" class="headerlink" title="NATの弊害"></a>NATの弊害</h2><p>NATを使うとインターネットからLANへの通信ができないという問題がある。<br>インターネットからの通信の場合、どのクライアントPCのプライベートIPアドレスに変換すればいいかがわからないため、クライアントPCに通信が届かないのだ。<br>これは、セキュリティ的にみると安全だ。<br>NATの内側にいるクライアントPCには外部からの通信が届かないからである。</p>
-<p>外部からの通信を届けたい場合はどうすればいいか。<br>ポートフォワーディングを使えばいい。</p>
-<h2 id="ポートフォワーディングとは"><a href="#ポートフォワーディングとは" class="headerlink" title="ポートフォワーディングとは"></a>ポートフォワーディングとは</h2><p>インターネットから特定のポート番号宛に通信が届いたときにあらかじめ設定しておいたLAN側の機器にパケットを転送する機能である。<br>例えば、宛先ポートが80宛のパケットは、LAN側の192.168.1.1の機器へ転送するといった設定ができる。<br>このようにあらかじめ転送するポートとクライアントPCのIPアドレスを登録しておくことで外部からの通信が行えるようになる。</p>
-<p>ポートフォワーディングは静的IPマスカレードとも呼ばれる。</p>
-<h2 id="おすすめの書籍"><a href="#おすすめの書籍" class="headerlink" title="おすすめの書籍"></a>おすすめの書籍</h2><p>ネットワークについては様々な書籍があるが私は以下の書籍をおすすめする。</p>
-<h3 id="ネットワークはなぜつながるのか"><a href="#ネットワークはなぜつながるのか" class="headerlink" title="ネットワークはなぜつながるのか"></a>ネットワークはなぜつながるのか</h3><p>ネットワークの概要についてわかりやすく解説してある。初学者にお勧め。</p>
-<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=syoyama-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4822283119&linkId=f0180a64f0c324f0f26456536a0feed3"></iframe>
-
-<h3 id="マスタリングTCP-IP-入門編"><a href="#マスタリングTCP-IP-入門編" class="headerlink" title="マスタリングTCP/IP 入門編"></a>マスタリングTCP/IP 入門編</h3><p>ネットワークの理論についてわかりやすく解説してある。知人のネットワークの専門家もこの書籍をおすすめしていた。</p>
-<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=syoyama-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4274068765&linkId=394f3cca6b2bd67ea0333de41b8980c5"></iframe>
-
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
-<li>1.2.4 NAT・NAPTとIPアドレス<ul>
-<li><a href="http://www.arearesearch.co.jp/learn/ip/07.html" target="_blank" rel="noopener">http://www.arearesearch.co.jp/learn/ip/07.html</a></li>
-</ul>
-</li>
-<li>アドレス変換の弊害<ul>
-<li><a href="http://www.itbook.info/study/nat5.html" target="_blank" rel="noopener">http://www.itbook.info/study/nat5.html</a></li>
-</ul>
-</li>
-</ul>
-
-        </div>
-      </div>
-    
   </div>
 
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/24/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><a class="page-number" href="/page/27/">27</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/26/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/24/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><a class="page-number" href="/page/27/">27</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/26/">Next</a>
 </div>
 
             

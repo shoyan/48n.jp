@@ -150,6 +150,51 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-06-15T04:42:55.000Z" itemprop="datepublished">
+            2016/06/15
+          </time>
+          <time datetime="2016-06-15T04:42:55.000Z" itemprop="modified">
+            (更新日: 2016/06/15)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/06/15/whenever-cannot-load-such-file/">capistrano/wheneverで cannot load such fileがでる</a>
+        </h1>
+        <div class="content">
+          <p>wheneverを導入するため<code>Capfile</code>に <code>require &quot;whenever/capistrano&quot;</code>と定義して <code>bundle exec cap -T</code> とすると以下のエラーがでた。</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">LoadError:</span> cannot load such file -- /Users<span class="meta-keyword">/shoyan/</span>app<span class="meta-keyword">/vendor/</span>bundle<span class="meta-keyword">/ruby/</span><span class="number">2.2</span><span class="number">.0</span><span class="meta-keyword">/gems/</span>whenever<span class="number">-0.9</span><span class="number">.5</span><span class="meta-keyword">/lib/</span>whenever<span class="meta-keyword">/tasks/</span>whenever.rake</span><br></pre></td></tr></table></figure>
+
+<p>実際に<code>vendor/bundle/ruby/2.2.0/gems/whenever-0.9.5/lib/whenever/tasks/whenever.rake</code> を確認してみると、たしかにそのファイルが存在しない。</p>
+<p>wheneverのリポジトリを見てみると、シンボリックリンクがはってあった。  </p>
+<p><code>bundle install</code> したときにはシンボリックリンクがはられないようだ。</p>
+<p>手元のRubyのバージョンは、2.2.4だった。</p>
+<p>ruby2.3.1で実行してみると <code>Gem::Package::PathError</code> が発生した。</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR:  <span class="keyword">While</span> executing gem ... (Gem::<span class="keyword">Package</span>::PathError)</span><br><span class="line">    installing <span class="keyword">into</span> parent path <span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/g</span>ems<span class="regexp">/2.3.0/g</span>ems<span class="regexp">/capistrano/</span>v3<span class="regexp">/tasks/</span>whenever.rake of <span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/g</span>ems<span class="regexp">/2.3.0/g</span>ems<span class="regexp">/whenever-0.9.5 is not allowed</span></span><br></pre></td></tr></table></figure>
+
+<p>このエラーはRuby2.3.2では直っていることが期待される。</p>
+<ul>
+<li><a href="https://github.com/rubygems/rubygems/issues/1448#issuecomment-218355005" target="_blank" rel="noopener">https://github.com/rubygems/rubygems/issues/1448#issuecomment-218355005</a></li>
+</ul>
+<h2 id="回避策"><a href="#回避策" class="headerlink" title="回避策"></a>回避策</h2><p>Capfileでの指定はやめて、<code>lib/capistrano/tasks</code> 以下にwhenever.taskを作成した。<br>これでcapのタスク自体は実行できるようになった。<br>しかし、ruby2.3.1の環境ではbundle installがこけるのでwheneverの導入自体ができないという状況。</p>
+<h2 id="その後"><a href="#その後" class="headerlink" title="その後"></a>その後</h2><p>bundle installがこけるバグは以下のPRがでており0.9.6で修正されていた。</p>
+<ul>
+<li><a href="https://github.com/javan/whenever/pull/633" target="_blank" rel="noopener">https://github.com/javan/whenever/pull/633</a></li>
+</ul>
+<p>また、0.9.5では <code>cap whenever:update_crontab</code> で <code>instance variable @_env not defined</code> が発生してコマンドが正常に実行できないバグがあったが、0.9.7で修正されている。</p>
+<ul>
+<li><a href="https://github.com/javan/whenever/issues/634" target="_blank" rel="noopener">https://github.com/javan/whenever/issues/634</a></li>
+</ul>
+<p>実はこのバグは自分が踏んでおり、その修正案をPRしてCHANGELOGに名前が刻まれた。</p>
+<ul>
+<li><a href="https://github.com/javan/whenever/pull/636" target="_blank" rel="noopener">https://github.com/javan/whenever/pull/636</a></li>
+<li><a href="https://github.com/javan/whenever/commit/5aa0ccfa53e87bda43e92da005d781a4b5a8d5a5" target="_blank" rel="noopener">https://github.com/javan/whenever/commit/5aa0ccfa53e87bda43e92da005d781a4b5a8d5a5</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-06-14T04:34:48.000Z" itemprop="datepublished">
             2016/06/14
           </time>
@@ -330,61 +375,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
     
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-06-06T10:33:59.000Z" itemprop="datepublished">
-            2016/06/06
-          </time>
-          <time datetime="2016-06-06T10:33:59.000Z" itemprop="modified">
-            (更新日: 2016/06/06)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/06/06/guide-tcpwrappers/">TCPWrappersとは何なのかを調べてみた</a>
-        </h1>
-        <div class="content">
-          <p>sshのハンドシェイクでこけてしまい、その原因がわからずハマりました。<br>原因としては、TCPWrappersで拒否されていました。<br>TCPWrappersとはなんだろうということで調べてみました。</p>
-<h2 id="TCPWrappersとは"><a href="#TCPWrappersとは" class="headerlink" title="TCPWrappersとは"></a>TCPWrappersとは</h2><p>TCPWrapperとは、ネットワークのアクセス制御をする機能です。<br>デフォルトでインストールされています。</p>
-<h2 id="Linuxの基本的なアクセス制御の仕組み"><a href="#Linuxの基本的なアクセス制御の仕組み" class="headerlink" title="Linuxの基本的なアクセス制御の仕組み"></a>Linuxの基本的なアクセス制御の仕組み</h2><p><img src="https://www.centos.org/docs/5/html/Deployment_Guide-en-US/images/tcp-wrappers/tcp_wrap_diagram.png" alt="Access Control to Network Services"></p>
-<p>アクセス制御の仕組みとして、FirewallとTCP Wrappersがあります。<br>Firewallはiptablesで制御します。<br>なぜ2つの仕組みが存在するのかはわかりません（誰か教えてください）。</p>
-<p>クライアント→Firewall→TCPWrappers→サービスという流れで処理を行います。<br>TCPWrappersは接続を許可するかどうかのファイルを参照し、許可リストにあればサービスに処理を受け渡します。</p>
-<p>処理のログはsyslog daemon (syslogd)によってクライアントと接続先サービスの情報を <code>/var/log/secure</code> または <code>/var/log/messages</code> に書き込まれます。</p>
-<h2 id="TCPWrappersのアドバンテージ"><a href="#TCPWrappersのアドバンテージ" class="headerlink" title="TCPWrappersのアドバンテージ"></a>TCPWrappersのアドバンテージ</h2><p>TCPWrappersを使うことで、以下のメリットがあるとのこと。</p>
-<ul>
-<li>接続したクライアントとそのサービスがログに残る</li>
-<li>様々なプロトコルを集約して管理できる</li>
-</ul>
-<p>##TCPWrappersの設定ファイル</p>
-<p>以下の2つのファイルがあります。</p>
-<ul>
-<li>/etc/hosts.allow</li>
-<li>/etc/hosts.deny</li>
-</ul>
-<p>TCPWrappersはクライアントからのリクエストを受けると、以下の処理を行います。</p>
-<ul>
-<li><code>/etc/hosts.allow</code> を参照します。クライアントがリストに存在した場合、接続を許可します。リストに存在しない場合は次のステップに進みます。</li>
-<li><code>/etc/hosts.deny</code>を参照します。クライアントがリストに存在した場合、接続を拒否します。リストにない場合は接続を許可します。</li>
-</ul>
-<h3 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h3><ul>
-<li><code>/etc/hosts.allow</code>から先に評価され、そこでリストに一致した場合<code>/etc/hosts.deny</code>は評価されません。<code>/etc/hosts.allow</code>と<code>/etc/hosts.deny</code>に同じクライアントを指定した場合は<code>/etc/hosts.allow</code>が優先されます。</li>
-<li>ファイルの上から評価されていき、一致した時点で評価を打ち切ります。順番が重要です。</li>
-<li>TCPWrappersはキャッシュを持ちません。ですので、設定ファイルを書き換えたら即反映されます。デーモンをリスタートする必要はありません。</li>
-<li>最後に改行を含めるとエラーメッセージが出るとのことなので、含めないほうがよさそうです。<code>warning: /etc/hosts.allow, line 20: missing newline or line too long</code>というメッセージが <code>/var/log/messages</code> または <code>/var/log/secure</code>に出力されるとのことです。</li>
-</ul>
-<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
-<li><a href="http://lpi.or.jp/column/linux/linux_m06.shtml" target="_blank" rel="noopener">【第6回】TCPWrappers(hosts.allow,hosts.deny)とSSHの公開鍵認証について</a></li>
-<li><a href="https://www.centos.org/docs/5/html/Deployment_Guide-en-US/ch-tcpwrappers.html" target="_blank" rel="noopener">42.5. TCP Wrappers and xinetd</a></li>
-</ul>
-
-        </div>
-      </div>
-    
   </div>
 
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/19/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><a class="page-number" href="/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/21/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/19/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><a class="page-number" href="/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/21/">Next</a>
 </div>
 
             

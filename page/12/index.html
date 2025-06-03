@@ -150,6 +150,41 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-09-17T07:36:10.000Z" itemprop="datepublished">
+            2016/09/17
+          </time>
+          <time datetime="2016-09-17T07:36:10.000Z" itemprop="modified">
+            (更新日: 2016/09/17)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/09/17/sim/">SIMについて</a>
+        </h1>
+        <div class="content">
+          <p>SIMといえば携帯電話やスマートフォンに入っているカードという認識はありましたが、そのSIMについて調べてみました。</p>
+<h2 id="SIMの概要"><a href="#SIMの概要" class="headerlink" title="SIMの概要"></a>SIMの概要</h2><p>SIMとは Subscriber Identity Module = 加入者IDモジュール の頭文字をとったものです。<br>それをカード状にしたものが「SIMカード」と呼ばれています。<br>つまり一種のIDカードです。<br>また、簡単に情報が盗まれないような仕組みも入っています。</p>
+<h2 id="SIMの中に入っている情報"><a href="#SIMの中に入っている情報" class="headerlink" title="SIMの中に入っている情報"></a>SIMの中に入っている情報</h2><h3 id="電話番号"><a href="#電話番号" class="headerlink" title="電話番号"></a>電話番号</h3><p>SIMが内部に保持している情報の代表的なものが電話番号です。<br>電話番号は国際的に一意になるよう定められており、国番号と加入者電話番号の組み合わせにより世界中で唯一無二の存在になります。<br>例えば、090-1234-5678のSIMカードを持っている人は、日本からはその番号が、海外からは国番号を表す「+」記号と日本の国番号「81」を先頭につけて「+81-90-1234-5678」がそのSIMへの電話番号となります。<br>090ではなく90となっているのは理由があります。<br>実はこの省略された0は電話番号の一部ではなく、「国内プリフィックス」と呼ばれる、国内への電話番号だよということを電話に識別させるための識別番号なのです。<br>ですので、日本から電話をかけるときは  「0」、海外から電話をかけるときは「81」に変わるわけです。</p>
+<h3 id="ICCID-ICカードID"><a href="#ICCID-ICカードID" class="headerlink" title="ICCID(ICカードID)"></a>ICCID(ICカードID)</h3><p>国際電気通信連合で定められた、すべてのICカードを一意に識別するためのIDです。<br>クレジットカードにも使われています。<br>構成は以下です([]の中の数字は桁数です)。</p>
+<p>| [2]産業識別(電気通信=89) | [2]国番号(日本81) | [3]事業者番号(ドコモ=100, SB=200, KDDI=300) | [11]カード番号 | [1]チェックデジット |</p>
+<h3 id="IMSI-International-Mobile-Subscriber-ID-国際的な端末加入者識別番号"><a href="#IMSI-International-Mobile-Subscriber-ID-国際的な端末加入者識別番号" class="headerlink" title="IMSI(International Mobile Subscriber ID = 国際的な端末加入者識別番号)"></a>IMSI(International Mobile Subscriber ID = 国際的な端末加入者識別番号)</h3><p>SIMカードで最も重要な情報です。<br>SIMカードの通信上の根本となるもので、1枚のSIMカードに固有の一意な番号が与えられおり、世界で一意に識別できる番号です。<br>構成は以下です。</p>
+<p>| [3]MCC(国番号 日本=440) | [2]MNC(事業者番号 ドコモ=10, SB=20, KDDI=50/54) | [最大10]MSIN |</p>
+<h3 id="MSISDN-Mobile-Subscriber-ISDN-Number-電話番号"><a href="#MSISDN-Mobile-Subscriber-ISDN-Number-電話番号" class="headerlink" title="MSISDN(Mobile Subscriber ISDN Number = 電話番号)"></a>MSISDN(Mobile Subscriber ISDN Number = 電話番号)</h3><p>キャリアと契約するとキャリアから与えられる番号で、いわゆる電話番号です。<br>これはSIMカード固有ではなく、キャリアがどのSIMカードにこの番号を書くかを決定します。</p>
+<p>構成は以下です。</p>
+<p>| [3]CC(国番号 日本=81) | [2]NDC(国内宛先番号 90など) | [最大10]加入者番号(電話番号) |</p>
+<p>例えば、090-1234-5678の番号の場合は <code>|81|90|12345678|</code> となります。</p>
+<h2 id="SIMの利点"><a href="#SIMの利点" class="headerlink" title="SIMの利点"></a>SIMの利点</h2><p>SIMカードを使う利点は、端末と電話番号の切り離しができることです。<br>つまり、端末からSIMカードを抜いてしまえば電話番号はまったく残らないことになります。<br>これにより以下のメリットがあります。</p>
+<ul>
+<li><p>ユーザーはSIMを抜いて別の端末に挿せば様々な端末を同じ電話番号で使えるようになります。これにより、新しい端末が出た際にSIMカードを挿せば同じ電話番号ですぐ使うといったことができ、機種を変えることが容易になります。</p>
+</li>
+<li><p>端末と電話番号が結合していると、必然的にキャリアの力が上になります（というのもメーカーは端末を作ったらキャリアに電話番号をつけてもらわないといけなくなるため）。SIMカードによって端末と電話番号が分離することで、メーカーはキャリアの意向に関係なく自由に端末を作ってマーケティングすることが可能となります。</p>
+</li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-09-16T08:37:10.000Z" itemprop="datepublished">
             2016/09/16
           </time>
@@ -288,34 +323,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
     
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-09-07T09:30:13.000Z" itemprop="datepublished">
-            2016/09/07
-          </time>
-          <time datetime="2016-09-07T09:30:13.000Z" itemprop="modified">
-            (更新日: 2016/09/07)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/09/07/reading-a-novel-and-thinking-life/">高任和夫の「起業前夜」を読了した</a>
-        </h1>
-        <div class="content">
-          <p>私は本が好きで常に何かしらの本を読んでいる。</p>
-<p>最近、高任和夫の「起業前夜」を読了した。<br>商社のサラリーマンが会社の闇に気づいて、それをなんとかしようとする話しだ。<br>その過程で様々な人と出会い、主人公は自分の人生や幸福について考えることになる。</p>
-<p>社会人になってから小説は読むのに時間がかかるのでそれとなく敬遠していたのだが、小説を読む必要性があるのではないかと考えを改めた。<br>最近、視野が狭くなっていると感じている。<br>同じオフィスで働く毎日を繰り返すと、どうしてもその日常での視点で物事を見てしまう。<br>その組織の常識が自分の常識となり、それはどうもおもしろくない。<br>そんなことを考えず、ただ目の前の仕事をこなしそれでうまくいけばいいのだが私はそうではないので、視野を広げてみようと思ったのが小説を読むきっかけである。</p>
-<p>そういう理由なので、サラリーマンが題材の小説を中心に読むつもりだ。<br>職種は違えど、会社に勤めるサラリーマンであれば皆似たような悩みや問題を持っていると思う。<br>それをどのように解決し成長していくのかを学び、あわよくば取り込んでしまおうと思っている。</p>
-<p>「起業前夜」の次は何を読むのかというと、楡周平の「プラチナタウン」だ。<br>寂れた地方を元気にしていく内容の小説。<br>色々と学べることがありそうで楽しみだ。</p>
-
-        </div>
-      </div>
-    
   </div>
 
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/11/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/13/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/11/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/13/">Next</a>
 </div>
 
             
