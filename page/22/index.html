@@ -150,6 +150,63 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-05-31T09:03:46.000Z" itemprop="datepublished">
+            2016/05/31
+          </time>
+          <time datetime="2016-05-31T09:03:46.000Z" itemprop="modified">
+            (更新日: 2016/05/31)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/05/31/tips-for-nginx-cookbook/">NginxのCookbookでハマった</a>
+        </h1>
+        <div class="content">
+          <p>Nginxのcookbookでversionを指定しているのに、指定したバージョンでインストールされない問題でハマった。</p>
+<p><a href="https://supermarket.chef.io/cookbooks/nginx" target="_blank" rel="noopener">https://supermarket.chef.io/cookbooks/nginx</a></p>
+<h2 id="結果としてわかったこと"><a href="#結果としてわかったこと" class="headerlink" title="結果としてわかったこと"></a>結果としてわかったこと</h2><p>パッケージでインストールする場合はバージョンが指定できない。<br>バージョンを指定したい場合はソースでインストールする必要がある。  </p>
+<p>Nginx cookbookはパッケージでのインストールかソースでのインストールのいずれかを選ぶことができる。<br>デフォルトはパッケージである。<br>ソースでインストールしたい場合は、<code>node[&#39;nginx&#39;][&#39;install_method’]=&#39;source&#39;</code> とする必要がある。<br><code>install_method</code>を指定したときにはじめてversionの指定が可能となる。</p>
+<h2 id="立ちはだかる様々な問題"><a href="#立ちはだかる様々な問題" class="headerlink" title="立ちはだかる様々な問題"></a>立ちはだかる様々な問題</h2><h3 id="versionが反映されない"><a href="#versionが反映されない" class="headerlink" title="versionが反映されない"></a>versionが反映されない</h3><p><code>attributes/default.rb</code>にversionを定義してみたが、指定されたバージョンがインストールされない問題にハマった。<br>デフォルトである、1.4.4がインストールされている。</p>
+<h4 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h4><p>rolesのoverride_attributesとして指定すると指定されたバージョンがインストールされた。<br>基本的にvendor cookbookの値の定義はroleのoverride_attributeで指定したほうがいいのかもしれない。<br>とはいえ、パラメーターによっては上書きされる場合もあってそのあたりの挙動がよくわかっていない。</p>
+<h3 id="Checksumを指定しないといけない"><a href="#Checksumを指定しないといけない" class="headerlink" title="Checksumを指定しないといけない"></a>Checksumを指定しないといけない</h3><p>sourceからインストールする場合、checksumを設定する必要がある。<br>checksumは以下のようにして作成できる。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">shasum</span> <span class="selector-tag">-a</span> 256 <span class="selector-tag">nginx-x</span><span class="selector-class">.x</span><span class="selector-class">.x</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></span><br></pre></td></tr></table></figure>
+
+<p>もしくは</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">http:</span><span class="comment">//nginx.org/download/nginx-x.x.x.tar.gz | shasum -a 256</span></span><br></pre></td></tr></table></figure>
+
+<p>checksumは <code>node[&#39;nginx&#39;][&#39;source&#39;][&#39;checksum’]</code> に指定する。</p>
+<h2 id="ChefのAttributeの優先順位について"><a href="#ChefのAttributeの優先順位について" class="headerlink" title="ChefのAttributeの優先順位について"></a>ChefのAttributeの優先順位について</h2><p>マニュアルによると、以下のようになっている(しかし、versionをoverrideで定義しても上書きできなかった)。</p>
+<ul>
+<li>A default attribute located in a cookbook attribute file</li>
+<li>A default attribute located in a recipe</li>
+<li>A default attribute located in an environment</li>
+<li>A default attribute located in role</li>
+<li>A force_default attribute located in a cookbook attribute file</li>
+<li>A force_default attribute located in a recipe</li>
+<li>A normal attribute located in a cookbook attribute file</li>
+<li>A normal attribute located in a recipe</li>
+<li>An override attribute located in a cookbook attribute file</li>
+<li>An override attribute located in a recipe</li>
+<li>An override attribute located in a role</li>
+<li>An override attribute located in an environment</li>
+<li>A force_override attribute located in a cookbook attribute file</li>
+<li>A force_override attribute located in a recipe</li>
+<li>An automatic attribute identified by Ohai at the start of the chef-client run</li>
+</ul>
+<p><a href="https://docs.chef.io/attributes.html#attribute-precedence" target="_blank" rel="noopener">https://docs.chef.io/attributes.html#attribute-precedence</a></p>
+<h2 id="Attributeの使い分けについて"><a href="#Attributeの使い分けについて" class="headerlink" title="Attributeの使い分けについて"></a>Attributeの使い分けについて</h2><p>以下のようにルール決めをしているという記事もあった。</p>
+<blockquote>
+<p>Attributeファイル=&gt;文言変更<br>recipeファイル=&gt;テスト的に変えたいものがある時のみ。本番では消す。<br>Environmentファイル=&gt;development(開発）,alpha(実験用)、staging(テスト)、production（本番）でのIPやOSバージョンの違い。同じ構成が複数台ある時もここで区別。<br>Role=&gt;ミドルウェアのバージョン違い</p>
+</blockquote>
+<p><a href="http://dev.classmethod.jp/server-side/chef/attribute-overrides-pattern/" target="_blank" rel="noopener">http://dev.classmethod.jp/server-side/chef/attribute-overrides-pattern/</a></p>
+<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
+<li><a href="http://stackoverflow.com/questions/27366774/chefexceptionschecksummismatch-when-installing-nginx-1-7-8-from-source" target="_blank" rel="noopener">http://stackoverflow.com/questions/27366774/chefexceptionschecksummismatch-when-installing-nginx-1-7-8-from-source</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-05-31T04:58:42.000Z" itemprop="datepublished">
             2016/05/31
           </time>
@@ -343,36 +400,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h2 id="関連記事"><a href="#関連記事" class="headerlink" title="関連記事"></a>関連記事</h2><ul>
 <li><a href="/blog/2016/12/07/guard-rubocop/">Guardでrubocopを自動化する</a></li>
 </ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-05-20T08:40:56.000Z" itemprop="datepublished">
-            2016/05/20
-          </time>
-          <time datetime="2016-05-20T08:40:56.000Z" itemprop="modified">
-            (更新日: 2016/05/20)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/05/20/does-not-proceed-worker-is-blocked-processing-of-chef/">Chefのworkerが詰まって処理が進まなくなった</a>
-        </h1>
-        <div class="content">
-          <p>chefを実行したらこんなメッセージがでた。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARN: Chef<span class="built_in"> client </span>24431 is running, will wait <span class="keyword">for</span> it <span class="keyword">to</span> finish <span class="keyword">and</span> then run.</span><br></pre></td></tr></table></figure>
-
-<p>前回実行したChefが途中で詰まってしまい、ウンともスンとも言わなくなったので Ctrl + Cでとめたが、プロセス自体は残ってしまっている。</p>
-<p>こんな感じで2つchef-clientのworkerが立ち上がっている状態。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[<span class="symbol">shoyan@</span>server01 ~]$ ps aux | grep chef</span><br><span class="line">root     <span class="number">24373</span>  <span class="number">0.0</span>  <span class="number">0.1</span> <span class="number">178168</span>  <span class="number">2992</span> ?        Ss   <span class="number">10</span>:<span class="number">22</span>   <span class="number">0</span>:<span class="number">00</span> sudo -p knife sudo password:  chef-client -S http:<span class="comment">//127.0.0.1:18889</span></span><br><span class="line">root     <span class="number">24426</span>  <span class="number">0.0</span>  <span class="number">3.1</span> <span class="number">262164</span> <span class="number">61072</span> ?        Sl   <span class="number">10</span>:<span class="number">22</span>   <span class="number">0</span>:<span class="number">01</span> /opt/chef/embedded/bin/ruby /usr/bin/chef-client -S http:<span class="comment">//127.0.0.1:18889</span></span><br><span class="line">root     <span class="number">24431</span>  <span class="number">0.0</span>  <span class="number">7.1</span> <span class="number">1078932</span> <span class="number">138052</span> ?      Sl   <span class="number">10</span>:<span class="number">22</span>   <span class="number">0</span>:<span class="number">03</span> chef-client worker: ppid=<span class="number">24426</span>;start=<span class="number">10</span>:<span class="number">22</span>:<span class="number">49</span>;</span><br><span class="line">root     <span class="number">26701</span>  <span class="number">0.0</span>  <span class="number">0.1</span> <span class="number">178168</span>  <span class="number">2996</span> pts/<span class="number">3</span>    Ss+  <span class="number">10</span>:<span class="number">50</span>   <span class="number">0</span>:<span class="number">00</span> sudo -p knife sudo password:  chef-client -S http:<span class="comment">//127.0.0.1:18889</span></span><br><span class="line">root     <span class="number">26754</span>  <span class="number">0.0</span>  <span class="number">3.1</span> <span class="number">261996</span> <span class="number">60896</span> pts/<span class="number">3</span>    Sl+  <span class="number">10</span>:<span class="number">50</span>   <span class="number">0</span>:<span class="number">01</span> /opt/chef/embedded/bin/ruby /usr/bin/chef-client -S http:<span class="comment">//127.0.0.1:18889</span></span><br><span class="line">root     <span class="number">26759</span>  <span class="number">0.0</span>  <span class="number">3.0</span> <span class="number">261996</span> <span class="number">57760</span> pts/<span class="number">3</span>    Sl+  <span class="number">10</span>:<span class="number">50</span>   <span class="number">0</span>:<span class="number">00</span> chef-client worker: ppid=<span class="number">26754</span>;start=<span class="number">10</span>:<span class="number">50</span>:<span class="number">38</span>;</span><br></pre></td></tr></table></figure>
-
-<p>1時間ほど経過しても何も進まないので、プロセスをkillしてみた。</p>
-<p>TERMシグナルを送ってみたが、反応なし。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">kill</span> -s TERM 24431</span></span><br></pre></td></tr></table></figure>
-
-<p>killシグナルを送るとプロセスが終了し、ペンディング状態となっていたChefが実行された。</p>
-<figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">kill</span> -<span class="keyword">s</span> <span class="keyword">KILL</span> <span class="number">24431</span></span><br></pre></td></tr></table></figure>
 
         </div>
       </div>

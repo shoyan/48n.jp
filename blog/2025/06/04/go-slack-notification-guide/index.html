@@ -1,0 +1,317 @@
+
+  <!DOCTYPE html>
+  <html lang="ja">
+
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-37267422-8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-37267422-8');
+</script>
+
+      <meta charset="UTF-8">
+      <title>
+        GoでSlack通知を実装する方法 - SHOYAN BLOG
+      </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+      
+        <!-- stylesheets list from _config.yml -->
+        
+          <link rel="stylesheet" href="/css/shoyanblog.css">
+          
+            
+              
+                  
+                      
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@sinn_shoyan" />
+<meta name="twitter:creator" content="@sinn_shoyan" />
+<meta name="og:title" content="GoでSlack通知を実装する方法 - SHOYAN BLOG" />
+
+  <meta name="og:description" content="当サイトSHOYAN BLOGは、ソフトウェアエンジニアの山崎勝平(Yamasaki Shohei)が運営するブログです。プログラミングに関連する情報を発信しています。" />
+
+
+  <meta name="og:image" content="https://48n.jp/images/logo.png" />
+
+
+                        <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KQX8LKG');</script>
+<!-- End Google Tag Manager -->
+
+  <meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
+</head>
+
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KQX8LKG"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+      <div id="menu-outer">
+        <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SHOYAN BLOG</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        <a class="nav-link" href="https://twitter.com/sinn_shoyan" target="_blank">
+          <?xml version="1.0" encoding="utf-8"?>
+          <!-- Generator: Adobe Illustrator 20.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+          <svg
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            x="0px"
+            y="0px"
+            viewBox="0 0 400 400"
+            style="enable-background:new 0 0 400 400;"
+            xml:space="preserve"
+            width="25"
+            height="25"
+          >
+            <style type="text/css">
+              .st0 {
+                fill: #1da1f2;
+              }
+              .st1 {
+                fill: #ffffff;
+              }
+            </style>
+            <g id="Dark_Blue">
+              <path
+                class="st0"
+                d="M350,400H50c-27.6,0-50-22.4-50-50V50C0,22.4,22.4,0,50,0h300c27.6,0,50,22.4,50,50v300
+		C400,377.6,377.6,400,350,400z"
+              />
+            </g>
+            <g id="Logo__x2014__FIXED">
+              <path
+                class="st1"
+                d="M153.6,301.6c94.3,0,145.9-78.2,145.9-145.9c0-2.2,0-4.4-0.1-6.6c10-7.2,18.7-16.3,25.6-26.6
+		c-9.2,4.1-19.1,6.8-29.5,8.1c10.6-6.3,18.7-16.4,22.6-28.4c-9.9,5.9-20.9,10.1-32.6,12.4c-9.4-10-22.7-16.2-37.4-16.2
+		c-28.3,0-51.3,23-51.3,51.3c0,4,0.5,7.9,1.3,11.7c-42.6-2.1-80.4-22.6-105.7-53.6c-4.4,7.6-6.9,16.4-6.9,25.8
+		c0,17.8,9.1,33.5,22.8,42.7c-8.4-0.3-16.3-2.6-23.2-6.4c0,0.2,0,0.4,0,0.7c0,24.8,17.7,45.6,41.1,50.3c-4.3,1.2-8.8,1.8-13.5,1.8
+		c-3.3,0-6.5-0.3-9.6-0.9c6.5,20.4,25.5,35.2,47.9,35.6c-17.6,13.8-39.7,22-63.7,22c-4.1,0-8.2-0.2-12.2-0.7
+		C97.7,293.1,124.7,301.6,153.6,301.6"
+              />
+            </g>
+          </svg>
+        </a>
+        
+        <a class="nav-link" href="/atom.xml" title="RSSフィード">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25" viewBox="0 0 100 100">
+            <path
+              class="social"
+              d="M 13.310204,73.332654 C 5.967347,73.332654 0,79.322448 0,86.621428 c 0,7.338776 5.967347,13.262246 13.310204,13.262246 7.370408,0 13.328572,-5.92245 13.328572,-13.262246 0,-7.29898 -5.958164,-13.288774 -13.328572,-13.288774 z M 0.01530612,33.978572 V 53.143878 C 12.493878,53.143878 24.229592,58.02347 33.068368,66.865306 41.894898,75.685714 46.767346,87.47449 46.767346,100 h 19.25 C 66.017346,63.592858 36.4,33.979592 0.01530612,33.978572 l 0,0 z M 0.03877552,0 V 19.17449 C 44.54796,19.17551 80.77551,55.437756 80.77551,100 H 100 C 100,44.87653 55.15102,0 0.03877552,0 z"
+            ></path>
+          </svg>
+        </a>
+         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="https://48n.jp"></form>
+      </nav>
+
+      <nav id="main-nav">
+        
+        <a class="main-nav-link" href="/">Home</a>
+        
+        <a class="main-nav-link" href="/lang/php/">PHP入門</a>
+        
+        <a class="main-nav-link" href="/lesson">プログラミングレッスン</a>
+        
+        <a class="main-nav-link" href="/archives">記事一覧</a>
+        
+        <a class="main-nav-link" href="/about">このページについて</a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+      </div>
+
+      <div id="content-outer">
+        <div id="content-inner">
+          
+<article id="post">
+  <div class="date-box">
+    <time datetime="2025-06-04T01:30:00.000Z" itemprop="datepublished">
+      2025/06/04
+    </time>
+    <time datetime="2025-06-04T03:39:47.774Z" itemprop="modified">
+      (更新日: 2025/06/04)
+    </time>
+  </div>
+  <h1>GoでSlack通知を実装する方法</h1>
+  <div class="post-tags">
+    <a class="post-tags-link" href="/tags/API/" rel="tag">API</a> <a class="post-tags-link" href="/tags/Go/" rel="tag">Go</a> <a class="post-tags-link" href="/tags/Slack/" rel="tag">Slack</a> <a class="post-tags-link" href="/tags/%E9%80%9A%E7%9F%A5/" rel="tag">通知</a>
+  </div>
+  <div class="sharing">
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" target="_blank" rel="noopener" class="twitter-share-button" data-via="sinn_shoyan" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <a href="https://b.hatena.ne.jp/entry/" target="_blank" rel="noopener" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+</div>
+  <h2 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h2><p>Slackは現代のチーム開発において欠かせないコミュニケーションツールです。システムからの通知やアラート、定期的なレポートなど、様々な情報をSlackに送信することで、チーム全体での情報共有を効率化できます。</p>
+<p>この記事では、Goを使ってSlackに通知を送信する方法を、基本的なテキストメッセージから高度なBlock Kitを使ったリッチなメッセージまで、実際のコード例とともに解説します。</p>
+<h2 id="使用するライブラリ"><a href="#使用するライブラリ" class="headerlink" title="使用するライブラリ"></a>使用するライブラリ</h2><p>今回は、<a href="https://github.com/slack-go/slack" target="_blank" rel="noopener"><code>github.com/slack-go/slack</code></a>というGoの公式Slackクライアントライブラリを使用します。このライブラリは活発に開発されており、Slack APIの最新機能もサポートしています。</p>
+<h2 id="セットアップ"><a href="#セットアップ" class="headerlink" title="セットアップ"></a>セットアップ</h2><h3 id="1-Slackアプリの作成とトークンの取得"><a href="#1-Slackアプリの作成とトークンの取得" class="headerlink" title="1. Slackアプリの作成とトークンの取得"></a>1. Slackアプリの作成とトークンの取得</h3><p>まず、<a href="https://api.slack.com/apps" target="_blank" rel="noopener">Slack API</a>でアプリを作成し、Bot User OAuth Tokenを取得する必要があります。</p>
+<ol>
+<li>Slack APIのページにアクセス</li>
+<li>“Create New App” → “From scratch”でアプリを作成</li>
+<li>“OAuth &amp; Permissions”から必要な権限を設定<ul>
+<li><code>users:read</code> - ユーザー一覧の取得</li>
+<li><code>chat:write</code> - メッセージの送信</li>
+<li><code>im:write</code> - ダイレクトメッセージの送信</li>
+</ul>
+</li>
+<li>Bot User OAuth Tokenをコピー</li>
+</ol>
+<h3 id="2-環境変数の設定"><a href="#2-環境変数の設定" class="headerlink" title="2. 環境変数の設定"></a>2. 環境変数の設定</h3><p>取得したトークンを環境変数として設定します。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> SLACK_BOT_TOKEN=<span class="string">"xoxb-your-token-here"</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="基本的な実装"><a href="#基本的な実装" class="headerlink" title="基本的な実装"></a>基本的な実装</h2><h3 id="Slackクライアントの初期化"><a href="#Slackクライアントの初期化" class="headerlink" title="Slackクライアントの初期化"></a>Slackクライアントの初期化</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">"log"</span></span><br><span class="line">    <span class="string">"os"</span></span><br><span class="line">    <span class="string">"github.com/slack-go/slack"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="comment">// Slack APIトークンを環境変数から取得</span></span><br><span class="line">    token := os.Getenv(<span class="string">"SLACK_BOT_TOKEN"</span>)</span><br><span class="line">    <span class="keyword">if</span> token == <span class="string">""</span> &#123;</span><br><span class="line">        log.Fatal(<span class="string">"SLACK_BOT_TOKEN is not set"</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Slackクライアントの初期化</span></span><br><span class="line">    api := slack.New(token)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="ユーザー一覧の取得"><a href="#ユーザー一覧の取得" class="headerlink" title="ユーザー一覧の取得"></a>ユーザー一覧の取得</h3><p>通知を送信する前に、まずワークスペース内のユーザー一覧を取得してみましょう。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getUsers</span><span class="params">(api *slack.Client)</span></span> &#123;</span><br><span class="line">    <span class="comment">// ユーザー一覧を取得</span></span><br><span class="line">    users, err := api.GetUsers()</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Fatalf(<span class="string">"ユーザー一覧の取得に失敗しました: %v"</span>, err)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ユーザー情報を表示</span></span><br><span class="line">    log.Printf(<span class="string">"ワークスペース内のユーザー数: %d\n"</span>, <span class="built_in">len</span>(users))</span><br><span class="line">    <span class="keyword">for</span> i, user := <span class="keyword">range</span> users &#123;</span><br><span class="line">        <span class="comment">// 必要な情報だけを表示（すべての情報を表示するとログが長くなりすぎるため）</span></span><br><span class="line">        log.Printf(<span class="string">"%d: ID=%s, Name=%s, RealName=%s, IsBot=%v\n"</span>,</span><br><span class="line">            i+<span class="number">1</span>, user.ID, user.Name, user.RealName, user.IsBot)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="シンプルなダイレクトメッセージの送信"><a href="#シンプルなダイレクトメッセージの送信" class="headerlink" title="シンプルなダイレクトメッセージの送信"></a>シンプルなダイレクトメッセージの送信</h3><p>ユーザーIDを指定して、シンプルなテキストメッセージを送信する関数です。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">sendDirectMessage</span><span class="params">(api *slack.Client, userID, message <span class="keyword">string</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    <span class="comment">// ユーザーとのDMチャンネルを開く</span></span><br><span class="line">    channel, _, _, err := api.OpenConversation(&amp;slack.OpenConversationParameters&#123;</span><br><span class="line">        Users: []<span class="keyword">string</span>&#123;userID&#125;,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> fmt.Errorf(<span class="string">"DMチャンネルを開けませんでした: %v"</span>, err)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// DMを送信</span></span><br><span class="line">    _, _, err = api.PostMessage(</span><br><span class="line">        channel.ID,</span><br><span class="line">        slack.MsgOptionText(message, <span class="literal">false</span>),</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> fmt.Errorf(<span class="string">"DMの送信に失敗しました: %v"</span>, err)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    log.Printf(<span class="string">"ユーザー %s にDMを送信しました"</span>, userID)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Block-Kitを使った高度なメッセージ"><a href="#Block-Kitを使った高度なメッセージ" class="headerlink" title="Block Kitを使った高度なメッセージ"></a>Block Kitを使った高度なメッセージ</h2><p>Slack Block Kitを使用すると、画像、ボタン、フォーマットされたテキストなどを含む、より視覚的にリッチなメッセージを作成できます。</p>
+<h3 id="Block-Kitメッセージの構築"><a href="#Block-Kitメッセージの構築" class="headerlink" title="Block Kitメッセージの構築"></a>Block Kitメッセージの構築</h3><p>以下は、様々なBlock Kit要素を含むサンプルメッセージの構築例です。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">buildSampleBlockKit</span><span class="params">()</span> <span class="title">slack</span>.<span class="title">MsgOption</span></span> &#123;</span><br><span class="line">    <span class="comment">// Block Kitを使ったメッセージの構築</span></span><br><span class="line">    headerText := slack.NewTextBlockObject(<span class="string">"mrkdwn"</span>, <span class="string">"*ブロックキットのサンプル*"</span>, <span class="literal">false</span>, <span class="literal">false</span>)</span><br><span class="line">    headerSection := slack.NewSectionBlock(headerText, <span class="literal">nil</span>, <span class="literal">nil</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// テキストブロック</span></span><br><span class="line">    textBlock := slack.NewTextBlockObject(<span class="string">"mrkdwn"</span>, <span class="string">"これは `Block Kit` を使ったメッセージです。\n*太字* や _斜体_ などのMarkdownも使えます！"</span>, <span class="literal">false</span>, <span class="literal">false</span>)</span><br><span class="line">    textSection := slack.NewSectionBlock(textBlock, <span class="literal">nil</span>, <span class="literal">nil</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 画像ブロック</span></span><br><span class="line">    accessory := slack.NewImageBlockElement(<span class="string">"https://api.slack.com/img/blocks/bkb_template_images/beagle.png"</span>, <span class="string">"犬の画像"</span>)</span><br><span class="line">    imageText := slack.NewTextBlockObject(<span class="string">"mrkdwn"</span>, <span class="string">"こちらはかわいい犬の画像です :dog:"</span>, <span class="literal">false</span>, <span class="literal">false</span>)</span><br><span class="line">    imageSection := slack.NewSectionBlock(imageText, <span class="literal">nil</span>, slack.NewAccessory(accessory))</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ボタン要素</span></span><br><span class="line">    btnText := slack.NewTextBlockObject(<span class="string">"plain_text"</span>, <span class="string">"クリックしてください"</span>, <span class="literal">false</span>, <span class="literal">false</span>)</span><br><span class="line">    btn := slack.NewButtonBlockElement(<span class="string">"click_button"</span>, <span class="string">"button_clicked"</span>, btnText)</span><br><span class="line">    btnAccessory := slack.NewAccessory(btn)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ボタンセクション</span></span><br><span class="line">    btnSectionText := slack.NewTextBlockObject(<span class="string">"mrkdwn"</span>, <span class="string">"アクションを実行するには:"</span>, <span class="literal">false</span>, <span class="literal">false</span>)</span><br><span class="line">    btnSection := slack.NewSectionBlock(btnSectionText, <span class="literal">nil</span>, btnAccessory)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 区切り線</span></span><br><span class="line">    divider := slack.NewDividerBlock()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// フッターブロック</span></span><br><span class="line">    footerText := slack.NewTextBlockObject(<span class="string">"mrkdwn"</span>, <span class="string">"Block Kitの詳細は &lt;https://api.slack.com/block-kit|こちら&gt; をご覧ください"</span>, <span class="literal">false</span>, <span class="literal">false</span>)</span><br><span class="line">    footerSection := slack.NewSectionBlock(footerText, <span class="literal">nil</span>, <span class="literal">nil</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// すべてのブロックを一つのメッセージにまとめる</span></span><br><span class="line">    <span class="keyword">return</span> slack.MsgOptionBlocks(</span><br><span class="line">        headerSection,</span><br><span class="line">        divider,</span><br><span class="line">        textSection,</span><br><span class="line">        imageSection,</span><br><span class="line">        divider,</span><br><span class="line">        btnSection,</span><br><span class="line">        divider,</span><br><span class="line">        footerSection,</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Block-Kitメッセージの送信"><a href="#Block-Kitメッセージの送信" class="headerlink" title="Block Kitメッセージの送信"></a>Block Kitメッセージの送信</h3><p>構築したBlock Kitメッセージを送信する関数です。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">sendDirectMessageWithBlocks</span><span class="params">(api *slack.Client, userID <span class="keyword">string</span>, blocks slack.MsgOption)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    <span class="comment">// ユーザーとのDMチャンネルを開く</span></span><br><span class="line">    channel, _, _, err := api.OpenConversation(&amp;slack.OpenConversationParameters&#123;</span><br><span class="line">        Users: []<span class="keyword">string</span>&#123;userID&#125;,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> fmt.Errorf(<span class="string">"DMチャンネルを開けませんでした: %v"</span>, err)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ブロックキットメッセージを送信</span></span><br><span class="line">    _, _, err = api.PostMessage(</span><br><span class="line">        channel.ID,</span><br><span class="line">        blocks,</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> fmt.Errorf(<span class="string">"DMの送信に失敗しました: %v"</span>, err)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    log.Printf(<span class="string">"ユーザー %s にブロックキットDMを送信しました"</span>, userID)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="完全なサンプルコード"><a href="#完全なサンプルコード" class="headerlink" title="完全なサンプルコード"></a>完全なサンプルコード</h2><p>以下が、これまでの機能をすべて含んだ完全なサンプルです。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="comment">// Slack APIトークンを環境変数から取得</span></span><br><span class="line">    token := os.Getenv(<span class="string">"SLACK_BOT_TOKEN"</span>)</span><br><span class="line">    <span class="keyword">if</span> token == <span class="string">""</span> &#123;</span><br><span class="line">        log.Fatal(<span class="string">"SLACK_BOT_TOKEN is not set"</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Slackクライアントの初期化</span></span><br><span class="line">    api := slack.New(token)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ユーザー一覧を取得して表示</span></span><br><span class="line">    getUsers(api)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 特定のユーザーにDMを送信</span></span><br><span class="line">    userID := <span class="string">"U02K6JU8D"</span> <span class="comment">// 実際のユーザーIDに置き換えてください</span></span><br><span class="line">    err := sendDirectMessage(api, userID, <span class="string">"これはテストメッセージです！"</span>)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Fatalf(<span class="string">"DMの送信に失敗しました: %v"</span>, err)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ブロックキットを使用したDMを送信</span></span><br><span class="line">    blocks := buildSampleBlockKit()</span><br><span class="line">    err = sendDirectMessageWithBlocks(api, userID, blocks)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Fatalf(<span class="string">"ブロックキットDMの送信に失敗しました: %v"</span>, err)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="実行方法"><a href="#実行方法" class="headerlink" title="実行方法"></a>実行方法</h2><ol>
+<li><p>依存関係をインストール：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go mod tidy</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>環境変数を設定：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> SLACK_BOT_TOKEN=<span class="string">"xoxb-your-token"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>プログラムを実行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run main.go</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="注意事項"><a href="#注意事項" class="headerlink" title="注意事項"></a>注意事項</h2><ol>
+<li><p><strong>レート制限</strong>: Slack APIにはレート制限があります。大量のメッセージを送信する場合は、適切な間隔を設けましょう。</p>
+</li>
+<li><p><strong>エラーハンドリング</strong>: 本番環境では、ネットワークエラーやAPI制限エラーに対する適切なリトライ機構を実装することを推奨します。</p>
+</li>
+<li><p><strong>ユーザーID</strong>: 実際の運用では、ユーザー名からユーザーIDを動的に取得する仕組みを構築することが一般的です。</p>
+</li>
+<li><p><strong>セキュリティ</strong>: Slack APIトークンは機密情報です。ソースコードに直接記述せず、必ず環境変数や設定ファイルから読み込むようにしてください。</p>
+</li>
+</ol>
+<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>この記事では、Goを使ったSlack通知の実装方法を、基本的なテキストメッセージから高度なBlock Kitを使ったリッチなメッセージまで幅広く解説しました。</p>
+<p><code>github.com/slack-go/slack</code>ライブラリを使用することで、Slack APIの豊富な機能を簡単に利用できます。システム監視、定期レポート、チーム内通知など、様々な用途でSlack通知を活用して、より効率的なチーム開発を実現してください。</p>
+<p>Block Kitの詳細については、<a href="https://app.slack.com/block-kit-builder" target="_blank" rel="noopener">Slack Block Kit Builder</a>で実際にブロックを構築しながら学習することをおすすめします。</p>
+
+</article>
+
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2025/06/03/asynq-rate-limiter-implementation-guide/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">Go言語でAsynqにレート制限を実装する</div>
+    </a>
+  
+</nav>
+
+
+
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2025/06/04/go-slack-notification-guide/">GoでSlack通知を実装する方法</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2025/06/03/asynq-rate-limiter-implementation-guide/">Go言語でAsynqにレート制限を実装する</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2025/05/30/go-1-24-3-build-error/">Go 1.24.3アップデート後のビルドエラーと解決方法</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2025/05/30/go-error-handling-best-practice/">Goのエラーハンドリングのベストプラクティス</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2025/02/09/resigned-from-mercari-to-become-a-freelancer/">メルカリを退職してフリーランスになりました</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+            
+    <div class="ltech-ad">
+        <a href="https://learning-tech.jp/" target="_blank" rel="noopener">
+            <img src="https://learning-tech.jp/assets/images/lts-logo.png" alt="LTech - プログラミング学習サイト" width="300">
+            <p>LTech - プログラミング学習ならここで学ぼう</p>
+        </a>
+    </div>
+        </div>
+      </div>
+
+      <footer>
+        <div id="bottom-outer">
+          <div id="bottom-inner">
+            <div id="author-profile">
+              <div id="author">
+                <p>著者情報</p>
+                <a href="/about/">
+                  <img
+                    src="https://avatars1.githubusercontent.com/u/1150041?s=460&u=f615fc39ae1a47862c73b870898620fc9b5e6d60&v=4"
+                    alt="著者">
+                </a>
+                <a href="/about/">
+                  <p class="author-name">山崎勝平</p>
+                </a>
+                <p class="author-introduction">ソフトウェアエンジニア。福岡の郊外でリモートワークをしています。webアプリ開発とプログラミングのレッスンをしています。</p>
+              </div>
+              <div id="twitter-timeline">
+                <a class="twitter-timeline" href="https://twitter.com/sinn_shoyan?ref_src=twsrc%5Etfw" target="_blank" rel="noopener">Tweets by
+                  sinn_shoyan</a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+              </div>
+            </div>
+            <div id="footer-bottom">
+              <p>Copyright ©SHOYAN BLOG</p>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      
+        <!-- scripts list from theme config.yml -->
+        
+          <script src="/js/shoyanblog.js"></script>
+          
+            
+
+  </body>
+
+  </html>

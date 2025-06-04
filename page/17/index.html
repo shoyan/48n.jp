@@ -150,6 +150,80 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-07-15T05:05:31.000Z" itemprop="datepublished">
+            2016/07/15
+          </time>
+          <time datetime="2016-07-15T05:05:31.000Z" itemprop="modified">
+            (更新日: 2016/07/15)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/07/15/learn-iptables/">iptablesことはじめ</a>
+        </h1>
+        <div class="content">
+          <p>iptablesの概念と設定方法を調べました。</p>
+<h2 id="iptablesとは"><a href="#iptablesとは" class="headerlink" title="iptablesとは"></a>iptablesとは</h2><p>iptablesとはパケットをフィルタリングするためのツールです。<br>また、NATとしても使えます。</p>
+<h2 id="iptablesの用語"><a href="#iptablesの用語" class="headerlink" title="iptablesの用語"></a>iptablesの用語</h2><p>iptablesを理解するにあたって必要な用語をまとめました。</p>
+<h3 id="TARGETS"><a href="#TARGETS" class="headerlink" title="TARGETS"></a>TARGETS</h3><p>iptablesのルールを設定する際に、targetを指定します。<br>targetはユーザー定義のものと特別なtargetである、ACCEPT, DROP, QUEUE or RETURNがあります。<br>パケットに対してどんな操作をするかを定義します。</p>
+<p>代表的なtargetです。</p>
+<p>ACCEPT<br>パケットを通す<br>DROP<br>パケットを破棄する<br>QUEUE<br>パケットをキューにためる<br>RETURN<br>チェインを辿るのをストップして、評価を行う<br>REJECT<br>パケットを破棄し、エラーパケットを返す<br>DNAT<br>送信先IPアドレスを変更する<br>SNAT<br>送信元IPアドレスを変更する<br>MASQUERADE<br>複数の送信元IPアドレスを変更（マスカレード）する<br>LOG<br>ログを出力する</p>
+<h3 id="Chain"><a href="#Chain" class="headerlink" title="Chain"></a>Chain</h3><p>iptablesを設定する際にchainを指定します。<br>chainにはビルトインchainとユーザー定義chainがあります。<br>chainはパケットに対する実行条件を定義します。</p>
+<p>ビルトインchainは以下です。</p>
+<p>INPUT<br>FORWARD<br>OUTPUT<br>PREROUTING<br>POSTROUTING</p>
+<h3 id="TABLES"><a href="#TABLES" class="headerlink" title="TABLES"></a>TABLES</h3><p>一般的にはフィルタリングとして使われることが多いiptablesですが、他にも様々な機能があります。<br>iptablesにはそれをtableという概念で扱っており、5つのtableがあります。</p>
+<p><em>filter</em><br>パケットのフィルタリングを設定するためのテーブルです。<br>デフォルトのテーブルです。tableオプションを明示的に指定しない場合は、filterが指定されたことになります。<br>INPUT、FORWARD、OUTPUTのChainを含みます。</p>
+<p><em>nat</em><br>IPアドレスの変換を設定するためのテーブルです。<br>PREROUTING、POSTROUTING のChainを含みます。</p>
+<p><em>mangle</em><br>パケットの書き換えを設定するためのテーブルです。</p>
+<p><em>raw</em><br>接続の追跡の除外の設定をするためのテーブルです。</p>
+<p><em>security</em><br>アクセスコントロールの設定をするためのテーブルです。</p>
+<h2 id="OPTIONS"><a href="#OPTIONS" class="headerlink" title="OPTIONS"></a>OPTIONS</h2><p>iptablesのコマンドにオプションを指定できます。<br>オプションはいくつかのグループに区別されます。</p>
+<h3 id="COMMANDS"><a href="#COMMANDS" class="headerlink" title="COMMANDS"></a>COMMANDS</h3><p>iptablesに実行してほしいコマンドを指定します。<br>以下のようなコマンドがあります。</p>
+<p>-A, –append<br>選択したチェインにルールを追加します。</p>
+<p>-C, –check<br>指定したチェインにルールが存在するかをチェックします。</p>
+<p>-D, –delete<br>チェインからルールを消します。</p>
+<p>詳細はiptablesのmanをご覧ください。</p>
+<h3 id="PARAMETERS"><a href="#PARAMETERS" class="headerlink" title="PARAMETERS"></a>PARAMETERS</h3><p>ルールを作成する際に指定するパラメーターです。</p>
+<p>-p, –protocol<br>ルールの対象となるプロトコルを指定します。</p>
+<p>-j, –jump<br>ルールの対象となるtargetを指定します。</p>
+<p>-s, –source<br>ルールの対象となるアドレスを指定します。<br>例えば、IPアドレス、ホスト名、ネットワーク名などを指定します。</p>
+<p>詳細はiptablesのmanをご覧ください。</p>
+<h3 id="OTHER-OPTIONS"><a href="#OTHER-OPTIONS" class="headerlink" title="OTHER OPTIONS"></a>OTHER OPTIONS</h3><p>追加オプションです。</p>
+<p>-v, –verbose<br>詳細表示のオプションです。</p>
+<p>詳細はiptablesのmanを参照ください。</p>
+<h2 id="iptablesの基本的な構文"><a href="#iptablesの基本的な構文" class="headerlink" title="iptablesの基本的な構文"></a>iptablesの基本的な構文</h2><p>基本的には以下のように指定します。</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables [-t <span class="keyword">table</span>] command <span class="comment">chain options target</span></span><br></pre></td></tr></table></figure>
+
+<p>例えば、ローカルホストからのping(icmp)を許可する場合は以下となります。</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -p icmp -j <span class="keyword">ACCEPT</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="iptablesの基本的な読み方"><a href="#iptablesの基本的な読み方" class="headerlink" title="iptablesの基本的な読み方"></a>iptablesの基本的な読み方</h2><p>現在のiptablesの設定を表示するには、iptables -L コマンドを使います。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Example: Input Chain Rule Table Listing</span><br><span class="line">Chain INPUT (policy <span class="keyword">DROP</span>)</span><br><span class="line">target     prot opt <span class="keyword">source</span>               destination</span><br><span class="line"><span class="keyword">ACCEPT</span>     <span class="keyword">all</span>  <span class="comment">--  anywhere             anywhere             ctstate RELATED,ESTABLISHED</span></span><br><span class="line"><span class="keyword">ACCEPT</span>     <span class="keyword">all</span>  <span class="comment">--  anywhere             anywhere</span></span><br><span class="line"><span class="keyword">DROP</span>       <span class="keyword">all</span>  <span class="comment">--  anywhere             anywhere             ctstate INVALID</span></span><br><span class="line">UDP        udp  <span class="comment">--  anywhere             anywhere             ctstate NEW</span></span><br><span class="line">TCP        tcp  <span class="comment">--  anywhere             anywhere             tcp flags:FIN,SYN,RST,ACK/SYN ctstate NEW</span></span><br><span class="line">ICMP       icmp <span class="comment">--  anywhere             anywhere             ctstate NEW</span></span><br><span class="line"><span class="keyword">REJECT</span>     udp  <span class="comment">--  anywhere             anywhere             reject-with icmp-port-unreachable</span></span><br><span class="line"><span class="keyword">REJECT</span>     tcp  <span class="comment">--  anywhere             anywhere             reject-with tcp-reset</span></span><br><span class="line"><span class="keyword">REJECT</span>     <span class="keyword">all</span>  <span class="comment">--  anywhere             anywhere             reject-with icmp-proto-unreachable</span></span><br></pre></td></tr></table></figure>
+
+<p>1行目がChainの名前で、次にデフォルトポリシーが表示されています(DROP)。<br>2行目がカラム名です。</p>
+<p><em>target</em>: target名<br><em>prot</em>: プロトコル名。例えば、tcp, udp, icmp, or all<br><em>opt</em>: めったに使われません。<br><em>source</em>: 接続元のIPアドレス or サブネット or anywhere<br><em>destination</em>: 接続先のIPアドレス or サブネット or anywhere</p>
+<h2 id="iptablesコマンドの使い方"><a href="#iptablesコマンドの使い方" class="headerlink" title="iptablesコマンドの使い方"></a>iptablesコマンドの使い方</h2><p>いくつかの例を紹介します。</p>
+<h3 id="特定のサーバーからのhttp通信を許可する"><a href="#特定のサーバーからのhttp通信を許可する" class="headerlink" title="特定のサーバーからのhttp通信を許可する"></a>特定のサーバーからのhttp通信を許可する</h3><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># iptables -A INPUT -p tcp -s 192.168.1.1 --dport 80 -j ACCEPT</span></span><br><span class="line"><span class="meta"># 設定を保存</span></span><br><span class="line"><span class="meta"># service iptables save</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="ルールを消す"><a href="#ルールを消す" class="headerlink" title="ルールを消す"></a>ルールを消す</h3><p>iptables -D ルール で消すことができます。<br><code>iptables -S</code> でルール一覧がでるので、そのルールを指定すれば簡単です。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># iptables -S</span><br><span class="line">-A INPUT -s <span class="number">157.7</span><span class="number">.105</span><span class="number">.69</span>/<span class="number">32</span> -p tcp -m tcp --dport <span class="number">80</span> -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p>以下のコマンドで消します。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -D INPUT -s <span class="number">157.7</span><span class="number">.105</span><span class="number">.69</span>/<span class="number">32</span> -p tcp -m tcp --dport <span class="number">80</span> -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li><a href="http://linux.die.net/man/8/iptables" target="_blank" rel="noopener">Man page of IPTABLES</a></li>
+<li><a href="https://linuxjm.osdn.jp/html/iptables/man8/iptables.8.html" target="_blank" rel="noopener">日本語訳</a></li>
+<li><a href="http://qiita.com/kmikmy/items/d279b1b993661ba7dbe4" target="_blank" rel="noopener">iptablesの読み方覚え書き</a></li>
+<li><a href="http://murayama.hatenablog.com/entry/20100206/1265444193" target="_blank" rel="noopener">iptablesの設定 入門編</a></li>
+<li><a href="https://help.sakura.ad.jp/app/answers/detail/a_id/2423/~/iptables%E3%81%AE%E8%A8%AD%E5%AE%9A%E6%96%B9%E6%B3%95" target="_blank" rel="noopener">iptablesの設定方法</a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-list-and-delete-iptables-firewall-rules" target="_blank" rel="noopener">How To List and Delete Iptables Firewall Rules</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-07-14T04:43:40.000Z" itemprop="datepublished">
             2016/07/14
           </time>
@@ -980,87 +1054,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
 <li><a href="http://docs.fluentd.org/articles/free-alternative-to-splunk-by-fluentd" target="_blank" rel="noopener">Free Alternative to Splunk Using Fluentd</a></li>
-</ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-07-04T04:50:35.000Z" itemprop="datepublished">
-            2016/07/04
-          </time>
-          <time datetime="2016-07-04T04:50:35.000Z" itemprop="modified">
-            (更新日: 2016/07/04)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/07/04/fluentd-tutorial/">Fluentdを使ってローカル環境にログ収集サーバを構築する</a>
-        </h1>
-        <div class="content">
-          <p>アプリケーションサーバとログ収集サーバにFluentdをインストールし、アプリケーションサーバからログ収集サーバにログをフォワードする方法を紹介します。<br>ここでは、アプリケーションサーバをMacOS X、ログ収集サーバをVagrantとします。</p>
-<h2 id="Fluentdをホストマシン-Mac-にインストール"><a href="#Fluentdをホストマシン-Mac-にインストール" class="headerlink" title="Fluentdをホストマシン(Mac)にインストール"></a>Fluentdをホストマシン(Mac)にインストール</h2><p>.dmgをダウンロードしてインストールしてください。</p>
-<ul>
-<li><a href="https://td-agent-package-browser.herokuapp.com/2/macosx" target="_blank" rel="noopener">ダウンロード</a></li>
-</ul>
-<p>以下でFluentdを起動します。</p>
-<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo launchctl <span class="keyword">load</span> /<span class="keyword">Library</span>/LaunchDaemons/td-agent.plist</span><br></pre></td></tr></table></figure>
-
-<p>Fluentdのログは <code>/var/log/td-agent/td-agent.log</code> に出力されます。</p>
-<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span> less /var/<span class="built-in">log</span>/td-agent/td-agent.<span class="built-in">log</span></span><br></pre></td></tr></table></figure>
-
-<p>停止は以下です。</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo launchctl unload <span class="regexp">/Library/</span>LaunchDaemons<span class="regexp">/td-agent.plist</span></span><br></pre></td></tr></table></figure>
-
-<p>設定ファイルは <code>/etc/td-agent/td-agent.conf</code> です。<br>設定を反映させるには、以下のコマンドで行います。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo launchctl <span class="keyword">stop</span> td-<span class="keyword">agent</span></span><br><span class="line">$ sudo launchctl <span class="keyword">start</span> td-<span class="keyword">agent</span></span><br></pre></td></tr></table></figure>
-
-<p>以下でFluentdにリクエストします。</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X POST -d <span class="symbol">'json</span>=&#123;<span class="string">"json"</span>:<span class="string">"message"</span>&#125;' http:<span class="comment">//localhost:8888/debug.test</span></span><br></pre></td></tr></table></figure>
-
-<p><code>/var/log/td-agent/td-agent.log</code> にログが出力されているはずです。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ tail -n <span class="number">1</span> /var/log/td-agent/td-agent.log</span><br><span class="line"><span class="number">2016</span><span class="number">-07</span><span class="number">-01</span> <span class="number">16</span>:<span class="number">51</span>:<span class="number">47</span> <span class="number">-0700</span> debug.test: &#123;<span class="string">"json"</span>:<span class="string">"message"</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="ログ収集サーバにFluentdをインストール"><a href="#ログ収集サーバにFluentdをインストール" class="headerlink" title="ログ収集サーバにFluentdをインストール"></a>ログ収集サーバにFluentdをインストール</h2><p>次にログ収集サーバにFluentdをインストールします。<br>OSはCentos6.5を使いました。<br>vagrantの使い方は割愛します。<br>networkはprivate_networkとし、192.168.33.10でアクセスできることとします。</p>
-<p>以下でログ収集サーバにログインします。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> vagrant ssh</span><br><span class="line"></span><br><span class="line"><span class="comment"># iptablesは無効にしておきます</span></span><br><span class="line"><span class="variable">$</span> sudo service iptables stop</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以下のコマンドでFluentdインストールします。</span></span><br><span class="line"><span class="variable">$</span> curl <span class="literal">-L</span> https://toolbelt.treasuredata.com/sh/<span class="built_in">install-redhat</span><span class="literal">-td</span><span class="literal">-agent2</span>.sh | sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># Fluentdを起動します</span></span><br><span class="line"><span class="variable">$</span> sudo /etc/init.d/td<span class="literal">-agent</span> start</span><br></pre></td></tr></table></figure>
-
-<p>ログ収集サーバでも同じように確認してみます。</p>
-<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X <span class="keyword">POST</span> -<span class="keyword">d</span> 'json=&#123;<span class="string">"json"</span>:<span class="string">"message"</span>&#125;' http:<span class="comment">//localhost:8888/debug.test</span></span><br><span class="line">$ tail -<span class="keyword">n</span> 1 /<span class="keyword">var</span>/<span class="keyword">log</span>/td-agent/td-agent.<span class="keyword">log</span></span><br><span class="line">2016-07-01 16:51:47 -0700 debug.<span class="keyword">test</span>: &#123;<span class="string">"json"</span>:<span class="string">"message"</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="アプリケーションサーバからログ収集サーバのFluentdにリクエストを送る"><a href="#アプリケーションサーバからログ収集サーバのFluentdにリクエストを送る" class="headerlink" title="アプリケーションサーバからログ収集サーバのFluentdにリクエストを送る"></a>アプリケーションサーバからログ収集サーバのFluentdにリクエストを送る</h2><p>アプリケーションサーバからログ収集サーバのFluentdにリクエストを送れるかを確認します。</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X POST -d <span class="symbol">'json</span>=&#123;<span class="string">"json"</span>:<span class="string">"message"</span>&#125;' http:<span class="comment">//192.168.33.10:8888/debug.test</span></span><br></pre></td></tr></table></figure>
-
-<p>ログ収集サーバでログを確認します。<br>Fluentdは出力をバッファするのでフォワードされるまでにタイムログがある場合があります。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ tail -<span class="built_in">n</span> <span class="number">1</span> /<span class="built_in">var</span>/<span class="built_in">log</span>/td-agent/td-agent.log</span><br></pre></td></tr></table></figure>
-
-<p>疎通を確認できたら、アプリケーションサーバからログ収集サーバのFluentdにログをforwardしてみましょう。</p>
-<p>アプリケーションサーバの<code>/etc/td-agent/td-agent.conf</code> を以下のように編集します。</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">&lt;source&gt;</span></span><br><span class="line">  <span class="built_in">type</span> http</span><br><span class="line">  port <span class="number">8888</span></span><br><span class="line">&lt;/<span class="keyword">source</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="symbol">&lt;source&gt;</span></span><br><span class="line">  @type forward</span><br><span class="line">  port <span class="number">24224</span></span><br><span class="line">&lt;/<span class="keyword">source</span>&gt;</span><br><span class="line"></span><br><span class="line"># <span class="keyword">tag</span>がvagrantの場合はvagrantのFluentdにフォワードする</span><br><span class="line">&lt;<span class="keyword">match</span> <span class="keyword">tag</span> vagrant.**&gt;</span><br><span class="line">  <span class="built_in">type</span> forward</span><br><span class="line">  <span class="symbol">&lt;server&gt;</span></span><br><span class="line">    host <span class="number">192.168</span>.<span class="number">33.10</span></span><br><span class="line">    port <span class="number">24224</span></span><br><span class="line">  &lt;/server&gt;</span><br><span class="line">&lt;/<span class="keyword">match</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;<span class="keyword">match</span> <span class="keyword">debug</span>.**&gt;</span><br><span class="line">  <span class="built_in">type</span> stdout</span><br><span class="line">&lt;/<span class="keyword">match</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<p>ログ収集サーバの<code>/etc/td-agent/td-agent.conf</code>に以下の設定を追加します。<br>tagがvagrantで送られてきたものをログに出力します。</p>
-<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">match</span> vagrant.**&gt;</span><br><span class="line">  <span class="class"><span class="keyword">type</span> <span class="title">stdout</span></span></span><br><span class="line">&lt;/<span class="keyword">match</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<p>以下のコマンドでログ収集サーバのFluentdにデータがフォワードされます。</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X POST -d <span class="symbol">'json</span>=&#123;<span class="string">"json"</span>:<span class="string">"Fluentd!!!"</span>&#125;' http:<span class="comment">//localhost:8888/vagrant.test</span></span><br></pre></td></tr></table></figure>
-
-<p>以上で基本的なフォワードの設定ができました。</p>
-<h2 id="ファイルを監視してログ収集サーバにフォワードする"><a href="#ファイルを監視してログ収集サーバにフォワードする" class="headerlink" title="ファイルを監視してログ収集サーバにフォワードする"></a>ファイルを監視してログ収集サーバにフォワードする</h2><p>次はファイルを監視してファイルにデータが追加されたらその内容をログ収集サーバにフォワードするようにします。<br><code>in_tail</code>プラグインを使います。<br><code>in_tail</code>プラグインを使うにはtypeにtailを使います。</p>
-<p>アプリケーションサーバの<code>/etc/td-agent/td-agent.conf</code>に以下を追記します。</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;source&gt;</span></span><br><span class="line">  <span class="keyword">type</span> tail <span class="comment"># in_tailプラグインを指定</span></span><br><span class="line">  path /tmp/access_log <span class="comment"># 監視するファイルの指定</span></span><br><span class="line">  <span class="keyword">tag</span> <span class="title">vagrant</span>.access_log <span class="comment"># ログにつけるタグを指定</span></span><br><span class="line">  pos_file /tmp/access_log.pos <span class="comment"># ファイル内のどの行までを読んだかを記録しておくファイルを指定</span></span><br><span class="line">  format none <span class="comment"># フォーマットはnoneを指定</span></span><br><span class="line"><span class="tag">&lt;/source&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>設定を反映させるには、以下のコマンドで行います。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo launchctl <span class="keyword">stop</span> td-<span class="keyword">agent</span></span><br><span class="line">$ sudo launchctl <span class="keyword">start</span> td-<span class="keyword">agent</span></span><br></pre></td></tr></table></figure>
-
-<p><code>/tmp/access_log</code> に追記してみましょう。</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>echo <span class="string">"hello"</span> &gt;&gt; <span class="regexp">/tmp/access</span>_log</span><br></pre></td></tr></table></figure>
-
-<p>すると、ログ収集サーバのFluentdに内容がフォワードされます。</p>
-<p>参考リンク</p>
-<ul>
-<li><a href="http://knowledge.sakura.ad.jp/tech/1336/" target="_blank" rel="noopener">柔軟なログ収集を可能にする「Fluentd」入門</a></li>
-<li><a href="http://docs.fluentd.org/articles/install-by-dmg" target="_blank" rel="noopener">Installing Fluentd using .dmg Installer (MacOS X)</a></li>
-<li><a href="http://docs.Fluentd.org/articles/config-file" target="_blank" rel="noopener">Configuration File</a></li>
 </ul>
 
         </div>

@@ -150,6 +150,48 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-04-25T05:05:02.000Z" itemprop="datepublished">
+            2016/04/25
+          </time>
+          <time datetime="2016-04-25T05:05:02.000Z" itemprop="modified">
+            (更新日: 2016/04/25)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/04/25/introduce-http-gem/">rubyでhttp通信をするhttp gem</a>
+        </h1>
+        <div class="content">
+          <p>rubyでhttp通信をする際に便利なhttp gemというものがあるので紹介します。<br><a href="https://github.com/httprb/http" target="_blank" rel="noopener">https://github.com/httprb/http</a></p>
+<h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gem <span class="keyword">install</span> <span class="keyword">http</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="getしてみる"><a href="#getしてみる" class="headerlink" title="getしてみる"></a>getしてみる</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ pry</span><br><span class="line">$ <span class="keyword">require</span> ’http<span class="string">'</span></span><br><span class="line"><span class="string">$ response = HTTP.get("https://github.com")</span></span><br><span class="line"><span class="string">$ response.status</span></span><br><span class="line"><span class="string">=&gt; 200</span></span><br><span class="line"><span class="string">$ response.body.to_s</span></span><br><span class="line"><span class="string">=&gt; "&lt;html&gt;&lt;head&gt;&lt;meta http-equiv=\"content-type\" content=..."</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="http-メソッドを指定する"><a href="#http-メソッドを指定する" class="headerlink" title="http メソッドを指定する"></a>http メソッドを指定する</h2><p>以下のように指定します。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;</span> response = HTTP.post(<span class="string">'https://restapi.com/objects'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;</span> response = HTTP.put(<span class="string">'https://restapi.com/put'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;</span> response = HTTP.patch(<span class="string">'https://restapi.com/put'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;</span> response = HTTP.delete(<span class="string">'https://restapi.com/put'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;</span> response = HTTP.head(<span class="string">'https://restapi.com/put'</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="クエリストリングを指定する"><a href="#クエリストリングを指定する" class="headerlink" title="クエリストリングを指定する"></a>クエリストリングを指定する</h2><p>以下のように paramsオプションで指定します。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ get = HTTP.get(<span class="string">"http://example.com/resource"</span>, <span class="symbol">:pa</span>rams =&gt; &#123;<span class="symbol">:fo</span>o =&gt; <span class="string">"bar"</span>&#125;)</span><br><span class="line">=&gt; <span class="string">"#&lt;HTTP::Response/1.1 404 Not …"</span></span><br><span class="line"></span><br><span class="line"># 以下のように生成されたuriを確認できます</span><br><span class="line">$ get.uri</span><br><span class="line">=&gt; #&lt;HT<span class="symbol">TP:</span><span class="symbol">:UR</span><span class="symbol">I:0</span>x007fce62a33aa8 U<span class="symbol">RI:ht</span><span class="symbol">tp:</span>//example.com/resource?foo=bar&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="bodyを指定する"><a href="#bodyを指定する" class="headerlink" title="bodyを指定する"></a>bodyを指定する</h2><p>formオプションに設定します。<br>URLエンコードされたパラメーターが設定されます。</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HTTP.post(<span class="string">"http://example.com/resource"</span>, :<span class="function"><span class="params">form</span> =&gt;</span> &#123;:<span class="function"><span class="params">foo</span> =&gt;</span> <span class="string">"42"</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>生データを渡したいときは、bodyオプションを使います。</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HTTP.post(<span class="string">"http://example.com/resource"</span>, :<span class="function"><span class="params">body</span> =&gt;</span> <span class="string">"foo=42&amp;bar=baz"</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="ネストしたbodyの渡し方"><a href="#ネストしたbodyの渡し方" class="headerlink" title="ネストしたbodyの渡し方"></a>ネストしたbodyの渡し方</h3><p>ネストした配列を渡したい場合はjsonを使って以下のように指定できます。</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">HTTP</span><span class="selector-class">.put</span>(<span class="string">"http://example.com/resource"</span>, :params =&gt; &#123;<span class="attribute">foo</span>: <span class="string">"A"</span>&#125;, <span class="attribute">json</span>: &#123; <span class="attribute">bar</span>: &#123; <span class="attribute">hoge</span>: <span class="string">"ok!"</span>&#125; &#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Basic認証に対応する"><a href="#Basic認証に対応する" class="headerlink" title="Basic認証に対応する"></a>Basic認証に対応する</h2><p>以下のように設定ができます。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http = <span class="module-access"><span class="module"><span class="identifier">HTTP</span>.</span></span>basic<span class="constructor">_auth(<span class="params">user</span>: '<span class="params">user_name</span>', <span class="params">pass</span>: '<span class="params">password</span>')</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="SSL証明書の検証を無効にする"><a href="#SSL証明書の検証を無効にする" class="headerlink" title="SSL証明書の検証を無効にする"></a>SSL証明書の検証を無効にする</h2><p>開発環境の場合などでSSL証明書の検証を無視したい場合は以下のように設定できます。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ctx = OpenSSL::SSL::SSLContext.<span class="keyword">new</span></span><br><span class="line">ctx.verify_mode = OpenSSL::SSL::VERIFY_NONE</span><br><span class="line">HTTP.get(<span class="string">"https://example.com"</span>, :ssl_context =&gt; ctx)</span><br></pre></td></tr></table></figure>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-04-22T04:59:35.000Z" itemprop="datepublished">
             2016/04/22
           </time>
@@ -337,28 +379,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p><a href="https://github.com/tablexi/capistrano3-unicorn/blob/master/lib/capistrano3/tasks/unicorn.rake#L4" target="_blank" rel="noopener">https://github.com/tablexi/capistrano3-unicorn/blob/master/lib/capistrano3/tasks/unicorn.rake#L4</a></p>
 <h4 id="unicorn-config-pathの設定"><a href="#unicorn-config-pathの設定" class="headerlink" title="unicorn_config_pathの設定"></a>unicorn_config_pathの設定</h4><p>以下のようにlambdaを使って設定します。<br>config/unicorn.rbをunicorn_config_pathとして設定しています。<br>config/deploy.rb</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set <span class="symbol">:unicorn_config_path</span>, -&gt; &#123; File.join(current_path, <span class="string">"config"</span>, <span class="string">"unicorn.rb"</span>) &#125;</span><br></pre></td></tr></table></figure>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-04-18T04:43:40.000Z" itemprop="datepublished">
-            2016/04/18
-          </time>
-          <time datetime="2016-04-18T04:43:40.000Z" itemprop="modified">
-            (更新日: 2016/04/18)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/04/18/cookbook-not-found-error-has-occurred/">cookbook_fileリソースでCookbookNotFoundが発生した</a>
-        </h1>
-        <div class="content">
-          <p>cookbook_fileでCookbookNotFoundというエラーがでた。<br>しかし、どこをどうみても合っているようにしか見えず、2時間ほどハマった。</p>
-<p>エラーは以下。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">* cookbook_file[/etc/nginx/nginx.conf] action create</span><br><span class="line"></span><br><span class="line">  ================================================================================</span><br><span class="line">  <span class="builtin-name">Error</span> executing action `create` on<span class="built_in"> resource </span><span class="string">'cookbook_file[/etc/nginx/nginx.conf]'</span></span><br><span class="line">  ================================================================================</span><br><span class="line"></span><br><span class="line">  Chef::Exceptions::CookbookNotFound</span><br><span class="line">  ----------------------------------</span><br><span class="line">  Cookbook cookbooks <span class="keyword">not</span> found. <span class="keyword">If</span> you<span class="string">'re loading cookbooks from another cookbook, make sure you configure the dependency in your metadata</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  Resource Declaration:</span></span><br><span class="line"><span class="string">  ---------------------</span></span><br><span class="line"><span class="string">  # In /var/chef/cache/cookbooks/cookbooks/recipes/default.rb</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">   25: cookbook_file '</span>/etc/nginx/nginx.conf<span class="string">' do</span></span><br><span class="line"><span class="string">   26:   source '</span>nginx.conf<span class="string">'</span></span><br><span class="line"><span class="string">   27:   owner '</span>root<span class="string">'</span></span><br><span class="line"><span class="string">   28:   group '</span>root<span class="string">'</span></span><br><span class="line"><span class="string">   29:   mode '</span>0755<span class="string">'</span></span><br><span class="line"><span class="string">   30: end</span></span><br><span class="line"><span class="string">   31:</span></span><br></pre></td></tr></table></figure>
-
-<p>原因はmetadata.rbの名前。<br>cookbooks/site という構成でcookbookを作成しているのだが、cookbooks/site/metadata.rbのnameが’cookbooks’となっていた。<br>これによりcookbook_fileリソースがcookbooksというcookbookを参照していたが、そんなものはないのでCookbookNotFoundエラーが発生していた。<br>nameを’site’と変更してやることでうまくいくようになった。</p>
 
         </div>
       </div>
