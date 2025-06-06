@@ -153,7 +153,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2025-06-05T02:00:00.000Z" itemprop="datepublished">
             2025/06/05
           </time>
-          <time datetime="2025-06-06T01:39:08.739Z" itemprop="modified">
+          <time datetime="2025-06-06T02:24:55.125Z" itemprop="modified">
             (更新日: 2025/06/06)
           </time>
         </div>
@@ -178,7 +178,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </ul>
 <p>これらの制約があるからこそ、<strong>コンテンツの構成とブロックの組み合わせ</strong>が重要になります。</p>
 <h2 id="Block-Kitの主要ブロックタイプ解説"><a href="#Block-Kitの主要ブロックタイプ解説" class="headerlink" title="Block Kitの主要ブロックタイプ解説"></a>Block Kitの主要ブロックタイプ解説</h2><p>実際のサンプルコードを基に、各ブロックタイプの特性と使用例を詳しく見てみましょう。</p>
-<h3 id="1-Header-ブロック"><a href="#1-Header-ブロック" class="headerlink" title="1. Header ブロック"></a>1. Header ブロック</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"header"</span>,</span><br><span class="line">    <span class="attr">"text"</span>: &#123;</span><br><span class="line">        <span class="attr">"type"</span>: <span class="string">"plain_text"</span>,</span><br><span class="line">        <span class="attr">"text"</span>: <span class="string">"Slack Block Kitデザインシステム見本"</span>,</span><br><span class="line">        <span class="attr">"emoji"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="1-Header-ブロック"><a href="#1-Header-ブロック" class="headerlink" title="1. Header ブロック"></a>1. Header ブロック</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"header"</span>,</span><br><span class="line">    <span class="attr">"text"</span>: &#123;</span><br><span class="line">        <span class="attr">"type"</span>: <span class="string">"plain_text"</span>,</span><br><span class="line">        <span class="attr">"text"</span>: <span class="string">"Slack Block Kitデザインシステム見本"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>特徴:</strong></p>
 <ul>
@@ -188,9 +188,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </ul>
 <p><strong>使用場面:</strong></p>
 <ul>
-<li>重要な通知のタイトル</li>
-<li>ダッシュボードのセクション見出し</li>
-<li>システムアラートの分類</li>
+<li>通知のタイトル</li>
 </ul>
 <h3 id="2-Section-ブロック"><a href="#2-Section-ブロック" class="headerlink" title="2. Section ブロック"></a>2. Section ブロック</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">    <span class="attr">"text"</span>: &#123;</span><br><span class="line">        <span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">        <span class="attr">"text"</span>: <span class="string">"*1. 基本的なセクション*\nこれは基本的なセクションブロックです。*太字*や_斜体_、~取り消し線~、`コード`などのMarkdown書式が使えます。"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -233,7 +231,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <li>最大5つの要素まで横並び配置可能</li>
 <li>3つのボタンスタイル：default（境界線のみ）、primary（青色）、danger（赤色）</li>
 </ul>
-<h2 id="制約の中での効果的なデザインパターン"><a href="#制約の中での効果的なデザインパターン" class="headerlink" title="制約の中での効果的なデザインパターン"></a>制約の中での効果的なデザインパターン</h2><h3 id="1-疑似的な枠線の実装"><a href="#1-疑似的な枠線の実装" class="headerlink" title="1. 疑似的な枠線の実装"></a>1. 疑似的な枠線の実装</h3><p>Block Kitには明確な「枠線」や「カード」要素がありませんが、以下のようなテクニックで視覚的なグループ化を実現できます。</p>
+<h2 id="制約の中での効果的なデザインパターン"><a href="#制約の中での効果的なデザインパターン" class="headerlink" title="制約の中での効果的なデザインパターン"></a>制約の中での効果的なデザインパターン</h2><h3 id="1-疑似的な枠線の実装"><a href="#1-疑似的な枠線の実装" class="headerlink" title="1. 疑似的な枠線の実装"></a>1. 疑似的な枠線の実装</h3><p>Block Kitには明確な「枠線」がありませんが、以下のようなテクニックで視覚的なグループ化を実現できます。</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;		</span><br><span class="line">	<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">	<span class="attr">"text"</span>: &#123;</span><br><span class="line">		<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">		<span class="attr">"text"</span>: <span class="string">"*2. 擬似的な枠線付きセクション*"</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">	<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">	<span class="attr">"text"</span>: &#123;</span><br><span class="line">		<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">		<span class="attr">"text"</span>: <span class="string">"```項目:値```"</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">	<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">	<span class="attr">"text"</span>: &#123;</span><br><span class="line">		<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">		<span class="attr">"text"</span>: <span class="string">"```ステータス:完了```"</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>工夫のポイント:</strong></p>
@@ -265,7 +263,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <li><strong>制約を受け入れる</strong>: デザインの自由度は制限されているが、その分一貫性と可読性が保たれる</li>
 <li><strong>コンテンツ構成に集中</strong>: 色やレイアウトではなく、情報の構造化と優先順位付けに注力</li>
 <li><strong>パターンの活用</strong>: 疑似的な枠線や絵文字による状態表現など、制約内でのテクニックを習得</li>
-<li><strong>ユーザビリティ優先</strong>: 見た目より機能性とアクセシビリティを重視</li>
 </ol>
 <p>Block Kitの詳細なリファレンスは<a href="https://app.slack.com/block-kit-builder" target="_blank" rel="noopener">Slack Block Kit Builder</a>で実際に構築しながら確認できますので、ぜひご活用ください。</p>
 <p>この記事で紹介したテクニックのサンプルもぜひご利用ください！</p>
@@ -278,7 +275,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2025-06-04T01:30:00.000Z" itemprop="datepublished">
             2025/06/04
           </time>
-          <time datetime="2025-06-06T01:39:08.735Z" itemprop="modified">
+          <time datetime="2025-06-06T02:24:55.119Z" itemprop="modified">
             (更新日: 2025/06/06)
           </time>
         </div>
@@ -356,7 +353,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2025-06-03T03:00:00.000Z" itemprop="datepublished">
             2025/06/03
           </time>
-          <time datetime="2025-06-06T01:39:08.733Z" itemprop="modified">
+          <time datetime="2025-06-06T02:24:55.117Z" itemprop="modified">
             (更新日: 2025/06/06)
           </time>
         </div>
@@ -446,7 +443,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2025-05-30T07:03:12.000Z" itemprop="datepublished">
             2025/05/30
           </time>
-          <time datetime="2025-06-06T01:39:08.735Z" itemprop="modified">
+          <time datetime="2025-06-06T02:24:55.119Z" itemprop="modified">
             (更新日: 2025/06/06)
           </time>
         </div>
@@ -478,7 +475,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2025-05-30T03:33:47.000Z" itemprop="datepublished">
             2025/05/30
           </time>
-          <time datetime="2025-06-06T01:39:08.735Z" itemprop="modified">
+          <time datetime="2025-06-06T02:24:55.119Z" itemprop="modified">
             (更新日: 2025/06/06)
           </time>
         </div>
