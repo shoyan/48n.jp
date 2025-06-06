@@ -195,6 +195,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <ul>
         
           <li>
+            <a href="/blog/2025/06/05/slack-block-kit-detailed-guide/">Slack Block Kitの制約とデザインパターンガイド</a>
+          </li>
+        
+          <li>
             <a href="/blog/2025/06/04/go-slack-notification-guide/">GoでSlack通知を実装する方法</a>
           </li>
         
@@ -210,21 +214,58 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <a href="/blog/2025/05/30/go-error-handling-best-practice/">Goのエラーハンドリングのベストプラクティス</a>
           </li>
         
-          <li>
-            <a href="/blog/2025/02/09/resigned-from-mercari-to-become-a-freelancer/">メルカリを退職してフリーランスになりました</a>
-          </li>
-        
       </ul>
     </div>
   </div>
 
             
-    <div class="ltech-ad">
+    <div class="ltech-ad" id="ltech-ad">
+        <button class="ltech-ad-close" id="ltech-ad-close" aria-label="広告を閉じる">×</button>
         <a href="https://learning-tech.jp/" target="_blank" rel="noopener">
             <img src="https://learning-tech.jp/assets/images/lts-logo.png" alt="LTech - プログラミング学習サイト" width="300">
             <p>LTech - プログラミング学習ならここで学ぼう</p>
         </a>
     </div>
+
+    <style>
+        .ltech-ad-close {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            font-size: 14px;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            z-index: 10;
+        }
+
+        .ltech-ad-close:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const closeButton = document.getElementById('ltech-ad-close');
+            const adContainer = document.getElementById('ltech-ad');
+
+            if (closeButton && adContainer) {
+                closeButton.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    adContainer.style.display = 'none';
+                });
+            }
+        });
+    </script>
         </div>
       </div>
 

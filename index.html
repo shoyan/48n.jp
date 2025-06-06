@@ -150,11 +150,136 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2025-06-05T02:00:00.000Z" itemprop="datepublished">
+            2025/06/05
+          </time>
+          <time datetime="2025-06-06T01:39:08.739Z" itemprop="modified">
+            (更新日: 2025/06/06)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2025/06/05/slack-block-kit-detailed-guide/">Slack Block Kitの制約とデザインパターンガイド</a>
+        </h1>
+        <div class="content">
+          <h2 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h2><p>前回の記事「<a href="/2025/06/04/go-slack-notification-guide/">GoでSlack通知を実装する方法</a>」では、Slack通知の基本的な実装方法とBlock Kitの初歩的な使い方について解説しました。</p>
+<p>今回は、Slack Block Kitをより深く掘り下げて、その特性、制約、そして効果的なデザインパターンについて詳しく説明します。特に、Block Kitの「見た目があまり変えられない」という特性と、その制約の中でいかに美しく機能的なメッセージを作成するかに焦点を当てます。</p>
+<h2 id="Slack-Block-Kitの特性と制約"><a href="#Slack-Block-Kitの特性と制約" class="headerlink" title="Slack Block Kitの特性と制約"></a>Slack Block Kitの特性と制約</h2><h3 id="1-デザインの統一性と制約"><a href="#1-デザインの統一性と制約" class="headerlink" title="1. デザインの統一性と制約"></a>1. デザインの統一性と制約</h3><p>Slack Block Kitの最も大きな特徴は、<strong>デザインの自由度が意図的に制限されている</strong>ことです。これにはいくつかの理由があります。</p>
+<ul>
+<li><strong>一貫性の確保</strong>: すべてのアプリからのメッセージが統一された見た目になる</li>
+<li><strong>可読性の向上</strong>: Slackの標準UIパターンに従うことで、ユーザーが迷わない</li>
+<li><strong>アクセシビリティ</strong>: スクリーンリーダーやキーボードナビゲーションに配慮</li>
+</ul>
+<h3 id="2-制約の具体例"><a href="#2-制約の具体例" class="headerlink" title="2. 制約の具体例"></a>2. 制約の具体例</h3><p>以下のような点でカスタマイズが制限されています。</p>
+<ul>
+<li><strong>色の変更</strong>: テキストやブロックの背景色は基本的に変更不可</li>
+<li><strong>フォントサイズ</strong>: 固定のフォントサイズ体系</li>
+<li><strong>余白・レイアウト</strong>: ブロック間の余白やレイアウトは Slack側で制御</li>
+<li><strong>アニメーション</strong>: 動的な効果は実装不可</li>
+</ul>
+<p>これらの制約があるからこそ、<strong>コンテンツの構成とブロックの組み合わせ</strong>が重要になります。</p>
+<h2 id="Block-Kitの主要ブロックタイプ解説"><a href="#Block-Kitの主要ブロックタイプ解説" class="headerlink" title="Block Kitの主要ブロックタイプ解説"></a>Block Kitの主要ブロックタイプ解説</h2><p>実際のサンプルコードを基に、各ブロックタイプの特性と使用例を詳しく見てみましょう。</p>
+<h3 id="1-Header-ブロック"><a href="#1-Header-ブロック" class="headerlink" title="1. Header ブロック"></a>1. Header ブロック</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"header"</span>,</span><br><span class="line">    <span class="attr">"text"</span>: &#123;</span><br><span class="line">        <span class="attr">"type"</span>: <span class="string">"plain_text"</span>,</span><br><span class="line">        <span class="attr">"text"</span>: <span class="string">"Slack Block Kitデザインシステム見本"</span>,</span><br><span class="line">        <span class="attr">"emoji"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>特徴:</strong></p>
+<ul>
+<li>メッセージの最上部に配置される大きなタイトル</li>
+<li>plain_textのみ対応（Markdownは使用不可）</li>
+<li>絵文字を使用することで視覚的なアクセントを追加可能</li>
+</ul>
+<p><strong>使用場面:</strong></p>
+<ul>
+<li>重要な通知のタイトル</li>
+<li>ダッシュボードのセクション見出し</li>
+<li>システムアラートの分類</li>
+</ul>
+<h3 id="2-Section-ブロック"><a href="#2-Section-ブロック" class="headerlink" title="2. Section ブロック"></a>2. Section ブロック</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">    <span class="attr">"text"</span>: &#123;</span><br><span class="line">        <span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">        <span class="attr">"text"</span>: <span class="string">"*1. 基本的なセクション*\nこれは基本的なセクションブロックです。*太字*や_斜体_、~取り消し線~、`コード`などのMarkdown書式が使えます。"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>特徴:</strong></p>
+<ul>
+<li>最も汎用的で使用頻度が高いブロック</li>
+<li>Markdownによる豊富なテキスト装飾</li>
+<li>accessoryフィールドで画像やボタンを右側に配置可能</li>
+</ul>
+<p><strong>応用例 - 画像付きセクション:</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">    <span class="attr">"text"</span>: &#123;</span><br><span class="line">        <span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">        <span class="attr">"text"</span>: <span class="string">"画像を右側に配置できます"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"accessory"</span>: &#123;</span><br><span class="line">        <span class="attr">"type"</span>: <span class="string">"image"</span>,</span><br><span class="line">        <span class="attr">"image_url"</span>: <span class="string">"https://api.slack.com/img/blocks/bkb_template_images/beagle.png"</span>,</span><br><span class="line">        <span class="attr">"alt_text"</span>: <span class="string">"かわいい犬の画像"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-Context-ブロック"><a href="#3-Context-ブロック" class="headerlink" title="3. Context ブロック"></a>3. Context ブロック</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"context"</span>,</span><br><span class="line">    <span class="attr">"elements"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">            <span class="attr">"text"</span>: <span class="string">"👆 Contextブロックは小さいテキストで補足情報を表示するのに最適です"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>特徴:</strong></p>
+<ul>
+<li>小さなフォントサイズで表示</li>
+<li>補足情報や注釈に最適</li>
+<li>複数の要素を横並びで配置可能</li>
+</ul>
+<p><strong>使用場面:</strong></p>
+<ul>
+<li>タイムスタンプ</li>
+<li>作成者情報</li>
+<li>追加の説明文</li>
+</ul>
+<h3 id="4-Divider-ブロック"><a href="#4-Divider-ブロック" class="headerlink" title="4. Divider ブロック"></a>4. Divider ブロック</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"divider"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>特徴:</strong></p>
+<ul>
+<li>シンプルな水平線</li>
+<li>セクション間の視覚的な区切り</li>
+<li>パラメータ不要で最もシンプルなブロック</li>
+</ul>
+<h3 id="5-Actions-ブロック"><a href="#5-Actions-ブロック" class="headerlink" title="5. Actions ブロック"></a>5. Actions ブロック</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"actions"</span>,</span><br><span class="line">    <span class="attr">"elements"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"button"</span>,</span><br><span class="line">            <span class="attr">"text"</span>: &#123;</span><br><span class="line">                <span class="attr">"type"</span>: <span class="string">"plain_text"</span>,</span><br><span class="line">                <span class="attr">"text"</span>: <span class="string">"Primary ボタン"</span>,</span><br><span class="line">                <span class="attr">"emoji"</span>: <span class="literal">true</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">"style"</span>: <span class="string">"primary"</span>,</span><br><span class="line">            <span class="attr">"value"</span>: <span class="string">"primary_button"</span>,</span><br><span class="line">            <span class="attr">"url"</span>: <span class="string">"https://example.com/primary"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>特徴:</strong></p>
+<ul>
+<li>ボタンやその他のインタラクティブ要素を配置</li>
+<li>最大5つの要素まで横並び配置可能</li>
+<li>3つのボタンスタイル：default（境界線のみ）、primary（青色）、danger（赤色）</li>
+</ul>
+<h2 id="制約の中での効果的なデザインパターン"><a href="#制約の中での効果的なデザインパターン" class="headerlink" title="制約の中での効果的なデザインパターン"></a>制約の中での効果的なデザインパターン</h2><h3 id="1-疑似的な枠線の実装"><a href="#1-疑似的な枠線の実装" class="headerlink" title="1. 疑似的な枠線の実装"></a>1. 疑似的な枠線の実装</h3><p>Block Kitには明確な「枠線」や「カード」要素がありませんが、以下のようなテクニックで視覚的なグループ化を実現できます。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;		</span><br><span class="line">	<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">	<span class="attr">"text"</span>: &#123;</span><br><span class="line">		<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">		<span class="attr">"text"</span>: <span class="string">"*2. 擬似的な枠線付きセクション*"</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">	<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">	<span class="attr">"text"</span>: &#123;</span><br><span class="line">		<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">		<span class="attr">"text"</span>: <span class="string">"```項目:値```"</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">	<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">	<span class="attr">"text"</span>: &#123;</span><br><span class="line">		<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">		<span class="attr">"text"</span>: <span class="string">"```ステータス:完了```"</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>工夫のポイント:</strong></p>
+<ul>
+<li>Markdownを使用した疑似的な枠線</li>
+</ul>
+<h3 id="2-状態表示のパターン"><a href="#2-状態表示のパターン" class="headerlink" title="2. 状態表示のパターン"></a>2. 状態表示のパターン</h3><p>色が変更できない制約の中で、絵文字とテキストを組み合わせて状態を表現。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">    <span class="attr">"text"</span>: &#123;</span><br><span class="line">        <span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">        <span class="attr">"text"</span>: <span class="string">"• *&lt;https://example.com/task/goals|目標の基本を学ぶ&gt;*\n  :alarm_clock: 2024年9月24日"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">    <span class="attr">"text"</span>: &#123;</span><br><span class="line">        <span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">        <span class="attr">"text"</span>: <span class="string">"• *&lt;https://example.com/task/personal-goals|個人目標設定の方法を学ぶ&gt;*\n  :warning: 2024年9月24日（期限超過）"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用される表現方法:</strong></p>
+<ul>
+<li><code>:alarm_clock:</code> - 通常の期限</li>
+<li><code>:warning:</code> - 期限超過や注意</li>
+<li><code>:white_check_mark:</code> - 完了</li>
+<li><code>:x:</code> - エラーやキャンセル</li>
+</ul>
+<h3 id="3-複数ボタンのレイアウトパターン"><a href="#3-複数ボタンのレイアウトパターン" class="headerlink" title="3. 複数ボタンのレイアウトパターン"></a>3. 複数ボタンのレイアウトパターン</h3><p>Actionsブロックでは、最大5つまでのボタンを配置できます。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"actions"</span>,</span><br><span class="line">    <span class="attr">"elements"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"button"</span>,</span><br><span class="line">            <span class="attr">"text"</span>: &#123;</span><br><span class="line">                <span class="attr">"type"</span>: <span class="string">"plain_text"</span>,</span><br><span class="line">                <span class="attr">"text"</span>: <span class="string">"確認"</span>,</span><br><span class="line">                <span class="attr">"emoji"</span>: <span class="literal">true</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">"style"</span>: <span class="string">"primary"</span>,</span><br><span class="line">            <span class="attr">"value"</span>: <span class="string">"confirm"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"button"</span>,</span><br><span class="line">            <span class="attr">"text"</span>: &#123;</span><br><span class="line">                <span class="attr">"type"</span>: <span class="string">"plain_text"</span>,</span><br><span class="line">                <span class="attr">"text"</span>: <span class="string">"後で"</span>,</span><br><span class="line">                <span class="attr">"emoji"</span>: <span class="literal">true</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">"value"</span>: <span class="string">"later"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"button"</span>,</span><br><span class="line">            <span class="attr">"text"</span>: &#123;</span><br><span class="line">                <span class="attr">"type"</span>: <span class="string">"plain_text"</span>,</span><br><span class="line">                <span class="attr">"text"</span>: <span class="string">"キャンセル"</span>,</span><br><span class="line">                <span class="attr">"emoji"</span>: <span class="literal">true</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">"style"</span>: <span class="string">"danger"</span>,</span><br><span class="line">            <span class="attr">"value"</span>: <span class="string">"cancel"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>デザインの考慮点:</strong></p>
+<ul>
+<li>Primary（青色）は最重要アクション用</li>
+<li>Default（境界線のみ）は通常アクション用</li>
+<li>Danger（赤色）は削除や危険なアクション用</li>
+</ul>
+<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>Slack Block Kitは確かに「見た目があまり変えられない」という制約がありますが、これらの制約を理解し、適切にブロックを組み合わせることで、美しく機能的なメッセージを作成できます。</p>
+<p>重要なのは以下の点です。</p>
+<ol>
+<li><strong>制約を受け入れる</strong>: デザインの自由度は制限されているが、その分一貫性と可読性が保たれる</li>
+<li><strong>コンテンツ構成に集中</strong>: 色やレイアウトではなく、情報の構造化と優先順位付けに注力</li>
+<li><strong>パターンの活用</strong>: 疑似的な枠線や絵文字による状態表現など、制約内でのテクニックを習得</li>
+<li><strong>ユーザビリティ優先</strong>: 見た目より機能性とアクセシビリティを重視</li>
+</ol>
+<p>Block Kitの詳細なリファレンスは<a href="https://app.slack.com/block-kit-builder" target="_blank" rel="noopener">Slack Block Kit Builder</a>で実際に構築しながら確認できますので、ぜひご活用ください。</p>
+<p>この記事で紹介したテクニックのサンプルもぜひご利用ください！</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"blocks"</span>: [</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"header"</span>,</span><br><span class="line">			<span class="attr">"text"</span>: &#123;</span><br><span class="line">				<span class="attr">"type"</span>: <span class="string">"plain_text"</span>,</span><br><span class="line">				<span class="attr">"text"</span>: <span class="string">"Slack Block Kitデザインシステム見本"</span>,</span><br><span class="line">				<span class="attr">"emoji"</span>: <span class="literal">true</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">			<span class="attr">"text"</span>: &#123;</span><br><span class="line">				<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">				<span class="attr">"text"</span>: <span class="string">"こんにちは、鈴木 太郎さん\nこちらはデザインパターンの総合的な見本です。"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"divider"</span></span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">			<span class="attr">"text"</span>: &#123;</span><br><span class="line">				<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">				<span class="attr">"text"</span>: <span class="string">"*1. 基本的なセクション*\nこれは基本的なセクションブロックです。 *太字* や _斜体_ 、 ~取り消し線~ 、 `コード` などのMarkdown書式が使えます。"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"context"</span>,</span><br><span class="line">			<span class="attr">"elements"</span>: [</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">					<span class="attr">"text"</span>: <span class="string">"👆 Contextブロックは小さいテキストで補足情報を表示するのに最適です"</span></span><br><span class="line">				&#125;</span><br><span class="line">			]</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"divider"</span></span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">			<span class="attr">"text"</span>: &#123;</span><br><span class="line">				<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">				<span class="attr">"text"</span>: <span class="string">"*2. 擬似的な枠線付きセクション*"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">			<span class="attr">"text"</span>: &#123;</span><br><span class="line">				<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">				<span class="attr">"text"</span>: <span class="string">"```項目:値```"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">			<span class="attr">"text"</span>: &#123;</span><br><span class="line">				<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">				<span class="attr">"text"</span>: <span class="string">"```ステータス:完了```"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"divider"</span></span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">			<span class="attr">"text"</span>: &#123;</span><br><span class="line">				<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">				<span class="attr">"text"</span>: <span class="string">"*3. リンク付きのテキスト*"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">			<span class="attr">"text"</span>: &#123;</span><br><span class="line">				<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">				<span class="attr">"text"</span>: <span class="string">"• *&lt;https://example.com/task/1|リンク付きタスク名&gt;*\n  2024年9月24日"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">			<span class="attr">"text"</span>: &#123;</span><br><span class="line">				<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">				<span class="attr">"text"</span>: <span class="string">"• リンクなしタスク名\n  2024年9月25日"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"divider"</span></span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">			<span class="attr">"text"</span>: &#123;</span><br><span class="line">				<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">				<span class="attr">"text"</span>: <span class="string">"*4. 画像付きセクション*"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">			<span class="attr">"text"</span>: &#123;</span><br><span class="line">				<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">				<span class="attr">"text"</span>: <span class="string">"画像を右側に配置できます"</span></span><br><span class="line">			&#125;,</span><br><span class="line">			<span class="attr">"accessory"</span>: &#123;</span><br><span class="line">				<span class="attr">"type"</span>: <span class="string">"image"</span>,</span><br><span class="line">				<span class="attr">"image_url"</span>: <span class="string">"https://api.slack.com/img/blocks/bkb_template_images/beagle.png"</span>,</span><br><span class="line">				<span class="attr">"alt_text"</span>: <span class="string">"かわいい犬の画像"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"divider"</span></span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">			<span class="attr">"text"</span>: &#123;</span><br><span class="line">				<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">				<span class="attr">"text"</span>: <span class="string">"*5. ボタンとアクション*"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"actions"</span>,</span><br><span class="line">			<span class="attr">"elements"</span>: [</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="attr">"type"</span>: <span class="string">"button"</span>,</span><br><span class="line">					<span class="attr">"text"</span>: &#123;</span><br><span class="line">						<span class="attr">"type"</span>: <span class="string">"plain_text"</span>,</span><br><span class="line">						<span class="attr">"text"</span>: <span class="string">"Primary ボタン"</span>,</span><br><span class="line">						<span class="attr">"emoji"</span>: <span class="literal">true</span></span><br><span class="line">					&#125;,</span><br><span class="line">					<span class="attr">"style"</span>: <span class="string">"primary"</span>,</span><br><span class="line">					<span class="attr">"value"</span>: <span class="string">"primary_button"</span>,</span><br><span class="line">					<span class="attr">"url"</span>: <span class="string">"https://example.com/primary"</span></span><br><span class="line">				&#125;</span><br><span class="line">			]</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"actions"</span>,</span><br><span class="line">			<span class="attr">"elements"</span>: [</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="attr">"type"</span>: <span class="string">"button"</span>,</span><br><span class="line">					<span class="attr">"text"</span>: &#123;</span><br><span class="line">						<span class="attr">"type"</span>: <span class="string">"plain_text"</span>,</span><br><span class="line">						<span class="attr">"text"</span>: <span class="string">"Default ボタン（アウトライン）"</span>,</span><br><span class="line">						<span class="attr">"emoji"</span>: <span class="literal">true</span></span><br><span class="line">					&#125;,</span><br><span class="line">					<span class="attr">"value"</span>: <span class="string">"default_button"</span>,</span><br><span class="line">					<span class="attr">"url"</span>: <span class="string">"https://example.com/default"</span></span><br><span class="line">				&#125;</span><br><span class="line">			]</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"actions"</span>,</span><br><span class="line">			<span class="attr">"elements"</span>: [</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="attr">"type"</span>: <span class="string">"button"</span>,</span><br><span class="line">					<span class="attr">"text"</span>: &#123;</span><br><span class="line">						<span class="attr">"type"</span>: <span class="string">"plain_text"</span>,</span><br><span class="line">						<span class="attr">"text"</span>: <span class="string">"Danger ボタン"</span>,</span><br><span class="line">						<span class="attr">"emoji"</span>: <span class="literal">true</span></span><br><span class="line">					&#125;,</span><br><span class="line">					<span class="attr">"style"</span>: <span class="string">"danger"</span>,</span><br><span class="line">					<span class="attr">"value"</span>: <span class="string">"danger_button"</span>,</span><br><span class="line">					<span class="attr">"url"</span>: <span class="string">"https://example.com/danger"</span></span><br><span class="line">				&#125;</span><br><span class="line">			]</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"divider"</span></span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">			<span class="attr">"text"</span>: &#123;</span><br><span class="line">				<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">				<span class="attr">"text"</span>: <span class="string">"*6. 通知カード*"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"context"</span>,</span><br><span class="line">			<span class="attr">"elements"</span>: [</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">					<span class="attr">"text"</span>: <span class="string">"┌──────────────────────────────────────────┐"</span></span><br><span class="line">				&#125;</span><br><span class="line">			]</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">			<span class="attr">"text"</span>: &#123;</span><br><span class="line">				<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">				<span class="attr">"text"</span>: <span class="string">"　*【オンボーディング】入社後1ヶ月間のTODO*"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">			<span class="attr">"text"</span>: &#123;</span><br><span class="line">				<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">				<span class="attr">"text"</span>: <span class="string">"　*社員*"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">			<span class="attr">"text"</span>: &#123;</span><br><span class="line">				<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">				<span class="attr">"text"</span>: <span class="string">"　佐藤 花子、田中 一郎、山田 太郎"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"context"</span>,</span><br><span class="line">			<span class="attr">"elements"</span>: [</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">					<span class="attr">"text"</span>: <span class="string">"└──────────────────────────────────────────┘"</span></span><br><span class="line">				&#125;</span><br><span class="line">			]</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"actions"</span>,</span><br><span class="line">			<span class="attr">"elements"</span>: [</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="attr">"type"</span>: <span class="string">"button"</span>,</span><br><span class="line">					<span class="attr">"text"</span>: &#123;</span><br><span class="line">						<span class="attr">"type"</span>: <span class="string">"plain_text"</span>,</span><br><span class="line">						<span class="attr">"text"</span>: <span class="string">"コースを確認"</span>,</span><br><span class="line">						<span class="attr">"emoji"</span>: <span class="literal">true</span></span><br><span class="line">					&#125;,</span><br><span class="line">					<span class="attr">"style"</span>: <span class="string">"primary"</span>,</span><br><span class="line">					<span class="attr">"value"</span>: <span class="string">"check_course"</span>,</span><br><span class="line">					<span class="attr">"url"</span>: <span class="string">"https://example.com/onboarding/course"</span></span><br><span class="line">				&#125;</span><br><span class="line">			]</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"divider"</span></span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">			<span class="attr">"text"</span>: &#123;</span><br><span class="line">				<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">				<span class="attr">"text"</span>: <span class="string">"*7. タスクリスト（期限付き）*"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">			<span class="attr">"text"</span>: &#123;</span><br><span class="line">				<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">				<span class="attr">"text"</span>: <span class="string">"• *&lt;https://example.com/task/goals|目標の基本を学ぶ&gt;*\n  :alarm_clock: 2024年9月24日"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">			<span class="attr">"text"</span>: &#123;</span><br><span class="line">				<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">				<span class="attr">"text"</span>: <span class="string">"• *&lt;https://example.com/task/management|代表的なマネジメントの型を知る&gt;*\n  :alarm_clock: 2024年9月25日"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">			<span class="attr">"text"</span>: &#123;</span><br><span class="line">				<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">				<span class="attr">"text"</span>: <span class="string">"• *&lt;https://example.com/task/personal-goals|個人目標設定の方法を学ぶ&gt;*\n  :warning: 2024年9月24日（期限超過）"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"divider"</span></span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"section"</span>,</span><br><span class="line">			<span class="attr">"text"</span>: &#123;</span><br><span class="line">				<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">				<span class="attr">"text"</span>: <span class="string">"*8. 複数ボタン配置*"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"actions"</span>,</span><br><span class="line">			<span class="attr">"elements"</span>: [</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="attr">"type"</span>: <span class="string">"button"</span>,</span><br><span class="line">					<span class="attr">"text"</span>: &#123;</span><br><span class="line">						<span class="attr">"type"</span>: <span class="string">"plain_text"</span>,</span><br><span class="line">						<span class="attr">"text"</span>: <span class="string">"確認"</span>,</span><br><span class="line">						<span class="attr">"emoji"</span>: <span class="literal">true</span></span><br><span class="line">					&#125;,</span><br><span class="line">					<span class="attr">"style"</span>: <span class="string">"primary"</span>,</span><br><span class="line">					<span class="attr">"value"</span>: <span class="string">"confirm"</span></span><br><span class="line">				&#125;,</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="attr">"type"</span>: <span class="string">"button"</span>,</span><br><span class="line">					<span class="attr">"text"</span>: &#123;</span><br><span class="line">						<span class="attr">"type"</span>: <span class="string">"plain_text"</span>,</span><br><span class="line">						<span class="attr">"text"</span>: <span class="string">"後で"</span>,</span><br><span class="line">						<span class="attr">"emoji"</span>: <span class="literal">true</span></span><br><span class="line">					&#125;,</span><br><span class="line">					<span class="attr">"value"</span>: <span class="string">"later"</span></span><br><span class="line">				&#125;,</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="attr">"type"</span>: <span class="string">"button"</span>,</span><br><span class="line">					<span class="attr">"text"</span>: &#123;</span><br><span class="line">						<span class="attr">"type"</span>: <span class="string">"plain_text"</span>,</span><br><span class="line">						<span class="attr">"text"</span>: <span class="string">"キャンセル"</span>,</span><br><span class="line">						<span class="attr">"emoji"</span>: <span class="literal">true</span></span><br><span class="line">					&#125;,</span><br><span class="line">					<span class="attr">"style"</span>: <span class="string">"danger"</span>,</span><br><span class="line">					<span class="attr">"value"</span>: <span class="string">"cancel"</span></span><br><span class="line">				&#125;</span><br><span class="line">			]</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"divider"</span></span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"type"</span>: <span class="string">"context"</span>,</span><br><span class="line">			<span class="attr">"elements"</span>: [</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="attr">"type"</span>: <span class="string">"mrkdwn"</span>,</span><br><span class="line">					<span class="attr">"text"</span>: <span class="string">"このメッセージはデザインシステムの参考用に自動生成されました"</span></span><br><span class="line">				&#125;</span><br><span class="line">			]</span><br><span class="line">		&#125;</span><br><span class="line">	]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2025-06-04T01:30:00.000Z" itemprop="datepublished">
             2025/06/04
           </time>
-          <time datetime="2025-06-04T03:39:47.774Z" itemprop="modified">
-            (更新日: 2025/06/04)
+          <time datetime="2025-06-06T01:39:08.735Z" itemprop="modified">
+            (更新日: 2025/06/06)
           </time>
         </div>
         <h1>
@@ -231,8 +356,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2025-06-03T03:00:00.000Z" itemprop="datepublished">
             2025/06/03
           </time>
-          <time datetime="2025-06-04T03:39:47.772Z" itemprop="modified">
-            (更新日: 2025/06/04)
+          <time datetime="2025-06-06T01:39:08.733Z" itemprop="modified">
+            (更新日: 2025/06/06)
           </time>
         </div>
         <h1>
@@ -321,8 +446,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2025-05-30T07:03:12.000Z" itemprop="datepublished">
             2025/05/30
           </time>
-          <time datetime="2025-06-04T03:39:47.774Z" itemprop="modified">
-            (更新日: 2025/06/04)
+          <time datetime="2025-06-06T01:39:08.735Z" itemprop="modified">
+            (更新日: 2025/06/06)
           </time>
         </div>
         <h1>
@@ -353,8 +478,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2025-05-30T03:33:47.000Z" itemprop="datepublished">
             2025/05/30
           </time>
-          <time datetime="2025-06-04T03:39:47.774Z" itemprop="modified">
-            (更新日: 2025/06/04)
+          <time datetime="2025-06-06T01:39:08.735Z" itemprop="modified">
+            (更新日: 2025/06/06)
           </time>
         </div>
         <h1>
@@ -391,103 +516,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
     
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2025-02-09T11:58:53.000Z" itemprop="datepublished">
-            2025/02/09
-          </time>
-          <time datetime="2025-02-25T01:00:00.000Z" itemprop="modified">
-            (更新日: 2025/02/25)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2025/02/09/resigned-from-mercari-to-become-a-freelancer/">メルカリを退職してフリーランスになりました</a>
-        </h1>
-        <div class="content">
-          <h3 id="自己紹介とメルカリでの経験"><a href="#自己紹介とメルカリでの経験" class="headerlink" title="自己紹介とメルカリでの経験"></a>自己紹介とメルカリでの経験</h3><p>私は 16 年ほど IT 企業でエンジニアとして働いてきました。GMO ペパボといった業界大手のサービスを運営している会社、ヤフーやメルカリといったメガベンチャー企業に勤めていました。直近はメルカリでおおよそ 3 年間働き、主に社内のカスタマーサービス部門が使うツールの開発に携わっていました。その中で GO 言語での開発経験や開発チームをマネジメントする経験を積むことができました。</p>
-<h3 id="フリーランスになろうと思った理由"><a href="#フリーランスになろうと思った理由" class="headerlink" title="フリーランスになろうと思った理由"></a>フリーランスになろうと思った理由</h3><p>正社員としてのキャリアアップに魅力を感じなくなったからです。</p>
-<p>私は物作りが好きで、現場で手を動かすのが性に合っていると思っています。また、仕事は好きですが、毎日深夜まで働いたり会社の評価を意識して振る舞うことなどは避けたいと思っています。</p>
-<p>一方で正社員として求められる仕事はマネジメント業務にシフトしていきました。また、その会社の社員として期待される振る舞いを求められるようになりました。</p>
-<p>上記のような自分の特性と会社が求めることのギャップがストレスとなり、正社員としてキャリアアップしていくことにモチベーションを感じられなくなってしまいました。</p>
-<h3 id="退職前に準備したこと"><a href="#退職前に準備したこと" class="headerlink" title="退職前に準備したこと"></a>退職前に準備したこと</h3><p>フリーランスとして独立する前に、以下の準備を行いました。</p>
-<ol>
-<li><strong>スキルの棚卸し</strong><ul>
-<li>職務経歴書の作成を通して、自分のスキルの棚卸しを行いました</li>
-</ul>
-</li>
-<li><strong>副業</strong><ul>
-<li>実際に IT 企業と業務委託契約を結び、平日の夜や週末に働いていました</li>
-<li>個人事業主として登録し、青色確定申告の書類を作成していました</li>
-</ul>
-</li>
-<li><strong>案件探しと情報収集</strong><ul>
-<li>フリーランスの案件を扱うエージェントに登録して実際に案件獲得を行いました</li>
-<li>自分の単価やどういった需要があるのかを確認することが目的です</li>
-</ul>
-</li>
-</ol>
-<h3 id="フリーランスになってからのリアル"><a href="#フリーランスになってからのリアル" class="headerlink" title="フリーランスになってからのリアル"></a>フリーランスになってからのリアル</h3><p>まだ 1 ヶ月程度ですが、実際にフリーランスとして活動し始めて、以下のようなことを感じました。</p>
-<h3 id="アップサイド"><a href="#アップサイド" class="headerlink" title="アップサイド"></a>アップサイド</h3><ul>
-<li><strong>時間と場所の自由</strong><ul>
-<li>フルリモート、フルフレックスで働いているため、仕事と生活のバランスがとりやすい</li>
-<li>案件はフルリモート前提の仕事のみに限定することができる</li>
-<li>同じ現場のフリーランスの方は、週4勤務だったり15時30分で退勤するように業務時間を調整していたりと柔軟に働いている</li>
-</ul>
-</li>
-<li><strong>開発に集中できストレスが減る</strong><ul>
-<li>業務範囲が明確なので、本業である開発の仕事に集中することができる</li>
-<li>雑務やマネジメント業務をする必要がないため、余計なストレスが減った</li>
-<li>職場の飲み会に参加しなくてよい</li>
-</ul>
-</li>
-<li><strong>環境を自分で選ぶことができる</strong><ul>
-<li>勢いのあるスタートアップの案件に携われば、事業の成長を感じることができる</li>
-<li>携わりたい事業があればその企業にアプローチすることができる</li>
-<li>自分に合わないと感じるところからは撤退する判断ができる</li>
-</ul>
-</li>
-</ul>
-<h3 id="ダウンサイド"><a href="#ダウンサイド" class="headerlink" title="ダウンサイド"></a>ダウンサイド</h3><ul>
-<li><strong>雇用と収入の不安定さ</strong><ul>
-<li>会社員のように毎月決まった給料が入ることが確約されていない</li>
-<li>常に契約解除のリスクがある</li>
-<li>有給休暇がないので休んだ分だけ収入が減る</li>
-</ul>
-</li>
-<li><strong>社会保障が脆弱</strong><ul>
-<li>フリーランスは将来受け取れる年金額が少ない</li>
-<li>病気になったり働けなくなったりした時の収入の保証がない</li>
-</ul>
-</li>
-</ul>
-<p><em>ダウンサイドについては、リスク対策が可能です。しかし、こういったリスク対策についても全て自分自身で行う必要があります。</em></p>
-<h3 id="フリーランスの実態と心境"><a href="#フリーランスの実態と心境" class="headerlink" title="フリーランスの実態と心境"></a>フリーランスの実態と心境</h3><p>私の場合は正社員の頃とあまり働き方は変わっていません。平日の 8 時間は仕事、コミュニケーションは毎日発生しますし、仕事の内容や質も正社員に求められるものと変わりません。</p>
-<p>しかし、契約形態としては独立しているので、自分自身のアイデンティティを大事にできる点が精神的なメリットになっている感じています。</p>
-<p>その分、不安定さはありますが、常に安泰ではないという危機感が自分にとってよい刺激になっています。</p>
-<p>これからフリーランスを続けていくと、様々なトラブルに遭遇すると思います。それも勉強だと思って邁進していく所存です。</p>
-<h3 id="これからフリーランスを目指す人へのアドバイス"><a href="#これからフリーランスを目指す人へのアドバイス" class="headerlink" title="これからフリーランスを目指す人へのアドバイス"></a>これからフリーランスを目指す人へのアドバイス</h3><p>最後に私の経験から、フリーランスを目指す人に伝えたいことは以下の 3 つです。</p>
-<ol>
-<li><strong>準備と情報収集をする</strong><ul>
-<li>いきなりフリーランスになることは不安も多いと思います。そういった場合は、副業から始めてみることをおすすめします</li>
-<li>現在は副業案件が多いそうです。私もエージェントから副業案件についての提案をよく受けます</li>
-<li>副業をすると確定申告が必要になるため、経理の知識もつきます。青色確定申告書類を作成できるようになりましょう。節税になります</li>
-</ul>
-</li>
-<li><strong>自分の強みの把握とスキルの研鑽</strong><ul>
-<li>自分の強みを明確にするために職務経歴書を作成することをおすすめします</li>
-<li>職務経歴書のアピールになるような経験を積めるように、日頃から意識してスキルの研鑽に励みましょう</li>
-</ul>
-</li>
-<li><strong>家族の理解が大事</strong><ul>
-<li>家族がいる人は家族の理解が必要です。収入が安定している正社員から収入が確約されていないフリーランスに転向することは心理的な障壁が高いからです</li>
-<li>いきなり説得することが難しい場合は、時間をかけて理解してもらうことが必要です。私は 3 年ほど時間がかかりました</li>
-</ul>
-</li>
-</ol>
-
-        </div>
-      </div>
-    
   </div>
 
 
@@ -497,12 +525,53 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 
             
-    <div class="ltech-ad">
+    <div class="ltech-ad" id="ltech-ad">
+        <button class="ltech-ad-close" id="ltech-ad-close" aria-label="広告を閉じる">×</button>
         <a href="https://learning-tech.jp/" target="_blank" rel="noopener">
             <img src="https://learning-tech.jp/assets/images/lts-logo.png" alt="LTech - プログラミング学習サイト" width="300">
             <p>LTech - プログラミング学習ならここで学ぼう</p>
         </a>
     </div>
+
+    <style>
+        .ltech-ad-close {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            font-size: 14px;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            z-index: 10;
+        }
+
+        .ltech-ad-close:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const closeButton = document.getElementById('ltech-ad-close');
+            const adContainer = document.getElementById('ltech-ad');
+
+            if (closeButton && adContainer) {
+                closeButton.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    adContainer.style.display = 'none';
+                });
+            }
+        });
+    </script>
         </div>
       </div>
 

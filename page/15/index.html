@@ -150,6 +150,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-08-08T04:30:30.000Z" itemprop="datepublished">
+            2016/08/08
+          </time>
+          <time datetime="2016-08-08T04:30:30.000Z" itemprop="modified">
+            (更新日: 2016/08/08)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/08/08/php-lint-with-ci/">PHPの構文チェックを自動で行う方法</a>
+        </h1>
+        <div class="content">
+          <p>私のチームではCIで自動的にLINTをする仕組みを構築しています。<br>この仕組みにより、レガシーコードでテストコードがない環境でもシンタックスエラーの混入を防ぐことができます。</p>
+<p>中身はシンプルで以下のスクリプトを作成して、CIプラットホームで実行するようにします。</p>
+<p>php-lint.sh</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line">RESULT=`find . -<span class="built_in">type</span> f -name <span class="string">"*.php"</span> -<span class="built_in">exec</span> php -l &#123;&#125; \; 2&gt;&amp;1 | grep <span class="string">"PHP Parse error"</span>`</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$RESULT</span>"</span> != <span class="string">""</span> ];<span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$RESULT</span>"</span></span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<p>例えば、Droneでチェックする場合は以下のように設定します。</p>
+<p>.drone.yml</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">scrip</span><span class="variable">t:</span></span><br><span class="line">  - ./php-lint.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-08-03T04:42:38.000Z" itemprop="datepublished">
             2016/08/03
           </time>
@@ -204,8 +229,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2016-08-02T04:40:25.000Z" itemprop="datepublished">
             2016/08/02
           </time>
-          <time datetime="2025-06-04T03:39:47.772Z" itemprop="modified">
-            (更新日: 2025/06/04)
+          <time datetime="2025-06-06T01:39:08.733Z" itemprop="modified">
+            (更新日: 2025/06/06)
           </time>
         </div>
         <h1>
@@ -331,29 +356,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
     
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-07-27T04:37:18.000Z" itemprop="datepublished">
-            2016/07/27
-          </time>
-          <time datetime="2016-07-27T04:37:18.000Z" itemprop="modified">
-            (更新日: 2016/07/27)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/07/27/introduce-to-git-monitor/">GitHubのリポジトリを監視するGitMonitor</a>
-        </h1>
-        <div class="content">
-          <p>GitHubのリポジトリを監視する<a href="https://gitmonitor.com/" target="_blank" rel="noopener">GitMonitor</a>というサービスを紹介します。<br>このサービスはGithubのリポジトリを監視して、そのリポジトリに行った操作をダッシュボードで確認することができます。<br>また、Flowdock、Slack、Emailに通知することも可能のようです。</p>
-<p>以下は、masterに直接pushしたときのログです。</p>
-<p><img src="/images/git_monitor.png" alt="git-monitor-image"></p>
-<p>GitMonitorは様々なルールが設定でき、そのルールに該当したものがダッシュボードに表示されます。<br>例えば、LGTMがないPull Requestがマージされたときや、リストに定義していない人がマージしたときに通知することもできるようです。</p>
-<p>操作の制限ができるわけではなく、ルールに該当したときにダッシュボードに通知されるだけのようです。</p>
-<p>30日間は無料で使えて、それ以降は有料プランとなります。<br>有料プランは3つあって、Small($10 / mon)、Medium($20 / mon)、Large($35 / mon) が選べます。<br>監視するリポジトリの数がプランによって違います。</p>
-
-        </div>
-      </div>
-    
   </div>
 
 
@@ -363,12 +365,53 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 
             
-    <div class="ltech-ad">
+    <div class="ltech-ad" id="ltech-ad">
+        <button class="ltech-ad-close" id="ltech-ad-close" aria-label="広告を閉じる">×</button>
         <a href="https://learning-tech.jp/" target="_blank" rel="noopener">
             <img src="https://learning-tech.jp/assets/images/lts-logo.png" alt="LTech - プログラミング学習サイト" width="300">
             <p>LTech - プログラミング学習ならここで学ぼう</p>
         </a>
     </div>
+
+    <style>
+        .ltech-ad-close {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            font-size: 14px;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            z-index: 10;
+        }
+
+        .ltech-ad-close:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const closeButton = document.getElementById('ltech-ad-close');
+            const adContainer = document.getElementById('ltech-ad');
+
+            if (closeButton && adContainer) {
+                closeButton.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    adContainer.style.display = 'none';
+                });
+            }
+        });
+    </script>
         </div>
       </div>
 

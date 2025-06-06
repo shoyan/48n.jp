@@ -150,6 +150,36 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2019-04-25T07:21:18.000Z" itemprop="datepublished">
+            2019/04/25
+          </time>
+          <time datetime="2019-04-25T07:21:18.000Z" itemprop="modified">
+            (更新日: 2019/04/25)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2019/04/25/avoid-using-database-specific-functions/">データベース固有の関数の使用を避けるべき理由</a>
+        </h1>
+        <div class="content">
+          <p>こんにちは、しょーやんです。</p>
+<p>私はエンジニアとして12年目で、現在はエンジニアチームのリーダーとしてWebアプリケーションのシステムを開発しています。キャリアとしては、SIerで1年、ベンチャー企業で3年、300人程度の企業で5年、現在は6000人規模の会社でエンジニアとして働いています。</p>
+<p>前提として、ここで話すことはアプリケーション設計に関する話しです。データベースの関数自体の使用を否定しているわけではありません。データベース固有の関数を使う前に少し考えてみましょうという話しです。まずは、データベース固有の関数を使うリスクについて説明します。</p>
+<h2 id="データベース固有の関数を使うリスク"><a href="#データベース固有の関数を使うリスク" class="headerlink" title="データベース固有の関数を使うリスク"></a>データベース固有の関数を使うリスク</h2><p>データベースには固有の関数が用意されています。MySQLだとDATE_FORMATやNOW、SUMといったような関数です。これらを利用するのは便利ですが、安易な利用はおすすめしません。相応の理由がない限りは避けるべきです。理由は、データベース固有の関数を利用すると移植性が失われてしまうからです。</p>
+<p>多くの人はデータベースを変更することはほとんどないだろうと考えます。本当にそうでしょうか。</p>
+<p>例えば、開発環境ではSQLite、プロダクション環境ではMySQLを使うということは特段珍しいことではありません。<br>トランザクション境界を分離できないようなインテグレーションテストを実行するときはどうでしょうか。</p>
+<p>ユーザーの情報を取得するAPIのインテグレーションテストがあるとします。このテストをクリアするためには、事前にユーザーのデータをデータベースに登録しておくことが必要です。そうでなければユーザーのデータを検証することができません。<br>テスト用のデータベースを共有で利用していた場合、一時的に作成されたテストデータが他のテストに影響するようになるでしょう。この問題は複数のテストが同時に実行されるようなCI環境になると顕著に現れます。解決策の1つとしてプロダクション環境と同じデータベースが含まれたイメージを作成するという手がありますが、複雑なイメージファイルを作成することは、なるべくなら避けたいところです。</p>
+<h2 id="データベースはドアノブである"><a href="#データベースはドアノブである" class="headerlink" title="データベースはドアノブである"></a>データベースはドアノブである</h2><p>ロバート・C・マーティンは著書「Clean Architecture」で、データベースはあくまで道具の1つであり、アーキテクチャの中心になるものではないと言っています。データベースは家のドアノブのようなものであり、アーキテクチャ的にはどうでもよいのです。ドアノブに家の設計を合わせることはしないでしょう。データベースがドアノブのようなものであれば、データベースに依存しないようにアプリケーションを実装するのは当然のことのように思えます。</p>
+<p>RailsやSpringのような現在のフレームワークは、データベースを抽象化して扱えるような仕組みを提供しています。多くの場合、それはORMとして提供されており、利用するドライバーの設定を変更するだけでデータベースを変更することが可能です。</p>
+<p>アプリケーション設計の側面から考えると、データベース固有の関数は避けるべきです。データベース固有の関数を利用する必要が場合は、基本的なCRUDで同じことができないかを検討しましょう。さもなければ、たった1つのデータベース固有の関数のせいでアプリケーションの移植性は失われてしまいます。</p>
+<h2 id="原則としてアプリケーション側で対応する"><a href="#原則としてアプリケーション側で対応する" class="headerlink" title="原則としてアプリケーション側で対応する"></a>原則としてアプリケーション側で対応する</h2><p>多くのアプリケーションは基本的なCRUDで構築することが可能です。少しの手間を省くためにデータベース固有の関数（例えばMySQLのREPLACE）を利用することはデメリットの方が大きくなる可能性があります。よく見られるアンチパターンはNOWの多様です。時刻はアプリケーション側で取得できます。アプリケーション側で対応できるものはアプリケーションの機能で対応しましょう。</p>
+<h2 id="データベース固有の機能に頼った方がいい場合"><a href="#データベース固有の機能に頼った方がいい場合" class="headerlink" title="データベース固有の機能に頼った方がいい場合"></a>データベース固有の機能に頼った方がいい場合</h2><p>データベース固有の機能に頼った方がいい場合も存在します。例えば、位置情報を扱うような場合です。位置情報を扱う場合、PostgreSQLの拡張であるPostGISを利用した方が少ない労力で実装することができるでしょう。このように明確なアドバンテージがある場合はデータベース固有の機能を利用しない理由はありません。</p>
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=syoyama-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4048930656&linkId=bd16a1851920993a41c2031b32cd6769"></iframe>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2018-12-07T07:47:03.000Z" itemprop="datepublished">
             2018/12/07
           </time>
@@ -288,58 +318,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
     
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2018-08-07T05:23:15.000Z" itemprop="datepublished">
-            2018/08/07
-          </time>
-          <time datetime="2018-08-07T05:23:15.000Z" itemprop="modified">
-            (更新日: 2018/08/07)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2018/08/07/started-video-chat/">最短でビデオチャットを開発したい人へ</a>
-        </h1>
-        <div class="content">
-          <p>ビデオチャットを最短で作りたいと考えている人への備忘録です。次の手順に沿って開発すると4時間程度でビデオチャットを開発できます。</p>
-<ol>
-<li><a href="#1-webrtcの概要を把握する">WebRTCの概要を把握する</a></li>
-<li><a href="#2-webrtcのコードを動かしてみる">WebRTCのコードを動かしてみる</a></li>
-<li><a href="#3-webrtcの開発を支援するサービスを利用する">WebRTCの開発を支援するサービスを利用する</a></li>
-</ol>
-<h2 id="1-WebRTCの概要を把握する"><a href="#1-WebRTCの概要を把握する" class="headerlink" title="1. WebRTCの概要を把握する"></a>1. WebRTCの概要を把握する</h2><p>まずはWebRTCについての概要を把握しておくと、実装するときの理解が深まります。まずは、次の記事を読んでください。</p>
-<ul>
-<li><a href="https://gist.github.com/voluntas/67e5a26915751226fdcf" target="_blank">WebRTC コトハジメ</a></li>
-</ul>
-<p>同じタイトルですが、Qiitaのこの記事もわかりやすいです。</p>
-<ul>
-<li><a href="https://qiita.com/yusuke84/items/286f569d110daede721e" target="_blank">WebRTC コトハジメ</a></li>
-</ul>
-<h2 id="2-WebRTCのコードを動かしてみる"><a href="#2-WebRTCのコードを動かしてみる" class="headerlink" title="2. WebRTCのコードを動かしてみる"></a>2. WebRTCのコードを動かしてみる</h2><p>上記の記事を読んだら、早速コードを動かしてみましょう。コードを実際に動かしてみることで、着実にWebRTCの概念を理解していくことができます。</p>
-<p>次の記事で簡単にPCのカメラの映像をブラウザに表示できることが体感してください。</p>
-<ul>
-<li><a href="https://html5experts.jp/mganeko/19728/" target="_blank">カメラを使ってみよう ーWebRTC入門2016</a></li>
-</ul>
-<p>次の記事でシグナリングの流れを掴みましょう。</p>
-<ul>
-<li><a href="https://html5experts.jp/mganeko/19814/" target="_blank">手動でWebRTCの通信をつなげよう ーWebRTC入門2016</a></li>
-</ul>
-<h2 id="3-WebRTCの開発を支援するサービスを利用する"><a href="#3-WebRTCの開発を支援するサービスを利用する" class="headerlink" title="3. WebRTCの開発を支援するサービスを利用する"></a>3. WebRTCの開発を支援するサービスを利用する</h2><p>本格的なビデオチャットを開発するのはなかなか大変です。その開発を楽にしてくれるサービスが世の中に存在します。私がおすすめするのはSkyWayというサービスです。このサービスを利用することでNAT越えなどの仕組みを自分で実装せずにすみます。日本語ドキュメントが整備されており、サービス自体も無料で試すことができます。</p>
-<ul>
-<li><a href="https://webrtc.ecl.ntt.com/" target="_blank">SkyWay</a></li>
-</ul>
-<p>SkyWayを利用するにあたっては、次のスライドが参考になります。</p>
-<ul>
-<li><a href="https://www.slideshare.net/iwashi86/skyway-how-to-use-skyway-webrtc" target="_blank">SkyWayを使いこなすために - How to use SkyWay (WebRTC)</a></li>
-</ul>
-<p>余談ですが、WebRTCのライブラリであるPeerJSはメンテされてないので使わない方がよいです。</p>
-<ul>
-<li><a href="https://medium.com/@Tukimikage/peerjs%E3%82%92%E4%BB%8A%E5%BE%8C%E3%82%82%E4%BD%BF%E3%81%84%E7%B6%9A%E3%81%91%E3%82%8B%E3%81%AE%E3%81%AF%E5%8D%B1%E9%99%BA-8c3cf68d56a0" target="_blank">PeerJSを今後も使い続けるのは危険</a></li>
-</ul>
-
-        </div>
-      </div>
-    
   </div>
 
 
@@ -349,12 +327,53 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 
             
-    <div class="ltech-ad">
+    <div class="ltech-ad" id="ltech-ad">
+        <button class="ltech-ad-close" id="ltech-ad-close" aria-label="広告を閉じる">×</button>
         <a href="https://learning-tech.jp/" target="_blank" rel="noopener">
             <img src="https://learning-tech.jp/assets/images/lts-logo.png" alt="LTech - プログラミング学習サイト" width="300">
             <p>LTech - プログラミング学習ならここで学ぼう</p>
         </a>
     </div>
+
+    <style>
+        .ltech-ad-close {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            font-size: 14px;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            z-index: 10;
+        }
+
+        .ltech-ad-close:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const closeButton = document.getElementById('ltech-ad-close');
+            const adContainer = document.getElementById('ltech-ad');
+
+            if (closeButton && adContainer) {
+                closeButton.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    adContainer.style.display = 'none';
+                });
+            }
+        });
+    </script>
         </div>
       </div>
 

@@ -150,6 +150,39 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-05-16T04:25:01.000Z" itemprop="datepublished">
+            2016/05/16
+          </time>
+          <time datetime="2016-05-16T04:25:01.000Z" itemprop="modified">
+            (更新日: 2016/05/16)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/05/16/cording-without-separator-on-ruby/">Rubyでスラッシュを意識せずにコーディングする方法</a>
+        </h1>
+        <div class="content">
+          <p>ファイルのパスを生成する際にセパレーターを意識しなくてはならず、どうにもいけていないコードがあります(ありますというか自分が量産していました)。<br>以下のようなコードです。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">path = <span class="string">"<span class="subst">#&#123;path1&#125;</span>/&#123;$path2&#125;"</span></span><br></pre></td></tr></table></figure>
+
+<p>セパレーターを意識せずコーディングできないものかと調べたところ、<code>File.join</code>を使えばよしなにやってくれることがわかりました。<br><code>File.join</code>を使えばセパレーターを指定する必要はありません。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">File.join(<span class="string">"hoge"</span>, <span class="string">"moge"</span>)</span><br><span class="line">=&gt; <span class="string">"hoge/moge"</span></span><br></pre></td></tr></table></figure>
+
+<p><code>File.join</code>は正しいであろうパスのフォーマットに補正してくれるため、<code>//hoge</code>のようなパスが生成されることもありません。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">File.join(<span class="string">"hoge"</span>, <span class="string">"moge/"</span>, <span class="string">"/fuga"</span>)</span><br><span class="line">=&gt; <span class="string">"hoge/moge/fuga"</span></span><br></pre></td></tr></table></figure>
+
+<p>パラメーターが配列でもよしなにやってくれます。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">File.join(%w(hoge moge/ fuga))</span><br><span class="line">=&gt; <span class="string">"hoge/moge/fuga"</span></span><br></pre></td></tr></table></figure>
+
+<p>地味ですが、これでセパレーターの悩みから解放されて幸せになれます。</p>
+<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
+<li><a href="http://ruby-doc.org/core-2.2.0/File.html#method-c-join" target="_blank" rel="noopener">http://ruby-doc.org/core-2.2.0/File.html#method-c-join</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-05-13T04:28:11.000Z" itemprop="datepublished">
             2016/05/13
           </time>
@@ -313,36 +346,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
     
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-05-06T04:33:16.000Z" itemprop="datepublished">
-            2016/05/06
-          </time>
-          <time datetime="2016-05-06T04:33:16.000Z" itemprop="modified">
-            (更新日: 2016/05/06)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/05/06/can-not-ssh-login-allow-groups-problems/">AllowGroupsの問題でsshログインできない</a>
-        </h1>
-        <div class="content">
-          <p>sshログインできないので <code>/var/log/secure</code> のログを見てみました。<br>以下のメッセージがでていました。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Apr 28 14:11:14 server01 sshd[31264]:<span class="built_in"> User </span>shoyan <span class="keyword">from</span> example.jp <span class="keyword">not</span> allowed because none of user<span class="string">'s groups are listed in AllowGroups</span></span><br><span class="line"><span class="string">Apr 28 14:11:14 server01 sshd[31265]: input_userauth_request: invalid user shoyan</span></span><br><span class="line"><span class="string">Apr 28 14:11:14 server01 sshd[31265]: Connection closed by 192.168.1.1</span></span><br></pre></td></tr></table></figure>
-
-<p><code>none of user&#39;s groups are listed in AllowGroups</code> と書いてあるので、groupの問題らしい。</p>
-<p><code>/etc/ssh/sshd_config</code>をみると、AllowGroups にいなかったのでユーザーのグループを追加しました。</p>
-<p>sshd_configを変更したら、設定を反映させるためにreloadします。</p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># service sshd reload</span></span><br><span class="line"><span class="attribute">sshd</span> を再読み込み中:                                      <span class="meta"> [  OK  ]</span></span><br></pre></td></tr></table></figure>
-
-<p>AllowGroupsにユーザーのグループを追加することによってログインできるようになりました。</p>
-<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><ul>
-<li><a href="http://open-groove.net/linux/sshd-restart/" target="_blank" rel="noopener">http://open-groove.net/linux/sshd-restart/</a></li>
-<li><a href="https://www.howtoforge.com/community/threads/cannot-ssh-with-shell-user.52800/i" target="_blank" rel="noopener">https://www.howtoforge.com/community/threads/cannot-ssh-with-shell-user.52800/i</a></li>
-</ul>
-
-        </div>
-      </div>
-    
   </div>
 
 
@@ -352,12 +355,53 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 
             
-    <div class="ltech-ad">
+    <div class="ltech-ad" id="ltech-ad">
+        <button class="ltech-ad-close" id="ltech-ad-close" aria-label="広告を閉じる">×</button>
         <a href="https://learning-tech.jp/" target="_blank" rel="noopener">
             <img src="https://learning-tech.jp/assets/images/lts-logo.png" alt="LTech - プログラミング学習サイト" width="300">
             <p>LTech - プログラミング学習ならここで学ぼう</p>
         </a>
     </div>
+
+    <style>
+        .ltech-ad-close {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            font-size: 14px;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            z-index: 10;
+        }
+
+        .ltech-ad-close:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const closeButton = document.getElementById('ltech-ad-close');
+            const adContainer = document.getElementById('ltech-ad');
+
+            if (closeButton && adContainer) {
+                closeButton.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    adContainer.style.display = 'none';
+                });
+            }
+        });
+    </script>
         </div>
       </div>
 
