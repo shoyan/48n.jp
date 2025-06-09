@@ -625,6 +625,33 @@ details.answer {
   }
 }
 
+.categories ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.categories li {
+  margin-right: 10px;
+  margin-bottom: 5px;
+}
+
+.categories a {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border-radius: 15px;
+  color: #333;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.categories a:hover {
+  background-color: #e0e0e0;
+}
+
 .tags ul {
   display: flex;
   flex-wrap: wrap;
@@ -638,15 +665,37 @@ details.answer {
   margin-bottom: 5px;
 }
 
-.categories ul {
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.tags a {
+  display: inline-block;
+  padding: 3px 8px;
+  background-color: #e8f0fe;
+  border-radius: 12px;
+  color: #1a73e8;
+  text-decoration: none;
+  font-size: 0.9em;
+  transition: background-color 0.2s;
 }
 
-.categories li {
-  margin-right: 10px;
-  margin-bottom: 5px;
+.tags a:hover {
+  background-color: #d2e3fc;
+}
+
+.category-title,
+.tag-title {
+  font-size: 1.2em;
+  font-weight: 600;
+  margin: 20px 0 10px;
+  color: #333;
+}
+
+.category-list,
+.tag-list {
+  margin-bottom: 30px;
+}
+
+.category-list-count,
+.tag-list-count {
+  color: #666;
+  font-size: 0.9em;
+  margin-left: 5px;
 }
