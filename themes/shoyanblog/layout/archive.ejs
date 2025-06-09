@@ -21,7 +21,7 @@ const archivesList = list_archives({ show_count: true, format: "YYYY年M月" });
       // 表示
       Object.keys(grouped).sort((a, b) => b.localeCompare(a, 'ja', {numeric: true})).forEach(key => {
     %>
-      <h2 class="fs-3"><%= key %>（<%= grouped[key].length %>）</h2>
+      <h2><%= key %>（<%= grouped[key].length %>）</h2>
       <ul>
         <% grouped[key].forEach(post => { %>
           <li>
@@ -30,6 +30,30 @@ const archivesList = list_archives({ show_count: true, format: "YYYY年M月" });
         <% }) %>
       </ul>
     <% }); %>
+
+    <div class="categories-tags">
+      <div class="categories">
+        <h2>カテゴリ</h2>
+        <ul>
+          <% site.categories.sort('name').each(category => { %>
+            <li>
+              <a href="<%= url_for(category.path) %>"><%= category.name %></a>（<%= category.length %>）
+            </li>
+          <% }); %>
+        </ul>
+      </div>
+
+      <div class="tags">
+        <h2>タグ</h2>
+        <ul>
+          <% site.tags.sort('name').each(tag => { %>
+            <li>
+              <a href="<%= url_for(tag.path) %>"><%= tag.name %></a>（<%= tag.length %>）
+            </li>
+          <% }); %>
+        </ul>
+      </div>
+    </div>
   </div>
 <% } else { %>
 
