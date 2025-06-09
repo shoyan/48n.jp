@@ -4,7 +4,12 @@ title: "CircleCIでお手軽にCI環境をつくる"
 date: 2016-07-22 14:12:06
 updated: 2016-07-22 14:12:06
 comments: true
+category: 技術記事
 tags: 
+  - CircleCI
+  - CI/CD
+  - 開発環境
+  - チュートリアル
 description: "最近はCIプラットフォームが充実していて、Travice CI、Wercker、Droneなど様々なプラットフォームが開発されています。最近はCirlceCIを使っているのですが、なかなか便利です。CircleCIの便利な点と注意点を紹介します。"
 ---
 

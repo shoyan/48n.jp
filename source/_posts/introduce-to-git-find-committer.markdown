@@ -4,9 +4,11 @@ title: "Gitのコミッターを集計するGitFindCommitterをつくった"
 date: 2016-07-25 18:09:52
 updated: 2016-07-25 18:09:52
 comments: true
+category: プロジェクト
 tags: 
   - Gem 
   - Git
+  - 個人開発
 description: "Gitのコミッターを集計するGitFindCommitterをつくったので紹介します。GitFindCommitterとは変更されたファイルを対象としてコミッターを探すツールです。名前の通り、Gitのコミット履歴からコミッターを探します。"
 ---
 
@@ -64,6 +66,6 @@ end
 名前のみ配列で取得します。
 
 ```
-GitFindCommitter.search(repo: 'balloonbros/sutekki', branch: 'add-ui’).names(1)
+GitFindCommitter.search(repo: 'balloonbros/sutekki', branch: 'add-ui').names(1)
 => ["Shohei Yamasaki"]
 ```

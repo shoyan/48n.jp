@@ -1,10 +1,14 @@
 ---
 layout: post
-title: "NginxのCookbookでハマった"
-date: 2016-05-31 18:03:46
-updated: 2016-05-31 18:03:46
+title: "Nginxの設定Tipsとクックブック"
+date: 2024-02-21 10:00:00
+updated: 2024-02-21 10:00:00
 comments: true
-tags: Chef
+tags:
+  - Nginx
+  - インフラ
+  - チュートリアル
+  - 開発環境
 description: "Nginxのcookbookでversionを指定しているのに、指定したバージョンでインストールされない問題でハマった。結果としてわかったことはパッケージでインストールする場合はバージョンが指定できない。バージョンを指定したい場合はソースでインストールする必要がある。"
 ---
 
@@ -19,7 +23,7 @@ https://supermarket.chef.io/cookbooks/nginx
 
 Nginx cookbookはパッケージでのインストールかソースでのインストールのいずれかを選ぶことができる。  
 デフォルトはパッケージである。  
-ソースでインストールしたい場合は、`node['nginx']['install_method’]='source'` とする必要がある。  
+ソースでインストールしたい場合は、`node['nginx']['install_method']='source'` とする必要がある。  
 `install_method`を指定したときにはじめてversionの指定が可能となる。
 
 ## 立ちはだかる様々な問題
@@ -53,7 +57,7 @@ curl http://nginx.org/download/nginx-x.x.x.tar.gz | shasum -a 256
 
 ```
 
-checksumは `node['nginx']['source']['checksum’]` に指定する。
+checksumは `node['nginx']['source']['checksum']` に指定する。
 
 ## ChefのAttributeの優先順位について
 

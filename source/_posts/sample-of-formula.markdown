@@ -1,10 +1,13 @@
 ---
 layout: post
-title: "LATEXチートシート - 数式記号の読み方・表し方"
-date: 2016-07-12 14:45:29
-updated: 2022-12-18 13:42:29
+title: "よく使う数式のサンプル集"
+date: 2024-02-17 10:00:00
+updated: 2024-02-17 10:00:00
 comments: true
-tags: 数学
+tags:
+  - 数学
+  - チュートリアル
+  - リファレンス
 description: "LATEXを使った数式記号の読み方・表し方をまとめました。"
 math: true
 ---

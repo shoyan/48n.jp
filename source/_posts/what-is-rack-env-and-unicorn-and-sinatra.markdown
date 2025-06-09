@@ -1,13 +1,17 @@
 ---
 layout: post
-title: "RACK_ENVとUnicorn、SinatraでのRACK_ENVの扱いと注意点"
-date: 2016-05-02 14:14:29
-updated: 2016-05-02 14:14:29
+title: "Rack、Unicorn、Sinatraの関係性と使い方"
+date: 2024-03-15 10:00:00
+updated: 2024-03-15 10:00:00
 comments: true
-tags: 
-  - Ruby 
-  - Sinatra 
+category: 技術記事
+tags:
+  - Ruby
   - Rack
+  - Unicorn
+  - Sinatra
+  - チュートリアル
+  - 開発環境
 description: "RACK_ENVについて調べた内容とUnicorn、SinatraでのRACK_ENVの扱い方や注意点をまとめました。"
 ---
 

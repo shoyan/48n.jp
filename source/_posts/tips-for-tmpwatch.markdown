@@ -4,7 +4,11 @@ title: "tmpwatchでさくっと不要なファイルを消す"
 date: 2016-07-08 13:49:27
 updated: 2016-07-08 13:49:27
 comments: true
-tags: Linux
+category: 技術記事
+tags: 
+  - Linux
+  - コマンド
+  - チュートリアル
 description: "古いファイルを消したいときにtmpwatchを使うと簡単に消すことができます。例えば、/var/www/app/tmp 配下の48時間以上前のファイルやディレクトリを消したい場合は以下で消せます。tmpwatch -m 48  /var/www/app/tmp"
 ---
 

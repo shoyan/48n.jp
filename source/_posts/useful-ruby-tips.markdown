@@ -1,10 +1,14 @@
 ---
 layout: post
-title: "知っていると便利なRubyの小技集"
-date: 2016-07-14 13:43:40
-updated: 2016-07-14 13:43:40
+title: "Rubyの便利な機能とTips"
+date: 2024-03-04 10:00:00
+updated: 2024-03-04 10:00:00
 comments: true
-tags: Ruby
+category: 技術記事
+tags:
+  - Ruby
+  - プログラミング言語
+  - チュートリアル
 description: "知っていると便利なRubyの小技集を紹介します。"
 ---
 

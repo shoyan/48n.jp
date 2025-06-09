@@ -4,7 +4,11 @@ title: "JekyllテーマのminimaをAMP対応した"
 date: 2017-04-14 15:11:53
 updated: 2017-04-14 15:11:53
 comments: true
-tags: Jekyll
+category: 技術記事
+tags: 
+  - Jekyll
+  - AMP
+  - フレームワーク
 description: "JekyllテーマのminimaをAMP対応しました。デモサイトも用意していてこちらで確認できます。"
 ---
 

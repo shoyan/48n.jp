@@ -1,12 +1,15 @@
 ---
 layout: post
-title: "Sinatraのレスポンスの設定とストリーミングヘルパー"
-date: 2016-04-26 13:52:30
-updated: 2016-04-26 13:52:30
+title: "Sinatraでレスポンスの設定方法"
+date: 2024-02-16 10:00:00
+updated: 2024-02-16 10:00:00
 comments: true
-tags: 
-  - Sinatra 
+category: 技術記事
+tags:
   - Ruby
+  - Sinatra
+  - HTTP
+  - チュートリアル
 ---
 
 通常はルーティングブロックの戻り値にセットした文字列がbodyにセットされます。  

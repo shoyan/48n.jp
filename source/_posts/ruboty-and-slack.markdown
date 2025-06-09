@@ -9,6 +9,7 @@ tags:
   - Gem 
   - ChatOps
 description: "RubotyにはSlackアダプターが用意してありますが、新しくユーザーの作成が必要です。今回はユーザーの作成が必要のない、Botsインテグレーションとruboty-slack_rtmを使ってRubotyをSlackで動かす方法を紹介します。"
+category: 技術記事
 ---
 
 前回は[Rubotyのインストールとプラグインチュートリアル](/blog/2016/07/29/first-step-ruboty/)でRubotyの導入方法を紹介しました。

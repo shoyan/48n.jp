@@ -4,8 +4,13 @@ title: "GitHubのリポジトリを監視するGitMonitor"
 date: 2016-07-27 13:37:18
 updated: 2016-07-27 13:37:18
 comments: true
-tags: Git
-description: GitHubのリポジトリを監視するGitMonitorというサービスを紹介します。このサービスはGithubのリポジトリを監視して、そのリポジトリに行った操作をダッシュボードで確認することができます。
+category: 技術記事
+tags: 
+  - Git
+  - GitHub
+  - 開発環境
+  - レビュー
+description: "GitHubのリポジトリを監視するGitMonitorというサービスを紹介します。このサービスはGithubのリポジトリを監視して、そのリポジトリに行った操作をダッシュボードで確認することができます。"
 ---
 
 GitHubのリポジトリを監視する[GitMonitor](https://gitmonitor.com/)というサービスを紹介します。

@@ -1,10 +1,15 @@
 ---
 layout: post
-title: "ShellのTipsてきなやつ"
-date: 2016-06-22 18:16:41
-updated: 2016-06-22 18:16:41
+title: "シェルの便利な使い方Tips"
+date: 2024-02-13 10:00:00
+updated: 2024-02-13 10:00:00
 comments: true
-tags: Linux
+category: 技術記事
+tags:
+  - シェル
+  - コマンド
+  - チュートリアル
+  - 開発環境
 description: "ShellスクリプトのTipsです。自分がShellのコードを読んだり書いたりしたときにでてきた疑問のメモでもあります。"
 ---
 

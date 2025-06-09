@@ -1,13 +1,16 @@
 ---
 layout: post
-title: "天気予報をSlackに通知する on Heroku"
-date: 2015-10-06 16:12:17
-updated: 2015-10-06 16:12:17
+title: "Herokuで天気予報をSlackに通知する"
+date: 2024-03-02 10:00:00
+updated: 2024-03-02 10:00:00
 comments: true
-tags: 
-  - Slack 
-  - Heroku 
+category: 技術記事
+tags:
   - Ruby
+  - Heroku
+  - Slack
+  - API
+  - チュートリアル
 ---
 
 [@keita_kawamoto](https://twitter.com/keita_kawamoto)が天気予報を見ずに出社して、途中で雨に降られて困っていたので天気予報通知をつくってみました。  

@@ -4,9 +4,11 @@ title: "Jekyllチュートリアル"
 date: 2016-12-06 23:49:36
 updated: 2016-12-06 23:49:36
 comments: true
+category: 技術記事
 tags: 
   - Jekyll 
   - ブログ
+  - チュートリアル
 ---
 
 最近、ブログをリニューアルしようとJekyllをちょこちょこ触っている。

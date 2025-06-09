@@ -1,10 +1,16 @@
 ---
 layout: post
-title: "capistrano3-unicornを使う"
-date: 2016-04-19 17:21:17
-updated: 2016-04-19 17:21:17
+title: "Capistrano3とUnicornの設定Tips"
+date: 2024-02-22 10:00:00
+updated: 2024-02-22 10:00:00
 comments: true
-tags: Ruby
+category: 技術記事
+tags:
+  - Ruby
+  - Capistrano
+  - Unicorn
+  - デプロイ
+  - チュートリアル
 ---
 
 capistrano3-unicornとは、capistranoでデプロイしたときにunicornのstart/restartをしてくれるgemです。

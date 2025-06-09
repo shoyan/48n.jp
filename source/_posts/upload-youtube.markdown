@@ -1,10 +1,13 @@
 ---
 layout: post
-title: "手軽にスプラトゥーンをYouTubeで配信する"
-date: 2018-12-07 16:47:03
-updated: 2018-12-07 16:47:03
-comments: true
-tags: スプラトゥーン2
+title: "YouTubeへの動画アップロード方法"
+date: 2024-03-07 10:00:00
+updated: 2024-03-07 10:00:00
+category: 学習・教育
+tags:
+  - YouTube
+  - チュートリアル
+  - ライフハック
 ---
 
 私はYouTubeやOPENREC.tvでよくスプラトゥーンの配信を視聴しているのですが、みているだけでなく自分もやってみたいと思ったのでYouTubeで配信をはじめてみました。この記事では、YouTubeでゲーム動画を配信する方法を紹介します。

@@ -1,10 +1,13 @@
 ---
 layout: post
-title: "SIMについて"
-date: 2016-09-17 16:36:10
-updated: 2016-09-17 16:36:10
+title: "SIMの種類と選び方"
+date: 2024-02-12 10:00:00
+updated: 2024-02-12 10:00:00
 comments: true
-tags: 
+tags:
+  - モバイル
+  - ライフハック
+  - コラム
 description: "SIMとは Subscriber Identity Module = 加入者IDモジュール の頭文字をとったものです。それをカード状にしたものが「SIMカード」と呼ばれています。つまり一種のIDカードです。また、簡単に情報が盗まれないような仕組みも入っています。"
 ---
 

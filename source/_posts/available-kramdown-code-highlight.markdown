@@ -4,7 +4,12 @@ title: "Rdiscountからkramdownへmarkdownのparserを変更した"
 date: 2016-06-27 16:01:52
 updated: 2016-06-27 16:01:52
 comments: true
+category: 技術記事
 tags: 
+  - Jekyll
+  - Markdown
+  - 開発環境
+  - チュートリアル
 description: "数式を扱うために前回の記事で、markdownをkramdownに変更したのですが、コードのシンタックスハイライトが効かなくなってしまいました。kramdownのparserをGFMにしてやるとうまくいきました。GFMを使わない場合は、プラグインがあるのでそちらでも対応できます。"
 ---
 

@@ -1,10 +1,15 @@
 ---
 layout: post
-title: Rspecのコードリーディング
-date: 2015-07-16 17:13:38
-updated: 2015-07-16 17:13:38
+title: "RSpecでコードリーディングを効率化する"
+date: 2024-02-05 10:00:00
+updated: 2024-02-05 10:00:00
 comments: true
-tags: 
+category: 技術記事
+tags:
+  - Ruby
+  - RSpec
+  - テスト
+  - チュートリアル
 ---
 
 bundle exec rspecを実行したときの処理を追ってみた。  
@@ -41,7 +46,7 @@ load Gem.bin_path('rspec-core', 'rspec', version)
 
 loadメソッドにGem.bin_pathで生成されるものを渡している。  
 
-Gem.bin_path('rspec-core', 'rspec', ">=0”)をpryで実行すると以下の文字列が取得できた。  
+Gem.bin_path('rspec-core', 'rspec', ">=0")をpryで実行すると以下の文字列が取得できた。  
 
 ```
 => "/Users/shoyan/Development/rails-sample/vendor/bundle/ruby/2.1.0/gems/rspec-core-3.3.1/exe/rspec"

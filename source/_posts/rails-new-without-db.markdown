@@ -1,10 +1,15 @@
 ---
 layout: post
-title: "RailsをDBなしで使う"
-date: 2015-06-29 15:12:27
-updated: 2015-06-29 15:12:27
+title: "RailsをDBなしで初期化する方法"
+date: 2024-02-08 10:00:00
+updated: 2024-02-08 10:00:00
 comments: true
-tags: 
+category: 技術記事
+tags:
+  - Ruby
+  - Rails
+  - チュートリアル
+  - 開発環境
 ---
 
 RailsはデフォルトではDBを利用する設定になっているので、普通にrails newすると、Gemfileにsqlite3が定義されたりdatabase.ymlが作成されてしまいます。

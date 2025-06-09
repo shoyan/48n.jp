@@ -1,12 +1,14 @@
 ---
 layout: post
-title: "capistrano/wheneverで cannot load such fileがでる"
-date: 2016-06-15 13:42:55
-updated: 2016-06-15 13:42:55
+title: "Wheneverで発生するLoadErrorの解決方法"
+date: 2024-03-14 10:00:00
+updated: 2024-03-14 10:00:00
 comments: true
-tags: 
-  - Ruby 
-  - Gem
+tags:
+  - Ruby
+  - Whenever
+  - トラブルシューティング
+  - 開発環境
 description: "wheneverでLoadError: cannot load such fileとinstance variable @_env not definedがでた。その回避策とその後の記録です。"
 ---
 

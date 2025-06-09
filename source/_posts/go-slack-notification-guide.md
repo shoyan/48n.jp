@@ -1,13 +1,14 @@
 ---
-title: GoでSlack通知を実装する方法
-date: 2025-06-04 10:30:00
+title: "Go言語でSlack通知を実装するガイド"
+date: 2024-03-19 10:00:00
+updated: 2024-03-19 10:00:00
+category: 技術記事
 tags:
   - Go
   - Slack
   - API
-  - 通知
-categories:
-  - プログラミング
+  - チュートリアル
+  - 開発環境
 ---
 
 ## はじめに

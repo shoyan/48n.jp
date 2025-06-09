@@ -6,6 +6,7 @@ updated: 2016-06-20 13:23:28
 comments: true
 tags: Ruby
 description: "日本語の場合、CSVのファイルエンコードをShift JISにする要件がけっこうあると思います。RubyのCSVライブラリは、encodingというオプションが用意されており、encoding: ’sjis' のようにファイルエンコーディングを指定できます。"
+category: 技術記事
 ---
 
 日本語の場合、CSVのファイルエンコードをShift JISにする要件がけっこうあると思います。  

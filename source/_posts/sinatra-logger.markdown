@@ -1,12 +1,15 @@
 ---
 layout: post
-title: "Sinatraのロギング機構について調べてみた"
-date: 2016-05-27 13:48:34
-updated: 2016-05-27 13:48:34
+title: "Sinatraのロガー設定と使い方"
+date: 2024-02-10 10:00:00
+updated: 2024-02-10 10:00:00
 comments: true
-tags: 
-  - Sinatra 
-  - Rack
+category: 技術記事
+tags:
+  - Ruby
+  - Sinatra
+  - ログ
+  - チュートリアル
 description: "Sinatraのloggerヘルパーを使ったところ、なぜか標準エラーの出力先にログが吐かれており、標準出力の出力先にはログが吐かれない。
 標準出力先にログを吐くものだと思っていたのだが、自分が想定していた挙動と違うので調べてみた。Sinatraのロギング機構の仕組みと任意のファイルにログを出力する方法を解説する。"
 ---
@@ -57,7 +60,7 @@ RACK_LOGGER = 'rack.logger'.freeze
 
 https://github.com/rack/rack/blob/9073125f71afd615091f575d74ec468a0b1b79bf/lib/rack.rb#L64
 
-ここまでで、loggerヘルパーは`env['rack.logger’]`を取得していることがわかった。
+ここまでで、loggerヘルパーは`env['rack.logger']`を取得していることがわかった。
 
 では、rack.loggerには何が設定されているのかという疑問が湧いてくる。  
 rackには3つのロガーがある。

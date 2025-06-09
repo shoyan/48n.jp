@@ -4,7 +4,11 @@ title: "WEB+DB PRESS Vol.99に寄稿しました"
 date: 2017-06-26 10:37:20
 updated: 2017-06-26 10:37:20
 comments: true
-tags: 寄稿
+category: プロジェクト
+tags: 
+  - 寄稿
+  - 技術書
+  - 執筆
 ---
 
 こんにちは、SHOYANです。
