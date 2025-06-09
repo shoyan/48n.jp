@@ -7,44 +7,29 @@ const archivesList = list_archives({ show_count: true, format: "YYYY年M月" });
 
 <% if (is_year() === false) { %>
   <div id="archive">
-
     <h1>記事一覧</h1>
-
-    <aside>
-      <h2>記事一覧</h2>
-      <% if (archivesList !== "") { %>
-        <%-archivesList%>
-      <% } else { %>
-        <p>None.</p>
-      <% } %>
-    </aside>
-    <% if (theme.atom !== undefined) { %>
-      <p>
-        The feed is available via
-        <a href="<%=theme.atom%>">atom</a>.
-      </p>
-      <br>
-    <% } %>
-
-    <% if (categoriesList !== "") { %>
-      <aside>
-        <h2>Categories</h2>
-        <%-categoriesList%>
-      </aside>
-    <% } %>
-
-    <aside>
-      <h2>Tags</h2>
-      <% if (tagsList !== "") { %>
-        <%-tagsList%>
-      <% } else { %>
-        <p>None.</p>
-      <% } %>
-    </aside>
-    <br>
-
-
-
+    <%
+      // 年月ごとにグループ化（全記事対象）
+      const grouped = {};
+      site.posts.sort('date', -1).forEach(post => {
+        const y = post.date.year();
+        const m = post.date.month() + 1; // month()は0始まり
+        const key = `${y}年${m}月`;
+        if (!grouped[key]) grouped[key] = [];
+        grouped[key].push(post);
+      });
+      // 表示
+      Object.keys(grouped).sort((a, b) => b.localeCompare(a, 'ja', {numeric: true})).forEach(key => {
+    %>
+      <h2 class="fs-3"><%= key %>（<%= grouped[key].length %>）</h2>
+      <ul>
+        <% grouped[key].forEach(post => { %>
+          <li>
+            <a href="<%= url_for(post.path) %>"><%= post.title %></a>
+          </li>
+        <% }) %>
+      </ul>
+    <% }); %>
   </div>
 <% } else { %>
 
