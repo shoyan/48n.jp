@@ -624,3 +624,29 @@ details.answer {
     background-color: white;
   }
 }
+
+.tags ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tags li {
+  margin-right: 10px;
+  margin-bottom: 5px;
+}
+
+.categories ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.categories li {
+  margin-right: 10px;
+  margin-bottom: 5px;
+}
