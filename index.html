@@ -150,11 +150,47 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2025-07-02T03:00:00.000Z" itemprop="datepublished">
+            2025/07/02
+          </time>
+          <time datetime="2025-07-02T06:06:10.815Z" itemprop="modified">
+            (更新日: 2025/07/02)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2025/07/02/git-japanese-filename-encoding-fix/">Gitで日本語ファイル名が正しく表示されない問題の解決方法</a>
+        </h1>
+        <div class="content">
+          <h2 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h2><p>Gitで日本語ファイル名が正しく表示されず、エンコードされた文字列として表示されることがあります。<br>エンコードされた文字は一見何が書いてあるかはわからないし、ものすごく表示の幅をとるのでなんとかしたい。</p>
+<h2 id="問題の原因"><a href="#問題の原因" class="headerlink" title="問題の原因"></a>問題の原因</h2><p>Gitはデフォルトで、非ASCII文字（日本語など）を含むファイル名を引用符で囲んで表示したり、適切なエンコーディングで処理しない場合があります。これにより、日本語ファイル名が正しく表示されない問題が発生します。</p>
+<h2 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h2><h3 id="日本語ファイル名を正しく表示するための設定"><a href="#日本語ファイル名を正しく表示するための設定" class="headerlink" title="日本語ファイル名を正しく表示するための設定"></a>日本語ファイル名を正しく表示するための設定</h3><p>以下の3つの設定を変更することで、日本語ファイル名が正しく表示されるようになります。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 日本語などの非ASCII文字を含むファイル名を引用符で囲まずに表示</span></span><br><span class="line">git config --global core.quotepath <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Gitのログ出力をUTF-8エンコーディングで表示</span></span><br><span class="line">git config --global i18n.logoutputencoding utf-8</span><br><span class="line"></span><br><span class="line"><span class="comment"># コミットメッセージをUTF-8エンコーディングで処理</span></span><br><span class="line">git config --global i18n.commitencoding utf-8</span><br></pre></td></tr></table></figure>
+
+<p>設定を変更した後、<code>git status</code> コマンドなどで日本語ファイルを表示してみると、正しく表示されるはずです。</p>
+<h2 id="設定内容の詳細説明"><a href="#設定内容の詳細説明" class="headerlink" title="設定内容の詳細説明"></a>設定内容の詳細説明</h2><p>設定した内容は以下の通りです。</p>
+<h3 id="core-quotepath-false"><a href="#core-quotepath-false" class="headerlink" title="core.quotepath false"></a><code>core.quotepath false</code></h3><ul>
+<li><strong>目的</strong>: 日本語などの非ASCII文字を含むファイル名を引用符で囲まずに表示</li>
+<li><strong>効果</strong>: ファイル名が <code>&quot;日本語ファイル名.txt&quot;</code> ではなく <code>日本語ファイル名.txt</code> として表示される</li>
+</ul>
+<h3 id="i18n-logoutputencoding-utf-8"><a href="#i18n-logoutputencoding-utf-8" class="headerlink" title="i18n.logoutputencoding utf-8"></a><code>i18n.logoutputencoding utf-8</code></h3><ul>
+<li><strong>目的</strong>: Gitのログ出力をUTF-8エンコーディングで表示</li>
+<li><strong>効果</strong>: <code>git log</code> や <code>git status</code> などの出力で日本語が正しく表示される</li>
+</ul>
+<h3 id="i18n-commitencoding-utf-8"><a href="#i18n-commitencoding-utf-8" class="headerlink" title="i18n.commitencoding utf-8"></a><code>i18n.commitencoding utf-8</code></h3><ul>
+<li><strong>目的</strong>: コミットメッセージをUTF-8エンコーディングで処理</li>
+<li><strong>効果</strong>: 日本語のコミットメッセージが正しく保存・表示される（この設定は直接は関係ないが、設定しておいてよいと思う）</li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2025-06-05T02:00:00.000Z" itemprop="datepublished">
             2025/06/05
           </time>
-          <time datetime="2025-06-09T12:21:29.931Z" itemprop="modified">
-            (更新日: 2025/06/09)
+          <time datetime="2025-07-02T06:06:10.819Z" itemprop="modified">
+            (更新日: 2025/07/02)
           </time>
         </div>
         <h1>
@@ -275,8 +311,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2025-06-04T01:30:00.000Z" itemprop="datepublished">
             2025/06/04
           </time>
-          <time datetime="2025-06-09T12:21:29.927Z" itemprop="modified">
-            (更新日: 2025/06/09)
+          <time datetime="2025-07-02T06:06:10.815Z" itemprop="modified">
+            (更新日: 2025/07/02)
           </time>
         </div>
         <h1>
@@ -353,8 +389,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2025-06-03T03:00:00.000Z" itemprop="datepublished">
             2025/06/03
           </time>
-          <time datetime="2025-06-09T12:21:29.926Z" itemprop="modified">
-            (更新日: 2025/06/09)
+          <time datetime="2025-07-02T06:06:10.813Z" itemprop="modified">
+            (更新日: 2025/07/02)
           </time>
         </div>
         <h1>
@@ -443,8 +479,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2025-05-30T07:03:12.000Z" itemprop="datepublished">
             2025/05/30
           </time>
-          <time datetime="2025-06-09T12:21:29.927Z" itemprop="modified">
-            (更新日: 2025/06/09)
+          <time datetime="2025-07-02T06:06:10.815Z" itemprop="modified">
+            (更新日: 2025/07/02)
           </time>
         </div>
         <h1>
@@ -466,49 +502,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <li><a href="https://github.com/golang/go/issues/73617" target="_blank" rel="noopener">Go公式リポジトリのIssue #73617</a></li>
 <li><a href="https://github.com/ebitengine/purego/releases/tag/v0.8.3" target="_blank" rel="noopener">purego v0.8.3リリースノート</a></li>
 </ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2025-05-30T03:33:47.000Z" itemprop="datepublished">
-            2025/05/30
-          </time>
-          <time datetime="2025-06-09T12:21:29.927Z" itemprop="modified">
-            (更新日: 2025/06/09)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2025/05/30/go-error-handling-best-practice/">Goのエラーハンドリングのベストプラクティス</a>
-        </h1>
-        <div class="content">
-          <h2 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h2><p>Goのエラーハンドリングは他の言語と少し異なるアプローチを取ります。例外機構を持たないGoでは、エラーは値として扱われ、関数の戻り値として明示的に返されます。このシンプルなアプローチは強力ですが、効果的に活用するにはいくつかのベストプラクティスを理解する必要があります。</p>
-<p>この記事では、Goのエラーハンドリングの基本から、カスタムエラーの作成、エラーのラッピングとアンラッピング、そして<code>errors.Is()</code>と<code>errors.As()</code>を使用した効果的なエラー判定の方法について解説します。</p>
-<h2 id="Goのエラーハンドリングのベストプラクティス"><a href="#Goのエラーハンドリングのベストプラクティス" class="headerlink" title="Goのエラーハンドリングのベストプラクティス"></a>Goのエラーハンドリングのベストプラクティス</h2><p>Goのエラーハンドリングのベストプラクティスを理解するために、いくつかの具体例を見ていきましょう。</p>
-<h3 id="1-基本的なエラー定義と判定"><a href="#1-基本的なエラー定義と判定" class="headerlink" title="1. 基本的なエラー定義と判定"></a>1. 基本的なエラー定義と判定</h3><p>Goでは、標準パッケージの<code>errors</code>を使って簡単にエラーを定義できます。以下のサンプルコードでは、よく使われるパターンを示しています。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"errors"</span></span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// カスタムエラー型の定義</span></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	ErrNotFound = errors.New(<span class="string">"not found"</span>)</span><br><span class="line">	ErrInvalid  = errors.New(<span class="string">"invalid input"</span>)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// データベース操作を模擬する関数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">findUser</span><span class="params">(id <span class="keyword">string</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="comment">// エラーをラップして返す</span></span><br><span class="line">	<span class="keyword">return</span> fmt.Errorf(<span class="string">"failed to find user: %w"</span>, ErrNotFound)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> NotFoundError <span class="keyword">struct</span> &#123;</span><br><span class="line">	ID <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(e *NotFoundError)</span> <span class="title">Error</span><span class="params">()</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> fmt.Sprintf(<span class="string">"user %s not found"</span>, e.ID)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 悪い例: == 演算子での比較</span></span><br><span class="line">	err := findUser(<span class="string">"123"</span>)</span><br><span class="line">	<span class="keyword">if</span> err == ErrNotFound &#123; <span class="comment">// これは動作しない！</span></span><br><span class="line">		fmt.Println(<span class="string">"== で比較。ユーザーが見つかりませんでした"</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 良い例1: errors.Is() を使用</span></span><br><span class="line">	err = findUser(<span class="string">"123"</span>)</span><br><span class="line">	<span class="keyword">if</span> errors.Is(err, ErrNotFound) &#123;</span><br><span class="line">		fmt.Println(<span class="string">"errors.Is() で比較。ユーザーが見つかりませんでした"</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	err = &amp;NotFoundError&#123;ID: <span class="string">"123"</span>&#125;</span><br><span class="line">	<span class="keyword">var</span> notFoundErr *NotFoundError</span><br><span class="line">	<span class="keyword">if</span> errors.As(err, &amp;notFoundErr) &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"ユーザー %s が見つかりませんでした\n"</span>, notFoundErr.ID)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// エラーのラップと展開の例</span></span><br><span class="line">	err = findUser(<span class="string">"123"</span>)</span><br><span class="line">	fmt.Printf(<span class="string">"元のエラー: %v\n"</span>, err)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ラップされたエラーを展開</span></span><br><span class="line">	unwrapped := errors.Unwrap(err)</span><br><span class="line">	fmt.Printf(<span class="string">"展開されたエラー: %v\n"</span>, unwrapped)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>実行結果</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">errors.Is() で比較。ユーザーが見つかりませんでした</span><br><span class="line">ユーザー 123 が見つかりませんでした</span><br><span class="line">元のエラー: failed to find user: not found</span><br><span class="line">展開されたエラー: not found</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-エラー判定の種類と使い分け"><a href="#2-エラー判定の種類と使い分け" class="headerlink" title="2. エラー判定の種類と使い分け"></a>2. エラー判定の種類と使い分け</h3><p>上記のコードには、エラー判定のための重要な方法がいくつか含まれています。それぞれを詳しく解説します。</p>
-<h4 id="エラー比較の落とし穴-演算子"><a href="#エラー比較の落とし穴-演算子" class="headerlink" title="エラー比較の落とし穴: == 演算子"></a>エラー比較の落とし穴: <code>==</code> 演算子</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 悪い例: == 演算子での比較</span></span><br><span class="line">err := findUser(<span class="string">"123"</span>)</span><br><span class="line"><span class="keyword">if</span> err == ErrNotFound &#123; <span class="comment">// これは動作しない！</span></span><br><span class="line">    fmt.Println(<span class="string">"== で比較。ユーザーが見つかりませんでした"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>このコードでは、<code>findUser</code>関数が返すエラーと<code>ErrNotFound</code>を<code>==</code>演算子で直接比較しています。しかし、このアプローチには大きな問題があります。<code>findUser</code>関数は単純に<code>ErrNotFound</code>を返すのではなく、<code>fmt.Errorf(&quot;failed to find user: %w&quot;, ErrNotFound)</code>を使ってエラーをラップしているため、<code>==</code>比較は失敗します。ラップされたエラーは元のエラーと等価ではないからです。</p>
-<h4 id="推奨方法1-errors-Is"><a href="#推奨方法1-errors-Is" class="headerlink" title="推奨方法1: errors.Is()"></a>推奨方法1: <code>errors.Is()</code></h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 良い例1: errors.Is() を使用</span></span><br><span class="line">err = findUser(<span class="string">"123"</span>)</span><br><span class="line"><span class="keyword">if</span> errors.Is(err, ErrNotFound) &#123;</span><br><span class="line">    fmt.Println(<span class="string">"errors.Is() で比較。ユーザーが見つかりませんでした"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Go 1.13以降で導入された<code>errors.Is()</code>関数は、エラーチェーン内のどこかに特定のエラー値が含まれているかを確認します。これにより、ラップされたエラーでも正しく比較できるようになります。<code>errors.Is()</code>は、エラーが同一かどうかを確認する際の推奨方法です。</p>
-<h4 id="推奨方法2-errors-As"><a href="#推奨方法2-errors-As" class="headerlink" title="推奨方法2: errors.As()"></a>推奨方法2: <code>errors.As()</code></h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">err = &amp;NotFoundError&#123;ID: <span class="string">"123"</span>&#125;</span><br><span class="line"><span class="keyword">var</span> notFoundErr *NotFoundError</span><br><span class="line"><span class="keyword">if</span> errors.As(err, &amp;notFoundErr) &#123;</span><br><span class="line">    fmt.Printf(<span class="string">"ユーザー %s が見つかりませんでした\n"</span>, notFoundErr.ID)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>errors.As()</code>関数は、エラーチェーン内のいずれかのエラーが特定の型に一致するかを確認し、一致する場合はその値をターゲット変数に設定します。これは、エラーの型に基づいて処理を分岐させたい場合や、エラー内の追加情報（この例では<code>ID</code>）にアクセスしたい場合に特に有用です。</p>
-<h3 id="3-エラーのラッピングとアンラッピング"><a href="#3-エラーのラッピングとアンラッピング" class="headerlink" title="3. エラーのラッピングとアンラッピング"></a>3. エラーのラッピングとアンラッピング</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// エラーのラップと展開の例</span></span><br><span class="line">err = findUser(<span class="string">"123"</span>)</span><br><span class="line">fmt.Printf(<span class="string">"元のエラー: %v\n"</span>, err)</span><br><span class="line"></span><br><span class="line"><span class="comment">// ラップされたエラーを展開</span></span><br><span class="line">unwrapped := errors.Unwrap(err)</span><br><span class="line">fmt.Printf(<span class="string">"展開されたエラー: %v\n"</span>, unwrapped)</span><br></pre></td></tr></table></figure>
-
-<p>Go 1.13では、<code>%w</code>動詞を使用して元のエラーをラップする機能が<code>fmt.Errorf</code>に追加されました。これにより、より詳細なコンテキスト情報を提供しながら、元のエラー値を保持できます。<code>errors.Unwrap()</code>関数を使用すると、ラップされたエラーから元のエラーを取り出すことができます。</p>
-<h3 id="4-カスタムエラー型の作成"><a href="#4-カスタムエラー型の作成" class="headerlink" title="4. カスタムエラー型の作成"></a>4. カスタムエラー型の作成</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> NotFoundError <span class="keyword">struct</span> &#123;</span><br><span class="line">    ID <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(e *NotFoundError)</span> <span class="title">Error</span><span class="params">()</span> <span class="title">string</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> fmt.Sprintf(<span class="string">"user %s not found"</span>, e.ID)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Goでは、<code>Error()</code>メソッドを実装した任意の型をエラーとして使用できます。カスタムエラー型を作成することで、エラーに追加情報（この例では<code>ID</code>）を含めることができ、より詳細なエラーハンドリングが可能になります。</p>
-<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>Goのエラー判定では、==演算子による比較はラップされたエラーに対して正しく動作しません。<br>そのため、Go1.13以降で導入された<code>errors.Is</code>や<code>errors.As</code>を活用することで、より安全かつ柔軟なエラーハンドリングが可能になります。<br>エラー処理の品質向上のため、ぜひこれらの手法を取り入れてみてください。</p>
 
         </div>
       </div>

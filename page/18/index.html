@@ -150,6 +150,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-07-08T04:49:27.000Z" itemprop="datepublished">
+            2016/07/08
+          </time>
+          <time datetime="2016-07-08T04:49:27.000Z" itemprop="modified">
+            (更新日: 2016/07/08)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/07/08/tips-for-tmpwatch/">tmpwatchでさくっと不要なファイルを消す</a>
+        </h1>
+        <div class="content">
+          <p>古いファイルを消したいときにtmpwatchを使うと簡単に消すことができます。</p>
+<p>例えば、<code>/var/www/app/tmp</code> 配下の48時間以上前のファイルやディレクトリを消したい場合は以下で消せます。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmpwatch -m <span class="number">48</span>  <span class="regexp">/var/</span>www<span class="regexp">/app/</span>tmp</span><br></pre></td></tr></table></figure>
+
+<p>tmpwatchは再帰的にファイルを削除するので、サブディレクトリがあればその配下のファイルも削除されます。<br>シンボリックの場合はリンクが削除されるだけでリンク先のファイルは削除されないとのことです。</p>
+<h3 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h3><ul>
+<li><a href="http://spring-mt.tumblr.com/post/18484633412/tmpwatch%E3%81%8C%E4%BE%BF%E5%88%A9" target="_blank" rel="noopener">tmpwatchが便利！</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-07-05T08:21:32.000Z" itemprop="datepublished">
             2016/07/05
           </time>
@@ -394,44 +419,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h3 id="スペース区切りに加工する"><a href="#スペース区切りに加工する" class="headerlink" title="スペース区切りに加工する"></a>スペース区切りに加工する</h3><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">⇒  sed -n <span class="string">'4,14p'</span> <span class="keyword">table</span>.txt |<span class="comment"> awk</span> <span class="comment">'&#123;print $2 " "&#125;'</span> |<span class="comment"> tr -d</span> <span class="comment">'\n'</span></span><br><span class="line">A B C D E F G H I J K</span><br></pre></td></tr></table></figure>
 
 <p><code>sed -n &#39;4,14p’</code> で指定した行数のみ取得しています<br>次に<code>awk &#39;{print $2}’</code> でlabel列のみ抽出しています。<br>改行を消すのは <code>tr -d &#39;\n’</code> が便利です。</p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-06-27T07:01:52.000Z" itemprop="datepublished">
-            2016/06/27
-          </time>
-          <time datetime="2016-06-27T07:01:52.000Z" itemprop="modified">
-            (更新日: 2016/06/27)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/06/27/available-kramdown-code-highlight/">Rdiscountからkramdownへmarkdownのparserを変更した</a>
-        </h1>
-        <div class="content">
-          <p>数式を扱うために<a href="/blog/2016/06/27/use-math-syntax-on-jekyll/">前回の記事</a>で、markdownをkramdownに変更したのですが、コードのシンタックスハイライトが効かなくなってしまいました。</p>
-<p>kramdownのparserをGFMにしてやるとうまくいきました。</p>
-<p>_config.yml</p>
-<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">kramdown:</span></span><br><span class="line"><span class="symbol">  input:</span> GFM</span><br></pre></td></tr></table></figure>
-
-<p>GFMを使わない場合は、プラグインがあるのでそちらでも対応できます。</p>
-<p><a href="https://github.com/mvdbos/kramdown-with-pygments" target="_blank" rel="noopener">kramdown-with-pygments</a></p>
-<p>使い方ですが、pluginsディレクトリにkramdown_pygments.rbを置きます。<br>そして、<code>_config.yml</code>のmarkdownを以下のように修正します。</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">markdown: </span>KramdownPygments</span><br></pre></td></tr></table></figure>
-
-
-<p>また、parserにkramdownを使う場合はRdiscountとkramdownでcodeのmarkdownのフォーマットが違うのでgenerate時にエラーがでるかもしれません。</p>
-<p>自分は以下のワンライナーで書き換えました。</p>
-<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">find</span> source/<span class="variable">_posts</span> -<span class="built_in">type</span> f -<span class="built_in">name</span> <span class="string">"*.markdown"</span> | xargs sed -i <span class="string">''</span> -e <span class="string">'s/\`\`\`/\</span></span><br><span class="line"><span class="string">~~~/g'</span></span><br></pre></td></tr></table></figure>
-
-<p>また、URLに自動でリンクを付与してくれる機能がRdiscountにはあったのですが、kramdownでは明示的に指定する必要があります。<br>Rdiscountのように自動的にリンクを付与するプラグインを作成しました。</p>
-<ul>
-<li><a href="https://github.com/shoyan/kramdown_easy_link" target="_blank" rel="noopener">kramdown_easy_link</a></li>
-</ul>
-<p>使い方は<code>kramdown_easy_link.rb</code>を<code>plugins/</code>ディレクトリに置いて、<code>_config.yml</code>を以下のように修正します。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">markdown:</span> kramdown</span><br><span class="line"><span class="symbol">kramdown:</span></span><br><span class="line">  <span class="symbol">input:</span> KramdownEasyLink</span><br></pre></td></tr></table></figure>
 
         </div>
       </div>

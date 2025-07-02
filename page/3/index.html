@@ -150,6 +150,41 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2019-08-02T08:47:20.000Z" itemprop="datepublished">
+            2019/08/02
+          </time>
+          <time datetime="2019-08-02T08:47:20.000Z" itemprop="modified">
+            (更新日: 2019/08/02)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2019/08/02/why-do-not-i-aim-for-100-test-coverage/">テストカバレッジ100%を目指さない理由</a>
+        </h1>
+        <div class="content">
+          <h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>テストカバレッジ100%は目指さない</p>
+<h2 id="理由"><a href="#理由" class="headerlink" title="理由"></a>理由</h2><p>以前、このようなツイートをしました。</p>
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">マージ条件に作成したコードのテストカバレッジが100%であることというプロジェクトを見たことがあります</p>&mdash; しょーやん (@sinn_shoyan) <a href="https://twitter.com/sinn_shoyan/status/1155279098102472705?ref_src=twsrc%5Etfw" target="_blank" rel="noopener">July 28, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>テストカバレッジ100%に違和感を感じない人はもう少し勉強した方がいいですね。</p>
+<p>テストカバレッジ100%を目指すとこのようになってしまいます。</p>
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">テストカバレッジ100%を目指すとどうなるかを説明しましょう。
+テストの目的がカバレッジを通すことになってしまい、意味のないテストが乱立します</p>&mdash; しょーやん (@sinn_shoyan) <a href="https://twitter.com/sinn_shoyan/status/1155279684218675201?ref_src=twsrc%5Etfw" target="_blank" rel="noopener">July 28, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>さらにテストの問題も発生します。</p>
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">さらに、コードとテストコードが密結合になり、コードを少し変えるとテストが落ちるという状態になります。
+リファクタリングする場合、テストコードも書き直しになります</p>&mdash; しょーやん (@sinn_shoyan) <a href="https://twitter.com/sinn_shoyan/status/1155280247924768772?ref_src=twsrc%5Etfw" target="_blank" rel="noopener">July 28, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>テストカバレッジの問題については次の記事に詳しく書いてあります。</p>
+<ul>
+<li><a herf="https://qiita.com/bremen/items/d02eb38e790b93f44728" target="_blank">テストカバレッジ100%を追求しても品質は高くならない理由と推奨されるカバレッジの目標値について</a></li>
+</ul>
+<p>全てのコードにコメントを書くのは馬鹿げていると感じる人は多いでしょう。全てのコードにテストを書くということも同じように考えるとどうでしょう。何事も過ぎたるは及ばざるが如しです。</p>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2019-04-25T07:21:18.000Z" itemprop="datepublished">
             2019/04/25
           </time>
@@ -291,29 +326,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>Webアプリケーションはリクエストとパラメーター（必要であれば）をアプリケーションサーバーに送信し、ルーティング設定に従ってそのリクエストを処理します。そして、レスポンスを返します。この流れを理解することがはじめの1歩です。この流れが理解できていない状態でRailsを使うのは早すぎるように思いますし、データベースの用意やらマイグレーションやらは確実に最初の壁となってプログラミング初学者に立ちはだかるでしょう。</p>
 <p>そのようなややこしいことは置いておいて、まずは小さな動くアプリケーションを作りましょう。Sinatraであればターミナルに数コマンドを打つだけでアプリケーションを起動できます。自分で全てのコードを書いても数時間程度で書くことができます。コードのほとんどは標準のRubyのライブラリを使用しているため、とてもシンプルです。</p>
 <p>ここまではRailsについて散々けなしていますが、誤解のないように断っておくと、本格的なWebアプリケーションを作るのであればRailsがいいです。習得に数ヶ月はかかるでしょうが、多くの機能を少ないコードで実装できてしまうRailsの生産性の高さは、それだけの時間をかける価値があります。しかし、プログラミング初学者がいきなりRailsから入るのは難しいのではと思います。RubyでのWebアプリケーション開発は、まずはSinatraから入りそこからRailsに行くのがよいというのが私の考えです。</p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2018-09-05T10:40:36.000Z" itemprop="datepublished">
-            2018/09/05
-          </time>
-          <time datetime="2018-09-05T10:40:36.000Z" itemprop="modified">
-            (更新日: 2018/09/05)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2018/09/05/before-developers-summit-2018-fukuoka/">Developers Summit 2018 FUKUOKAに登壇します</a>
-        </h1>
-        <div class="content">
-          <p>2018年9月7日にアクロス福岡で開催される <a href="https://event.shoeisha.jp/devsumi/20180906" target="_blank">Developers Summit 2018 FUKUOKA</a>(デブサミ福岡)に登壇します。<br>明日はどのような話しから入ろうかがまだ決まっていなくて、どうしようかと考えています。</p>
-<p>発表内容は0からはじまった開発チームが、どのようにチームとしてまとまっていき、アプリケーション開発を成功させることができたかという事例の紹介となります。</p>
-<ul>
-<li><a href="https://event.shoeisha.jp/devsumi/20180906/session/1775/" target="_blank">Y!Jカード天神チームの立ち上げからこれまで</a></li>
-</ul>
-<p>デブサミ福岡のような大きなイベントに登壇するのは今回が初めてなので、うまくできるか不安ではありますが、精一杯やりたいと思っています。もし、当日会場に来られる方がいれば是非、お声がけください。</p>
 
         </div>
       </div>

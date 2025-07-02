@@ -150,6 +150,44 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-06-27T07:01:52.000Z" itemprop="datepublished">
+            2016/06/27
+          </time>
+          <time datetime="2016-06-27T07:01:52.000Z" itemprop="modified">
+            (更新日: 2016/06/27)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/06/27/available-kramdown-code-highlight/">Rdiscountからkramdownへmarkdownのparserを変更した</a>
+        </h1>
+        <div class="content">
+          <p>数式を扱うために<a href="/blog/2016/06/27/use-math-syntax-on-jekyll/">前回の記事</a>で、markdownをkramdownに変更したのですが、コードのシンタックスハイライトが効かなくなってしまいました。</p>
+<p>kramdownのparserをGFMにしてやるとうまくいきました。</p>
+<p>_config.yml</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">kramdown:</span></span><br><span class="line"><span class="symbol">  input:</span> GFM</span><br></pre></td></tr></table></figure>
+
+<p>GFMを使わない場合は、プラグインがあるのでそちらでも対応できます。</p>
+<p><a href="https://github.com/mvdbos/kramdown-with-pygments" target="_blank" rel="noopener">kramdown-with-pygments</a></p>
+<p>使い方ですが、pluginsディレクトリにkramdown_pygments.rbを置きます。<br>そして、<code>_config.yml</code>のmarkdownを以下のように修正します。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">markdown: </span>KramdownPygments</span><br></pre></td></tr></table></figure>
+
+
+<p>また、parserにkramdownを使う場合はRdiscountとkramdownでcodeのmarkdownのフォーマットが違うのでgenerate時にエラーがでるかもしれません。</p>
+<p>自分は以下のワンライナーで書き換えました。</p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">find</span> source/<span class="variable">_posts</span> -<span class="built_in">type</span> f -<span class="built_in">name</span> <span class="string">"*.markdown"</span> | xargs sed -i <span class="string">''</span> -e <span class="string">'s/\`\`\`/\</span></span><br><span class="line"><span class="string">~~~/g'</span></span><br></pre></td></tr></table></figure>
+
+<p>また、URLに自動でリンクを付与してくれる機能がRdiscountにはあったのですが、kramdownでは明示的に指定する必要があります。<br>Rdiscountのように自動的にリンクを付与するプラグインを作成しました。</p>
+<ul>
+<li><a href="https://github.com/shoyan/kramdown_easy_link" target="_blank" rel="noopener">kramdown_easy_link</a></li>
+</ul>
+<p>使い方は<code>kramdown_easy_link.rb</code>を<code>plugins/</code>ディレクトリに置いて、<code>_config.yml</code>を以下のように修正します。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">markdown:</span> kramdown</span><br><span class="line"><span class="symbol">kramdown:</span></span><br><span class="line">  <span class="symbol">input:</span> KramdownEasyLink</span><br></pre></td></tr></table></figure>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-06-27T03:25:08.000Z" itemprop="datepublished">
             2016/06/27
           </time>
@@ -407,30 +445,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">simple_chart_config = &#123;</span><br><span class="line">    # chartの設定をします</span><br><span class="line">    chart: &#123;</span><br><span class="line">        container: <span class="string">"#tree-simple"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    # ノードを定義します</span><br><span class="line">    nodeStructure: &#123;</span><br><span class="line">        text: &#123; <span class="attr">name</span>: <span class="string">"Parent node"</span> &#125;,</span><br><span class="line">        children: [</span><br><span class="line">            &#123;</span><br><span class="line">                text: &#123; <span class="attr">name</span>: <span class="string">"First child"</span> &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                text: &#123; <span class="attr">name</span>: <span class="string">"Second child"</span> &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"># コンストラクタ</span><br><span class="line"><span class="keyword">var</span> my_chart = <span class="keyword">new</span> Treant(simple_chart_config);</span><br></pre></td></tr></table></figure>
 
 <p>基本的には、nodeStructureに必要なノードを定義して、CSSで見た目を調整するという感じです。<br>アニメーションにも対応していて、その場合はjQueryが必要だったりするようです。<br>サンプルも色々あるので参考にしてみるとよいと思います。<br><a href="http://fperucic.github.io/treant-js/" target="_blank" rel="noopener">http://fperucic.github.io/treant-js/</a></p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-06-20T04:23:28.000Z" itemprop="datepublished">
-            2016/06/20
-          </time>
-          <time datetime="2016-06-20T04:23:28.000Z" itemprop="modified">
-            (更新日: 2016/06/20)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/06/20/sets-csv-encoding/">[Ruby]CSVファイルのエンコードをsjisに指定する</a>
-        </h1>
-        <div class="content">
-          <p>日本語の場合、CSVのファイルエンコードをShift JISにする要件がけっこうあると思います。<br>RubyのCSVライブラリは、<code>encoding</code>というオプションが用意されており、<code>encoding: ’sjis’</code> のようにファイルエンコーディングを指定できます。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">'csv'</span></span><br><span class="line">CSV.open(<span class="string">"hoge.csv"</span>, <span class="string">"wb"</span>, <span class="symbol">encoding:</span> <span class="string">'sjis'</span>) <span class="keyword">do</span> <span class="params">|csv|</span></span><br><span class="line">  csv &lt;&lt; [<span class="string">"ID"</span>, <span class="string">"担当者"</span>, <span class="string">"メールアドレス"</span>]</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>nkfコマンドを使ってファイルエンコーディングを確認します。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">⇒  <span class="selector-tag">nkf</span> <span class="selector-tag">-g</span> <span class="selector-tag">hoge</span><span class="selector-class">.csv</span></span><br><span class="line"><span class="selector-tag">Shift_JIS</span></span><br></pre></td></tr></table></figure>
-
-<p>Shift_JISで作成されていることが確認できました。</p>
 
         </div>
       </div>

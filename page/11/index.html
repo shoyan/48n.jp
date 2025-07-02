@@ -150,6 +150,36 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-11-10T09:28:31.000Z" itemprop="datepublished">
+            2016/11/10
+          </time>
+          <time datetime="2016-11-10T09:28:31.000Z" itemprop="modified">
+            (更新日: 2016/11/10)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/11/10/change-date-format-with-i18n/">Railsで日付をいい感じ(スラッシュ区切り)に表示する</a>
+        </h1>
+        <div class="content">
+          <p>日付は日本だと <code>/</code>(スラッシュ)区切りが一般的なのでそのように表示したい。<br>しかし、RailsでDateオブジェクトやDateTimeオブジェクトを表示すると以下のような感じになってしまう。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pry(main)&gt; Date.today.to_s</span><br><span class="line">=&gt; <span class="string">"2016-11-10"</span></span><br><span class="line"></span><br><span class="line">pry(main)&gt; DateTime.now.to_s</span><br><span class="line">=&gt; <span class="string">"2016-11-10T17:47:01+09:00"</span></span><br></pre></td></tr></table></figure>
+
+<p><code>strftime</code>メソッドで書式を指定すれば良いのだが、面倒だしイケてないように感じる。</p>
+<p>Rails国際化APIの<code>I18n</code>にまさにというメソッドがあったので紹介する。<br>その名も<code>localize</code>メソッドだ。<br><code>localize</code>メソッドはDateオブジェクトやDateTimeオブジェクトを現地のフォーマットに変換する。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pry(main)&gt; I18n.localize(Date.today)</span><br><span class="line">=&gt; <span class="string">"2016/11/10"</span></span><br><span class="line"></span><br><span class="line">pry(main)&gt; I18n.localize(DateTime.now)</span><br><span class="line">=&gt; <span class="string">"2016/11/10 18:05:04"</span></span><br></pre></td></tr></table></figure>
+
+<p>ちなみにlocalizeの省略形で <code>l</code> というエイリアスが用意されている。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pry(main)&gt; I18n.l(Date.today)</span><br><span class="line">=&gt; <span class="string">"2016/11/10"</span></span><br><span class="line"></span><br><span class="line">pry(main)&gt; I18n.l(DateTime.now)</span><br><span class="line">=&gt; <span class="string">"2016/11/10 18:07:24"</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a href="http://railsguides.jp/i18n.html#%E3%83%91%E3%83%96%E3%83%AA%E3%83%83%E3%82%AFi18n-api" target="_blank" rel="noopener">Rails国際化(I18n) API Rails ガイド</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-11-08T08:48:30.000Z" itemprop="datepublished">
             2016/11/08
           </time>
@@ -258,31 +288,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>以下は実際のソースだ。<br>参考にしてほしい。</p>
 <ul>
 <li><a href="https://github.com/shoyan/git_find_committer/blob/master/Rakefile" target="_blank" rel="noopener">https://github.com/shoyan/git_find_committer/blob/master/Rakefile</a></li>
-</ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-10-17T08:06:47.000Z" itemprop="datepublished">
-            2016/10/17
-          </time>
-          <time datetime="2016-10-17T08:06:47.000Z" itemprop="modified">
-            (更新日: 2016/10/17)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/10/17/kindle-unlimited-impression/">Kindle Unlimitedの冊数は図書館並みだった</a>
-        </h1>
-        <div class="content">
-          <p>今更ながらKindle Unlimitedを使ってみた。<br>すでに承知の方が大半だろうが、Kindle UnlimitedはKindle本の読み放題サービスだ。<br>月額980円でKindle Unlimitedに登録されている本を読むことができる。<br>ちなみに現在登録されている本はおよそ13万冊。<br>この数は私が利用する糸島市図書館のおよそ2倍だ。</p>
-<p>ちなみに13万冊というのは日本で出版されている本の数で洋書は含まれていない。<br>洋書は10倍にあたる132万冊を読むことができる。<br>132万冊といえば全国で6番目に蔵書数が多い滋賀県立図書館に匹敵する。</p>
-<p>洋書を手に入れる場所は日本だと限られているが、Kindleを使えば大型の図書館の蔵書数に匹敵する洋書を読むことができる。<br>また、Kindleアプリには英語の翻訳機能が搭載されているので、不明な単語があれば即座に意味を確認することもできる。</p>
-<p>使ってみて3週間ほど経つが、月額980円をペイするには十分すぎるクオリティだと思う。<br>Kindleは各プラットフォームにアプリが用意されており、Kindleがなくても読むことができる。<br>自分はKindle Fireを持っているがKindle Fireを使うことはあまりなく、iPhoneやMacで読むことの方が多い。</p>
-<p>Kindle Unlimitedで読めるKindle本は以下で確認できる。</p>
-<ul>
-<li><a href="https://www.amazon.co.jp/b?ie=UTF8&node=4486610051" target="_blank" rel="noopener">Kindle Unlimited:読み放題ストア: Kindleストア</a></li>
 </ul>
 
         </div>
