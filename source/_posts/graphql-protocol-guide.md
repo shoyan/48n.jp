@@ -6,9 +6,6 @@ updated: 2025-07-31 14:30:00
 comments: true
 tags: 
   - GraphQL
-  - API
-  - WebSocket
-  - HTTP
 description: "GraphQLは、Facebook（現Meta）が2012年に開発し、2015年に公開したクエリ言語およびAPI仕様です。REST APIの代替として設計され、クライアントがサーバーから必要なデータを正確に取得できるようにすることを目的としています。この記事では、GraphQLのプロトコルと特徴について解説しています。"
 ---
 
