@@ -1,0 +1,353 @@
+
+  <!DOCTYPE html>
+  <html lang="ja">
+
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-37267422-8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-37267422-8');
+</script>
+
+      <meta charset="UTF-8">
+      <title>
+        GraphQLガイド - GraphQLのプロトコルと特徴 - SHOYAN BLOG
+      </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+      
+        <!-- stylesheets list from _config.yml -->
+        
+          <link rel="stylesheet" href="/css/shoyanblog.css">
+          
+            
+              
+                <meta name="description" content="GraphQLは、Facebook（現Meta）が2012年に開発し、2015年に公開したクエリ言語およびAPI仕様です。REST APIの代替として設計され、クライアントがサーバーから必要なデータを正確に取得できるようにすることを目的としています。この記事では、GraphQLのプロトコルと特徴について解説しています。">
+                
+                  
+                      
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@sinn_shoyan" />
+<meta name="twitter:creator" content="@sinn_shoyan" />
+<meta name="og:title" content="GraphQLガイド - GraphQLのプロトコルと特徴 - SHOYAN BLOG" />
+
+  <meta name="og:description" content="GraphQLは、Facebook（現Meta）が2012年に開発し、2015年に公開したクエリ言語およびAPI仕様です。REST APIの代替として設計され、クライアントがサーバーから必要なデータを正確に取得できるようにすることを目的としています。この記事では、GraphQLのプロトコルと特徴について解説しています。" />
+
+
+  <meta name="og:image" content="https://48n.jp/images/logo.png" />
+
+
+                        <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KQX8LKG');</script>
+<!-- End Google Tag Manager -->
+
+  <meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
+</head>
+
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KQX8LKG"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+      <div id="menu-outer">
+        <header id="header">
+  <div id="header-outer" class="outer mb-2">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SHOYAN BLOG</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        <a class="nav-link" href="https://twitter.com/sinn_shoyan" target="_blank">
+          <?xml version="1.0" encoding="utf-8"?>
+          <!-- Generator: Adobe Illustrator 20.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+          <svg
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            x="0px"
+            y="0px"
+            viewBox="0 0 400 400"
+            style="enable-background:new 0 0 400 400;"
+            xml:space="preserve"
+            width="25"
+            height="25"
+          >
+            <style type="text/css">
+              .st0 {
+                fill: #1da1f2;
+              }
+              .st1 {
+                fill: #ffffff;
+              }
+            </style>
+            <g id="Dark_Blue">
+              <path
+                class="st0"
+                d="M350,400H50c-27.6,0-50-22.4-50-50V50C0,22.4,22.4,0,50,0h300c27.6,0,50,22.4,50,50v300
+		C400,377.6,377.6,400,350,400z"
+              />
+            </g>
+            <g id="Logo__x2014__FIXED">
+              <path
+                class="st1"
+                d="M153.6,301.6c94.3,0,145.9-78.2,145.9-145.9c0-2.2,0-4.4-0.1-6.6c10-7.2,18.7-16.3,25.6-26.6
+		c-9.2,4.1-19.1,6.8-29.5,8.1c10.6-6.3,18.7-16.4,22.6-28.4c-9.9,5.9-20.9,10.1-32.6,12.4c-9.4-10-22.7-16.2-37.4-16.2
+		c-28.3,0-51.3,23-51.3,51.3c0,4,0.5,7.9,1.3,11.7c-42.6-2.1-80.4-22.6-105.7-53.6c-4.4,7.6-6.9,16.4-6.9,25.8
+		c0,17.8,9.1,33.5,22.8,42.7c-8.4-0.3-16.3-2.6-23.2-6.4c0,0.2,0,0.4,0,0.7c0,24.8,17.7,45.6,41.1,50.3c-4.3,1.2-8.8,1.8-13.5,1.8
+		c-3.3,0-6.5-0.3-9.6-0.9c6.5,20.4,25.5,35.2,47.9,35.6c-17.6,13.8-39.7,22-63.7,22c-4.1,0-8.2-0.2-12.2-0.7
+		C97.7,293.1,124.7,301.6,153.6,301.6"
+              />
+            </g>
+          </svg>
+        </a>
+        
+        <a class="nav-link" href="/atom.xml" title="RSSフィード">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25" viewBox="0 0 100 100">
+            <path
+              class="social"
+              d="M 13.310204,73.332654 C 5.967347,73.332654 0,79.322448 0,86.621428 c 0,7.338776 5.967347,13.262246 13.310204,13.262246 7.370408,0 13.328572,-5.92245 13.328572,-13.262246 0,-7.29898 -5.958164,-13.288774 -13.328572,-13.288774 z M 0.01530612,33.978572 V 53.143878 C 12.493878,53.143878 24.229592,58.02347 33.068368,66.865306 41.894898,75.685714 46.767346,87.47449 46.767346,100 h 19.25 C 66.017346,63.592858 36.4,33.979592 0.01530612,33.978572 l 0,0 z M 0.03877552,0 V 19.17449 C 44.54796,19.17551 80.77551,55.437756 80.77551,100 H 100 C 100,44.87653 55.15102,0 0.03877552,0 z"
+            ></path>
+          </svg>
+        </a>
+         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="https://48n.jp"></form>
+      </nav>
+
+      <nav id="main-nav">
+        
+        <a class="main-nav-link" href="/">Home</a>
+        
+        <a class="main-nav-link" href="/lang/php/">PHP入門</a>
+        
+        <a class="main-nav-link" href="/lesson">プログラミングレッスン</a>
+        
+        <a class="main-nav-link" href="/archives">記事一覧</a>
+        
+        <a class="main-nav-link" href="/about">このページについて</a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+      </div>
+
+      <div id="content-outer">
+        <div id="content-inner">
+          
+<article id="post">
+  <div class="date-box">
+    <time datetime="2025-07-31T05:30:00.000Z" itemprop="datepublished">
+      2025/07/31
+    </time>
+    <time datetime="2025-07-31T05:30:00.000Z" itemprop="modified">
+      (更新日: 2025/07/31)
+    </time>
+  </div>
+  <h1>GraphQLガイド - GraphQLのプロトコルと特徴</h1>
+  <div class="post-tags">
+    <a class="post-tags-link" href="/tags/API/" rel="tag">API</a> <a class="post-tags-link" href="/tags/GraphQL/" rel="tag">GraphQL</a> <a class="post-tags-link" href="/tags/HTTP/" rel="tag">HTTP</a> <a class="post-tags-link" href="/tags/WebSocket/" rel="tag">WebSocket</a>
+  </div>
+  <div class="sharing">
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" target="_blank" rel="noopener" class="twitter-share-button" data-via="sinn_shoyan" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <a href="https://b.hatena.ne.jp/entry/" target="_blank" rel="noopener" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+</div>
+  <p>GraphQLは、Facebook（現Meta）が2012年に開発し、2015年に公開したクエリ言語およびAPI仕様です。REST APIの代替として設計され、クライアントがサーバーから必要なデータを正確に取得できるようにすることを目的としています。</p>
+<p>この記事では、GraphQLのプロトコルと特徴について解説し、理解を深めていきます。</p>
+<h2 id="GraphQLとは"><a href="#GraphQLとは" class="headerlink" title="GraphQLとは"></a>GraphQLとは</h2><p>GraphQLは、クライアントがサーバーに対して必要なデータを正確に指定して取得できるクエリ言語です。従来のREST APIでは、サーバーが決めたエンドポイントから固定のデータ構造を取得する必要がありましたが、GraphQLではクライアントが自由にデータの形を指定できます。</p>
+<h2 id="主な特徴"><a href="#主な特徴" class="headerlink" title="主な特徴"></a>主な特徴</h2><h3 id="1-単一エンドポイント"><a href="#1-単一エンドポイント" class="headerlink" title="1. 単一エンドポイント"></a>1. 単一エンドポイント</h3><p>GraphQLでは通常、<code>/graphql</code>のような単一のエンドポイントを使用します。すべてのクエリ、ミューテーション、サブスクリプションがこのエンドポイントを通じて処理されます。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// すべての操作が同じエンドポイントを使用</span></span><br><span class="line">POST /graphql</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-クエリ言語"><a href="#2-クエリ言語" class="headerlink" title="2. クエリ言語"></a>2. クエリ言語</h3><p>GraphQLは独自のクエリ言語を提供し、クライアントが必要なデータを正確に指定できます。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">query &#123;</span><br><span class="line">  user(id: &quot;123&quot;) &#123;</span><br><span class="line">    name</span><br><span class="line">    email</span><br><span class="line">    posts &#123;</span><br><span class="line">      title</span><br><span class="line">      content</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-型システム"><a href="#3-型システム" class="headerlink" title="3. 型システム"></a>3. 型システム</h3><p>GraphQLは強力な型システムを持ち、APIの仕様が明確になります。また、イントロスペクション機能により、スキーマ情報を動的に取得できます。</p>
+<h3 id="4-リアルタイム通信"><a href="#4-リアルタイム通信" class="headerlink" title="4. リアルタイム通信"></a>4. リアルタイム通信</h3><p>Subscriptions機能により、WebSocketを使用したリアルタイム通信をサポートしています。</p>
+<h2 id="プロトコルの詳細"><a href="#プロトコルの詳細" class="headerlink" title="プロトコルの詳細"></a>プロトコルの詳細</h2><h3 id="HTTPプロトコルでの実装"><a href="#HTTPプロトコルでの実装" class="headerlink" title="HTTPプロトコルでの実装"></a>HTTPプロトコルでの実装</h3><p>GraphQLは主にHTTPプロトコル上で動作します。リクエストボディはJSONです。<br>以下が基本的なリクエスト形式です。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">POST /graphql</span><br><span class="line">Content-Type: application/json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"query"</span>: <span class="string">"query &#123; user(id: \"123\") &#123; name email &#125; &#125;"</span>,</span><br><span class="line">  <span class="string">"variables"</span>: &#123;&#125;,</span><br><span class="line">  <span class="string">"operationName"</span>: <span class="string">"GetUser"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="レスポンス形式"><a href="#レスポンス形式" class="headerlink" title="レスポンス形式"></a>レスポンス形式</h4><p>レスポンス形式はJSONです。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"data"</span>: &#123;</span><br><span class="line">    <span class="string">"user"</span>: &#123;</span><br><span class="line">      <span class="string">"name"</span>: <span class="string">"John Doe"</span>,</span><br><span class="line">      <span class="string">"email"</span>: <span class="string">"john@example.com"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"errors"</span>: <span class="literal">null</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="WebSocketプロトコルでの実装"><a href="#WebSocketプロトコルでの実装" class="headerlink" title="WebSocketプロトコルでの実装"></a>WebSocketプロトコルでの実装</h3><p>リアルタイム通信が必要な場合は、WebSocketプロトコルを使用します。</p>
+<h4 id="接続確立"><a href="#接続確立" class="headerlink" title="接続確立"></a>接続確立</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GET /graphql HTTP/<span class="number">1.1</span></span><br><span class="line">Upgrade: websocket</span><br><span class="line">Connection: Upgrade</span><br><span class="line">Sec-WebSocket-Key: <span class="xml"><span class="tag">&lt;<span class="name">key</span>&gt;</span></span></span><br><span class="line"><span class="xml">Sec-WebSocket-Protocol: graphql-ws</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="サブスクリプション例"><a href="#サブスクリプション例" class="headerlink" title="サブスクリプション例"></a>サブスクリプション例</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">subscription &#123;</span><br><span class="line">  userUpdated(userId: &quot;123&quot;) &#123;</span><br><span class="line">    id</span><br><span class="line">    name</span><br><span class="line">    email</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="GraphQLプロトコルレイヤー"><a href="#GraphQLプロトコルレイヤー" class="headerlink" title="GraphQLプロトコルレイヤー"></a>GraphQLプロトコルレイヤー</h2><p>GraphQLは以下のプロトコルレイヤーで動作します。</p>
+<ol>
+<li><strong>HTTP/HTTPS</strong>: 主なトランスポートプロトコル</li>
+<li><strong>WebSocket</strong>: Subscriptions用のリアルタイム通信</li>
+<li><strong>GraphQL</strong>: アプリケーションレベルのクエリ言語</li>
+</ol>
+<h3 id="プロトコルスタック"><a href="#プロトコルスタック" class="headerlink" title="プロトコルスタック"></a>プロトコルスタック</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────┐</span><br><span class="line">│   GraphQL       │ ← クエリ言語</span><br><span class="line">├─────────────────┤</span><br><span class="line">│   HTTP/HTTPS    │ ← トランスポート</span><br><span class="line">├─────────────────┤</span><br><span class="line">│   TCP<span class="built_in">/IP </span>       │ ← ネットワーク</span><br><span class="line">└─────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="実装例"><a href="#実装例" class="headerlink" title="実装例"></a>実装例</h2><h3 id="基本的なクエリ"><a href="#基本的なクエリ" class="headerlink" title="基本的なクエリ"></a>基本的なクエリ</h3><p>データの取得にはクエリを利用します。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// リクエスト</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"query"</span>: <span class="string">`</span></span><br><span class="line"><span class="string">    query GetUser($id: ID!) &#123;</span></span><br><span class="line"><span class="string">      user(id: $id) &#123;</span></span><br><span class="line"><span class="string">        id</span></span><br><span class="line"><span class="string">        name</span></span><br><span class="line"><span class="string">        email</span></span><br><span class="line"><span class="string">        posts &#123;</span></span><br><span class="line"><span class="string">          id</span></span><br><span class="line"><span class="string">          title</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">      &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  <span class="string">"variables"</span>: &#123;</span><br><span class="line">    <span class="string">"id"</span>: <span class="string">"123"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="ミューテーション"><a href="#ミューテーション" class="headerlink" title="ミューテーション"></a>ミューテーション</h3><p>データの作成、更新にはミューテーションを利用します。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// リクエスト</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"query"</span>: <span class="string">`</span></span><br><span class="line"><span class="string">    mutation CreateUser($input: CreateUserInput!) &#123;</span></span><br><span class="line"><span class="string">      createUser(input: $input) &#123;</span></span><br><span class="line"><span class="string">        id</span></span><br><span class="line"><span class="string">        name</span></span><br><span class="line"><span class="string">        email</span></span><br><span class="line"><span class="string">      &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  <span class="string">"variables"</span>: &#123;</span><br><span class="line">    <span class="string">"input"</span>: &#123;</span><br><span class="line">      <span class="string">"name"</span>: <span class="string">"Jane Doe"</span>,</span><br><span class="line">      <span class="string">"email"</span>: <span class="string">"jane@example.com"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="サブスクリプション"><a href="#サブスクリプション" class="headerlink" title="サブスクリプション"></a>サブスクリプション</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// WebSocket接続後のメッセージ</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"type"</span>: <span class="string">"start"</span>,</span><br><span class="line">  <span class="string">"id"</span>: <span class="string">"1"</span>,</span><br><span class="line">  <span class="string">"payload"</span>: &#123;</span><br><span class="line">    <span class="string">"query"</span>: <span class="string">`</span></span><br><span class="line"><span class="string">      subscription &#123;</span></span><br><span class="line"><span class="string">        userUpdated &#123;</span></span><br><span class="line"><span class="string">          id</span></span><br><span class="line"><span class="string">          name</span></span><br><span class="line"><span class="string">          email</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">      &#125;</span></span><br><span class="line"><span class="string">    `</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="エラーハンドリング"><a href="#エラーハンドリング" class="headerlink" title="エラーハンドリング"></a>エラーハンドリング</h2><p>GraphQLでは、エラーが発生した場合でも部分的なデータを返すことができます。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"data"</span>: &#123;</span><br><span class="line">    <span class="string">"user"</span>: &#123;</span><br><span class="line">      <span class="string">"name"</span>: <span class="string">"John Doe"</span>,</span><br><span class="line">      <span class="string">"email"</span>: <span class="literal">null</span>  <span class="comment">// エラーにより取得できなかった</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"errors"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"message"</span>: <span class="string">"Cannot return null for non-nullable field User.email"</span>,</span><br><span class="line">      <span class="string">"locations"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="string">"line"</span>: <span class="number">3</span>,</span><br><span class="line">          <span class="string">"column"</span>: <span class="number">7</span></span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="string">"path"</span>: [<span class="string">"user"</span>, <span class="string">"email"</span>]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="パフォーマンス最適化"><a href="#パフォーマンス最適化" class="headerlink" title="パフォーマンス最適化"></a>パフォーマンス最適化</h2><h3 id="1-クエリの最適化"><a href="#1-クエリの最適化" class="headerlink" title="1. クエリの最適化"></a>1. クエリの最適化</h3><p>必要なフィールドのみを指定することで、ネットワーク転送量を削減できます。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># 良い例：必要なフィールドのみ</span><br><span class="line">query &#123;</span><br><span class="line">  user(id: &quot;123&quot;) &#123;</span><br><span class="line">    name</span><br><span class="line">    email</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 悪い例：不要なフィールドも含む</span><br><span class="line">query &#123;</span><br><span class="line">  user(id: &quot;123&quot;) &#123;</span><br><span class="line">    name</span><br><span class="line">    email</span><br><span class="line">    posts &#123;</span><br><span class="line">      title</span><br><span class="line">      content</span><br><span class="line">      comments &#123;</span><br><span class="line">        text</span><br><span class="line">        author &#123;</span><br><span class="line">          name</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-バッチ処理"><a href="#2-バッチ処理" class="headerlink" title="2. バッチ処理"></a>2. バッチ処理</h3><p>複数のクエリを一度に実行することで、ネットワークリクエスト数を削減できます。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"query"</span>: <span class="string">`</span></span><br><span class="line"><span class="string">    query &#123;</span></span><br><span class="line"><span class="string">      user1: user(id: "1") &#123; name email &#125;</span></span><br><span class="line"><span class="string">      user2: user(id: "2") &#123; name email &#125;</span></span><br><span class="line"><span class="string">      user3: user(id: "3") &#123; name email &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">  `</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="セキュリティ"><a href="#セキュリティ" class="headerlink" title="セキュリティ"></a>セキュリティ</h2><h3 id="1-認証・認可"><a href="#1-認証・認可" class="headerlink" title="1. 認証・認可"></a>1. 認証・認可</h3><p>Authorizationヘッダーに認証・認可トークンを付与します。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ヘッダーにトークンを含める</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"query"</span>: <span class="string">"..."</span>,</span><br><span class="line">  <span class="string">"variables"</span>: &#123;&#125;,</span><br><span class="line">  <span class="string">"headers"</span>: &#123;</span><br><span class="line">    <span class="string">"Authorization"</span>: <span class="string">"Bearer &lt;token&gt;"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-クエリの複雑度制限"><a href="#2-クエリの複雑度制限" class="headerlink" title="2. クエリの複雑度制限"></a>2. クエリの複雑度制限</h3><p>悪意のあるクエリによる攻撃を防ぐため、クエリの複雑度を制限することもできます。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// サーバー側での実装例</span></span><br><span class="line"><span class="keyword">const</span> depthLimit = <span class="built_in">require</span>(<span class="string">'graphql-depth-limit'</span>);</span><br><span class="line"><span class="keyword">const</span> server = <span class="keyword">new</span> ApolloServer(&#123;</span><br><span class="line">  typeDefs,</span><br><span class="line">  resolvers,</span><br><span class="line">  validationRules: [depthLimit(<span class="number">7</span>)]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>GraphQLは、モダンなWebアプリケーション開発において、REST APIの代替として広く採用されており、REST APIと比較して通信量の削減が見込めます。<br>今後もGraphQLの普及は進むことが予想され、API設計の標準的なアプローチの一つとして確立されていくと思われます。 </p>
+
+</article>
+
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2025/07/02/git-japanese-filename-encoding-fix/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">Gitで日本語ファイル名が正しく表示されない問題の解決方法</div>
+    </a>
+  
+</nav>
+
+
+
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2025/07/31/graphql-protocol-guide/">GraphQLガイド - GraphQLのプロトコルと特徴</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2025/07/02/git-japanese-filename-encoding-fix/">Gitで日本語ファイル名が正しく表示されない問題の解決方法</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2025/06/05/slack-block-kit-detailed-guide/">Slack Block Kitの制約とデザインパターンガイド</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2025/06/04/go-slack-notification-guide/">GoでSlack通知を実装する方法</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2025/06/03/asynq-rate-limiter-implementation-guide/">Go言語でAsynqにレート制限を実装する</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+            
+    <div class="ltech-ad" id="ltech-ad">
+        <button class="ltech-ad-close" id="ltech-ad-close" aria-label="広告を閉じる">×</button>
+        <a href="https://learning-tech.jp/" target="_blank" rel="noopener">
+            <img src="https://learning-tech.jp/assets/images/lts-logo.png" alt="LTech - プログラミング学習サイト" width="300">
+            <p>LTech - プログラミング学習ならここで学ぼう</p>
+        </a>
+    </div>
+
+    <style>
+        .ltech-ad-close {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            font-size: 14px;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            z-index: 10;
+        }
+
+        .ltech-ad-close:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const closeButton = document.getElementById('ltech-ad-close');
+            const adContainer = document.getElementById('ltech-ad');
+
+            if (closeButton && adContainer) {
+                closeButton.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    adContainer.style.display = 'none';
+                });
+            }
+        });
+    </script>
+        </div>
+      </div>
+
+      <footer>
+        <div id="bottom-outer">
+          <div id="bottom-inner">
+            <div id="author-profile">
+              <div id="author">
+                <p>著者情報</p>
+                <a href="/about/">
+                  <img
+                    src="https://avatars1.githubusercontent.com/u/1150041?s=460&u=f615fc39ae1a47862c73b870898620fc9b5e6d60&v=4"
+                    alt="著者">
+                </a>
+                <a href="/about/">
+                  <p class="author-name">山崎勝平(Yamasaki Shohei)</p>
+                </a>
+                <p class="author-introduction">フリーランスのソフトウェアエンジニア。LINEヤフーやメルカリで開発に従事し、その後独立。現在はIT企業のプロダクト開発や<a href="https://learning-tech.jp" target="_blank">LTech</a>の開発をしています。お仕事に関するご相談は<a href="/about/">お問い合わせ</a>ください。</p>
+              </div>
+              <div id="twitter-timeline">
+                <a class="twitter-timeline" href="https://twitter.com/sinn_shoyan?ref_src=twsrc%5Etfw" target="_blank" rel="noopener">Tweets by
+                  sinn_shoyan</a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+              </div>
+            </div>
+            <div id="footer-bottom">
+              <p>Copyright ©SHOYAN BLOG</p>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      
+        <!-- scripts list from theme config.yml -->
+        
+          <script src="/js/shoyanblog.js"></script>
+          
+            
+
+  </body>
+
+  </html>

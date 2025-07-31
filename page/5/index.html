@@ -150,6 +150,40 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2018-06-29T08:39:49.000Z" itemprop="datepublished">
+            2018/06/29
+          </time>
+          <time datetime="2018-06-29T08:39:49.000Z" itemprop="modified">
+            (更新日: 2018/06/29)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2018/06/29/use-of-setter-or-builder/">SetterとBuilderの使いわけ</a>
+        </h1>
+        <div class="content">
+          <p>先日、「SetterとBuilderはどのように使いわければいいのか？」という質問を受けました。なかなかよい質問ですね。Builderを使うとクラスのインスタンスを柔軟に作ることができます。Builderを使ったサンプルコードです。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">User user = User.builder()</span><br><span class="line">        .lastName(<span class="string">"山田"</span>)</span><br><span class="line">        .firstName(<span class="string">"太郎"</span>)</span><br><span class="line">        .build();</span><br></pre></td></tr></table></figure>
+
+<p>Builderを実装したUserクラスのサンプルコードです。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String lastName;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String firstName;</span><br><span class="line"></span><br><span class="line">    User(String lastName, String firstName) &#123;</span><br><span class="line">        <span class="keyword">this</span>.lastName = lastName;</span><br><span class="line">        <span class="keyword">this</span>.firstName = firstName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> UserBuilder <span class="title">builder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> UserBuilder();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">UserBuilder</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> String lastName;</span><br><span class="line">        <span class="keyword">private</span> String firstName;</span><br><span class="line"></span><br><span class="line">        UserBuilder() &#123;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> UserBuilder <span class="title">lastName</span><span class="params">(String lastName)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.lastName = lastName;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> UserBuilder <span class="title">firstName</span><span class="params">(String firstName)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.firstName = firstName;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> User <span class="title">build</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> User(lastName, firstName);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Setterを使うと次のようになります(実装は省略)。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">User user = <span class="keyword">new</span> User();</span><br><span class="line">user.setLastName(<span class="string">"山田"</span>);</span><br><span class="line">user.setFirstName(<span class="string">"太郎"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Setterの問題点として、インスタンスの状態を変更してしまうことがあります。イミュータブルな実装にする場合、原則としてコンストラクタで値は設定するべきでSetterで変更するべきではありません。</p>
+<p>では、Setterではなくコンストラクタで設定するようにしましょう。引数が少ないうちは問題がないのですが、次の例のように引数の数が増えてしまうとコードが煩雑になってしまいます。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 姓、名、年齢、血液型、国が引数のコンストラクタの例</span></span><br><span class="line"><span class="comment">// 年齢と血液型は不明だが、nullを指定する必要がある</span></span><br><span class="line">User user = <span class="keyword">new</span> User(<span class="string">"山田"</span>, <span class="string">"太郎"</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="string">"日本"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>そこで、Builderを使うメリットが出てきます。Builderを使えば柔軟にパラメーターの設定が行えるようになります。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">User user = User.builder()</span><br><span class="line">        .lastName(<span class="string">"山田"</span>)</span><br><span class="line">        .firstName(<span class="string">"太郎"</span>)</span><br><span class="line">        .country(<span class="string">"日本"</span>)</span><br><span class="line">        .build();</span><br></pre></td></tr></table></figure>
+
+<p>SetterもBuilderもやりたいことはオブジェクトにパラメーターをセットすることです。Setterを使うとオブジェクトの状態を変更してしまうことになります。イミュータブルな実装かつ柔軟にパラメーターを設定したい場合はBuilderを使いましょう。</p>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2018-06-29T06:26:49.000Z" itemprop="datepublished">
             2018/06/29
           </time>
@@ -233,31 +267,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h3 id="人数不利の場合の立ち回り"><a href="#人数不利の場合の立ち回り" class="headerlink" title="人数不利の場合の立ち回り"></a>人数不利の場合の立ち回り</h3><p>人数不利の場合は、安全なところまで下がって味方が前線に復帰してくるのを待ちます。孤立した場合はリスポーンに戻ってしまってもよいです。敵がヤグラに乗っている場合は、安全なところからヤグラ上の敵を攻撃してヤグラの進行を妨害します。</p>
 <h2 id="おすすめのギア"><a href="#おすすめのギア" class="headerlink" title="おすすめのギア"></a>おすすめのギア</h2><p>おすすめするギアはイカ速、メインインク効率アップです。イカ速は敵との距離を取るために積んでいます。メインインク効率アップは、メイン効率がよくないため積んでいます。私はイカ速1.0、メインインク効率2.0を積んでいます。デスが少なく抑えれる場合はメインインク効率を1.0にして、ペナルティや逆境強化を積んでもよいでしょう。</p>
 <h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>ポイントは敵と距離をとって戦うこと、人数有利の時、人数不利の時の立ち回りを意識することです。あとは実践あるのみです。自然とこの立ち回りができるくらい実践を繰り返せば必ずウデマエはあがります。</p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2018-06-12T09:28:53.000Z" itemprop="datepublished">
-            2018/06/12
-          </time>
-          <time datetime="2018-06-12T09:28:53.000Z" itemprop="modified">
-            (更新日: 2018/06/12)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2018/06/12/awesome-splatoon2/">スプラトゥーン2が楽しすぎる</a>
-        </h1>
-        <div class="content">
-          <p>スプラトゥーン2が楽しすぎます。社会人になってからゲームはあまりしなくなってゲームは卒業かと思っていましたが、やばいゲームと出会ってしまいました。時間を見つけてはスプラトゥーン2をやっています。ハマりすぎて妻には愛想をつかされていますが、まあそれでもいいのです。</p>
-<p>スプラトゥーン2はオンラインサバゲーのようなゲームです。味方と敵の2チームにわかれて自分のチームのインクを多く塗ったほうが勝ちです。幼稚園児でもできるシンプルなゲームです。そんなシンプルなゲームですが、プロゲーマーも多くいて、プロチームもあります。6月11日より世界大会が開催されて、第3回スプラトゥーン甲子園で優勝したGGBoyZが日本代表として出場します。</p>
-<p>幼稚園児からプロゲーマーまで楽しめるゲームってなかなかないのではないでしょうか。クリエイターの人には脱帽ですね。素晴らしいゲームです。</p>
-<p>ちなみに私のウデマエはS〜Aあたりをウロウロしています。あと100時間くらいやればS+はいけるんじゃないでしょうか。武器はプラコラやラピブラエリート、デュアルスイーパーカスタムなど中長距離武器をよく使ってます。</p>
-<p>しばらくはやり続けるでしょうから、今後もスプラトゥーン2について書いていきたいと思います。</p>
-<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=syoyama-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B072J2J26T&linkId=b397d3e0d93479554f7ad256a1279272"></iframe>
-
-
 
         </div>
       </div>

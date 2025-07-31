@@ -150,6 +150,47 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-06-03T08:45:45.000Z" itemprop="datepublished">
+            2016/06/03
+          </time>
+          <time datetime="2016-06-03T08:45:45.000Z" itemprop="modified">
+            (更新日: 2016/06/03)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/06/03/cross-site-scripting-aka-xss/">クロスサイトスクリプティングの脆弱性とその対策</a>
+        </h1>
+        <div class="content">
+          <p>クロスサイトスクリプティングはユーザーの入力を受け付ける動的なアプリケーションに含まれる脆弱性を利用した攻撃です。<br>英語ではCross Site Scriptingと呼ばれその頭文字をとるとCSSとなりますが、「Cascading Style Sheets」との区別が紛らわしいため一般的にXSSの表記が使われています。</p>
+<h2 id="クロスサイトスクリプティングとはどのような脆弱性であるのか"><a href="#クロスサイトスクリプティングとはどのような脆弱性であるのか" class="headerlink" title="クロスサイトスクリプティングとはどのような脆弱性であるのか"></a>クロスサイトスクリプティングとはどのような脆弱性であるのか</h2><p>XSSとは動的なWebサイトのプログラムの脆弱性を利用した攻撃です。<br>この脆弱性を利用することで、攻撃者は悪意のあるJavaScriptコードをサイトに埋め込み、そのコードを実行することができるようになります。</p>
+<p>例えば、XSSの脆弱性がある掲示板があったとします。<br>攻撃者はフィッシングサイトにページを遷移させるJavaScriptコードを投稿しました。<br>すると、他の利用者がこの掲示板を閲覧したときにそのJavaScriptコードが実行され、フィッシングサイトが表示されるようになります。</p>
+<h2 id="この脆弱性を持ったサイトが攻撃されるとどのような被害が起き得るのか"><a href="#この脆弱性を持ったサイトが攻撃されるとどのような被害が起き得るのか" class="headerlink" title="この脆弱性を持ったサイトが攻撃されるとどのような被害が起き得るのか"></a>この脆弱性を持ったサイトが攻撃されるとどのような被害が起き得るのか</h2><p>上記の例のようにXSSはWebサイトの利用者を攻撃の対象とします。</p>
+<p>例えば、以下のような被害が出る可能性があります。</p>
+<ul>
+<li>ユーザーのcookie情報を盗み、その情報を利用してそのユーザーでログインする</li>
+<li>不正なページへユーザーを誘導する</li>
+<li>不正なファイルをダウンロードさせる</li>
+</ul>
+<p>Webサイトを直接攻撃することも可能です。<br>JavaScriptのhtmlを書き換える機能を使って、攻撃対象のサイトの内容を書き換えることができてしまいます。</p>
+<h2 id="なぜそのようなセキュリティホールが作り込まれてしまうのか"><a href="#なぜそのようなセキュリティホールが作り込まれてしまうのか" class="headerlink" title="なぜそのようなセキュリティホールが作り込まれてしまうのか"></a>なぜそのようなセキュリティホールが作り込まれてしまうのか</h2><p>HTMLには特殊文字が存在します。<br>具体的には「’”&lt;&gt;&amp;」といった文字です。<br>これらの特殊文字をHTML上に表示するには適切な方法で変換しなければなりません。<br>しかし、XSSの脆弱性のあるプログラムはこのような特殊文字を意識せずに作られてしまっています。</p>
+<h2 id="どのように対策をすればよいのか"><a href="#どのように対策をすればよいのか" class="headerlink" title="どのように対策をすればよいのか"></a>どのように対策をすればよいのか</h2><p>入力時のチェックと出力時のチェックを行います。</p>
+<h3 id="入力時のチェック"><a href="#入力時のチェック" class="headerlink" title="入力時のチェック"></a>入力時のチェック</h3><p>具体的には、入力時に入力できる文字を制限します。<br>例えば、郵便番号を入力するフォームの場合は、数字と-しか入力できないようにします。<br>そうすれば、悪意のあるコード自体が入力できなくなります。<br>入り口でとめる作戦です。</p>
+<p>注意点としては、入力文字のチェックは必ずサーバサイドで行わなければなりません。<br>PHP等のサーバサイドで実行されるプログラムでチェックする必要があるということです。<br>クライアントサイド(JavaScript)のチェックでは攻撃者がそのチェック機構自体を無効にすることが可能です。</p>
+<h3 id="出力時のチェック"><a href="#出力時のチェック" class="headerlink" title="出力時のチェック"></a>出力時のチェック</h3><p>実際には仕様上、入力文字を制限することができないことがあります。<br>例えばフリーフォームの場合、無闇に入力文字を制限するとユーザーは自由に文章を入力することができなくなってしまいます。</p>
+<p>そこで、出力時に文字を無害化（サニタイジング）します。</p>
+<p>サニタイジングについては、プログラム言語やフレームワークに専用の機能が用意されています。<br>その機能を使うことを強く推奨します。</p>
+<p>例えばPHPであれば、<code>htmlspecialchars</code>というhtmlの特殊文字を無害化する関数が用意されています。<br><a href="http://php.net/manual/ja/function.htmlspecialchars.php" target="_blank" rel="noopener">http://php.net/manual/ja/function.htmlspecialchars.php</a></p>
+<p>また、フレームワークはデフォルトでサニタイズされた文字が出力される仕組みになっているはずなので、そのようなフレームワークを使ったほうがよいでしょう。</p>
+<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
+<li><a href="http://www.atmarkit.co.jp/ait/articles/0211/09/news001.html" target="_blank" rel="noopener">クロスサイトスクリプティングの脆弱性とは？</a></li>
+<li><a href="http://qiita.com/mpyw/items/565b3670dd0c7f9162fa" target="_blank" rel="noopener">XSS攻撃への対策</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-06-02T10:37:47.000Z" itemprop="datepublished">
             2016/06/02
           </time>
@@ -356,40 +397,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </ul>
 <p>様々なグラフのデモページが用意されており、参考になります。</p>
 <p><a href="http://www.highcharts.com/demo" target="_blank" rel="noopener">http://www.highcharts.com/demo</a></p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-05-30T03:58:52.000Z" itemprop="datepublished">
-            2016/05/30
-          </time>
-          <time datetime="2016-05-30T03:58:52.000Z" itemprop="modified">
-            (更新日: 2016/05/30)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/05/30/yum-install-failed-by-insufficient-space-on-docker/">Dockerのコンテナでyum installが失敗する</a>
-        </h1>
-        <div class="content">
-          <p>Dockerのコンテナでyum installが失敗する。<br>以下のようなエラーがでていた。  </p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Insufficient space <span class="keyword">in</span> download directory <span class="regexp">/var/</span>cache<span class="regexp">/yum/</span>x86_64<span class="regexp">/6/u</span>pdates<span class="regexp">/packages</span></span><br></pre></td></tr></table></figure>
-
-<p>容量が不足しているらしい。</p>
-<p>ディスク容量を確認したところ、100%になっていた。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">bash<span class="number">-4.2</span># df</span><br><span class="line">Filesystem     <span class="number">1</span>K-blocks     Used Available Use% Mounted on</span><br><span class="line">none            <span class="number">19049892</span> <span class="number">18226752</span>         <span class="number">0</span> <span class="number">100</span>% /</span><br><span class="line">tmpfs             <span class="number">509992</span>        <span class="number">0</span>    <span class="number">509992</span>   <span class="number">0</span>% /dev</span><br><span class="line">tmpfs             <span class="number">509992</span>        <span class="number">0</span>    <span class="number">509992</span>   <span class="number">0</span>% /sys/fs/cgroup</span><br><span class="line">/dev/sda1       <span class="number">19049892</span> <span class="number">18226752</span>         <span class="number">0</span> <span class="number">100</span>% /etc/hosts</span><br><span class="line">shm                <span class="number">65536</span>        <span class="number">0</span>     <span class="number">65536</span>   <span class="number">0</span>% /dev/shm</span><br></pre></td></tr></table></figure>
-
-<p>不要なコンテナが溜まっていて、そのせいでディスク容量を圧迫していたようだ。</p>
-<h3 id="コンテナを消す方法"><a href="#コンテナを消す方法" class="headerlink" title="コンテナを消す方法"></a>コンテナを消す方法</h3><ul>
-<li>docker ps -a でコンテナの一覧が表示される</li>
-<li>docker rm  container_id で消す</li>
-</ul>
-<p>コンテナを消すと、ディスク容量に空きができてyum installできるようになった。</p>
-<p>こちらは類似案件。</p>
-<ul>
-<li><a href="http://shoyan.github.io/blog/2016/04/13/no-space-left-on-device-on-docker/" target="_blank" rel="noopener">Dockerでno Space Left on Deviceが出てbuildできなくなった</a></li>
-</ul>
 
         </div>
       </div>

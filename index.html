@@ -150,11 +150,82 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2025-07-31T05:30:00.000Z" itemprop="datepublished">
+            2025/07/31
+          </time>
+          <time datetime="2025-07-31T05:30:00.000Z" itemprop="modified">
+            (更新日: 2025/07/31)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2025/07/31/graphql-protocol-guide/">GraphQLガイド - GraphQLのプロトコルと特徴</a>
+        </h1>
+        <div class="content">
+          <p>GraphQLは、Facebook（現Meta）が2012年に開発し、2015年に公開したクエリ言語およびAPI仕様です。REST APIの代替として設計され、クライアントがサーバーから必要なデータを正確に取得できるようにすることを目的としています。</p>
+<p>この記事では、GraphQLのプロトコルと特徴について解説し、理解を深めていきます。</p>
+<h2 id="GraphQLとは"><a href="#GraphQLとは" class="headerlink" title="GraphQLとは"></a>GraphQLとは</h2><p>GraphQLは、クライアントがサーバーに対して必要なデータを正確に指定して取得できるクエリ言語です。従来のREST APIでは、サーバーが決めたエンドポイントから固定のデータ構造を取得する必要がありましたが、GraphQLではクライアントが自由にデータの形を指定できます。</p>
+<h2 id="主な特徴"><a href="#主な特徴" class="headerlink" title="主な特徴"></a>主な特徴</h2><h3 id="1-単一エンドポイント"><a href="#1-単一エンドポイント" class="headerlink" title="1. 単一エンドポイント"></a>1. 単一エンドポイント</h3><p>GraphQLでは通常、<code>/graphql</code>のような単一のエンドポイントを使用します。すべてのクエリ、ミューテーション、サブスクリプションがこのエンドポイントを通じて処理されます。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// すべての操作が同じエンドポイントを使用</span></span><br><span class="line">POST /graphql</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-クエリ言語"><a href="#2-クエリ言語" class="headerlink" title="2. クエリ言語"></a>2. クエリ言語</h3><p>GraphQLは独自のクエリ言語を提供し、クライアントが必要なデータを正確に指定できます。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">query &#123;</span><br><span class="line">  user(id: &quot;123&quot;) &#123;</span><br><span class="line">    name</span><br><span class="line">    email</span><br><span class="line">    posts &#123;</span><br><span class="line">      title</span><br><span class="line">      content</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-型システム"><a href="#3-型システム" class="headerlink" title="3. 型システム"></a>3. 型システム</h3><p>GraphQLは強力な型システムを持ち、APIの仕様が明確になります。また、イントロスペクション機能により、スキーマ情報を動的に取得できます。</p>
+<h3 id="4-リアルタイム通信"><a href="#4-リアルタイム通信" class="headerlink" title="4. リアルタイム通信"></a>4. リアルタイム通信</h3><p>Subscriptions機能により、WebSocketを使用したリアルタイム通信をサポートしています。</p>
+<h2 id="プロトコルの詳細"><a href="#プロトコルの詳細" class="headerlink" title="プロトコルの詳細"></a>プロトコルの詳細</h2><h3 id="HTTPプロトコルでの実装"><a href="#HTTPプロトコルでの実装" class="headerlink" title="HTTPプロトコルでの実装"></a>HTTPプロトコルでの実装</h3><p>GraphQLは主にHTTPプロトコル上で動作します。リクエストボディはJSONです。<br>以下が基本的なリクエスト形式です。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">POST /graphql</span><br><span class="line">Content-Type: application/json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"query"</span>: <span class="string">"query &#123; user(id: \"123\") &#123; name email &#125; &#125;"</span>,</span><br><span class="line">  <span class="string">"variables"</span>: &#123;&#125;,</span><br><span class="line">  <span class="string">"operationName"</span>: <span class="string">"GetUser"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="レスポンス形式"><a href="#レスポンス形式" class="headerlink" title="レスポンス形式"></a>レスポンス形式</h4><p>レスポンス形式はJSONです。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"data"</span>: &#123;</span><br><span class="line">    <span class="string">"user"</span>: &#123;</span><br><span class="line">      <span class="string">"name"</span>: <span class="string">"John Doe"</span>,</span><br><span class="line">      <span class="string">"email"</span>: <span class="string">"john@example.com"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"errors"</span>: <span class="literal">null</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="WebSocketプロトコルでの実装"><a href="#WebSocketプロトコルでの実装" class="headerlink" title="WebSocketプロトコルでの実装"></a>WebSocketプロトコルでの実装</h3><p>リアルタイム通信が必要な場合は、WebSocketプロトコルを使用します。</p>
+<h4 id="接続確立"><a href="#接続確立" class="headerlink" title="接続確立"></a>接続確立</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GET /graphql HTTP/<span class="number">1.1</span></span><br><span class="line">Upgrade: websocket</span><br><span class="line">Connection: Upgrade</span><br><span class="line">Sec-WebSocket-Key: <span class="xml"><span class="tag">&lt;<span class="name">key</span>&gt;</span></span></span><br><span class="line"><span class="xml">Sec-WebSocket-Protocol: graphql-ws</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="サブスクリプション例"><a href="#サブスクリプション例" class="headerlink" title="サブスクリプション例"></a>サブスクリプション例</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">subscription &#123;</span><br><span class="line">  userUpdated(userId: &quot;123&quot;) &#123;</span><br><span class="line">    id</span><br><span class="line">    name</span><br><span class="line">    email</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="GraphQLプロトコルレイヤー"><a href="#GraphQLプロトコルレイヤー" class="headerlink" title="GraphQLプロトコルレイヤー"></a>GraphQLプロトコルレイヤー</h2><p>GraphQLは以下のプロトコルレイヤーで動作します。</p>
+<ol>
+<li><strong>HTTP/HTTPS</strong>: 主なトランスポートプロトコル</li>
+<li><strong>WebSocket</strong>: Subscriptions用のリアルタイム通信</li>
+<li><strong>GraphQL</strong>: アプリケーションレベルのクエリ言語</li>
+</ol>
+<h3 id="プロトコルスタック"><a href="#プロトコルスタック" class="headerlink" title="プロトコルスタック"></a>プロトコルスタック</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────┐</span><br><span class="line">│   GraphQL       │ ← クエリ言語</span><br><span class="line">├─────────────────┤</span><br><span class="line">│   HTTP/HTTPS    │ ← トランスポート</span><br><span class="line">├─────────────────┤</span><br><span class="line">│   TCP<span class="built_in">/IP </span>       │ ← ネットワーク</span><br><span class="line">└─────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="実装例"><a href="#実装例" class="headerlink" title="実装例"></a>実装例</h2><h3 id="基本的なクエリ"><a href="#基本的なクエリ" class="headerlink" title="基本的なクエリ"></a>基本的なクエリ</h3><p>データの取得にはクエリを利用します。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// リクエスト</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"query"</span>: <span class="string">`</span></span><br><span class="line"><span class="string">    query GetUser($id: ID!) &#123;</span></span><br><span class="line"><span class="string">      user(id: $id) &#123;</span></span><br><span class="line"><span class="string">        id</span></span><br><span class="line"><span class="string">        name</span></span><br><span class="line"><span class="string">        email</span></span><br><span class="line"><span class="string">        posts &#123;</span></span><br><span class="line"><span class="string">          id</span></span><br><span class="line"><span class="string">          title</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">      &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  <span class="string">"variables"</span>: &#123;</span><br><span class="line">    <span class="string">"id"</span>: <span class="string">"123"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="ミューテーション"><a href="#ミューテーション" class="headerlink" title="ミューテーション"></a>ミューテーション</h3><p>データの作成、更新にはミューテーションを利用します。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// リクエスト</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"query"</span>: <span class="string">`</span></span><br><span class="line"><span class="string">    mutation CreateUser($input: CreateUserInput!) &#123;</span></span><br><span class="line"><span class="string">      createUser(input: $input) &#123;</span></span><br><span class="line"><span class="string">        id</span></span><br><span class="line"><span class="string">        name</span></span><br><span class="line"><span class="string">        email</span></span><br><span class="line"><span class="string">      &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  <span class="string">"variables"</span>: &#123;</span><br><span class="line">    <span class="string">"input"</span>: &#123;</span><br><span class="line">      <span class="string">"name"</span>: <span class="string">"Jane Doe"</span>,</span><br><span class="line">      <span class="string">"email"</span>: <span class="string">"jane@example.com"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="サブスクリプション"><a href="#サブスクリプション" class="headerlink" title="サブスクリプション"></a>サブスクリプション</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// WebSocket接続後のメッセージ</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"type"</span>: <span class="string">"start"</span>,</span><br><span class="line">  <span class="string">"id"</span>: <span class="string">"1"</span>,</span><br><span class="line">  <span class="string">"payload"</span>: &#123;</span><br><span class="line">    <span class="string">"query"</span>: <span class="string">`</span></span><br><span class="line"><span class="string">      subscription &#123;</span></span><br><span class="line"><span class="string">        userUpdated &#123;</span></span><br><span class="line"><span class="string">          id</span></span><br><span class="line"><span class="string">          name</span></span><br><span class="line"><span class="string">          email</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">      &#125;</span></span><br><span class="line"><span class="string">    `</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="エラーハンドリング"><a href="#エラーハンドリング" class="headerlink" title="エラーハンドリング"></a>エラーハンドリング</h2><p>GraphQLでは、エラーが発生した場合でも部分的なデータを返すことができます。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"data"</span>: &#123;</span><br><span class="line">    <span class="string">"user"</span>: &#123;</span><br><span class="line">      <span class="string">"name"</span>: <span class="string">"John Doe"</span>,</span><br><span class="line">      <span class="string">"email"</span>: <span class="literal">null</span>  <span class="comment">// エラーにより取得できなかった</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"errors"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"message"</span>: <span class="string">"Cannot return null for non-nullable field User.email"</span>,</span><br><span class="line">      <span class="string">"locations"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="string">"line"</span>: <span class="number">3</span>,</span><br><span class="line">          <span class="string">"column"</span>: <span class="number">7</span></span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="string">"path"</span>: [<span class="string">"user"</span>, <span class="string">"email"</span>]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="パフォーマンス最適化"><a href="#パフォーマンス最適化" class="headerlink" title="パフォーマンス最適化"></a>パフォーマンス最適化</h2><h3 id="1-クエリの最適化"><a href="#1-クエリの最適化" class="headerlink" title="1. クエリの最適化"></a>1. クエリの最適化</h3><p>必要なフィールドのみを指定することで、ネットワーク転送量を削減できます。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># 良い例：必要なフィールドのみ</span><br><span class="line">query &#123;</span><br><span class="line">  user(id: &quot;123&quot;) &#123;</span><br><span class="line">    name</span><br><span class="line">    email</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 悪い例：不要なフィールドも含む</span><br><span class="line">query &#123;</span><br><span class="line">  user(id: &quot;123&quot;) &#123;</span><br><span class="line">    name</span><br><span class="line">    email</span><br><span class="line">    posts &#123;</span><br><span class="line">      title</span><br><span class="line">      content</span><br><span class="line">      comments &#123;</span><br><span class="line">        text</span><br><span class="line">        author &#123;</span><br><span class="line">          name</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-バッチ処理"><a href="#2-バッチ処理" class="headerlink" title="2. バッチ処理"></a>2. バッチ処理</h3><p>複数のクエリを一度に実行することで、ネットワークリクエスト数を削減できます。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"query"</span>: <span class="string">`</span></span><br><span class="line"><span class="string">    query &#123;</span></span><br><span class="line"><span class="string">      user1: user(id: "1") &#123; name email &#125;</span></span><br><span class="line"><span class="string">      user2: user(id: "2") &#123; name email &#125;</span></span><br><span class="line"><span class="string">      user3: user(id: "3") &#123; name email &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">  `</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="セキュリティ"><a href="#セキュリティ" class="headerlink" title="セキュリティ"></a>セキュリティ</h2><h3 id="1-認証・認可"><a href="#1-認証・認可" class="headerlink" title="1. 認証・認可"></a>1. 認証・認可</h3><p>Authorizationヘッダーに認証・認可トークンを付与します。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ヘッダーにトークンを含める</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"query"</span>: <span class="string">"..."</span>,</span><br><span class="line">  <span class="string">"variables"</span>: &#123;&#125;,</span><br><span class="line">  <span class="string">"headers"</span>: &#123;</span><br><span class="line">    <span class="string">"Authorization"</span>: <span class="string">"Bearer &lt;token&gt;"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-クエリの複雑度制限"><a href="#2-クエリの複雑度制限" class="headerlink" title="2. クエリの複雑度制限"></a>2. クエリの複雑度制限</h3><p>悪意のあるクエリによる攻撃を防ぐため、クエリの複雑度を制限することもできます。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// サーバー側での実装例</span></span><br><span class="line"><span class="keyword">const</span> depthLimit = <span class="built_in">require</span>(<span class="string">'graphql-depth-limit'</span>);</span><br><span class="line"><span class="keyword">const</span> server = <span class="keyword">new</span> ApolloServer(&#123;</span><br><span class="line">  typeDefs,</span><br><span class="line">  resolvers,</span><br><span class="line">  validationRules: [depthLimit(<span class="number">7</span>)]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>GraphQLは、モダンなWebアプリケーション開発において、REST APIの代替として広く採用されており、REST APIと比較して通信量の削減が見込めます。<br>今後もGraphQLの普及は進むことが予想され、API設計の標準的なアプローチの一つとして確立されていくと思われます。 </p>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2025-07-02T03:00:00.000Z" itemprop="datepublished">
             2025/07/02
           </time>
-          <time datetime="2025-07-02T06:06:10.815Z" itemprop="modified">
-            (更新日: 2025/07/02)
+          <time datetime="2025-07-31T04:52:03.516Z" itemprop="modified">
+            (更新日: 2025/07/31)
           </time>
         </div>
         <h1>
@@ -189,8 +260,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2025-06-05T02:00:00.000Z" itemprop="datepublished">
             2025/06/05
           </time>
-          <time datetime="2025-07-02T06:06:10.819Z" itemprop="modified">
-            (更新日: 2025/07/02)
+          <time datetime="2025-07-31T04:52:03.520Z" itemprop="modified">
+            (更新日: 2025/07/31)
           </time>
         </div>
         <h1>
@@ -311,8 +382,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2025-06-04T01:30:00.000Z" itemprop="datepublished">
             2025/06/04
           </time>
-          <time datetime="2025-07-02T06:06:10.815Z" itemprop="modified">
-            (更新日: 2025/07/02)
+          <time datetime="2025-07-31T04:52:03.516Z" itemprop="modified">
+            (更新日: 2025/07/31)
           </time>
         </div>
         <h1>
@@ -389,8 +460,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2025-06-03T03:00:00.000Z" itemprop="datepublished">
             2025/06/03
           </time>
-          <time datetime="2025-07-02T06:06:10.813Z" itemprop="modified">
-            (更新日: 2025/07/02)
+          <time datetime="2025-07-31T04:52:03.514Z" itemprop="modified">
+            (更新日: 2025/07/31)
           </time>
         </div>
         <h1>
@@ -469,38 +540,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <li><a href="https://github.com/hibiken/asynq" target="_blank" rel="noopener">Asynq公式ドキュメント</a></li>
 <li><a href="https://pkg.go.dev/golang.org/x/time/rate" target="_blank" rel="noopener">golang.org/x/time/rate</a></li>
 <li><a href="https://github.com/shoyan/asynq-late-limiter" target="_blank" rel="noopener">サンプルコード</a></li>
-</ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2025-05-30T07:03:12.000Z" itemprop="datepublished">
-            2025/05/30
-          </time>
-          <time datetime="2025-07-02T06:06:10.815Z" itemprop="modified">
-            (更新日: 2025/07/02)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2025/05/30/go-1-24-3-build-error/">Go 1.24.3アップデート後のビルドエラーと解決方法</a>
-        </h1>
-        <div class="content">
-          <h2 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h2><p>最近Go 1.24.3へアップデートしたところ、ローカル環境でビルドエラーが発生するようになりました。この記事では、発生した問題と解決方法について共有します。</p>
-<h2 id="発生した問題"><a href="#発生した問題" class="headerlink" title="発生した問題"></a>発生した問題</h2><p>Go 1.24.3にアップデートした後、以下のようなエラーメッセージが表示されるようになりました。</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">link: duplicated definition of symbol dlopen, from github.com<span class="regexp">/ebitengine/</span>purego and github.com<span class="regexp">/ebitengine/</span>purego (<span class="keyword">exit</span> status <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>調査の結果、このエラーはMacのIntel CPU（darwin/amd64）環境で発生する既知の問題であることがわかりました。Go公式リポジトリでも同様の問題が報告されています。</p>
-<p><a href="https://github.com/golang/go/issues/73617" target="_blank" rel="noopener">Github Issue #73617: cmd/link: Go 1.24.3 and 1.23.9 regression - duplicated definition of symbol dlopen</a></p>
-<h2 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h2><p>この問題は<code>github.com/ebitengine/purego</code>の最新バージョン（v0.8.3）で修正されています。以下のコマンドでpuregoをアップデートすることで解決できます。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/ebitengine/purego@v0.8.3</span><br></pre></td></tr></table></figure>
-
-<p>アップデート後、ビルドが正常に完了することを確認しました。</p>
-<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>Go言語のバージョンアップ後にはライブラリとの互換性の問題が発生することがあります。特にGoのマイナーバージョンアップデート（1.24.2→1.24.3など）でも互換性の問題が生じる可能性があるため、ビルドエラーが発生した場合は依存ライブラリの更新も検討するとよいでしょう。</p>
-<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
-<li><a href="https://github.com/golang/go/issues/73617" target="_blank" rel="noopener">Go公式リポジトリのIssue #73617</a></li>
-<li><a href="https://github.com/ebitengine/purego/releases/tag/v0.8.3" target="_blank" rel="noopener">purego v0.8.3リリースノート</a></li>
 </ul>
 
         </div>

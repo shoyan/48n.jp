@@ -150,6 +150,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-10-25T05:17:29.000Z" itemprop="datepublished">
+            2016/10/25
+          </time>
+          <time datetime="2016-10-25T05:17:29.000Z" itemprop="modified">
+            (更新日: 2016/10/25)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/10/25/introduce-gem-push/">RubyGems.orgに反映させるRakeタスクの紹介</a>
+        </h1>
+        <div class="content">
+          <p>Gemを更新した場合はRubyGems.orgに反映させる手続きが必要だ。<br>Gemを更新することはそんなに多くないので（私の場合）よく手順を忘れてしまう。<br>毎回手順を探すのはストレスなので以下のようなRakeタスクを作成した。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">"bundler/gem_tasks"</span></span><br><span class="line"><span class="keyword">require</span> <span class="string">"rspec/core/rake_task"</span></span><br><span class="line"></span><br><span class="line">RSpec::Core::RakeTask.new(<span class="symbol">:spec</span>)</span><br><span class="line"></span><br><span class="line">task <span class="symbol">:default</span> =&gt; <span class="symbol">:spec</span></span><br><span class="line"></span><br><span class="line">namespace <span class="string">"gem"</span> <span class="keyword">do</span></span><br><span class="line">  desc <span class="string">'Build a gem package'</span></span><br><span class="line">  task <span class="symbol">:build</span> <span class="keyword">do</span></span><br><span class="line">    sh <span class="string">"gem build your_gem_name.gemspec"</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  desc <span class="string">'Push a gem package'</span></span><br><span class="line">  task <span class="symbol">:push</span> <span class="keyword">do</span></span><br><span class="line">    Rake::Task[<span class="string">"gem:build"</span>].execute</span><br><span class="line">    sh <span class="string">"gem push your_gem_name-<span class="subst">#&#123;YourGemName::VERSION&#125;</span>.gem"</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>公開する時は以下のタスクを実行すればいい。</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rake gem:<span class="keyword">push</span></span><br></pre></td></tr></table></figure>
+
+<p>以下は実際のソースだ。<br>参考にしてほしい。</p>
+<ul>
+<li><a href="https://github.com/shoyan/git_find_committer/blob/master/Rakefile" target="_blank" rel="noopener">https://github.com/shoyan/git_find_committer/blob/master/Rakefile</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-10-17T08:06:47.000Z" itemprop="datepublished">
             2016/10/17
           </time>
@@ -286,45 +313,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <li><p>端末と電話番号が結合していると、必然的にキャリアの力が上になります（というのもメーカーは端末を作ったらキャリアに電話番号をつけてもらわないといけなくなるため）。SIMカードによって端末と電話番号が分離することで、メーカーはキャリアの意向に関係なく自由に端末を作ってマーケティングすることが可能となります。</p>
 </li>
 </ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-09-16T08:37:10.000Z" itemprop="datepublished">
-            2016/09/16
-          </time>
-          <time datetime="2016-09-16T08:37:10.000Z" itemprop="modified">
-            (更新日: 2016/09/16)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/09/16/links-container-for-docker/">Dockerのコンテナ間を繋ぐLinksを使ってPHPとMySQLコンテナを連携させる</a>
-        </h1>
-        <div class="content">
-          <p>DockerはLinksというコンテナ間のネットワークを繋ぐ仕組みを持つ。<br>例えば、アプリケーションコンテナとデータベースコンテナを連携して使いたいときに有用だ。<br>今回はMySQLとPHPのコンテナを連携させる方法を紹介する。</p>
-<h2 id="MySQLコンテナの作成"><a href="#MySQLコンテナの作成" class="headerlink" title="MySQLコンテナの作成"></a>MySQLコンテナの作成</h2><p>まずは、mysqlコンテナを作成する。<br>バックグラウンドで起動させるための <code>--detach</code>オプションと3306ポートを解放するための <code>expose</code>オプションを指定している。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="builtin-name">run</span> --detach <span class="attribute">--expose</span>=3306 <span class="attribute">--name</span>=test-mysql <span class="attribute">--env</span>=<span class="string">"MYSQL_ROOT_PASSWORD=mypassword"</span> mysql</span><br></pre></td></tr></table></figure>
-
-<p>以下のようにコンテナが起動していることを確認できるはずだ。</p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">⇒  docker ps</span><br><span class="line">CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES</span><br><span class="line">b18a5159fe7c        mysql               <span class="string">"docker-entrypoint.sh"</span>   <span class="number">1</span> minutes ago      Up <span class="number">1</span> minutes       <span class="number">3306</span>/tcp            test-mysql</span><br></pre></td></tr></table></figure>
-
-<h2 id="PHPコンテナの作成"><a href="#PHPコンテナの作成" class="headerlink" title="PHPコンテナの作成"></a>PHPコンテナの作成</h2><p>次にPHPコンテナを作成する。<br>以下のDockerfileと確認用のconnect.phpを用意しておく。</p>
-<p>Dockerfile</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> php:7.1</span><br><span class="line"><span class="builtin-name">RUN</span> apt-<span class="builtin-name">get</span> update</span><br><span class="line"><span class="builtin-name">RUN</span> docker-php-ext-install pdo_mysql mbstring</span><br><span class="line"><span class="builtin-name">ADD</span> . /app</span><br></pre></td></tr></table></figure>
-
-<p>connect.php</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">$dsn = <span class="string">'mysql:host='</span> . $_ENV[<span class="string">'MYSQL_PORT_3306_TCP_ADDR'</span>];</span><br><span class="line">$user = <span class="string">'root'</span>;</span><br><span class="line">$password = $_ENV[<span class="string">'MYSQL_ENV_MYSQL_ROOT_PASSWORD'</span>];</span><br><span class="line"></span><br><span class="line">$dbh = <span class="keyword">new</span> PDO($dsn, $user, $password);</span><br><span class="line"></span><br><span class="line">$sql = <span class="string">"SELECT version();"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span> ($dbh-&gt;query($sql, PDO::FETCH_ASSOC) <span class="keyword">as</span> $row) &#123;</span><br><span class="line">    print_r($row);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>ビルドする。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t mysql-php .</span><br></pre></td></tr></table></figure>
-
-<p>以下のように <code>--link 連携したいコンテナ名:エイリアス名</code> でPHPコンテナを起動すると、起動したコンテナの環境変数に連携したいコンテナに関する情報が登録される。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="builtin-name">run</span> -it --link test-mysql:mysql mysql-php bash</span><br><span class="line"><span class="comment"># root@9ec43f759596:/#</span></span><br><span class="line"><span class="comment"># env</span></span><br><span class="line"><span class="attribute">MYSQL_PORT_3306_TCP_PORT</span>=3306</span><br><span class="line"><span class="attribute">MYSQL_PORT_3306_TCP</span>=tcp://172.17.0.3:3306</span><br><span class="line"><span class="attribute">MYSQL_ENV_MYSQL_VERSION</span>=5.7.15-1debian8</span><br><span class="line"><span class="attribute">MYSQL_NAME</span>=/big_shirley/mysql</span><br><span class="line"><span class="attribute">MYSQL_PORT_3306_TCP_PROTO</span>=tcp</span><br><span class="line"><span class="attribute">MYSQL_PORT_3306_TCP_ADDR</span>=172.17.0.3</span><br><span class="line"><span class="attribute">MYSQL_ENV_MYSQL_MAJOR</span>=5.7</span><br><span class="line"><span class="attribute">MYSQL_PORT</span>=tcp://172.17.0.3:3306</span><br></pre></td></tr></table></figure>
-
-<p>最後にPHPのコンテナでconnect.phpを実行して接続できることを確認してみる。<br>version名が表示されれば成功だ。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># php /app/connect.php</span><br><span class="line">=&gt;</span><br><span class="line">Array</span><br><span class="line">(</span><br><span class="line">    [version()] =&gt; <span class="number">5.7</span>.<span class="number">15</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 
         </div>
       </div>
