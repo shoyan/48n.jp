@@ -150,6 +150,39 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-12-06T14:49:36.000Z" itemprop="datepublished">
+            2016/12/06
+          </time>
+          <time datetime="2016-12-06T14:49:36.000Z" itemprop="modified">
+            (更新日: 2016/12/06)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/12/06/jekyll-tutorial-01/">Jekyllチュートリアル</a>
+        </h1>
+        <div class="content">
+          <p>最近、ブログをリニューアルしようとJekyllをちょこちょこ触っている。<br>ブログを作る上でJekyllで知っておいたほうが良いことをまとめていきたいと思う。</p>
+<h2 id="Jekyllとは"><a href="#Jekyllとは" class="headerlink" title="Jekyllとは"></a>Jekyllとは</h2><p>Jekyllは静的なサイトを作ることに特化したツールだ。<br>Ruby製でGithub pagesでも利用されている。<br>内部的には<a href="https://github.com/Shopify/liquid/wiki" target="_blank" rel="noopener">Liquid</a>が使われている。<br>Liquidはテンプレートエンジンで変数や制御文(foreachとか)を使うことができる。<br>Jekyllはそれをラップしたものだ。<br>Jekyllの何が便利かというと、サイトの設定をymlファイルで管理したりJekyllコマンドでMarkdownからhtmlファイルを生成したりすることができるという点だ。<br>また、サードパーティ製のテーマを利用できたりもする。</p>
+<h2 id="ドキュメント"><a href="#ドキュメント" class="headerlink" title="ドキュメント"></a>ドキュメント</h2><p>Jekyllはドキュメントがなかなかしっかりしているので、公式のドキュメントを見るのがよい。</p>
+<ul>
+<li><a href="https://jekyllrb.com/" target="_blank" rel="noopener">https://jekyllrb.com/</a></li>
+</ul>
+<p>日本語版も用意してある。</p>
+<ul>
+<li><a href="https://jekyllrb-ja.github.io/" target="_blank" rel="noopener">https://jekyllrb-ja.github.io/</a></li>
+</ul>
+<p>まずドキュメントを探してみて、わからなければググるという感じで自分は調べている。</p>
+<h2 id="目次"><a href="#目次" class="headerlink" title="目次"></a>目次</h2><ul>
+<li>Jekyllをはじめよう</li>
+<li>Jekyllの構成について</li>
+<li>Jekyllのテーマを作成する</li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-11-11T05:13:32.000Z" itemprop="datepublished">
             2016/11/11
           </time>
@@ -281,35 +314,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
     
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-10-31T07:58:56.000Z" itemprop="datepublished">
-            2016/10/31
-          </time>
-          <time datetime="2016-10-31T07:58:56.000Z" itemprop="modified">
-            (更新日: 2016/10/31)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/10/31/run-regular-basis-the-ruboty/">Slackで定期的にRubotyに仕事をさせる</a>
-        </h1>
-        <div class="content">
-          <p>ChatOpsの一環としてSlackにRubotyを常駐させているのだが、Rubotyに定期的にタスクを実行させたいことがあった。<br>最初はruby-cronを使ってみたのだが、Slackだとうまく動かなかった。<br>具体的にはジョブの登録はできるのだがジョブの実行(通知)がされない。</p>
-<p>うまくいかなかったのでSlackのリマインダー機能を使ってみることにした。<br>Slackのリマインダー機能を使うと <code>Reminder:</code> と言うプレフィックスが入るのでRubotyが反応せず、こちらもうまくいかなかった。</p>
-<p>最終的にはcronでスクリプトを定期実行させることにした。<br>Slackに通知するスクリプトを作って、それをcronで定期的に実行させる。<br>メッセージを拾ったRubotyがタスクを実行するといった感じだ。</p>
-<h3 id="サンプルコード"><a href="#サンプルコード" class="headerlink" title="サンプルコード"></a>サンプルコード</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">"faraday"</span></span><br><span class="line"></span><br><span class="line">username = <span class="string">'your name'</span></span><br><span class="line">channel = <span class="string">'your channel'</span></span><br><span class="line">slack_token = <span class="string">'your slack token'</span></span><br><span class="line">icon_url = <span class="string">'your icon url'</span></span><br><span class="line"></span><br><span class="line">body = &#123;</span><br><span class="line">  <span class="symbol">username:</span> username,</span><br><span class="line">  <span class="symbol">channel:</span> channel,</span><br><span class="line">  <span class="symbol">icon_url:</span> icon_url,</span><br><span class="line">  <span class="symbol">text:</span> <span class="string">"ruboty ping"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Faraday.new(<span class="string">'https://slack.com'</span>) <span class="keyword">do</span> <span class="params">|c|</span></span><br><span class="line">  c.request <span class="symbol">:url_encoded</span></span><br><span class="line">  c.adapter Faraday.default_adapter</span><br><span class="line"><span class="keyword">end</span>.post(<span class="string">"/api/chat.postMessage?token=<span class="subst">#&#123;slack_token&#125;</span>"</span>, body)</span><br></pre></td></tr></table></figure>
-
-<p>これでRubotyに定期的に仕事をさせることができるようになった。</p>
-
-        </div>
-      </div>
-    
   </div>
 
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/10/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/12/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/10/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><a class="extend next" rel="next" href="/page/12/">Next</a>
 </div>
 
             

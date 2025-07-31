@@ -150,6 +150,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-08-23T04:37:27.000Z" itemprop="datepublished">
+            2016/08/23
+          </time>
+          <time datetime="2016-08-23T04:37:27.000Z" itemprop="modified">
+            (更新日: 2016/08/23)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/08/23/last-comment-is-deprecated/">Rails 4.2.7.1 に更新した後に [DEPRECATION] last_comment is deprecated. が発生した</a>
+        </h1>
+        <div class="content">
+          <p>Railsを4.2.7.1にアップデートをしてrspecを実行すると、以下のエラーが発生するようになった。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ bundle exec rspec spec</span><br><span class="line">[DEPRECATION] `last_comment` is deprecated.  Please use `last_description` instead.</span><br><span class="line">[DEPRECATION] `last_comment` is deprecated.  Please use `last_description` instead.</span><br><span class="line">[DEPRECATION] `last_comment` is deprecated.  Please use `last_description` instead.</span><br><span class="line">[DEPRECATION] `last_comment` is deprecated.  Please use `last_description` instead.</span><br><span class="line">[DEPRECATION] `last_comment` is deprecated.  Please use `last_description` instead.</span><br><span class="line"><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span></span><br><span class="line"></span><br><span class="line">Finished <span class="keyword">in</span> 2.33 seconds (files took 8.78 seconds <span class="keyword">to</span> load)</span><br><span class="line">102 examples, 0 failures</span><br></pre></td></tr></table></figure>
+
+<p>grepしてみたところ、rspecで使用していた。</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hw last_comment vendor/bundle</span><br><span class="line">vendor/bundle/ruby/<span class="number">2.2</span>.<span class="number">0</span>/gems/rspec-core-<span class="number">3.2</span>.<span class="number">2</span>/<span class="class"><span class="keyword">lib</span>/<span class="title">rspec</span>/<span class="title">core</span>/<span class="title">rake_task</span>.<span class="title">rb</span></span></span><br><span class="line"><span class="number">84</span>:        desc <span class="string">"Run RSpec code examples"</span> <span class="keyword">unless</span> ::Rake.application.last_comment</span><br></pre></td></tr></table></figure>
+
+<p>rspecをアップデートしたら出なくなった。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ bundle update rspec-rails</span><br><span class="line"></span><br><span class="line">$ bundle exec rspec spec</span><br><span class="line"><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span></span><br><span class="line"></span><br><span class="line">Finished <span class="keyword">in</span> 2.33 seconds (files took 8.85 seconds <span class="keyword">to</span> load)</span><br><span class="line">102 examples, 0 failures</span><br></pre></td></tr></table></figure>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-08-22T04:53:14.000Z" itemprop="datepublished">
             2016/08/22
           </time>
@@ -282,49 +307,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
     
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-08-02T04:40:25.000Z" itemprop="datepublished">
-            2016/08/02
-          </time>
-          <time datetime="2025-07-31T04:52:03.514Z" itemprop="modified">
-            (更新日: 2025/07/31)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/08/02/README/">Botsインテグレーションを使って手軽にRubotyをSlackで動かす</a>
-        </h1>
-        <div class="content">
-          <p>前回は<a href="/blog/2016/07/29/first-step-ruboty/">Rubotyのインストールとプラグインチュートリアル</a>でRubotyの導入方法を紹介しました。<br>今回はRubotyをSlackで動かす方法を紹介します。</p>
-<p>RubotyにはSlackアダプターが用意してありますが、新しくユーザーの作成が必要です。<br>ユーザーの作成が必要のない、Botsインテグレーションと<a href="https://github.com/rosylilly/ruboty-slack_rtm" target="_blank" rel="noopener">ruboty-slack_rtm</a>を使ってRubotyをSlackで動かす方法を紹介します。</p>
-<h2 id="ruboty-slack-rtmのインストール"><a href="#ruboty-slack-rtmのインストール" class="headerlink" title="ruboty-slack_rtmのインストール"></a>ruboty-slack_rtmのインストール</h2><p>Gemfileに以下を定義します。</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">gem</span> <span class="string">"ruboty-slack_rtm"</span></span><br></pre></td></tr></table></figure>
-
-<p><code>bundle install</code> コマンドでインストールします。</p>
-<h2 id="SlackのBotsインテグレーションを設定する"><a href="#SlackのBotsインテグレーションを設定する" class="headerlink" title="SlackのBotsインテグレーションを設定する"></a>SlackのBotsインテグレーションを設定する</h2><p>Slackの管理画面でBotsインテグレーションを登録します。</p>
-<p><img src="/images/bots-integration.png" alt="bots-integration"></p>
-<p>登録するとTokenが発行されるので、そのTokenをSLACK_TOKENという名前で環境変数に設定します。<br>Rubotyは dotenv に対応しているので、<code>.env</code> ファイルを作成し、そこにTOKENを登録しておくと便利です。</p>
-<p>.env</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">SLACK_TOKEN</span>=&lt;slack token&gt;</span><br></pre></td></tr></table></figure>
-
-<p>Ruboty を起動します。<code>.env</code> ファイルを読み込むように <code>—dotenv</code> オプションをつけて起動します。</p>
-<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bundle exec ruby <span class="comment">--dotenv</span></span><br></pre></td></tr></table></figure>
-
-<p>起動すると SlackのRubotyがログインマークに変わります。</p>
-<p>あとは、チャンネルにinviteすればSlackでRubotyが使えます！<br>ちなみにrubotyではなく、Botsインテグレーションで登録したユーザー名に反応します。</p>
-<h3 id="関連記事"><a href="#関連記事" class="headerlink" title="関連記事"></a>関連記事</h3><ul>
-<li><a href="/blog/2016/07/29/first-step-ruboty/">Rubotyのインストールとプラグインチュートリアル</a></li>
-</ul>
-
-        </div>
-      </div>
-    
   </div>
 
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/14/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/16/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/14/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><a class="extend next" rel="next" href="/page/16/">Next</a>
 </div>
 
             

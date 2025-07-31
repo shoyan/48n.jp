@@ -150,6 +150,62 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-05-31T04:58:42.000Z" itemprop="datepublished">
+            2016/05/31
+          </time>
+          <time datetime="2016-05-31T04:58:42.000Z" itemprop="modified">
+            (更新日: 2016/05/31)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/05/31/to-draw-a-graph-using-high-charts/">グラフを描画するHighChartsで平均気温のグラフを描画する</a>
+        </h1>
+        <div class="content">
+          <p>グラフを描画する<a href="http://www.highcharts.com/" target="_blank" rel="noopener">HighCharts</a>を紹介します。<br>HighChartsはJavaScriptのグラフ描画ライブラリです。<br>HighChartsを使えば簡単にグラフの描画ができます。</p>
+<h2 id="デモページ"><a href="#デモページ" class="headerlink" title="デモページ"></a>デモページ</h2><p>福岡市の平均気温をグラフで表示してみました。</p>
+<p><a href="http://codepen.io/shoyan/details/jrOjWK/" target="_blank" rel="noopener">http://codepen.io/shoyan/details/jrOjWK/</a></p>
+<h2 id="サンプルを作ってみる"><a href="#サンプルを作ってみる" class="headerlink" title="サンプルを作ってみる"></a>サンプルを作ってみる</h2><p>簡単なサンプルを作ってみましょう。<br>私がサンプルとして利用していた<a href="http://codepen.io/" target="_blank" rel="noopener">CODEPEN</a>を利用すると簡単に作成できるのでオススメです。</p>
+<p>HighChartsを使うには、jQueryとhighCharts.jsが必要です。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://code.highcharts.com/highcharts.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://code.jquery.com/jquery-2.2.4.min.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>index.htmlのbody部は以下を定義します。<br>div要素にグラフが描画されます。</p>
+<p>index.html</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span> <span class="built_in">id</span>=<span class="string">"container"</span> style=<span class="string">"width:100%; height:400px;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>JavaScript tag <code>&lt;script&gt; &lt;/script&gt;</code> に書くか、外部ファイルに定義してください。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">$(function</span> <span class="string">()</span> <span class="string">&#123;</span></span><br><span class="line">    <span class="string">$('#container').highcharts(&#123;</span></span><br><span class="line">        <span class="attr">chart:</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">type:</span> <span class="string">'bar'</span></span><br><span class="line">        <span class="string">&#125;,</span></span><br><span class="line">        <span class="attr">title:</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">text:</span> <span class="string">'Fruit Consumption'</span></span><br><span class="line">        <span class="string">&#125;,</span></span><br><span class="line">        <span class="attr">xAxis:</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">tags:</span> <span class="string">['Apples',</span> <span class="string">'Bananas'</span><span class="string">,</span> <span class="string">'Oranges'</span><span class="string">]</span></span><br><span class="line">        <span class="string">&#125;,</span></span><br><span class="line">        <span class="attr">yAxis:</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">title:</span> <span class="string">&#123;</span></span><br><span class="line">                <span class="attr">text:</span> <span class="string">'Fruit eaten'</span></span><br><span class="line">            <span class="string">&#125;</span></span><br><span class="line">        <span class="string">&#125;,</span></span><br><span class="line">        <span class="attr">series:</span> <span class="string">[&#123;</span></span><br><span class="line">            <span class="attr">name:</span> <span class="string">'Jane'</span><span class="string">,</span></span><br><span class="line">            <span class="attr">data:</span> <span class="string">[1,</span> <span class="number">0</span><span class="string">,</span> <span class="number">4</span><span class="string">]</span></span><br><span class="line">        <span class="string">&#125;,</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">name:</span> <span class="string">'John'</span><span class="string">,</span></span><br><span class="line">            <span class="attr">data:</span> <span class="string">[5,</span> <span class="number">7</span><span class="string">,</span> <span class="number">3</span><span class="string">]</span></span><br><span class="line">        <span class="string">&#125;]</span></span><br><span class="line">    <span class="string">&#125;);</span></span><br><span class="line"><span class="string">&#125;);</span></span><br></pre></td></tr></table></figure>
+
+<p>あとは、ブラウザでアクセスすればグラフが描画されます。</p>
+<h2 id="構文"><a href="#構文" class="headerlink" title="構文"></a>構文</h2><p>基本的な構文は以下です。</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span>(<span class="string">"グラフを描画するhtml要素"</span>).highcharts(<span class="keyword">option</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="HighChartsの基本的なパラメーター-option"><a href="#HighChartsの基本的なパラメーター-option" class="headerlink" title="HighChartsの基本的なパラメーター(option)"></a>HighChartsの基本的なパラメーター(option)</h3><p>HighChartsの基本的なパラメーター(option)を紹介します。</p>
+<ul>
+<li><strong>TITLE</strong>: チャートのタイトル</li>
+<li><strong>SERIES</strong>: 描画するデータの値</li>
+<li><strong>TOOLTIP</strong>: チャートにマウスオーバーしたときに表示されるツールチップの設定</li>
+<li><strong>LEGEND</strong>: SERIESの説明</li>
+<li><strong>AXES</strong>: 縦軸と横軸の説明を設定します。</li>
+</ul>
+<h3 id="グラフの種類について"><a href="#グラフの種類について" class="headerlink" title="グラフの種類について"></a>グラフの種類について</h3><p>typeにグラフの種類を設定できます。</p>
+<ul>
+<li>棒グラフ: column</li>
+<li>折れ線グラフ: line</li>
+<li>円グラフ: pie</li>
+<li>帯グラフ: bar</li>
+<li>ヒストグラム: column</li>
+<li>散布図: scatter</li>
+<li>箱ひげ図: boxplot</li>
+<li>三角グラフ: pyramid</li>
+</ul>
+<p>様々なグラフのデモページが用意されており、参考になります。</p>
+<p><a href="http://www.highcharts.com/demo" target="_blank" rel="noopener">http://www.highcharts.com/demo</a></p>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-05-30T03:58:52.000Z" itemprop="datepublished">
             2016/05/30
           </time>
@@ -321,72 +377,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
     
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-05-19T05:16:15.000Z" itemprop="datepublished">
-            2016/05/19
-          </time>
-          <time datetime="2016-05-19T05:16:15.000Z" itemprop="modified">
-            (更新日: 2016/05/19)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/05/19/the-server-monitored-by-mackerel/">マカレルでサーバーを監視する</a>
-        </h1>
-        <div class="content">
-          <p>サーバーの監視に<a href="https://mackerel.io/ja/features" target="_blank" rel="noopener">マカレル</a>を導入してみました。<br>使ってみた感想としては、難しい設定もなく簡単に導入することができて、とてもよくできているなぁと関心しました。  </p>
-<h2 id="マカレルエージェントのインストール"><a href="#マカレルエージェントのインストール" class="headerlink" title="マカレルエージェントのインストール"></a>マカレルエージェントのインストール</h2><p>マカレルでサーバーを監視をするには監視対象のサーバーにマカレルエージェントをインストールする必要があります。<br>また、事前に申し込みをして、apikeyを発行しておく必要があります。</p>
-<p>マカレルエージェントのインストールはChefを使って行います。<br><a href="https://github.com/mackerelio/cookbook-mackerel-agent" target="_blank" rel="noopener">cookbook-mackerel-agent</a>を使いました。</p>
-<p>metadata.rb</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">depends</span> <span class="string">'mackerel-agent'</span></span><br></pre></td></tr></table></figure>
-
-<p>recipes/default.rb</p>
-<figure class="highlight sml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">include_recipe <span class="symbol">'mackerel</span>-agent'</span><br><span class="line">include_recipe <span class="symbol">'mackerel</span>-agent::plugins'</span><br><span class="line">yum_package <span class="symbol">'mackerel</span>-check-plugins'</span><br></pre></td></tr></table></figure>
-
-<p>cookbook-mackerel-agentだけだとcheckプラグインが入らなかったので<code>yum_package</code>リソースを使ってインストールしています。  </p>
-<p>attributes/default.rb</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">default[<span class="string">'mackerel-agent'</span>][<span class="symbol">'package-action'</span>] = 'upgrade'</span><br><span class="line">default[<span class="string">'mackerel-agent'</span>][<span class="symbol">'conf'</span>][<span class="string">'apikey'</span>] = ‘API KEYをかく'</span><br><span class="line">default[<span class="string">'mackerel-agent'</span>][<span class="symbol">'conf'</span>][<span class="string">'plugins'</span>] = true</span><br></pre></td></tr></table></figure>
-
-<p>サーバーにレシピを適用するとマカレルの管理画面にサーバーがでてくるのでロールを設定します。<br>これでサーバーのメトリクスを見ることができます。</p>
-<h2 id="プラグインを使う"><a href="#プラグインを使う" class="headerlink" title="プラグインを使う"></a>プラグインを使う</h2><p>マカレルには様々なプラグインが用意されています。<br>使い方はgithubのREADMEに書いてあります。<br><a href="https://github.com/mackerelio/mackerel-agent-plugins" target="_blank" rel="noopener">https://github.com/mackerelio/mackerel-agent-plugins</a></p>
-<p>自分はプラグインを使って以下のことを行っています。</p>
-<h3 id="linuxマカレルプラグインを使って様々なメトリクスをだす"><a href="#linuxマカレルプラグインを使って様々なメトリクスをだす" class="headerlink" title="linuxマカレルプラグインを使って様々なメトリクスをだす"></a>linuxマカレルプラグインを使って様々なメトリクスをだす</h3><p>linuxマカレルプラグインを使えばswapやnetstat、Disk read time 等のグラフを表示することができます。</p>
-<p>attributes/default.rb に以下を定義します。</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default[<span class="string">'mackerel-agent'</span>][<span class="symbol">'conf'</span>][<span class="string">'plugin.metrics.linux'</span>][<span class="symbol">'command'</span>] = '/usr/local/bin/mackerel-plugin-linux'</span><br></pre></td></tr></table></figure>
-
-<h3 id="Unicornマカレルプラグインを使ってUnicornのメトリクスをだす"><a href="#Unicornマカレルプラグインを使ってUnicornのメトリクスをだす" class="headerlink" title="Unicornマカレルプラグインを使ってUnicornのメトリクスをだす"></a>Unicornマカレルプラグインを使ってUnicornのメトリクスをだす</h3><p>Unicornマカレルプラグインを使えばダッシュボードにUnicornのメモリとワーカ数のグラフが表示されます。</p>
-<p>attributes/default.rb に以下を定義します。</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default[<span class="string">'mackerel-agent'</span>][<span class="symbol">'conf'</span>][<span class="string">'plugin.metrics.unicorn'</span>][<span class="symbol">'command'</span>] = "/usr/local/bin/mackerel-plugin-unicorn -pidfile=/var/www/app/shared/tmp/pids/unicorn.pid"</span><br></pre></td></tr></table></figure>
-
-<h3 id="httpの監視"><a href="#httpの監視" class="headerlink" title="httpの監視"></a>httpの監視</h3><p>httpのレスポンスをチェックして監視を行います。<br>細かい設定を行いたい場合は、<code>check-tcp</code>がよいですが、単純なチェックでよいのであれば<code>http</code>のほうが設定が簡単です。</p>
-<p>attributes/default.rb に以下を定義します。</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default[<span class="string">'mackerel-agent'</span>][<span class="symbol">'conf'</span>][<span class="string">'plugin.checks.http'</span>][<span class="symbol">'command'</span>] = "/usr/bin/check-http -u http://localhost"</span><br></pre></td></tr></table></figure>
-
-<h3 id="ログファイルの監視"><a href="#ログファイルの監視" class="headerlink" title="ログファイルの監視"></a>ログファイルの監視</h3><p>nginxのログファイルを監視し、500系のエラーが頻発したときは通知するようにします。</p>
-<p>attributes/default.rb に以下を定義します。</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/check-log --file /var/log/nginx/access.log --pattern 'HTTP/1\.[<span class="string">01</span>]" [<span class="string">5</span>][<span class="symbol">0-9</span>][<span class="string">0-9</span>] ' --warning-over 3 --critical-over 10 --return</span><br></pre></td></tr></table></figure>
-
-<h2 id="監視ルールの設定"><a href="#監視ルールの設定" class="headerlink" title="監視ルールの設定"></a>監視ルールの設定</h2><p>監視ルールを設定することで閾値を超えた際に通知をすることができます。<br>CPU、メモリ、ロードアベレージ、ディスク容量等の監視を管理画面より設定できます。<br>詳しい設定方法については以下を参照ください。  </p>
-<ul>
-<li><a href="https://mackerel.io/ja/docs/entry/howto/alerts" target="_blank" rel="noopener">監視・通知を設定する - Mackerel ヘルプ</a></li>
-</ul>
-<h2 id="Slackに通知する"><a href="#Slackに通知する" class="headerlink" title="Slackに通知する"></a>Slackに通知する</h2><p>何か異常が起きた場合はSlackに通知をするようにします。<br>こちらも管理画面から設定できます。<br>具体的な設定方法については、ドキュメントを参照ください。  </p>
-<ul>
-<li><a href="https://mackerel.io/ja/docs/entry/howto/alerts" target="_blank" rel="noopener">監視・通知を設定する - Mackerel ヘルプ</a></li>
-</ul>
-<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
-<li><a href="https://mackerel.io/ja/docs/" target="_blank" rel="noopener">ヘルプ - Mackerel ヘルプ</a></li>
-</ul>
-
-        </div>
-      </div>
-    
   </div>
 
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/22/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/24/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/22/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><a class="extend next" rel="next" href="/page/24/">Next</a>
 </div>
 
             
