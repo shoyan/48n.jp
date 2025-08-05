@@ -27,6 +27,32 @@
                     <% } %>
                       <%- partial('partials/twitter-card') %>
                         <%- partial('partials/google-tag-manager') %>
+                        
+                        <!-- JSON-LD Structured Data -->
+                        <script type="application/ld+json">
+                        {
+                          "@context": "https://schema.org",
+                          "@type": "BlogPosting",
+                          "headline": "<%=pageTitle%>",
+                          "author": {
+                            "@type": "Person",
+                            "name": "<%=config.author%>",
+                            "url": "<%=config.url%>/about/"
+                          },
+                          "publisher": {
+                            "@type": "Organization",
+                            "name": "<%=config.title%>",
+                            "url": "<%=config.url%>"
+                          },
+                          "datePublished": "<%=page.date%>",
+                          "dateModified": "<%=page.updated%>",
+                          "description": "<%=description%>",
+                          "mainEntityOfPage": {
+                            "@type": "WebPage",
+                            "@id": "<%=config.url%>/<%=page.path%>"
+                          }
+                        }
+                        </script>
   </head>
 
   <body>

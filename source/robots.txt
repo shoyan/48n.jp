@@ -1,4 +1,10 @@
+# すべての検索エンジンクローラーに対して
 User-agent: *
-Disallow: 
+# サイト全体のクロールを許可
+Allow: /
 
+# Sitemaps
 Sitemap: https://48n.jp/sitemap.xml
+
+# Crawl-delay (1秒間隔でクロール)
+Crawl-delay: 1

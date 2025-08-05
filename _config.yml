@@ -6,7 +6,7 @@
 title: SHOYAN BLOG
 subtitle:
 description: 当サイトSHOYAN BLOGは、ソフトウェアエンジニアの山崎勝平(Yamasaki Shohei)が運営するブログです。プログラミングに関連する情報を発信しています。
-keywords: プログラミング
+keywords: プログラミング,Go,Ruby,PHP,JavaScript,Docker,GraphQL,エンジニア,フリーランス,技術ブログ
 author: Shohei Yamasaki
 language: ja
 timezone: Japan
