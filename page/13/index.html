@@ -176,6 +176,57 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-09-27T05:04:11.000Z" itemprop="datepublished">
+            2016/09/27
+          </time>
+          <time datetime="2016-09-27T05:04:11.000Z" itemprop="modified">
+            (更新日: 2016/09/27)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/09/27/links-container-with-docker-compose/">docker-composeを使ってPHPコンテナとMySQLコンテナを連携させる</a>
+        </h1>
+        <div class="content">
+          <p>以前、<a href="/blog/2016/09/16/links-container-for-docker/">Dockerコンテナを連携させる方法</a>を書いたが、コンテナ間の連携が必要な際はdocker-composeを使うと便利だ。<br>今回は前回と同じようにPHPとMySQLのコンテナを連携させるが、その連携にdocker-composeを使った方法を紹介する。</p>
+<p>まずは、適当なディレクトリをつくる。<br>今回は <code>docker-compose-sample</code>とする。</p>
+<p><code>docker-compose-sample/</code> 配下にDockerfileを作成する。</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> shoyan/www-ci</span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> . /app</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /app</span></span><br><span class="line"><span class="keyword">ENV</span> MYSQL_HOST mysql</span><br><span class="line"><span class="keyword">ENV</span> MYSQL_PASSWORD <span class="string">''</span></span><br></pre></td></tr></table></figure>
+
+<p>次に <code>docker-compose.yml</code>を作成する。</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">version</span>: <span class="string">'2'</span></span><br><span class="line"><span class="attribute">services</span>:</span><br><span class="line">  <span class="attribute">web</span>:</span><br><span class="line">    <span class="attribute">build</span>: .</span><br><span class="line">    <span class="attribute">links</span>:</span><br><span class="line">      - <span class="attribute">mysql</span>:mysql</span><br><span class="line">  <span class="attribute">mysql</span>:</span><br><span class="line">    <span class="attribute">image</span>: <span class="attribute">mysql</span>:<span class="number">5.5</span></span><br><span class="line">    <span class="attribute">environment</span>:</span><br><span class="line">      <span class="attribute">MYSQL_ALLOW_EMPTY_PASSWORD</span>: <span class="string">'yes'</span></span><br><span class="line">    <span class="attribute">expose</span>:</span><br><span class="line">      - <span class="string">"3306"</span></span><br><span class="line">    <span class="attribute">volumes</span>:</span><br><span class="line">      - ./docker-entrypoint-initdb.<span class="attribute">d</span>:/docker-entrypoint-initdb.d</span><br></pre></td></tr></table></figure>
+
+<p>servicesにwebとmysqlという名前でコンテナを定義している。</p>
+<h3 id="webコンテナ"><a href="#webコンテナ" class="headerlink" title="webコンテナ"></a>webコンテナ</h3><p>webコンテナはDockerfileをbuildして、mysqlコンテナと連携させる定義をしている。<br>これによりwebコンテナからはmysqlという名前でmysqlコンテナにアクセスできるようになる。</p>
+<h3 id="mysqlコンテナについて"><a href="#mysqlコンテナについて" class="headerlink" title="mysqlコンテナについて"></a>mysqlコンテナについて</h3><p>MySQLは公式のイメージを使っている。<br>他のコンテナからアクセスできるようにexposeで3306ポートを指定している。</p>
+<p>公式のMySQLイメージから作成したコンテナは<code>/docker-entrypoint-initdb.d/</code> 配下にあるシェルスクリプトやsqlファイルを起動時に実行するようになっている。<br>今回はデータベースとテーブルを作成するためにこの機構を利用する。<br>volumesを利用してファイルを配置している。</p>
+<p>以下の<code>docker-compose-sample/docker-entrypoint-initdb.d/setup.sql</code> を作成しておく。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> app_test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">`app_test`</span>.<span class="string">`user`</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`app_test`</span>.<span class="string">`user`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">8</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`status`</span> <span class="built_in">tinyint</span>(<span class="number">1</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`email`</span> <span class="built_in">varchar</span>(<span class="number">64</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`postal_code`</span> <span class="built_in">char</span>(<span class="number">7</span>) <span class="keyword">DEFAULT</span> <span class="string">''</span>,</span><br><span class="line">  <span class="string">`character_text`</span> <span class="built_in">text</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br></pre></td></tr></table></figure>
+
+<h3 id="確認用スクリプト"><a href="#確認用スクリプト" class="headerlink" title="確認用スクリプト"></a>確認用スクリプト</h3><p>DBにアクセスできているかを確認するためのスクリプト <code>connect.php</code> を用意しておく。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$dsn = sprintf(<span class="string">'mysql:host=%s:3306;dbname=%s'</span>,  $_ENV[<span class="string">'MYSQL_HOST'</span>], <span class="string">'app_test'</span>);</span><br><span class="line">$user = <span class="string">'root'</span>;</span><br><span class="line">$password = $_ENV[<span class="string">'MYSQL_PASSWORD'</span>];</span><br><span class="line">$dbh = <span class="keyword">new</span> PDO($dsn, $user, $password);</span><br><span class="line">$sql = <span class="string">"SELECT version();"</span>;</span><br><span class="line"><span class="keyword">foreach</span> ($dbh-&gt;query($sql, PDO::FETCH_ASSOC) <span class="keyword">as</span> $row) &#123;</span><br><span class="line">    print_r($row);</span><br><span class="line">&#125;</span><br><span class="line">$sql = <span class="string">"show tables;"</span>;</span><br><span class="line"><span class="keyword">foreach</span> ($dbh-&gt;query($sql, PDO::FETCH_ASSOC) <span class="keyword">as</span> $row) &#123;</span><br><span class="line">    print_r($row);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="docker-composeでコンテナを起動する"><a href="#docker-composeでコンテナを起動する" class="headerlink" title="docker-composeでコンテナを起動する"></a>docker-composeでコンテナを起動する</h3><p>準備ができたのでdocker-composeコマンドでコンテナを起動する。<br>以下のようにネットワークとコンテナが作成される。<br><code>-d</code> オプションはバックグラウンドでコンテナを起動するために指定している。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ docker-compose up -d</span><br><span class="line">Creating network &quot;dockercomposesample_default&quot; with the default driver</span><br><span class="line">Creating dockercomposesample_mysql_1</span><br><span class="line">Creating dockercomposesample_web_1</span><br></pre></td></tr></table></figure>
+
+<p>コンテナにログインしてみる。</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="keyword">run</span> --<span class="keyword">rm</span> -it -v `<span class="keyword">pwd</span>`:/<span class="keyword">app</span> --<span class="keyword">net</span>=dockercomposesample_default dockercomposesample_web bash</span><br></pre></td></tr></table></figure>
+
+<p>確認用スクリプトで疎通を確認する。<br>バージョンとtableが表示されたら成功だ。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root@6237502e4401:/app# php connect.php</span><br><span class="line">Array</span><br><span class="line">(</span><br><span class="line">    [version()] =&gt; 5.5.51</span><br><span class="line">)</span><br><span class="line">Array</span><br><span class="line">(</span><br><span class="line">    [Tables_in_app_test] =&gt; user</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>コンテナを削除するには <code>docker-compose down</code> コマンドを使う。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">⇒  docker-compose down</span><br><span class="line">Stopping dockercomposesample_mysql_1 <span class="built_in">..</span>. done</span><br><span class="line">Removing dockercomposesample_web_1 <span class="built_in">..</span>. done</span><br><span class="line">Removing dockercomposesample_mysql_1 <span class="built_in">..</span>. done</span><br><span class="line">Removing<span class="built_in"> network </span>dockercomposesample_default</span><br></pre></td></tr></table></figure>
+
+<p>サンプルコードをgithubで公開しているので参考にしてほしい。</p>
+<ul>
+<li><a href="https://github.com/shoyan/docker-compose-with-link-sample" target="_blank" rel="noopener">https://github.com/shoyan/docker-compose-with-link-sample</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-09-17T07:36:10.000Z" itemprop="datepublished">
             2016/09/17
           </time>
@@ -308,43 +359,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>覚えた英単語は3500。<br>4ヶ月前はネイティブが話す速度の英語はほとんど聞き取れなかったが、いまは単語として聞き取れる割合が増えた。<br>超右脳つぶやき英語トレーニングに付属しているCDはネイティブが普通に話すスピードなのでさっぱり聞き取れなくて愕然としたが、いまは6割くらい聞き取れてていると思う。何度も聞いて内容を覚えてしまっているからでもある。<br>しかし、聞き取れる単語は増えてきたが、意味がわからないことが多い。</p>
 <p>リーディング、ライティングはほとんどやっていないが、語彙数が向上したことでリーディングもあがっていると思う。<br>しかし、語彙数3500程度だとわからない単語が多く理解できない部分が多い。<br>当然、日本語のように英語を読むことは不可能である。<br>ライティングはほとんど向上していない。</p>
 <p>今後は語彙数をもっと増やして10000語を目指すつもりだ。</p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-09-09T01:53:43.000Z" itemprop="datepublished">
-            2016/09/09
-          </time>
-          <time datetime="2016-09-09T01:53:43.000Z" itemprop="modified">
-            (更新日: 2016/09/09)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/09/09/install-php-idnkit/">php-idnkitをインストールする</a>
-        </h1>
-        <div class="content">
-          <p>php-idnkitをインストールしたのでメモ。<br>OSはubuntu、PHPのバージョンは5.6.24で行った。</p>
-<p>php-idnkitはidnkitをPHPから使えるようにするPHPの拡張モジュール。<br>拡張モジュールなのでPHPをコンパイルし直す必要はない。モジュールをコンパイルして、php.iniのextensionに指定すれば使えるようになる。</p>
-<h2 id="idnkitのインストール"><a href="#idnkitのインストール" class="headerlink" title="idnkitのインストール"></a>idnkitのインストール</h2><p>php-idnkitはあくまでidnkitをPHPから使えるようにする拡張モジュールなのでidnkitがないと動作しない。<br>まずはidnkitをインストールする。</p>
-<p>idnkitはJPNICが提供しており、以下からソースコードをダウンロードすることができる。</p>
-<ul>
-<li><a href="https://www.nic.ad.jp/ja/idn/idnkit/download/" target="_blank" rel="noopener">https://www.nic.ad.jp/ja/idn/idnkit/download/</a></li>
-</ul>
-<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ wget https:<span class="comment">//www.nic.ad.jp/ja/idn/idnkit/download/sources/idnkit-1.0-src.tar.gz</span></span><br><span class="line">$ tar -zxf idnkit-<span class="number">1.0</span>-src.tar.gz</span><br><span class="line">$ cd idnkit-<span class="number">1.0</span>-src <span class="meta">&amp;&amp; \</span></span><br><span class="line">    ./configure <span class="meta">&amp;&amp; \</span></span><br><span class="line">    make <span class="meta">&amp;&amp; \</span></span><br><span class="line">    make install</span><br></pre></td></tr></table></figure>
-
-<h2 id="php-idnkitをインストール"><a href="#php-idnkitをインストール" class="headerlink" title="php-idnkitをインストール"></a>php-idnkitをインストール</h2><p>続いてphp-idnkitをインストールする。<br>そのままではエラーとなったので以下のパッチをあてた。</p>
-<p>php-idnkit.patch</p>
-<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--- xxx/idnkit.c</span></span><br><span class="line"><span class="comment">+++ yyy/idnkit.c</span></span><br><span class="line">@@ -36,7 +36,11 @@ static int le_idnkit;</span><br><span class="line">  *</span><br><span class="line">  * Every user visible function must have an entry in idnkit_functions[].</span><br><span class="line">  */</span><br><span class="line"><span class="addition">+#if ZEND_MODULE_API_NO &gt;= 20100525</span></span><br><span class="line"><span class="addition">+zend_function_entry idnkit_functions[] = &#123;</span></span><br><span class="line"><span class="addition">+#else</span></span><br><span class="line"> function_entry idnkit_functions[] = &#123;</span><br><span class="line"><span class="addition">+#endif</span></span><br><span class="line">    PHP_FE(idnkit_decodename,   NULL)</span><br><span class="line">    PHP_FE(idnkit_encodename,   NULL)</span><br><span class="line">    PHP_FE(idnkit_errno,        NULL)</span><br><span class="line">@@ -104,7 +108,7 @@ PHP_MINIT_FUNCTION(idnkit)</span><br><span class="line">    idn_nameinit(1);</span><br><span class="line"></span><br><span class="line">    /* get idnkit version */</span><br><span class="line"><span class="deletion">-   REGISTER_STRING_CONSTANT("IDNKIT_VERSION", (char*)idn_version_getstring(), CONST_CS | CONST_PERSISTENT);</span></span><br><span class="line"><span class="addition">+   REGISTER_STRING_CONSTANT("IDNKIT_VERSION", "1.0", CONST_CS | CONST_PERSISTENT);</span></span><br><span class="line"></span><br><span class="line">    /* idnkit actions */</span><br><span class="line">    REGISTER_LONG_CONSTANT("IDNKIT_DELIMMAP",       IDN_DELIMMAP,       CONST_CS | CONST_PERSISTENT);</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ wget http:<span class="comment">//www.sera.desuyo.net/idnkit/php-idnkit-20031204.tar.gz</span></span><br><span class="line">$ tar -zxf php-idnkit-<span class="number">20031204</span>.tar.gz</span><br><span class="line">$ cd idnkit <span class="meta">&amp;&amp; \</span></span><br><span class="line">    patch -lsp1 &lt; /tmp/php-idnkit.patch <span class="meta">&amp;&amp; \</span></span><br><span class="line">    phpize <span class="meta">&amp;&amp; \</span></span><br><span class="line">    ./configure <span class="meta">&amp;&amp; \</span></span><br><span class="line">    make <span class="meta">&amp;&amp; \</span></span><br><span class="line">    make install</span><br></pre></td></tr></table></figure>
-
-<h2 id="php-iniにextensionを指定"><a href="#php-iniにextensionを指定" class="headerlink" title="php.iniにextensionを指定"></a>php.iniにextensionを指定</h2><p>最後にphp.iniにextensionを指定を指定する。<br>以下は、<code>/usr/local/lib/php.ini</code> にphp.iniがある場合の設定例。</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>echo <span class="string">"extension=idnkit.so"</span> &gt;&gt; <span class="regexp">/usr/local</span><span class="regexp">/lib/php</span>.ini</span><br></pre></td></tr></table></figure>
-
-<p>以下のコマンドが動作すればOK。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ php -a</span><br><span class="line">&gt; <span class="keyword">echo</span> idnkit_encodename(mb_convert_encoding(<span class="string">"日本語ＪＰドメイン名.jp"</span>, <span class="string">"UTF-8"</span>, <span class="string">"auto"</span>));</span><br></pre></td></tr></table></figure>
 
         </div>
       </div>

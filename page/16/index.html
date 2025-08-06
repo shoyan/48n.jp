@@ -176,11 +176,62 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-08-03T04:42:38.000Z" itemprop="datepublished">
+            2016/08/03
+          </time>
+          <time datetime="2016-08-03T04:42:38.000Z" itemprop="modified">
+            (更新日: 2016/08/03)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/08/03/docker-auto-build-tutorial/">GitHubにpushしたらDockerイメージを自動ビルドする</a>
+        </h1>
+        <div class="content">
+          <p>Docker HubとGitHubを使ってDockerイメージの自動ビルドを行う方法を紹介します。</p>
+<h2 id="自動ビルドのメリット"><a href="#自動ビルドのメリット" class="headerlink" title="自動ビルドのメリット"></a>自動ビルドのメリット</h2><p>自動ビルドのメリットは以下です。</p>
+<ul>
+<li>常に最新のイメージがDocker Hubに用意される</li>
+<li>Dockerfileが公開され使う人が安心できる</li>
+<li>READMEも常に最新のものがDocker Hubに公開される</li>
+</ul>
+<p>Docker Hubを利用するには事前にアカウントの作成が必要です。<br>Docker Hubのアカウントの作成は以下を参考にしてください。</p>
+<ul>
+<li><a href="https://docs.docker.com/engine/getstarted/step_five/" target="_blank" rel="noopener">Create a Docker Hub account &amp; repository</a></li>
+</ul>
+<h2 id="Docker-Hubで自動ビルドの設定をする"><a href="#Docker-Hubで自動ビルドの設定をする" class="headerlink" title="Docker Hubで自動ビルドの設定をする"></a>Docker Hubで自動ビルドの設定をする</h2><p>すでにDockerfileがGitHubで管理されていることを前提に話しを進めます。</p>
+<p>Docker Hubにログインしたら「Profile &gt; Settings &gt; Linked Accounts &amp; Services.」を選択します。</p>
+<p>GitHubを使うのでGitHubのパネルを選択し、認証をしてください。<br>認証が成功すると、以下のような画面になります。</p>
+<p><img src="/images/docker-auto-build-01.png" alt="docker-auto-build-01"></p>
+<p>認証が済んだら、Docker Hubにリポジトリを作成します。</p>
+<p>「 Create &gt; Create Automated Build」を選択します。<br><img src="/images/docker-auto-build-02.png" alt="docker-auto-build-02"></p>
+<p>すると以下の画面が表示されます。</p>
+<p><img src="/images/docker-auto-build-03.png" alt="docker-auto-build-03"></p>
+<p>GitHubを選択すると 「Users/Organizations」とリポジトリを選択できる画面になるので、自動ビルドを行うリポジトリを選択します。</p>
+<p>Createボタンを押すと登録され、Docker Hubに表示されるようになります。</p>
+<p><img src="/images/docker-auto-build-04.png" alt="docker-auto-build-04"></p>
+<p><img src="/images/docker-auto-build-05.png" alt="docker-auto-build-05"></p>
+<p>リポジトリの「Build Settings」でビルドの設定ができます。</p>
+<p>Triggerボタンを押すとビルドが始まります。</p>
+<p><img src="/images/docker-auto-build-06.png" alt="docker-auto-build-06"></p>
+<p>ビルドの状態は「Build Details」で確認できます。</p>
+<p><img src="/images/docker-auto-build-07.png" alt="docker-auto-build-07"></p>
+<p>Queuedはビルド待ちのステータス。<br>Buildingはビルド中のステータスです。</p>
+<p>GitHubにpushすればBuild Settingsで設定したブランチが自動的にビルドされます。</p>
+<p>以上、簡単ですがDockerの自動ビルドの設定方法の紹介でした。<br>英語版ですが、詳しい方法が書いてあるのでこちらも参考にしてください。</p>
+<ul>
+<li><a href="https://docs.docker.com/docker-hub/builds/" target="_blank" rel="noopener">Automated Builds on Docker Hub</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-08-02T04:40:25.000Z" itemprop="datepublished">
             2016/08/02
           </time>
-          <time datetime="2025-08-05T08:26:08.375Z" itemprop="modified">
-            (更新日: 2025/08/05)
+          <time datetime="2025-08-06T05:49:26.678Z" itemprop="modified">
+            (更新日: 2025/08/06)
           </time>
         </div>
         <h1>
@@ -325,40 +376,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>GitMonitorは様々なルールが設定でき、そのルールに該当したものがダッシュボードに表示されます。<br>例えば、LGTMがないPull Requestがマージされたときや、リストに定義していない人がマージしたときに通知することもできるようです。</p>
 <p>操作の制限ができるわけではなく、ルールに該当したときにダッシュボードに通知されるだけのようです。</p>
 <p>30日間は無料で使えて、それ以降は有料プランとなります。<br>有料プランは3つあって、Small($10 / mon)、Medium($20 / mon)、Large($35 / mon) が選べます。<br>監視するリポジトリの数がプランによって違います。</p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-07-25T09:09:52.000Z" itemprop="datepublished">
-            2016/07/25
-          </time>
-          <time datetime="2016-07-25T09:09:52.000Z" itemprop="modified">
-            (更新日: 2016/07/25)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/07/25/introduce-to-git-find-committer/">Gitのコミッターを集計するGitFindCommitterをつくった</a>
-        </h1>
-        <div class="content">
-          <p>Gitのコミッターを集計する<a href="https://github.com/shoyan/git_find_committer" target="_blank" rel="noopener">GitFindCommitter</a>をつくったので紹介します。</p>
-<h2 id="GitFindCommitterとは"><a href="#GitFindCommitterとは" class="headerlink" title="GitFindCommitterとは"></a>GitFindCommitterとは</h2><p>GitFindCommitterとは変更されたファイルを対象としてコミッターを探すツールです。<br>名前の通り、Gitのコミット履歴からコミッターを探します。<br>例えば、fixブランチでhoge.rbとfuga.rbを修正したとします。<br>GitFindCommitterはhoge.rbとfugue.rbを対象にコミッターを探します。</p>
-<h2 id="なぜつくったのか"><a href="#なぜつくったのか" class="headerlink" title="なぜつくったのか"></a>なぜつくったのか</h2><p>チーム内でコードレビューを行っているのですが、なかなかレビューしてもらえないということが時々あります。<br>コードレビューの際に詳しいコミッターをレコメンドすればスムーズにレビューしてもらえるのではと考えました。<br>レビュアーのレコメンド機能はまだ作成中なのですが、そのモジュールの1つとしてGemに機能を切り出しました。</p>
-<h2 id="使い方"><a href="#使い方" class="headerlink" title="使い方"></a>使い方</h2><p>以下のコマンドでインストールします。</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gem <span class="keyword">install</span> git_find_committer</span><br></pre></td></tr></table></figure>
-
-<p>searchメソッドにリポジトリとブランチを指定すると、関連するファイルのコミッターを探してきます。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">'git_find_committer'</span></span><br><span class="line"></span><br><span class="line">GitFindCommitter.search(<span class="symbol">repo:</span> <span class="string">'balloonbros/sutekki'</span>, <span class="symbol">branch:</span> <span class="string">'add-ui'</span>)</span><br><span class="line">=&gt; [&#123;<span class="symbol">:name=&gt;<span class="string">"Shohei Yamasaki"</span></span>, <span class="symbol">:commit_count=&gt;</span><span class="number">51</span>&#125;, &#123;<span class="symbol">:name=&gt;<span class="string">"keitakawamoto"</span></span>, <span class="symbol">:commit_count=&gt;</span><span class="number">21</span>&#125;]</span><br></pre></td></tr></table></figure>
-
-<p>GitHub Enterpriseにも対応しており、GitHub Enterpriseで利用する場合は、以下の設定が必要です。</p>
-<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GitFindCommitter.configure <span class="built_in">do</span> |<span class="type">c</span>|<span class="type"></span></span><br><span class="line"><span class="type">  c</span>.url = <span class="string">"https://&lt;hostname&gt;"</span></span><br><span class="line">  c.access_token = <span class="string">"&lt;your 40 char token&gt;"</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="便利なTips"><a href="#便利なTips" class="headerlink" title="便利なTips"></a>便利なTips</h2><p>集計対象のコミッターをフィルターすることができます。</p>
-<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GitFindCommitter.configure <span class="built_in">do</span> |<span class="type">c</span>|<span class="type"></span></span><br><span class="line"><span class="type">  c</span>.available_committer_names = %w(shoyan)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>名前のみ配列で取得します。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GitFindCommitter.search(re<span class="symbol">po:</span> 'balloonbros/sutekki', bran<span class="symbol">ch:</span> 'add-ui’).names(<span class="number">1</span>)</span><br><span class="line">=&gt; [<span class="string">"Shohei Yamasaki"</span>]</span><br></pre></td></tr></table></figure>
 
         </div>
       </div>

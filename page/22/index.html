@@ -176,6 +176,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-06-08T09:41:16.000Z" itemprop="datepublished">
+            2016/06/08
+          </time>
+          <time datetime="2016-06-08T09:41:16.000Z" itemprop="modified">
+            (更新日: 2016/06/08)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/06/08/testing-attachment-for-action-mailer/">ActionMailerの添付ファイルをRspecでテストする</a>
+        </h1>
+        <div class="content">
+          <p>ActionMailerで添付ファイルを送るようにしたのですが、そのテストをするときの情報があまりなかったのでまとめました。</p>
+<p>以下のようにテストしました。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">RSpec.describe AppMailer, <span class="symbol">type:</span> <span class="symbol">:mailer</span> <span class="keyword">do</span></span><br><span class="line"></span><br><span class="line">  before(<span class="symbol">:all</span>) <span class="keyword">do</span></span><br><span class="line">    Archive::Zip.archive(</span><br><span class="line">      <span class="string">"tmp/app.zip"</span>,</span><br><span class="line">      <span class="string">"README.md"</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  after(<span class="symbol">:all</span>) <span class="keyword">do</span></span><br><span class="line">    FileUtils.rm <span class="string">"tmp/app.zip"</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  let(<span class="symbol">:mail</span>) <span class="keyword">do</span></span><br><span class="line">    AppMailer.send_email(zip_path)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  it <span class="string">'assings the attachment file'</span> <span class="keyword">do</span></span><br><span class="line">    attachment = mail.attachments[<span class="number">0</span>]</span><br><span class="line">    expect(attachment).to be_a_kind_of(Mail::Part)</span><br><span class="line">    expect(attachment.content_type).to be_start_with(<span class="string">'application/zip'</span>)</span><br><span class="line">    expect(attachment.filename).to eq <span class="string">"app.zip"</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>まず、before(:all)でテストに使うzipファイルを作成します。<br>zipファイルは<a href="https://github.com/javanthropus/archive-zip" target="_blank" rel="noopener">archive-zip</a>を使って作成しています。<br>アーカイブするファイルは何でもよいですが、この記事ではREADME.mdとしています。<br>テストで作成したzipファイルはafter(:all)で消しています。<br>mail.attachments[0]に添付ファイルが入っているので、その種類やファイル名を確認しています。</p>
+<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
+<li><a href="http://stackoverflow.com/questions/14286179/rails-how-to-test-that-actionmailer-sent-a-specific-attachment" target="_blank" rel="noopener">rails-how-to-test-that-actionmailer-sent-a-specific-attachment</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-06-06T10:33:59.000Z" itemprop="datepublished">
             2016/06/06
           </time>
@@ -359,63 +384,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>###capistrano-withrsync</p>
 <p>rsyncでデプロイしてくれるプラグインです。<br>デプロイするファイルが大きい場合に便利です。</p>
 <p><a href="https://github.com/linyows/capistrano-withrsync" target="_blank" rel="noopener">https://github.com/linyows/capistrano-withrsync</a></p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-05-31T09:03:46.000Z" itemprop="datepublished">
-            2016/05/31
-          </time>
-          <time datetime="2016-05-31T09:03:46.000Z" itemprop="modified">
-            (更新日: 2016/05/31)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/05/31/tips-for-nginx-cookbook/">NginxのCookbookでハマった</a>
-        </h1>
-        <div class="content">
-          <p>Nginxのcookbookでversionを指定しているのに、指定したバージョンでインストールされない問題でハマった。</p>
-<p><a href="https://supermarket.chef.io/cookbooks/nginx" target="_blank" rel="noopener">https://supermarket.chef.io/cookbooks/nginx</a></p>
-<h2 id="結果としてわかったこと"><a href="#結果としてわかったこと" class="headerlink" title="結果としてわかったこと"></a>結果としてわかったこと</h2><p>パッケージでインストールする場合はバージョンが指定できない。<br>バージョンを指定したい場合はソースでインストールする必要がある。  </p>
-<p>Nginx cookbookはパッケージでのインストールかソースでのインストールのいずれかを選ぶことができる。<br>デフォルトはパッケージである。<br>ソースでインストールしたい場合は、<code>node[&#39;nginx&#39;][&#39;install_method’]=&#39;source&#39;</code> とする必要がある。<br><code>install_method</code>を指定したときにはじめてversionの指定が可能となる。</p>
-<h2 id="立ちはだかる様々な問題"><a href="#立ちはだかる様々な問題" class="headerlink" title="立ちはだかる様々な問題"></a>立ちはだかる様々な問題</h2><h3 id="versionが反映されない"><a href="#versionが反映されない" class="headerlink" title="versionが反映されない"></a>versionが反映されない</h3><p><code>attributes/default.rb</code>にversionを定義してみたが、指定されたバージョンがインストールされない問題にハマった。<br>デフォルトである、1.4.4がインストールされている。</p>
-<h4 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h4><p>rolesのoverride_attributesとして指定すると指定されたバージョンがインストールされた。<br>基本的にvendor cookbookの値の定義はroleのoverride_attributeで指定したほうがいいのかもしれない。<br>とはいえ、パラメーターによっては上書きされる場合もあってそのあたりの挙動がよくわかっていない。</p>
-<h3 id="Checksumを指定しないといけない"><a href="#Checksumを指定しないといけない" class="headerlink" title="Checksumを指定しないといけない"></a>Checksumを指定しないといけない</h3><p>sourceからインストールする場合、checksumを設定する必要がある。<br>checksumは以下のようにして作成できる。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">shasum</span> <span class="selector-tag">-a</span> 256 <span class="selector-tag">nginx-x</span><span class="selector-class">.x</span><span class="selector-class">.x</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></span><br></pre></td></tr></table></figure>
-
-<p>もしくは</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">http:</span><span class="comment">//nginx.org/download/nginx-x.x.x.tar.gz | shasum -a 256</span></span><br></pre></td></tr></table></figure>
-
-<p>checksumは <code>node[&#39;nginx&#39;][&#39;source&#39;][&#39;checksum’]</code> に指定する。</p>
-<h2 id="ChefのAttributeの優先順位について"><a href="#ChefのAttributeの優先順位について" class="headerlink" title="ChefのAttributeの優先順位について"></a>ChefのAttributeの優先順位について</h2><p>マニュアルによると、以下のようになっている(しかし、versionをoverrideで定義しても上書きできなかった)。</p>
-<ul>
-<li>A default attribute located in a cookbook attribute file</li>
-<li>A default attribute located in a recipe</li>
-<li>A default attribute located in an environment</li>
-<li>A default attribute located in role</li>
-<li>A force_default attribute located in a cookbook attribute file</li>
-<li>A force_default attribute located in a recipe</li>
-<li>A normal attribute located in a cookbook attribute file</li>
-<li>A normal attribute located in a recipe</li>
-<li>An override attribute located in a cookbook attribute file</li>
-<li>An override attribute located in a recipe</li>
-<li>An override attribute located in a role</li>
-<li>An override attribute located in an environment</li>
-<li>A force_override attribute located in a cookbook attribute file</li>
-<li>A force_override attribute located in a recipe</li>
-<li>An automatic attribute identified by Ohai at the start of the chef-client run</li>
-</ul>
-<p><a href="https://docs.chef.io/attributes.html#attribute-precedence" target="_blank" rel="noopener">https://docs.chef.io/attributes.html#attribute-precedence</a></p>
-<h2 id="Attributeの使い分けについて"><a href="#Attributeの使い分けについて" class="headerlink" title="Attributeの使い分けについて"></a>Attributeの使い分けについて</h2><p>以下のようにルール決めをしているという記事もあった。</p>
-<blockquote>
-<p>Attributeファイル=&gt;文言変更<br>recipeファイル=&gt;テスト的に変えたいものがある時のみ。本番では消す。<br>Environmentファイル=&gt;development(開発）,alpha(実験用)、staging(テスト)、production（本番）でのIPやOSバージョンの違い。同じ構成が複数台ある時もここで区別。<br>Role=&gt;ミドルウェアのバージョン違い</p>
-</blockquote>
-<p><a href="http://dev.classmethod.jp/server-side/chef/attribute-overrides-pattern/" target="_blank" rel="noopener">http://dev.classmethod.jp/server-side/chef/attribute-overrides-pattern/</a></p>
-<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
-<li><a href="http://stackoverflow.com/questions/27366774/chefexceptionschecksummismatch-when-installing-nginx-1-7-8-from-source" target="_blank" rel="noopener">http://stackoverflow.com/questions/27366774/chefexceptionschecksummismatch-when-installing-nginx-1-7-8-from-source</a></li>
-</ul>
 
         </div>
       </div>
