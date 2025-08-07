@@ -176,6 +176,37 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2017-09-01T08:30:56.000Z" itemprop="datepublished">
+            2017/09/01
+          </time>
+          <time datetime="2017-09-01T08:30:56.000Z" itemprop="modified">
+            (更新日: 2017/09/01)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2017/09/01/osan-report-vol11/">ハッカソンでチャットBotを作って感じた課題</a>
+        </h1>
+        <div class="content">
+          <p>GMOペパボで開催された<a href="http://osan.pepabo.com/" target="_blank" rel="noopener">ハッカソン</a>に参加するため東京へ行ってきました。<br>チームを作って、2日でプロダクトを作るというイベントです。</p>
+<h2 id="チームについて"><a href="#チームについて" class="headerlink" title="チームについて"></a>チームについて</h2><p><img src="http://img-cdn.jg.jugem.jp/b8d/927914/20170809_1578727.jpg" alt="チーム"></p>
+<p>エンジニア2名とデザイナー、カスタマーサービスの4名で構成されています（農家ではありませんよ！）。<br>チームメンバーについては、なるべく異なった技能を持つ人で構成しようと考えました。<br>チーム名はすいかとかぼちゃです。開催されたのが8月だったので、夏っぽい名前をコンセプトとしましたが、深い意味はありません。</p>
+<h2 id="お産合宿で作ったもの"><a href="#お産合宿で作ったもの" class="headerlink" title="お産合宿で作ったもの"></a>お産合宿で作ったもの</h2><p>チャットBotを作りました。チャットBotにした理由は、チャットBotの作成に関するサービス、オープンソースが充実してきたことです。これらを利用すればそれほどコードを書かずにチャットBotの実装が可能だと考えました。また、どれほどの労力でどれほどのものが作れるかといったことを実際に検証してみたかったという理由もあります。</p>
+<h2 id="お産合宿1日目"><a href="#お産合宿1日目" class="headerlink" title="お産合宿1日目"></a>お産合宿1日目</h2><p>朝6時に家を出て東京に移動しました。朝が早すぎて大変でした。<br>会場に着いたらまずは、事前に担当を決めて実装していたコードをマージしました。<br>チャットBotを各自のPCで動かして、機能の修正、データのチューニングを行いました。<br>デモができる程度には出来たので、24時に就寝しました。</p>
+<h2 id="お産合宿2日目"><a href="#お産合宿2日目" class="headerlink" title="お産合宿2日目"></a>お産合宿2日目</h2><p>朝7時に起床して、外を15分くらい散歩しました。<br>東京は福岡に比べて高層ビルが多いですね。緑が意識的に植えてあって丁寧に管理されてあるんだなぁという印象でした（この写真にはほとんど写っていませんが）。</p>
+<p><img src="/images/osan01.jpeg" alt="osan01"></p>
+<p>朝食を食べて、開発開始。15時から品評会です。<br>今回は19チームの参加があり、たくさんのプロダクトができていました。</p>
+<p><img src="/images/osan02.jpeg" alt="osan02"></p>
+<p>19時の飛行機で福岡へ帰りました。</p>
+<h2 id="チャットBotを作って感じた課題"><a href="#チャットBotを作って感じた課題" class="headerlink" title="チャットBotを作って感じた課題"></a>チャットBotを作って感じた課題</h2><p>実際にチャットBotを作ってみることで、どういうことができて、どこが課題なのかを肌で感じることができました。</p>
+<h3 id="ウェブベースのチャットBotの開発コスト"><a href="#ウェブベースのチャットBotの開発コスト" class="headerlink" title="ウェブベースのチャットBotの開発コスト"></a>ウェブベースのチャットBotの開発コスト</h3><p>今回はウェブブラウザで動作するチャットBotを作ったのですが、チャットのUI自体を自前で用意する必要がありました。LINEやFacebook Messengerのプラットフォーム上で動くボットであればチャットの画面自体の開発が必要ないため、開発コストを削減できます。この点から各種のプラットフォームで動くボットが主流となっていると考えられます。とはいえ、WebベースのチャットBotの需要はあるでしょうから、WebベースのチャットBotを簡単に作れるサービスの需要はあると思います。ちなみに今回は<a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js</a>+<a href="https://socket.io/" target="_blank" rel="noopener">Socket.io</a>と<a href="https://github.com/botui/botui" target="_blank" rel="noopener">BotUI</a>を使って実装しました。</p>
+<h3 id="回答精度の問題"><a href="#回答精度の問題" class="headerlink" title="回答精度の問題"></a>回答精度の問題</h3><p>質問の解析、返答に関してはユーザーローカルが提供している<a href="http://ai.userlocal.jp/" target="_blank" rel="noopener">人工知能チャットボットのAPI</a>を利用しました。<br>単純なキーワード一致であれば対応できますが、少し複雑な質問になると全然関係のない応答を返したりと、精度の点ではまだまだといった印象でした。</p>
+<h2 id="終わりに"><a href="#終わりに" class="headerlink" title="終わりに"></a>終わりに</h2><p>チャットBotの開発に関しては多くのサービスやソフトウェアが提供されており、まさにチャットBot戦国時代といったところでしょうか。このように、チャットBotを作る環境は整ってきつつあります。しかし、自然な会話ができるチャットBotを誰もが作れるわけではなく、まだまだノウハウやコツが必要だと感じます。</p>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2017-07-13T04:47:27.000Z" itemprop="datepublished">
             2017/07/13
           </time>
@@ -354,89 +385,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p>実行してみると、<code>moge</code> が出力されました。<br>予想通り、後から読み込まれたモジュールのメソッドで上書きされていました。</p>
 <p>メソッド名が重複するということは普通にありそうなので、この挙動については知っておいたほうがいいかもしれませんね。</p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2017-04-14T06:11:53.000Z" itemprop="datepublished">
-            2017/04/14
-          </time>
-          <time datetime="2017-04-14T06:11:53.000Z" itemprop="modified">
-            (更新日: 2017/04/14)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2017/04/14/aminima-is-minima-with-amp/">JekyllテーマのminimaをAMP対応した</a>
-        </h1>
-        <div class="content">
-          <p>こんにちは、SHOYANです。</p>
-<p>JekyllテーマのminimaをAMP対応しました。</p>
-<ul>
-<li><a href="https://github.com/shoyan/aminima" target="_blank" rel="noopener">https://github.com/shoyan/aminima</a></li>
-</ul>
-<p>名前は AMP + Minima = AMinima です。</p>
-<p>デモサイトも用意していてこちらで確認できます。</p>
-<ul>
-<li><a href="https://shoyan.github.io/aminima/" target="_blank" rel="noopener">https://shoyan.github.io/aminima/</a></li>
-</ul>
-<h2 id="Minimaとは"><a href="#Minimaとは" class="headerlink" title="Minimaとは"></a>Minimaとは</h2><p>MinimaはJekyllのテーマです。<br>jekyll new で作成した場合にデフォルトでインストールされるテーマです。<br>URLはこちらです。</p>
-<ul>
-<li><a href="https://github.com/jekyll/minima" target="_blank" rel="noopener">https://github.com/jekyll/minima</a></li>
-</ul>
-<h2 id="どのようにAMP対応したのか"><a href="#どのようにAMP対応したのか" class="headerlink" title="どのようにAMP対応したのか"></a>どのようにAMP対応したのか</h2><p>どのようにAMP対応をしたのかを説明します。<br>わりとあっさりできました。</p>
-<p>まず、ampを宣言します。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">amp</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>そして、charsetを定義します。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>次にampランタイムをロードします。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">"https://cdn.ampproject.org/v0.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>また、AMPはcanonicalの宣言が必要なので定義します。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"canonical"</span> <span class="attr">href</span>=<span class="string">"https://shoyan.github.io/aminima/2016/05/20/welcome-to-jekyll.html"</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>CSSはインラインで定義しないといけないのでインラインで定義します。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">amp-custom</span></span></span><br><span class="line"><span class="tag">  <span class="attr">h1</span> &#123;</span></span><br><span class="line"><span class="tag">    <span class="attr">color:</span> <span class="attr">red</span>;</span></span><br><span class="line"><span class="tag">  &#125;</span></span><br><span class="line">&lt;/style</span><br></pre></td></tr></table></figure>
-
-<p>次にAMP boilerplateを定義します。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;style amp-boilerplatebody&#123;-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both&#125;@-webkit-keyframes -amp-start&#123;from&#123;visibility:hidden&#125;to&#123;visibility:visible&#125;&#125;@-moz-keyframes -amp-start&#123;from&#123;visibility:hidden&#125;to&#123;visibility:visible&#125;&#125;@-ms-keyframes -amp-start&#123;from&#123;visibility:hidden&#125;to&#123;visibility:visible&#125;&#125;@-o-keyframes -amp-start&#123;from&#123;visibility:hidden&#125;to&#123;visibility:visible&#125;&#125;@keyframes -amp-start&#123;from&#123;visibility:hidden&#125;to&#123;visibility:visible&#125;&#125;&lt;/style&lt;noscript&lt;style amp-boilerplatebody&#123;-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none&#125;&lt;/style&lt;/noscript</span><br></pre></td></tr></table></figure>
-
-<p>これでAMPの基本設定はOKです。</p>
-<p>実際のコードはリポジトリを参照してみてください。</p>
-<ul>
-<li><a href="https://github.com/shoyan/aminima/blob/master/_includes/head.html" target="_blank" rel="noopener">https://github.com/shoyan/aminima/blob/master/_includes/head.html</a></li>
-</ul>
-<h3 id="amp-analyticsを使う"><a href="#amp-analyticsを使う" class="headerlink" title="amp-analyticsを使う"></a>amp-analyticsを使う</h3><p>通常のAnalyticsのタグはAMPでは動かないのでamp-analyticsを使います。<br>amp-analyticsはAMP用に用意されたコンポーネントです。</p>
-<ul>
-<li><a href="https://ampbyexample.com/components/amp-analytics/" target="_blank" rel="noopener">https://ampbyexample.com/components/amp-analytics/</a></li>
-</ul>
-<p>テーマのソースコードはこの辺りです。</p>
-<ul>
-<li><a href="https://github.com/shoyan/aminima/blob/master/_includes/google-analytics.html" target="_blank" rel="noopener">https://github.com/shoyan/aminima/blob/master/_includes/google-analytics.html</a></li>
-</ul>
-<h2 id="Aminimaのインストール方法"><a href="#Aminimaのインストール方法" class="headerlink" title="Aminimaのインストール方法"></a>Aminimaのインストール方法</h2><p>Jekyllをインストールしていない場合はjekyllをインストールしてください。</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gem <span class="keyword">install</span> jekyll</span><br></pre></td></tr></table></figure>
-
-<p>ブログを作成します。</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ jekyll <span class="keyword">new</span> blog</span><br></pre></td></tr></table></figure>
-
-<p>Gemfileを編集します。</p>
-<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">以下のように書き換える</span><br><span class="line"></span><br><span class="line">gem <span class="string">"minima"</span>, <span class="string">"~&gt; 2.0"</span></span><br><span class="line">↓</span><br><span class="line">gem <span class="string">"aminima"</span></span><br></pre></td></tr></table></figure>
-
-<p><code>_config.yml</code> のthemeを編集します。</p>
-<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">theme:</span> aminima</span><br></pre></td></tr></table></figure>
-
-<p>bundleコマンドを実行します。</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>bundle</span><br></pre></td></tr></table></figure>
-
-<p>サーバーを立ち上げます。</p>
-<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ jekyll <span class="keyword">server</span></span><br></pre></td></tr></table></figure>
-
-<p>ブラウザで <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a> にアクセスすればサイトが表示されます。</p>
-<p>動かない部分や不明な点はコメント欄や<a href="https://twitter.com/sinn_shoyan" target="_blank" rel="noopener">Twitter</a>などでお気軽にご連絡ください！</p>
 
         </div>
       </div>

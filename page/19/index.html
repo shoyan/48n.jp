@@ -176,6 +176,62 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-07-05T08:21:32.000Z" itemprop="datepublished">
+            2016/07/05
+          </time>
+          <time datetime="2016-07-05T08:21:32.000Z" itemprop="modified">
+            (更新日: 2016/07/05)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/07/05/introduce-to-fluentd-elasticsearch-kibana/">Fluentd、ElasticsearchとKibanaでログ検索とグラフ表示を可能にする</a>
+        </h1>
+        <div class="content">
+          <p><a href="/blog/2016/07/04/fluentd-tutorial/">前回の記事</a>で<a href="http://www.fluentd.org/" target="_blank" rel="noopener">Fluentd</a>を使ってログをログ収集サーバに転送する方法を紹介しました。<br>今回は転送されたログを<a href="https://www.elastic.co/jp/products/elasticsearch" target="_blank" rel="noopener">Elasticsearch</a>に登録し、<a href="https://www.elastic.co/jp/products/kibana" target="_blank" rel="noopener">Kibana</a>でログ検索とグラフ表示する方法を紹介します。</p>
+<p>ログ収集サーバー(前回の記事でいうVagrant)の変更を行っていきます。</p>
+<h2 id="FluentdのElasticsearchプラグインをインストール"><a href="#FluentdのElasticsearchプラグインをインストール" class="headerlink" title="FluentdのElasticsearchプラグインをインストール"></a>FluentdのElasticsearchプラグインをインストール</h2><p>まずは、FluetndのElasticsearchプラグインをインストールしておきます。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo /usr/sbin/td-agent-gem <span class="keyword">install</span> fluent-<span class="keyword">plugin</span>-elasticsearch</span><br></pre></td></tr></table></figure>
+
+<h2 id="Javaのインストール"><a href="#Javaのインストール" class="headerlink" title="Javaのインストール"></a>Javaのインストール</h2><p>Elasticsearchを動かすにはJavaが必要なのでJavaをインストールします。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum <span class="keyword">install</span> <span class="keyword">java</span><span class="number">-1.7</span><span class="number">.0</span>-openjdk</span><br><span class="line">$ sudo yum <span class="keyword">install</span> <span class="keyword">java</span><span class="number">-1.7</span><span class="number">.0</span>-openjdk-devel</span><br><span class="line">$ <span class="keyword">java</span> -<span class="keyword">version</span></span><br><span class="line"><span class="keyword">java</span> <span class="keyword">version</span> <span class="string">"1.7.0_101"</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Elasticsearchのインストールと起動"><a href="#Elasticsearchのインストールと起動" class="headerlink" title="Elasticsearchのインストールと起動"></a>Elasticsearchのインストールと起動</h2><p>今回はアーカイブをダウンロードしてきてインストールします。<br>インストールといっても特に設定は不要でアーカイブを展開して<code>bin/elasticsearch</code>を実行するだけです。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>curl -O <span class="symbol">https:</span>/<span class="regexp">/download.elastic.co/elasticsearch</span><span class="regexp">/release/org</span><span class="regexp">/elasticsearch/distribution</span><span class="regexp">/tar/elasticsearch</span><span class="regexp">/2.3.3/elasticsearch</span><span class="number">-2.3</span>.<span class="number">3</span>.tar.gz</span><br><span class="line"><span class="variable">$ </span>cd elastic search<span class="number">-2.3</span>.<span class="number">3</span></span><br><span class="line"><span class="variable">$ </span>./bin/elasticsearch</span><br></pre></td></tr></table></figure>
+
+<h2 id="kibanaのインストールと起動"><a href="#kibanaのインストールと起動" class="headerlink" title="kibanaのインストールと起動"></a>kibanaのインストールと起動</h2><p>Kibanaも同じようにアーカイブをダウンロードして起動します。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>curl -O <span class="symbol">https:</span>/<span class="regexp">/download.elastic.co/kibana</span><span class="regexp">/kibana/kibana</span><span class="number">-4.5</span>.<span class="number">1</span>-linux-x64.tar.gz</span><br><span class="line"><span class="variable">$ </span>cd kibana<span class="number">-4.5</span>.<span class="number">1</span>-linux-x64</span><br><span class="line"><span class="variable">$ </span>./bin/kibana</span><br></pre></td></tr></table></figure>
+
+<p><code>http://192.168.33.10:5601</code> にブラウザでアクセスするとKibanaの管理画面が表示されます。<br>Indexの設定が必要ですが、ここでは何もせず次に進みます。</p>
+<h2 id="syslogのログをElasticsearchに格納する"><a href="#syslogのログをElasticsearchに格納する" class="headerlink" title="syslogのログをElasticsearchに格納する"></a>syslogのログをElasticsearchに格納する</h2><p>syslogのログをElasticsearchに格納し、Kibanaで参照します。</p>
+<p><code>/etc/td-agent/td-agent.conf</code>に以下を追記します。</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;source&gt;</span></span><br><span class="line">  @<span class="keyword">type</span> syslog <span class="comment"># syslogプラグイン</span></span><br><span class="line">  port <span class="number">42185</span>   <span class="comment"># portは42185を指定</span></span><br><span class="line">  <span class="keyword">tag</span> <span class="title">syslog</span>   <span class="comment"># syslogというtagをつける</span></span><br><span class="line"><span class="tag">&lt;/source&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;match syslog.**&gt;</span></span><br><span class="line">  @<span class="keyword">type</span> elasticsearch <span class="comment"># elasticsearchプラグインを使う</span></span><br><span class="line">  logstash_format <span class="literal">true</span> <span class="comment"># ログのフォーマット</span></span><br><span class="line">  flush_interval <span class="number">10s</span> <span class="comment"># 10秒ごとに登録する</span></span><br><span class="line"><span class="tag">&lt;/match&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>fluendをリスタートします。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo<span class="built_in"> service </span>td-agent restart</span><br></pre></td></tr></table></figure>
+
+<p>次にsyslogの設定をします。</p>
+<p><code>/etc/rsyslog.conf</code> に以下を追記します。<br>syslogが出力するログをFlutedがlistenするポート、42185に転送するための設定です。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*.* @<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">42185</span></span><br></pre></td></tr></table></figure>
+
+<p>設定を反映させるため、syslogをリスタートします。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo <span class="regexp">/etc/i</span>nit.d<span class="regexp">/rsyslog restart</span></span><br></pre></td></tr></table></figure>
+
+<p>先ほど確認した <code>http://192.168.33.10:5601</code> に戻ります。<br>syslogの出力がElasticsearchに登録されると、Indexを登録できるようになります。<br>Indexは<code>logstash-2016.07.05</code> のような名前で作成されます。<br>セレクトボックスからIndexを選択し、Createボタンを押下後にKibanaでログの表示、検索が行えます。</p>
+<p>手動でElasticsearchにログを送りたい場合は以下のコマンドで登録できます。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> logger -t <span class="built_in">test</span> foobar</span></span><br></pre></td></tr></table></figure>
+
+<p>もしくは、Fluentdのhttpポートにリクエストします。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X POST -d <span class="symbol">'json</span>=&#123;<span class="string">"json"</span>:<span class="string">"Hello"</span>&#125;' http:<span class="comment">//localhost:8888/syslog.test</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
+<li><a href="http://docs.fluentd.org/articles/free-alternative-to-splunk-by-fluentd" target="_blank" rel="noopener">Free Alternative to Splunk Using Fluentd</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-07-04T04:50:35.000Z" itemprop="datepublished">
             2016/07/04
           </time>
@@ -402,58 +458,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </ul>
 <p>使い方は<code>kramdown_easy_link.rb</code>を<code>plugins/</code>ディレクトリに置いて、<code>_config.yml</code>を以下のように修正します。</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">markdown:</span> kramdown</span><br><span class="line"><span class="symbol">kramdown:</span></span><br><span class="line">  <span class="symbol">input:</span> KramdownEasyLink</span><br></pre></td></tr></table></figure>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-06-27T03:25:08.000Z" itemprop="datepublished">
-            2016/06/27
-          </time>
-          <time datetime="2016-06-27T03:25:08.000Z" itemprop="modified">
-            (更新日: 2016/06/27)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/06/27/use-math-syntax-on-jekyll/">Jekyllで数式を表示する方法</a>
-        </h1>
-        <div class="content">
-          <p>Jekyllで数式を使いたい場合は、markdownにkramdownを使うのがおすすめです。<br>というのも、<code>redcarpet</code> はワンライナーの書式しか使えません。<br><code>rdiscount</code> は自分が試したところ、動作しませんでした。</p>
-<p>次にMathjax.jsを読み込みます。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>これで準備は整いました。</p>
-<p>Kramdown のドキュメントに書かれているサンプルを表示します。</p>
-<p>$$<br>\begin{align<em>}<br>  &amp; \phi(x,y) = \phi \left(\sum_{i=1}^n x_ie_i, \sum_{j=1}^n y_je_j \right)<br>  = \sum_{i=1}^n \sum_{j=1}^n x_i y_j \phi(e_i, e_j) = \<br>  &amp; (x_1, \ldots, x_n) \left( \begin{array}{ccc}<br>      \phi(e_1, e_1) &amp; \cdots &amp; \phi(e_1, e_n) \<br>      \vdots &amp; \ddots &amp; \vdots \<br>      \phi(e_n, e_1) &amp; \cdots &amp; \phi(e_n, e_n)<br>    \end{array} \right)<br>  \left( \begin{array}{c}<br>      y_1 \<br>      \vdots \<br>      y_n<br>    \end{array} \right)<br>\end{align</em>}<br>$$</p>
-<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="formula">$$</span></span><br><span class="line"><span class="formula"><span class="tag">\<span class="name">begin</span><span class="string">&#123;align*&#125;</span></span></span></span><br><span class="line"><span class="formula">  &amp; <span class="tag">\<span class="name">phi</span></span>(x,y) = <span class="tag">\<span class="name">phi</span></span> <span class="tag">\<span class="name">left</span></span>(<span class="tag">\<span class="name">sum</span></span>_&#123;i=1&#125;^n x_ie_i, <span class="tag">\<span class="name">sum</span></span>_&#123;j=1&#125;^n y_je_j <span class="tag">\<span class="name">right</span></span>)</span></span><br><span class="line"><span class="formula">  = <span class="tag">\<span class="name">sum</span></span>_&#123;i=1&#125;^n <span class="tag">\<span class="name">sum</span></span>_&#123;j=1&#125;^n x_i y_j <span class="tag">\<span class="name">phi</span></span>(e_i, e_j) = <span class="tag">\<span class="name">\</span></span></span></span><br><span class="line"><span class="formula">  &amp; (x_1, <span class="tag">\<span class="name">ldots</span></span>, x_n) <span class="tag">\<span class="name">left</span></span>( <span class="tag">\<span class="name">begin</span><span class="string">&#123;array&#125;</span><span class="string">&#123;ccc&#125;</span></span></span></span><br><span class="line"><span class="formula">      <span class="tag">\<span class="name">phi</span></span>(e_1, e_1) &amp; <span class="tag">\<span class="name">cdots</span></span> &amp; <span class="tag">\<span class="name">phi</span></span>(e_1, e_n) <span class="tag">\<span class="name">\</span></span></span></span><br><span class="line"><span class="formula">      <span class="tag">\<span class="name">vdots</span></span> &amp; <span class="tag">\<span class="name">ddots</span></span> &amp; <span class="tag">\<span class="name">vdots</span></span> <span class="tag">\<span class="name">\</span></span></span></span><br><span class="line"><span class="formula">      <span class="tag">\<span class="name">phi</span></span>(e_n, e_1) &amp; <span class="tag">\<span class="name">cdots</span></span> &amp; <span class="tag">\<span class="name">phi</span></span>(e_n, e_n)</span></span><br><span class="line"><span class="formula">    <span class="tag">\<span class="name">end</span><span class="string">&#123;array&#125;</span></span> <span class="tag">\<span class="name">right</span></span>)</span></span><br><span class="line"><span class="formula">  <span class="tag">\<span class="name">left</span></span>( <span class="tag">\<span class="name">begin</span><span class="string">&#123;array&#125;</span><span class="string">&#123;c&#125;</span></span></span></span><br><span class="line"><span class="formula">      y_1 <span class="tag">\<span class="name">\</span></span></span></span><br><span class="line"><span class="formula">      <span class="tag">\<span class="name">vdots</span></span> <span class="tag">\<span class="name">\</span></span></span></span><br><span class="line"><span class="formula">      y_n</span></span><br><span class="line"><span class="formula">    <span class="tag">\<span class="name">end</span><span class="string">&#123;array&#125;</span></span> <span class="tag">\<span class="name">right</span></span>)</span></span><br><span class="line"><span class="formula"><span class="tag">\<span class="name">end</span><span class="string">&#123;align*&#125;</span></span></span></span><br><span class="line"><span class="formula">$$</span></span><br></pre></td></tr></table></figure>
-
-<p>基本的な書式は以下のようになります。</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$$</span></span><br><span class="line">\<span class="keyword">begin</span>&#123;align*&#125;</span><br><span class="line"></span><br><span class="line">LaTexの数式</span><br><span class="line"></span><br><span class="line">\<span class="keyword">end</span>&#123;align*&#125;</span><br><span class="line"><span class="variable">$$</span></span><br></pre></td></tr></table></figure>
-
-<p>また<code>$$</code>を使ってワンライナーで書くことも可能です。</p>
-<p>$$ 5 + 5 $$</p>
-<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span><span class="symbol">$</span> <span class="number">5</span> + <span class="number">5</span> <span class="symbol">$</span><span class="symbol">$</span></span><br></pre></td></tr></table></figure>
-
-<p>インラインにしたいときは<code>\$$</code>を使います。</p>
-<p>$$ 5 + 5 $$</p>
-<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\<span class="symbol">$</span><span class="symbol">$</span> <span class="number">5</span> + <span class="number">5</span> <span class="symbol">$</span><span class="symbol">$</span></span><br></pre></td></tr></table></figure>
-
-<p>このように文字中に数式を埋め込むことができます。</p>
-<p>光は真空中を1秒間に約 $$ 3.0 × 10^8  $$メートル進む。 光速を $$ cc $$ で表す</p>
-<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">光は真空中を<span class="number">1</span>秒間に約 <span class="symbol">$</span><span class="symbol">$</span> <span class="number">3.0</span> × <span class="number">10</span>^<span class="number">8</span>  <span class="symbol">$</span><span class="symbol">$</span>メートル進む。 光速を <span class="symbol">$</span><span class="symbol">$</span> cc <span class="symbol">$</span><span class="symbol">$</span> で表す</span><br></pre></td></tr></table></figure>
-
-<p>表記の確認には<a href="http://gyafun.jp/ln/MathJax.html" target="_blank" rel="noopener">MathJax checker</a> を使うと便利です。<br>LaTeX 書式の数式をリアルタイムで確認することができます。</p>
-<p>LaTexの書式に関しては以下を参考にしてください。</p>
-<p><a href="http://www.onemathematicalcat.org/MathJaxDocumentation/TeXSyntax.htm" target="_blank" rel="noopener">http://www.onemathematicalcat.org/MathJaxDocumentation/TeXSyntax.htm</a></p>
-<p>参考リンク</p>
-<ul>
-<li><a href="http://kramdown.gettalong.org/syntax.html#math-blocks" target="_blank" rel="noopener">Syntax kramdown</a></li>
-<li><a href="http://jekyllrb.com/docs/extras/" target="_blank" rel="noopener">Extras - Jekyll • Simple, blog-aware, static sites</a></li>
-<li><a href="http://sekika.github.io/2015/10/10/equation-on-jekyll/" target="_blank" rel="noopener">Jekyll 上での数式の表示</a></li>
-<li><a href="http://www.ic.daito.ac.jp/~mizutani/html/mathexpress.html" target="_blank" rel="noopener">Webの数式表現</a></li>
-</ul>
-<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
         </div>
       </div>

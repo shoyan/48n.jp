@@ -176,6 +176,36 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-05-06T04:33:16.000Z" itemprop="datepublished">
+            2016/05/06
+          </time>
+          <time datetime="2016-05-06T04:33:16.000Z" itemprop="modified">
+            (更新日: 2016/05/06)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/05/06/can-not-ssh-login-allow-groups-problems/">AllowGroupsの問題でsshログインできない</a>
+        </h1>
+        <div class="content">
+          <p>sshログインできないので <code>/var/log/secure</code> のログを見てみました。<br>以下のメッセージがでていました。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Apr 28 14:11:14 server01 sshd[31264]:<span class="built_in"> User </span>shoyan <span class="keyword">from</span> example.jp <span class="keyword">not</span> allowed because none of user<span class="string">'s groups are listed in AllowGroups</span></span><br><span class="line"><span class="string">Apr 28 14:11:14 server01 sshd[31265]: input_userauth_request: invalid user shoyan</span></span><br><span class="line"><span class="string">Apr 28 14:11:14 server01 sshd[31265]: Connection closed by 192.168.1.1</span></span><br></pre></td></tr></table></figure>
+
+<p><code>none of user&#39;s groups are listed in AllowGroups</code> と書いてあるので、groupの問題らしい。</p>
+<p><code>/etc/ssh/sshd_config</code>をみると、AllowGroups にいなかったのでユーザーのグループを追加しました。</p>
+<p>sshd_configを変更したら、設定を反映させるためにreloadします。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># service sshd reload</span></span><br><span class="line"><span class="attribute">sshd</span> を再読み込み中:                                      <span class="meta"> [  OK  ]</span></span><br></pre></td></tr></table></figure>
+
+<p>AllowGroupsにユーザーのグループを追加することによってログインできるようになりました。</p>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><ul>
+<li><a href="http://open-groove.net/linux/sshd-restart/" target="_blank" rel="noopener">http://open-groove.net/linux/sshd-restart/</a></li>
+<li><a href="https://www.howtoforge.com/community/threads/cannot-ssh-with-shell-user.52800/i" target="_blank" rel="noopener">https://www.howtoforge.com/community/threads/cannot-ssh-with-shell-user.52800/i</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-05-04T13:12:07.000Z" itemprop="datepublished">
             2016/05/04
           </time>
@@ -373,48 +403,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </ul>
 </li>
 </ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-04-26T04:52:30.000Z" itemprop="datepublished">
-            2016/04/26
-          </time>
-          <time datetime="2016-04-26T04:52:30.000Z" itemprop="modified">
-            (更新日: 2016/04/26)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/04/26/sets-body-and-status-code-and-header-with-sinatra/">Sinatraのレスポンスの設定とストリーミングヘルパー</a>
-        </h1>
-        <div class="content">
-          <p>通常はルーティングブロックの戻り値にセットした文字列がbodyにセットされます。<br>任意の評価フローでbodyをセットしたい場合はどうすればいいでしょうか。<br>Sinatraには任意の評価フローでbodyをセットできる、bodyヘルパーが用意されています。  </p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">get <span class="string">'/foo'</span> <span class="keyword">do</span></span><br><span class="line">  body <span class="string">"bar"</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">after <span class="keyword">do</span></span><br><span class="line">  puts body</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>Status Codeを設定するstatusヘルパー、headerを設定するheadersヘルパーも用意されています。</p>
-<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">get</span> <span class="string">'/foo'</span> <span class="keyword">do</span></span><br><span class="line">  status <span class="number">418</span></span><br><span class="line">  headers \</span><br><span class="line">    <span class="string">"Allow"</span>   =&gt; <span class="string">"BREW, POST, GET, PROPFIND, WHEN"</span>,</span><br><span class="line">    <span class="string">"Refresh"</span> =&gt; <span class="string">"Refresh: 20; http://www.ietf.org/rfc/rfc2324.txt"</span></span><br><span class="line">  body <span class="string">"I'm a tea pot!"</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-
-<p>引数の伴わないbody, status, headersは現在の値を確認するために使えます。</p>
-<h3 id="Streamingヘルパー"><a href="#Streamingヘルパー" class="headerlink" title="Streamingヘルパー"></a>Streamingヘルパー</h3><p>streamヘルパーを使うとおもしろいことができます。<br>レスポンスボディの部分を生成している段階でデータを送信することができます。<br>この仕組みを使ってストリーミングAPIを実装することもできます。  </p>
-<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">get</span> <span class="string">'/'</span> <span class="keyword">do</span></span><br><span class="line">  stream <span class="keyword">do</span> |<span class="keyword">out</span>|</span><br><span class="line">    <span class="keyword">out</span> &lt;&lt; "It's gonna be legen -\n"</span><br><span class="line">    sleep <span class="number">0.5</span></span><br><span class="line">    <span class="keyword">out</span> &lt;&lt; " (wait for it) \n"</span><br><span class="line">    sleep <span class="number">1</span></span><br><span class="line">    <span class="keyword">out</span> &lt;&lt; "- dary!\n"</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>以下は、ストリーミングAPIのサンプルです。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># app.rb</span></span><br><span class="line"><span class="comment"># long polling</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span> :<span class="keyword">server</span>, :thin</span><br><span class="line">connections = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">get</span> <span class="string">'/subscribe'</span> <span class="keyword">do</span></span><br><span class="line">  <span class="comment"># register a client's interest in server events</span></span><br><span class="line">  stream(:keep_open) <span class="keyword">do</span> |<span class="keyword">out</span>|</span><br><span class="line">    connections &lt;&lt; <span class="keyword">out</span></span><br><span class="line">    <span class="comment"># purge dead connections</span></span><br><span class="line">    connections.reject!(&amp;:closed?)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">post <span class="string">'/message'</span> <span class="keyword">do</span></span><br><span class="line">  connections.each <span class="keyword">do</span> |<span class="keyword">out</span>|</span><br><span class="line">    <span class="comment"># notify client that a new message has arrived</span></span><br><span class="line">    <span class="keyword">out</span> &lt;&lt; params[<span class="string">'message'</span>] &lt;&lt; <span class="string">"\n"</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># indicate client to connect again</span></span><br><span class="line">    out.close</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># acknowledge</span></span><br><span class="line">  <span class="string">"message received"</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>ストリーミングはThinやRainbowsなどのイベント型サーバーでないと動かないので注意が必要です。  </p>
-<p>サーバーを起動させてみます。</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>gem insatall thin</span><br><span class="line"><span class="variable">$ </span>ruby app.rb</span><br></pre></td></tr></table></figure>
-
-<p>別のターミナルを開いて、以下を実行します。</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>curl <span class="symbol">http:</span>/<span class="regexp">/localhost:4567/subscribe</span></span><br></pre></td></tr></table></figure>
-
-<p>何もレスポンスがありませんが、接続が維持された状態となります。</p>
-<p>別のタブを開いて以下の実行してみましょう。</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>curl <span class="symbol">http:</span>/<span class="regexp">/localhost:4567/message</span> -X POST -d <span class="string">"message=hello"</span></span><br></pre></td></tr></table></figure>
-
-<p>すると、subscribeのほうにhelloと表示されて接続が切れます。<br>これは、/messageのout.closeを実行しているからです。<br>試しに、out.closeをコメントアウトしてサーバーを起動すると接続維持されたままになります。</p>
 
         </div>
       </div>

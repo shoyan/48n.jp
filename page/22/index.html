@@ -176,6 +176,54 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-06-09T05:04:17.000Z" itemprop="datepublished">
+            2016/06/09
+          </time>
+          <time datetime="2016-06-09T05:04:17.000Z" itemprop="modified">
+            (更新日: 2016/06/09)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/06/09/calculate-the-date-of-the-last-week-monday/">先週月曜日の日付を取得するアルゴリズム</a>
+        </h1>
+        <div class="content">
+          <h2 id="先週の月曜日を求めるアルゴリズム"><a href="#先週の月曜日を求めるアルゴリズム" class="headerlink" title="先週の月曜日を求めるアルゴリズム"></a>先週の月曜日を求めるアルゴリズム</h2><ul>
+<li>先週(7日前)が月曜日である場合はその日付を返す</li>
+<li>月曜日でない場合<ul>
+<li>月曜日より前であれば日付を1日たす</li>
+<li>月曜日より後であれば日付を1日ひく</li>
+</ul>
+</li>
+</ul>
+<h3 id="Rubyで実装"><a href="#Rubyで実装" class="headerlink" title="Rubyで実装"></a>Rubyで実装</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">last_monday</span><span class="params">(date = Date.today - <span class="number">7</span>)</span></span></span><br><span class="line">  <span class="keyword">return</span> date <span class="keyword">if</span> date.monday?</span><br><span class="line">  <span class="keyword">if</span> date.wday &lt; <span class="number">1</span></span><br><span class="line">    date += <span class="number">1</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    date -= <span class="number">1</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  last_monday(date)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="先週の金曜日を求める場合"><a href="#先週の金曜日を求める場合" class="headerlink" title="先週の金曜日を求める場合"></a>先週の金曜日を求める場合</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">last_friday</span><span class="params">(date = Date.today - <span class="number">7</span>)</span></span></span><br><span class="line">  <span class="keyword">return</span> date <span class="keyword">if</span> date.friday?</span><br><span class="line">  <span class="keyword">if</span> date.wday &lt; <span class="number">5</span></span><br><span class="line">    date += <span class="number">1</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    date -= <span class="number">1</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  last_friday(date)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="次の月曜日の日付を求めるアルゴリズム"><a href="#次の月曜日の日付を求めるアルゴリズム" class="headerlink" title="次の月曜日の日付を求めるアルゴリズム"></a>次の月曜日の日付を求めるアルゴリズム</h2><ul>
+<li>明日が月曜日かどうか<ul>
+<li>月曜日であればその日を返す</li>
+<li>月曜日でなければ1日たす</li>
+</ul>
+</li>
+</ul>
+<h3 id="Rubyで実装-1"><a href="#Rubyで実装-1" class="headerlink" title="Rubyで実装"></a>Rubyで実装</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">next_monday</span><span class="params">(date = Date.today + <span class="number">1</span>)</span></span></span><br><span class="line">  <span class="keyword">return</span> date <span class="keyword">if</span> date.monday?</span><br><span class="line">  next_monday(date + <span class="number">1</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="前回の月曜日の日付を求めるアルゴリズム"><a href="#前回の月曜日の日付を求めるアルゴリズム" class="headerlink" title="前回の月曜日の日付を求めるアルゴリズム"></a>前回の月曜日の日付を求めるアルゴリズム</h2><ul>
+<li>昨日が月曜日かどうか<ul>
+<li>月曜日であればその日を返す</li>
+<li>月曜日でなければ1日ひく</li>
+</ul>
+</li>
+</ul>
+<h3 id="Rubyで実装-2"><a href="#Rubyで実装-2" class="headerlink" title="Rubyで実装"></a>Rubyで実装</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">prev_monday</span><span class="params">(date = Date.today - <span class="number">1</span>)</span></span></span><br><span class="line">  <span class="keyword">return</span> date <span class="keyword">if</span> date.monday?</span><br><span class="line">  prev_monday(date - <span class="number">1</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="実行結果"><a href="#実行結果" class="headerlink" title="実行結果"></a>実行結果</h3><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">puts Date.today.strftime(<span class="string">"%Y-%m-%d (%a)"</span>)</span><br><span class="line">=&gt; <span class="number">2016</span>-<span class="number">06</span>-<span class="number">09</span> (Thu)</span><br><span class="line">puts prev_monday.strftime(<span class="string">"%Y-%m-%d (%a)"</span>)</span><br><span class="line">=&gt; <span class="number">2016</span>-<span class="number">06</span>-<span class="number">06</span> (Mon)</span><br><span class="line">puts next_monday.strftime(<span class="string">"%Y-%m-%d (%a)"</span>)</span><br><span class="line">=&gt; <span class="number">2016</span>-<span class="number">06</span>-<span class="number">13</span> (Mon)</span><br><span class="line">puts last_monday.strftime(<span class="string">"%Y-%m-%d (%a)"</span>)</span><br><span class="line">=&gt; <span class="number">2016</span>-<span class="number">05</span>-<span class="number">30</span> (Mon)</span><br><span class="line">puts last_friday.strftime(<span class="string">"%Y-%m-%d (%a)"</span>)</span><br><span class="line">=&gt; <span class="number">2016</span>-<span class="number">06</span>-<span class="number">03</span> (Fri)</span><br></pre></td></tr></table></figure>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-06-08T09:41:16.000Z" itemprop="datepublished">
             2016/06/08
           </time>
@@ -317,73 +365,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ idn -u xn<span class="params">--68jwei3c27a</span>.xyz</span><br><span class="line">しょーやん<span class="string">.xyz</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="digとidnを組み合わせて使う"><a href="#digとidnを組み合わせて使う" class="headerlink" title="digとidnを組み合わせて使う"></a>digとidnを組み合わせて使う</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">⇒</span>  <span class="string">dig</span> <span class="string">`idn</span> <span class="string">しょーやん.xyz`</span> <span class="string">NS</span></span><br><span class="line"></span><br><span class="line"><span class="string">;</span> <span class="string">&lt;&lt;&gt;&gt;</span> <span class="string">DiG</span> <span class="number">9.8</span><span class="number">.3</span><span class="string">-P1</span> <span class="string">&lt;&lt;&gt;&gt;</span> <span class="string">xn--68jwei3c27a.xyz</span> <span class="string">NS</span></span><br><span class="line"><span class="string">;;</span> <span class="attr">global options:</span> <span class="string">+cmd</span></span><br><span class="line"><span class="string">;;</span> <span class="attr">Got answer:</span></span><br><span class="line"><span class="string">;;</span> <span class="string">-&gt;&gt;HEADER&lt;&lt;-</span> <span class="attr">opcode:</span> <span class="string">QUERY,</span> <span class="attr">status:</span> <span class="string">NOERROR,</span> <span class="attr">id:</span> <span class="number">59533</span></span><br><span class="line"><span class="string">;;</span> <span class="attr">flags:</span> <span class="string">qr</span> <span class="string">rd</span> <span class="string">ra;</span> <span class="attr">QUERY:</span> <span class="number">1</span><span class="string">,</span> <span class="attr">ANSWER:</span> <span class="number">2</span><span class="string">,</span> <span class="attr">AUTHORITY:</span> <span class="number">0</span><span class="string">,</span> <span class="attr">ADDITIONAL:</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="string">;;</span> <span class="attr">QUESTION SECTION:</span></span><br><span class="line"><span class="string">;xn--68jwei3c27a.xyz.</span>   <span class="string">IN</span>  <span class="string">NS</span></span><br><span class="line"></span><br><span class="line"><span class="string">;;</span> <span class="attr">ANSWER SECTION:</span></span><br><span class="line"><span class="string">xn--68jwei3c27a.xyz.</span>  <span class="number">3578</span>  <span class="string">IN</span>  <span class="string">NS</span>  <span class="string">dns01.muumuu-domain.com.</span></span><br><span class="line"><span class="string">xn--68jwei3c27a.xyz.</span>  <span class="number">3578</span>  <span class="string">IN</span>  <span class="string">NS</span>  <span class="string">dns02.muumuu-domain.com.</span></span><br><span class="line"></span><br><span class="line"><span class="string">;;</span> <span class="attr">Query time:</span> <span class="number">34</span> <span class="string">msec</span></span><br><span class="line"><span class="string">;;</span> <span class="attr">SERVER:</span> <span class="number">192.168</span><span class="number">.74</span><span class="number">.20</span><span class="comment">#53(192.168.74.20)</span></span><br><span class="line"><span class="string">;;</span> <span class="attr">WHEN:</span> <span class="string">Fri</span> <span class="string">Jun</span>  <span class="number">3</span> <span class="number">09</span><span class="string">:25:40</span> <span class="number">2016</span></span><br><span class="line"><span class="string">;;</span> <span class="attr">MSG SIZE  rcvd:</span> <span class="number">94</span><span class="string">)&gt;&gt;&gt;&gt;&gt;&gt;</span></span><br></pre></td></tr></table></figure>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-06-01T05:17:45.000Z" itemprop="datepublished">
-            2016/06/01
-          </time>
-          <time datetime="2016-06-01T05:17:45.000Z" itemprop="modified">
-            (更新日: 2016/06/01)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/06/01/capistrano-tutorial-and-capistrano-plugins/">Capistranoの導入手順とプラグインの紹介</a>
-        </h1>
-        <div class="content">
-          <p>Capistranoのインストールと設定、プラグインの紹介をします。</p>
-<h2 id="Capistranoのインストール"><a href="#Capistranoのインストール" class="headerlink" title="Capistranoのインストール"></a>Capistranoのインストール</h2><p>bundle initコマンドでGemfileを作成します。</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$  bundle init</span><br><span class="line">Writing <span class="keyword">new</span> Gemfile to <span class="regexp">/Users/</span>shoyan<span class="regexp">/app/G</span>emfile</span><br></pre></td></tr></table></figure>
-
-<p>以下のGemfileが作成されます。</p>
-<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ cat Gemfile</span><br><span class="line"><span class="meta"># A sample Gemfile</span></span><br><span class="line">source <span class="string">"https://rubygems.org"</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># gem "rails"</span></span><br></pre></td></tr></table></figure>
-
-<p>GemfileにCapistranoを定義します。</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">group</span> <span class="title">:development</span> do</span><br><span class="line">  gem <span class="string">"capistrano"</span>, <span class="string">"~&gt; 3.4"</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-
-<p>bundle installコマンドでインストールします。</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">bundle </span>install</span><br></pre></td></tr></table></figure>
-
-<h2 id="Capistranoの設定"><a href="#Capistranoの設定" class="headerlink" title="Capistranoの設定"></a>Capistranoの設定</h2><p>Capistranoがインストールできたので、設定をしていきます。<br>cap installコマンドで雛形を作成します。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> bundle <span class="built_in">exec</span> <span class="built_in">cap</span> install</span></span><br></pre></td></tr></table></figure>
-
-<p><code>config/deploy.rb</code>と<code>config/deploy/{production, staging}.rb</code> が作成されているので適宜編集します。</p>
-<p>config/deploy.rb</p>
-<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># config valid only <span class="keyword">for</span> current <span class="keyword">version</span> of Capistrano</span><br><span class="line">lock '3.5.0'</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span> :application, ‘<span class="keyword">app</span>'</span><br><span class="line"><span class="keyword">set</span> :repo_url, 'git@github.com:shoyan/shoyan.git'</span><br><span class="line"></span><br><span class="line">ask :branch, `git rev-<span class="keyword">parse</span> --abbrev-ref HEAD`.chomp</span><br><span class="line"><span class="keyword">set</span> :deploy_to, '/<span class="keyword">var</span>/www/<span class="keyword">app</span>'</span><br><span class="line"><span class="keyword">set</span> :scm, :git</span><br><span class="line"><span class="keyword">set</span> :<span class="keyword">format</span>, :airbrussh</span><br><span class="line"><span class="keyword">set</span> :keep_releases, 5</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>application</strong>:  アプリケーション名</li>
-<li><strong>repo_url</strong>: リポジトリのURI</li>
-<li><strong>branch</strong>: デプロイ対象のブランチ</li>
-<li><strong>deploy_to</strong>: サーバーのアプリケーションのディレクトリ</li>
-<li><strong>scm</strong>: git or svn</li>
-<li><strong>format</strong>: ログのフォーマット</li>
-<li><strong>keep_releases</strong>: 過去にデプロイしたアプリケーションを何世代保持するか</li>
-</ul>
-<p>デプロイするサーバーを定義します。<br>事前に鍵認証でsshログインできるようにしておくととスムーズです。</p>
-<p>config/deploy/production.rb</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">role </span>:app, %w&#123;shoyan<span class="variable">@server001</span>.example.jp shoyan<span class="variable">@server002</span>.example.jp&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Capistranoでデプロイする"><a href="#Capistranoでデプロイする" class="headerlink" title="Capistranoでデプロイする"></a>Capistranoでデプロイする</h2><p>以下のコマンドでデプロイします。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> bundle <span class="built_in">exec</span> <span class="built_in">cap</span> production deploy</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="便利なCapistranoプラグイン"><a href="#便利なCapistranoプラグイン" class="headerlink" title="便利なCapistranoプラグイン"></a>便利なCapistranoプラグイン</h2><p>Capistranoには様々なプラグインがあります。<br>ここでは私が使っているプラグインを紹介します。</p>
-<h3 id="capistrano-github-releases"><a href="#capistrano-github-releases" class="headerlink" title="capistrano-github-releases"></a>capistrano-github-releases</h3><p>デプロイ時にタグをつけたり、PRにリリースコメントをつけれます。</p>
-<p><a href="https://github.com/linyows/capistrano-github-releases" target="_blank" rel="noopener">https://github.com/linyows/capistrano-github-releases</a></p>
-<h3 id="capistrano-slack-notification"><a href="#capistrano-slack-notification" class="headerlink" title="capistrano/slack_notification"></a>capistrano/slack_notification</h3><p>デプロイ時にSlackに通知できるようになります。</p>
-<p><a href="https://github.com/linyows/capistrano-slack_notification" target="_blank" rel="noopener">https://github.com/linyows/capistrano-slack_notification</a></p>
-<h3 id="capistrano-banner"><a href="#capistrano-banner" class="headerlink" title="capistrano_banner"></a>capistrano_banner</h3><p>デプロイ時にASCIIアートを設定できます。<br>また、productionにデプロイする前に確認をしてくれるようになります。</p>
-<p><a href="https://github.com/holysugar/capistrano_banner" target="_blank" rel="noopener">https://github.com/holysugar/capistrano_banner</a></p>
-<h3 id="capistrano-bundler"><a href="#capistrano-bundler" class="headerlink" title="capistrano-bundler"></a>capistrano-bundler</h3><p>デプロイ時にbundle installを実行できるようになります。</p>
-<p><a href="https://github.com/capistrano/bundler" target="_blank" rel="noopener">https://github.com/capistrano/bundler</a></p>
-<h3 id="capistrano3-unicorn"><a href="#capistrano3-unicorn" class="headerlink" title="capistrano3-unicorn"></a>capistrano3-unicorn</h3><p>デプロイ時にunicornのコマンドを実行できるようになります。</p>
-<p><a href="https://github.com/tablexi/capistrano3-unicorn" target="_blank" rel="noopener">https://github.com/tablexi/capistrano3-unicorn</a></p>
-<p>###capistrano-withrsync</p>
-<p>rsyncでデプロイしてくれるプラグインです。<br>デプロイするファイルが大きい場合に便利です。</p>
-<p><a href="https://github.com/linyows/capistrano-withrsync" target="_blank" rel="noopener">https://github.com/linyows/capistrano-withrsync</a></p>
 
         </div>
       </div>

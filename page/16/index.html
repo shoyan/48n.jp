@@ -176,6 +176,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-08-08T04:30:30.000Z" itemprop="datepublished">
+            2016/08/08
+          </time>
+          <time datetime="2016-08-08T04:30:30.000Z" itemprop="modified">
+            (更新日: 2016/08/08)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/08/08/php-lint-with-ci/">PHPの構文チェックを自動で行う方法</a>
+        </h1>
+        <div class="content">
+          <p>私のチームではCIで自動的にLINTをする仕組みを構築しています。<br>この仕組みにより、レガシーコードでテストコードがない環境でもシンタックスエラーの混入を防ぐことができます。</p>
+<p>中身はシンプルで以下のスクリプトを作成して、CIプラットホームで実行するようにします。</p>
+<p>php-lint.sh</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line">RESULT=`find . -<span class="built_in">type</span> f -name <span class="string">"*.php"</span> -<span class="built_in">exec</span> php -l &#123;&#125; \; 2&gt;&amp;1 | grep <span class="string">"PHP Parse error"</span>`</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$RESULT</span>"</span> != <span class="string">""</span> ];<span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$RESULT</span>"</span></span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<p>例えば、Droneでチェックする場合は以下のように設定します。</p>
+<p>.drone.yml</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">scrip</span><span class="variable">t:</span></span><br><span class="line">  - ./php-lint.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-08-03T04:42:38.000Z" itemprop="datepublished">
             2016/08/03
           </time>
@@ -230,8 +255,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2016-08-02T04:40:25.000Z" itemprop="datepublished">
             2016/08/02
           </time>
-          <time datetime="2025-08-06T05:49:26.678Z" itemprop="modified">
-            (更新日: 2025/08/06)
+          <time datetime="2025-08-07T02:54:41.939Z" itemprop="modified">
+            (更新日: 2025/08/07)
           </time>
         </div>
         <h1>
@@ -353,29 +378,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <ul>
 <li><a href="/blog/2016/08/02/ruboty-and-slack/">Botsインテグレーションを使って手軽にRubotyをSlackで動かす</a></li>
 </ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-07-27T04:37:18.000Z" itemprop="datepublished">
-            2016/07/27
-          </time>
-          <time datetime="2016-07-27T04:37:18.000Z" itemprop="modified">
-            (更新日: 2016/07/27)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/07/27/introduce-to-git-monitor/">GitHubのリポジトリを監視するGitMonitor</a>
-        </h1>
-        <div class="content">
-          <p>GitHubのリポジトリを監視する<a href="https://gitmonitor.com/" target="_blank" rel="noopener">GitMonitor</a>というサービスを紹介します。<br>このサービスはGithubのリポジトリを監視して、そのリポジトリに行った操作をダッシュボードで確認することができます。<br>また、Flowdock、Slack、Emailに通知することも可能のようです。</p>
-<p>以下は、masterに直接pushしたときのログです。</p>
-<p><img src="/images/git_monitor.png" alt="git-monitor-image"></p>
-<p>GitMonitorは様々なルールが設定でき、そのルールに該当したものがダッシュボードに表示されます。<br>例えば、LGTMがないPull Requestがマージされたときや、リストに定義していない人がマージしたときに通知することもできるようです。</p>
-<p>操作の制限ができるわけではなく、ルールに該当したときにダッシュボードに通知されるだけのようです。</p>
-<p>30日間は無料で使えて、それ以降は有料プランとなります。<br>有料プランは3つあって、Small($10 / mon)、Medium($20 / mon)、Large($35 / mon) が選べます。<br>監視するリポジトリの数がプランによって違います。</p>
 
         </div>
       </div>

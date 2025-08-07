@@ -176,6 +176,58 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2015-10-28T04:51:49.000Z" itemprop="datepublished">
+            2015/10/28
+          </time>
+          <time datetime="2015-10-28T04:51:49.000Z" itemprop="modified">
+            (更新日: 2015/10/28)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2015/10/28/highway-faster-than-ag/">超高速grep「The Silver Searcher(ag)」からhighwayに乗り換えた</a>
+        </h1>
+        <div class="content">
+          <p>プログラマーにとって，grepコマンドはなくてはならない存在です。<br>基本的かつ古典的なユーティリティであるgrepですが，使いにくい面もあります。</p>
+<p>2013年のはじめころから，grepに取って代わるコマンドとして「The Silver Searcher」（以下「ag」）が注目されはじめました。<br>そして最近、<a href="https://github.com/tkengo/highway" target="_blank" rel="noopener">highway</a>というagライクで高速なgrepツールがリリースされました。</p>
+<h3 id="The-Silver-Searcher（ag）とは？"><a href="#The-Silver-Searcher（ag）とは？" class="headerlink" title="The Silver Searcher（ag）とは？"></a>The Silver Searcher（ag）とは？</h3><p>highwayの紹介の前にagとagが開発された背景について説明したいと思います。  </p>
+<p>プログラムを書いていると，ソースコード全域にわたって文字列を検索したい，ということはよくあります。<br>そのようなときにgrepコマンドが活躍するわけですが，ソースコードのディレクトリには検索したくないファイルが往々としてあるわけです。  </p>
+<p>たとえばバージョン管理システムが使っている「.git」ディレクトリは，検索対象に含めたくありません。<br>これをgrepで実現しようとすると，オプションやパイプを組み合わせて，少々面倒なワンライナーを書く必要があります。</p>
+<p>こういった問題を解決するため，ackというプログラムが作られました。<br>ackは以下のような特徴を持つ，開発者向けの賢いgrepツールです。</p>
+<ul>
+<li>デフォルトでディレクトリツリーを再帰検索</li>
+<li>.gitなどを暗黙的に除外</li>
+<li>検索するファイルタイプをオプションで指定可能（–perl，など）</li>
+<li>拡張子だけでなく，shebangを見てファイルタイプを判別可能</li>
+<li>検索結果をファイル単位でわかりやすくまとめて表示</li>
+</ul>
+<p>ackはgrepと比べて使い勝手がよいのですが，Perlで実装されていることもあり，動作速度に難があります。<br>その動作速度の問題を改善するためにagが開発されました。    </p>
+<p>agは開発者が「A code searching tool similar to ack, with a focus on speed.」と紹介しているとおり，「高速なack」を目指して開発されたプログラムです。<br>「ackに比べて3から5倍高速」を謳っており，そして実際非常に高速です。</p>
+<h3 id="The-Silver-Searcher（ag）の問題点"><a href="#The-Silver-Searcher（ag）の問題点" class="headerlink" title="The Silver Searcher（ag）の問題点"></a>The Silver Searcher（ag）の問題点</h3><p>紹介した通り、使い勝手がよく、性能もよいagなのですが、以下の問題点があります。  </p>
+<ul>
+<li>EUC-JPやShift_JISなどの日本語に使われるマルチバイト文字列が検索できない</li>
+<li>検索結果の出力順が検索する度に異なる</li>
+</ul>
+<p>全てのコードがUTF-8であれば問題ありませんが、日本語圏で使われるファイルでは、なかなかそうもいきません。<br>検索結果の出力順が検索する度に異なるのも少し使いにくいと感じます。  </p>
+<p>その点、highwayはEUC-JPやShift_JISをサポートしており、検索結果の表示順の問題もありません。  </p>
+<h3 id="highwayのメリット"><a href="#highwayのメリット" class="headerlink" title="highwayのメリット"></a>highwayのメリット</h3><p>agの問題点であげた点をhighwayはクリアしています。<br>また、速度もagよりも高速です。  </p>
+<p>ベンチマークについては以下の記事をご覧ください。<br><a href="http://tkengo.github.io/blog/2015/10/19/release-highway/" target="_blank" rel="noopener">http://tkengo.github.io/blog/2015/10/19/release-highway/</a></p>
+<h3 id="highwayのインストール"><a href="#highwayのインストール" class="headerlink" title="highwayのインストール"></a>highwayのインストール</h3><h4 id="For-OS-X"><a href="#For-OS-X" class="headerlink" title="For OS X"></a>For OS X</h4><p>homebrewでインストールできます。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">brew </span>tap tkengo/highway</span><br><span class="line">$ <span class="keyword">brew </span>install highway</span><br></pre></td></tr></table></figure>
+
+<h4 id="For-Fedora-Core"><a href="#For-Fedora-Core" class="headerlink" title="For Fedora Core"></a>For Fedora Core</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vi /etc/yum.repos.d/highway.repo</span><br><span class="line">[repos.highway]</span><br><span class="line"><span class="attribute">name</span>=highway</span><br><span class="line"><span class="attribute">baseurl</span>=http://tkengo.github.io/highway/fedora</span><br><span class="line"><span class="attribute">enabled</span>=0</span><br><span class="line"><span class="attribute">gpgcheck</span>=0</span><br><span class="line"></span><br><span class="line">$ sudo yum install highway <span class="attribute">--enablerepo</span>=<span class="string">"repos.highway"</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="使い方"><a href="#使い方" class="headerlink" title="使い方"></a>使い方</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># カレントディレクトリをhogeをいう文字列で再帰的に検索</span></span><br><span class="line">$ hw hoge</span><br><span class="line"></span><br><span class="line"><span class="comment"># public_html以下のディレクトリからhogeという文字列を検索し、マッチした行から10行目までを表示</span></span><br><span class="line">$ hw -A 10 hoge public_html</span><br><span class="line"></span><br><span class="line"><span class="comment"># オプションは以下のコマンドで参照できます</span></span><br><span class="line">$ hw -h</span><br></pre></td></tr></table></figure>
+
+<h3 id="unite-vimと連携する"><a href="#unite-vimと連携する" class="headerlink" title="unite.vimと連携する"></a>unite.vimと連携する</h3><p>unite.vimのgrepにhighwayを使うようにします。</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">" grep検索</span></span><br><span class="line"><span class="keyword">nnoremap</span> <span class="symbol">&lt;silent&gt;</span> ,g  :<span class="symbol">&lt;C-u&gt;</span>Unite <span class="keyword">grep</span>:. -<span class="keyword">buffer</span>-name=<span class="built_in">search</span>-<span class="keyword">buffer</span><span class="symbol">&lt;CR&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">" unite grepにhw(highway)を使う</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">executable</span>(<span class="string">'hw'</span>)</span><br><span class="line">  <span class="keyword">let</span> <span class="variable">g:unite_source_grep_command</span> = <span class="string">'hw'</span></span><br><span class="line">  <span class="keyword">let</span> <span class="variable">g:unite_source_grep_default_opts</span> = <span class="string">'--no-group --no-color'</span></span><br><span class="line">  <span class="keyword">let</span> <span class="variable">g:unite_source_grep_recursive_opt</span> = <span class="string">''</span></span><br><span class="line"><span class="keyword">endif</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="おわりに"><a href="#おわりに" class="headerlink" title="おわりに"></a>おわりに</h3><p>grepツールは完全に<a href="https://github.com/tkengo/highway" target="_blank" rel="noopener">highway</a>に乗り換えましたが、速度面、機能面に関しては問題ありません。<br>まだgrepで頑張っている人はもちろん，agをすでに使っている人であっても，highwayの利用を検討する価値は充分にあると思います。</p>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2015-10-09T04:36:48.000Z" itemprop="datepublished">
             2015/10/09
           </time>
@@ -441,49 +493,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>手元で試したい方は以下のクエリでデータをつくれます。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`contracts`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  <span class="string">`account_id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`start_date`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`end_date`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`contracts`</span> (<span class="string">`id`</span>, <span class="string">`account_id`</span>, <span class="string">`start_date`</span>, <span class="string">`end_date`</span>)</span><br><span class="line"><span class="keyword">VALUES</span></span><br><span class="line">    (<span class="number">1</span>, <span class="number">1</span>, <span class="number">20140101</span>, <span class="number">20141231</span>),</span><br><span class="line">    (<span class="number">2</span>, <span class="number">1</span>, <span class="number">20150101</span>, <span class="number">20151231</span>),</span><br><span class="line">    (<span class="number">3</span>, <span class="number">1</span>, <span class="number">20160101</span>, <span class="number">20161231</span>),</span><br><span class="line">    (<span class="number">4</span>, <span class="number">1</span>, <span class="number">20170101</span>, <span class="number">20171231</span>),</span><br><span class="line">    (<span class="number">5</span>, <span class="number">2</span>, <span class="number">20150101</span>, <span class="number">20151231</span>),</span><br><span class="line">    (<span class="number">6</span>, <span class="number">2</span>, <span class="number">20160101</span>, <span class="number">20161231</span>);</span><br></pre></td></tr></table></figure>
 
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2015-09-08T04:59:30.000Z" itemprop="datepublished">
-            2015/09/08
-          </time>
-          <time datetime="2015-09-08T04:59:30.000Z" itemprop="modified">
-            (更新日: 2015/09/08)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2015/09/08/mathematics-for-programmer/">プログラマのための数学勉強会@福岡に登壇してきました</a>
-        </h1>
-        <div class="content">
-          <p><a href="http://maths4pg-fuk.connpass.com/event/18609/" target="_blank" rel="noopener">プログラマのための数学勉強会@福岡</a>が2015/9/4にLINE Fukuokaで開催されました。<br>今回はスピーカーとして参加させていただきました。</p>
-<p>「暗号技術を支える素数」というタイトルで、暗号で使われている数式とその仕組みを説明しつつ、素因数分解の困難性が暗号の要だということを説明しました。</p>
-<script async class="speakerdeck-embed" data-id="7be23082cd194199a6a953ff394b1db4" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
-
-
-<h2 id="他の登壇者のかたのスライド"><a href="#他の登壇者のかたのスライド" class="headerlink" title="他の登壇者のかたのスライド"></a>他の登壇者のかたのスライド</h2><p>他の登壇者のかたのスライドを紹介します。</p>
-<script async class="speakerdeck-embed" data-id="da59efa178f640c4aa60b95db1bbf2e5" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
-<p>主催者の<a href="https://twitter.com/tkengo/" target="_blank" rel="noopener">@tkengo</a>氏のスライドです。<br>プロジェクトオイラーの問題の紹介と効率的な解き方の解説をされています。  </p>
-<iframe src="//www.slideshare.net/slideshow/embed_code/key/L9nfIoYOZSbQDe" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/nowokay/ss-52481509" title="ぼくの実装した最弱のディープラーニング" target="_blank">ぼくの実装した最弱のディープラーニング</a> </strong> from <strong><a href="//www.slideshare.net/nowokay" target="_blank">なおき きしだ</a></strong> </div>
-
-<p><a href="https://twitter.com/kis" target="_blank" rel="noopener">きしださん</a> のスライドです。<br>画像の機械学習の話しです。<br>最弱といいながら高度なことをやっているというギャップがおもしろいです。</p>
-<h2 id="圏論超絶基礎の基礎の基礎入門"><a href="#圏論超絶基礎の基礎の基礎入門" class="headerlink" title="圏論超絶基礎の基礎の基礎入門"></a>圏論超絶基礎の基礎の基礎入門</h2><p>資料はあがっていないようですが、<a href="https://twitter.com/nobkz" target="_blank" rel="noopener">@nobkz</a>先生の独特なプレゼンテーションは圧倒的でした。</p>
-<h2 id="会場の様子"><a href="#会場の様子" class="headerlink" title="会場の様子"></a>会場の様子</h2><blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="4" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:8px;"> <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:37.5% 0; text-align:center; width:100%;"> <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAAGFBMVEUiIiI9PT0eHh4gIB4hIBkcHBwcHBwcHBydr+JQAAAACHRSTlMABA4YHyQsM5jtaMwAAADfSURBVDjL7ZVBEgMhCAQBAf//42xcNbpAqakcM0ftUmFAAIBE81IqBJdS3lS6zs3bIpB9WED3YYXFPmHRfT8sgyrCP1x8uEUxLMzNWElFOYCV6mHWWwMzdPEKHlhLw7NWJqkHc4uIZphavDzA2JPzUDsBZziNae2S6owH8xPmX8G7zzgKEOPUoYHvGz1TBCxMkd3kwNVbU0gKHkx+iZILf77IofhrY1nYFnB/lQPb79drWOyJVa/DAvg9B/rLB4cC+Nqgdz/TvBbBnr6GBReqn/nRmDgaQEej7WhonozjF+Y2I/fZou/qAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div></div> <p style=" margin:8px 0 0 0; padding:0 4px;"> <a href="https://instagram.com/p/7O0QBlBRCM/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;" target="_top">暗号技術を支える素数についての発表</a></p> <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">Balloonbrosさん(@balloonbros)が投稿した写真 - <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2015-09-05T02:05:13+00:00">2015 9月 4 7:05午後 PDT</time></p></div></blockquote>
-<script async defer src="//platform.instagram.com/en_US/embeds.js"></script>
-
-<p>当日は多くのかたに参加いただきました。</p>
-<blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="4" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:8px;"> <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;"> <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAAGFBMVEUiIiI9PT0eHh4gIB4hIBkcHBwcHBwcHBydr+JQAAAACHRSTlMABA4YHyQsM5jtaMwAAADfSURBVDjL7ZVBEgMhCAQBAf//42xcNbpAqakcM0ftUmFAAIBE81IqBJdS3lS6zs3bIpB9WED3YYXFPmHRfT8sgyrCP1x8uEUxLMzNWElFOYCV6mHWWwMzdPEKHlhLw7NWJqkHc4uIZphavDzA2JPzUDsBZziNae2S6owH8xPmX8G7zzgKEOPUoYHvGz1TBCxMkd3kwNVbU0gKHkx+iZILf77IofhrY1nYFnB/lQPb79drWOyJVa/DAvg9B/rLB4cC+Nqgdz/TvBbBnr6GBReqn/nRmDgaQEej7WhonozjF+Y2I/fZou/qAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div></div> <p style=" margin:8px 0 0 0; padding:0 4px;"> <a href="https://instagram.com/p/7OwlBthRMJ/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;" target="_top">LINEで勉強会でした</a></p> <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">Balloonbrosさん(@balloonbros)が投稿した写真 - <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2015-09-05T01:33:08+00:00">2015 9月 4 6:33午後 PDT</time></p></div></blockquote>
-<script async defer src="//platform.instagram.com/en_US/embeds.js"></script>
-
-<p>今回、カメラマンとして参加してくれた<a href="https://twitter.com/keita_kawamoto" target="_blank" rel="noopener">@keita_kawamoto</a>氏</p>
-<blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="4" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:8px;"> <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;"> <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAAGFBMVEUiIiI9PT0eHh4gIB4hIBkcHBwcHBwcHBydr+JQAAAACHRSTlMABA4YHyQsM5jtaMwAAADfSURBVDjL7ZVBEgMhCAQBAf//42xcNbpAqakcM0ftUmFAAIBE81IqBJdS3lS6zs3bIpB9WED3YYXFPmHRfT8sgyrCP1x8uEUxLMzNWElFOYCV6mHWWwMzdPEKHlhLw7NWJqkHc4uIZphavDzA2JPzUDsBZziNae2S6owH8xPmX8G7zzgKEOPUoYHvGz1TBCxMkd3kwNVbU0gKHkx+iZILf77IofhrY1nYFnB/lQPb79drWOyJVa/DAvg9B/rLB4cC+Nqgdz/TvBbBnr6GBReqn/nRmDgaQEej7WhonozjF+Y2I/fZou/qAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div></div> <p style=" margin:8px 0 0 0; padding:0 4px;"> <a href="https://instagram.com/p/7O0VaohRCW/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;" target="_top">主催者tkengo。楽しかった！ありがとう！</a></p> <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">Balloonbrosさん(@balloonbros)が投稿した写真 - <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2015-09-05T02:05:57+00:00">2015 9月 4 7:05午後 PDT</time></p></div></blockquote>
-<script async defer src="//platform.instagram.com/en_US/embeds.js"></script>
-
-<p>主催者の<a href="https://twitter.com/tkengo/" target="_blank" rel="noopener">@tkengo</a>氏。<br>最近、<a href="http://tkengo.github.io/" target="_blank" rel="noopener">ブログ</a>をリニューアルしたとのことです。</p>
-<h2 id="Twiterまとめ"><a href="#Twiterまとめ" class="headerlink" title="Twiterまとめ"></a>Twiterまとめ</h2><p><a href="http://togetter.com/li/870605" target="_blank" rel="noopener">プログラマのための数学勉強会@福岡まとめ</a></p>
-<p>会場を提供してくださったLINE Fukuokaのみなさん、忙しい中足を運んでくださった参加者、登壇者のみなさん、主催の<a href="https://twitter.com/tkengo/" target="_blank" rel="noopener">@tkengo</a>氏、ありがとうございました！</p>
 
         </div>
       </div>

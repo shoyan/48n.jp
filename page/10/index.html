@@ -176,6 +176,89 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2017-04-14T06:11:53.000Z" itemprop="datepublished">
+            2017/04/14
+          </time>
+          <time datetime="2017-04-14T06:11:53.000Z" itemprop="modified">
+            (更新日: 2017/04/14)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2017/04/14/aminima-is-minima-with-amp/">JekyllテーマのminimaをAMP対応した</a>
+        </h1>
+        <div class="content">
+          <p>こんにちは、SHOYANです。</p>
+<p>JekyllテーマのminimaをAMP対応しました。</p>
+<ul>
+<li><a href="https://github.com/shoyan/aminima" target="_blank" rel="noopener">https://github.com/shoyan/aminima</a></li>
+</ul>
+<p>名前は AMP + Minima = AMinima です。</p>
+<p>デモサイトも用意していてこちらで確認できます。</p>
+<ul>
+<li><a href="https://shoyan.github.io/aminima/" target="_blank" rel="noopener">https://shoyan.github.io/aminima/</a></li>
+</ul>
+<h2 id="Minimaとは"><a href="#Minimaとは" class="headerlink" title="Minimaとは"></a>Minimaとは</h2><p>MinimaはJekyllのテーマです。<br>jekyll new で作成した場合にデフォルトでインストールされるテーマです。<br>URLはこちらです。</p>
+<ul>
+<li><a href="https://github.com/jekyll/minima" target="_blank" rel="noopener">https://github.com/jekyll/minima</a></li>
+</ul>
+<h2 id="どのようにAMP対応したのか"><a href="#どのようにAMP対応したのか" class="headerlink" title="どのようにAMP対応したのか"></a>どのようにAMP対応したのか</h2><p>どのようにAMP対応をしたのかを説明します。<br>わりとあっさりできました。</p>
+<p>まず、ampを宣言します。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">amp</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>そして、charsetを定義します。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>次にampランタイムをロードします。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">"https://cdn.ampproject.org/v0.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>また、AMPはcanonicalの宣言が必要なので定義します。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"canonical"</span> <span class="attr">href</span>=<span class="string">"https://shoyan.github.io/aminima/2016/05/20/welcome-to-jekyll.html"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>CSSはインラインで定義しないといけないのでインラインで定義します。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">amp-custom</span></span></span><br><span class="line"><span class="tag">  <span class="attr">h1</span> &#123;</span></span><br><span class="line"><span class="tag">    <span class="attr">color:</span> <span class="attr">red</span>;</span></span><br><span class="line"><span class="tag">  &#125;</span></span><br><span class="line">&lt;/style</span><br></pre></td></tr></table></figure>
+
+<p>次にAMP boilerplateを定義します。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;style amp-boilerplatebody&#123;-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both&#125;@-webkit-keyframes -amp-start&#123;from&#123;visibility:hidden&#125;to&#123;visibility:visible&#125;&#125;@-moz-keyframes -amp-start&#123;from&#123;visibility:hidden&#125;to&#123;visibility:visible&#125;&#125;@-ms-keyframes -amp-start&#123;from&#123;visibility:hidden&#125;to&#123;visibility:visible&#125;&#125;@-o-keyframes -amp-start&#123;from&#123;visibility:hidden&#125;to&#123;visibility:visible&#125;&#125;@keyframes -amp-start&#123;from&#123;visibility:hidden&#125;to&#123;visibility:visible&#125;&#125;&lt;/style&lt;noscript&lt;style amp-boilerplatebody&#123;-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none&#125;&lt;/style&lt;/noscript</span><br></pre></td></tr></table></figure>
+
+<p>これでAMPの基本設定はOKです。</p>
+<p>実際のコードはリポジトリを参照してみてください。</p>
+<ul>
+<li><a href="https://github.com/shoyan/aminima/blob/master/_includes/head.html" target="_blank" rel="noopener">https://github.com/shoyan/aminima/blob/master/_includes/head.html</a></li>
+</ul>
+<h3 id="amp-analyticsを使う"><a href="#amp-analyticsを使う" class="headerlink" title="amp-analyticsを使う"></a>amp-analyticsを使う</h3><p>通常のAnalyticsのタグはAMPでは動かないのでamp-analyticsを使います。<br>amp-analyticsはAMP用に用意されたコンポーネントです。</p>
+<ul>
+<li><a href="https://ampbyexample.com/components/amp-analytics/" target="_blank" rel="noopener">https://ampbyexample.com/components/amp-analytics/</a></li>
+</ul>
+<p>テーマのソースコードはこの辺りです。</p>
+<ul>
+<li><a href="https://github.com/shoyan/aminima/blob/master/_includes/google-analytics.html" target="_blank" rel="noopener">https://github.com/shoyan/aminima/blob/master/_includes/google-analytics.html</a></li>
+</ul>
+<h2 id="Aminimaのインストール方法"><a href="#Aminimaのインストール方法" class="headerlink" title="Aminimaのインストール方法"></a>Aminimaのインストール方法</h2><p>Jekyllをインストールしていない場合はjekyllをインストールしてください。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gem <span class="keyword">install</span> jekyll</span><br></pre></td></tr></table></figure>
+
+<p>ブログを作成します。</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ jekyll <span class="keyword">new</span> blog</span><br></pre></td></tr></table></figure>
+
+<p>Gemfileを編集します。</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">以下のように書き換える</span><br><span class="line"></span><br><span class="line">gem <span class="string">"minima"</span>, <span class="string">"~&gt; 2.0"</span></span><br><span class="line">↓</span><br><span class="line">gem <span class="string">"aminima"</span></span><br></pre></td></tr></table></figure>
+
+<p><code>_config.yml</code> のthemeを編集します。</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">theme:</span> aminima</span><br></pre></td></tr></table></figure>
+
+<p>bundleコマンドを実行します。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>bundle</span><br></pre></td></tr></table></figure>
+
+<p>サーバーを立ち上げます。</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ jekyll <span class="keyword">server</span></span><br></pre></td></tr></table></figure>
+
+<p>ブラウザで <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a> にアクセスすればサイトが表示されます。</p>
+<p>動かない部分や不明な点はコメント欄や<a href="https://twitter.com/sinn_shoyan" target="_blank" rel="noopener">Twitter</a>などでお気軽にご連絡ください！</p>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2017-03-06T09:28:48.000Z" itemprop="datepublished">
             2017/03/06
           </time>
@@ -354,53 +437,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>私は家庭菜園をしているが、土がよければ放っておいても野菜は育つ。<br>そういうものだから、土の水分や養分をモニタリングしてもあまり意味がない。</p>
 <p>じゃあ、何が必要かというと、目の前の農家が困っていることを解決出来る仕組みだと思う。<br>その問題を解決するにあたってどうしても物理的に制御が必要なものが出てくるはずだ。<br>IoTの技術の進化でその技術を多くの人が使えるようになってきている。<br>実際に困っていることを解決するためのものをそこらの人が作る。<br>そういうことができる時代がやってきていることに可能性を感じる。</p>
 <p>私の友人は農家をやっているが、有機農法なので除草に手間がかかっているようだ。<br>その除草の手間をIoTの技術を使って軽減できないだろうかと考える(いいアイデアはない)。<br>また配達が手間のようなので、配達の手間を省けるような仕組みを考えるといいかもしれない。<br>例えばドローンを使って郵送するとか。<br>実際やろうとしたらものすごく大変そうだけど(野菜って重いんですよね)。</p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-12-26T05:05:53.000Z" itemprop="datepublished">
-            2016/12/26
-          </time>
-          <time datetime="2016-12-26T05:05:53.000Z" itemprop="modified">
-            (更新日: 2016/12/26)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/12/26/world-gdp-in-2015/">世界で最も成長しているのは中国じゃなかったと数値が教えてくれた</a>
-        </h1>
-        <div class="content">
-          <p><a href="http://data.worldbank.org/" target="_blank" rel="noopener">THE WORLD BANK</a>という世界の様々なデータを公開しているサイトがあります(最近知りました)。<br>何気なく普段のニュースに触れていると世界で最も成長しているのは中国だという印象があります。<br>しかし、データを見るとそうでないことが明らかになります。</p>
-<p>では、国の経済成長の指標であるGDPを見ていきます。</p>
-<h2 id="2015年のGDPの伸び率トップ10"><a href="#2015年のGDPの伸び率トップ10" class="headerlink" title="2015年のGDPの伸び率トップ10"></a>2015年のGDPの伸び率トップ10</h2><ol>
-<li>アイルランド 26.3%</li>
-<li>West Bank and Gaza(ヨルダン川西岸地区) 12.4%</li>
-<li>エチオピア 9.6%</li>
-<li>パラオ 9.4%</li>
-<li>コートジボワール 9.2%</li>
-<li>ウズベキスタン 8.0%</li>
-<li>インド 7.6%</li>
-<li>ラオス 7.4%</li>
-<li>ミャンマー 7.3%</li>
-<li>ドミニカ共和国、コロンビア、 タンザニア 7.0%</li>
-</ol>
-<p>「あれ、中国がいない？」と多くの日本人は思うのではないでしょうか。<br>中国のGDPは6.9%で11位です。<br>ちなみにGDP成長率6.9%の国はコンゴやルワンダがあります。</p>
-<p>あれだけ景気の良いと言われている中国以上に成長している国があるのですね(最近は危ぶまれる声も聞きますが)。</p>
-<p>ちなみに1位のアイルランドは26.3%と尋常ではない伸び率です。<br>この要因は一体何なんでしょうか。</p>
-<p>調べてみたところ、アイルランドは法人税が安く、そのために本社を移転してくる会社が多いとのことです。</p>
-<blockquote>
-<p>アイルランドには１２・５％と低い法人税率を目当てに多国籍企業が合併・買収（Ｍ＆Ａ）などを通じて本社を移転してくるケースが多い。同国の資産は統計上かさ上げされ、先進国では異例の“高成長”につながった。</p>
-</blockquote>
-<p><a href="http://www.sankei.com/economy/news/160713/ecn1607130011-n1.html" target="_blank" rel="noopener">http://www.sankei.com/economy/news/160713/ecn1607130011-n1.html</a></p>
-<p>アイルランドに本社移転した会社の資産がアイルランドのGDPに反映され、このように異常に高い数値として出ているようで、実際の経済成長とは乖離しているというのが識者の認識のようです。</p>
-<p>我らが日本のGDP成長率はいくらかというと0.5%です。<br>マイナス成長している国も少なからずあるのでマイナスじゃないだけマシかもしれません。<br>日本の高度経済成長期のGDP成長率は8%〜12%で推移しています。</p>
-<p>ワールドカップとオリンピックで沸いたブラジルはマイナス3.8%成長で、大きくこけている感じがありますね。</p>
-<p>ちなみに地域では南アジアの成長率がすごくて7.1%でした。</p>
-<p>南アジアの国々</p>
-<p><img src="/images/south-asia-gdp.png" alt="south-asia-gdp"></p>
-<p>高度経済成長期の日本のように成長している国があるという事実に、世界は広いなと感じます。</p>
-<p>また、こういう数値を認識せずに中国が最も経済成長しているなどの誤った認識を持ってしまう事は避けたほうが良いと思いました。</p>
 
         </div>
       </div>

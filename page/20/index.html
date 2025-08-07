@@ -176,6 +176,58 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-06-27T03:25:08.000Z" itemprop="datepublished">
+            2016/06/27
+          </time>
+          <time datetime="2016-06-27T03:25:08.000Z" itemprop="modified">
+            (更新日: 2016/06/27)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/06/27/use-math-syntax-on-jekyll/">Jekyllで数式を表示する方法</a>
+        </h1>
+        <div class="content">
+          <p>Jekyllで数式を使いたい場合は、markdownにkramdownを使うのがおすすめです。<br>というのも、<code>redcarpet</code> はワンライナーの書式しか使えません。<br><code>rdiscount</code> は自分が試したところ、動作しませんでした。</p>
+<p>次にMathjax.jsを読み込みます。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>これで準備は整いました。</p>
+<p>Kramdown のドキュメントに書かれているサンプルを表示します。</p>
+<p>$$<br>\begin{align<em>}<br>  &amp; \phi(x,y) = \phi \left(\sum_{i=1}^n x_ie_i, \sum_{j=1}^n y_je_j \right)<br>  = \sum_{i=1}^n \sum_{j=1}^n x_i y_j \phi(e_i, e_j) = \<br>  &amp; (x_1, \ldots, x_n) \left( \begin{array}{ccc}<br>      \phi(e_1, e_1) &amp; \cdots &amp; \phi(e_1, e_n) \<br>      \vdots &amp; \ddots &amp; \vdots \<br>      \phi(e_n, e_1) &amp; \cdots &amp; \phi(e_n, e_n)<br>    \end{array} \right)<br>  \left( \begin{array}{c}<br>      y_1 \<br>      \vdots \<br>      y_n<br>    \end{array} \right)<br>\end{align</em>}<br>$$</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="formula">$$</span></span><br><span class="line"><span class="formula"><span class="tag">\<span class="name">begin</span><span class="string">&#123;align*&#125;</span></span></span></span><br><span class="line"><span class="formula">  &amp; <span class="tag">\<span class="name">phi</span></span>(x,y) = <span class="tag">\<span class="name">phi</span></span> <span class="tag">\<span class="name">left</span></span>(<span class="tag">\<span class="name">sum</span></span>_&#123;i=1&#125;^n x_ie_i, <span class="tag">\<span class="name">sum</span></span>_&#123;j=1&#125;^n y_je_j <span class="tag">\<span class="name">right</span></span>)</span></span><br><span class="line"><span class="formula">  = <span class="tag">\<span class="name">sum</span></span>_&#123;i=1&#125;^n <span class="tag">\<span class="name">sum</span></span>_&#123;j=1&#125;^n x_i y_j <span class="tag">\<span class="name">phi</span></span>(e_i, e_j) = <span class="tag">\<span class="name">\</span></span></span></span><br><span class="line"><span class="formula">  &amp; (x_1, <span class="tag">\<span class="name">ldots</span></span>, x_n) <span class="tag">\<span class="name">left</span></span>( <span class="tag">\<span class="name">begin</span><span class="string">&#123;array&#125;</span><span class="string">&#123;ccc&#125;</span></span></span></span><br><span class="line"><span class="formula">      <span class="tag">\<span class="name">phi</span></span>(e_1, e_1) &amp; <span class="tag">\<span class="name">cdots</span></span> &amp; <span class="tag">\<span class="name">phi</span></span>(e_1, e_n) <span class="tag">\<span class="name">\</span></span></span></span><br><span class="line"><span class="formula">      <span class="tag">\<span class="name">vdots</span></span> &amp; <span class="tag">\<span class="name">ddots</span></span> &amp; <span class="tag">\<span class="name">vdots</span></span> <span class="tag">\<span class="name">\</span></span></span></span><br><span class="line"><span class="formula">      <span class="tag">\<span class="name">phi</span></span>(e_n, e_1) &amp; <span class="tag">\<span class="name">cdots</span></span> &amp; <span class="tag">\<span class="name">phi</span></span>(e_n, e_n)</span></span><br><span class="line"><span class="formula">    <span class="tag">\<span class="name">end</span><span class="string">&#123;array&#125;</span></span> <span class="tag">\<span class="name">right</span></span>)</span></span><br><span class="line"><span class="formula">  <span class="tag">\<span class="name">left</span></span>( <span class="tag">\<span class="name">begin</span><span class="string">&#123;array&#125;</span><span class="string">&#123;c&#125;</span></span></span></span><br><span class="line"><span class="formula">      y_1 <span class="tag">\<span class="name">\</span></span></span></span><br><span class="line"><span class="formula">      <span class="tag">\<span class="name">vdots</span></span> <span class="tag">\<span class="name">\</span></span></span></span><br><span class="line"><span class="formula">      y_n</span></span><br><span class="line"><span class="formula">    <span class="tag">\<span class="name">end</span><span class="string">&#123;array&#125;</span></span> <span class="tag">\<span class="name">right</span></span>)</span></span><br><span class="line"><span class="formula"><span class="tag">\<span class="name">end</span><span class="string">&#123;align*&#125;</span></span></span></span><br><span class="line"><span class="formula">$$</span></span><br></pre></td></tr></table></figure>
+
+<p>基本的な書式は以下のようになります。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$$</span></span><br><span class="line">\<span class="keyword">begin</span>&#123;align*&#125;</span><br><span class="line"></span><br><span class="line">LaTexの数式</span><br><span class="line"></span><br><span class="line">\<span class="keyword">end</span>&#123;align*&#125;</span><br><span class="line"><span class="variable">$$</span></span><br></pre></td></tr></table></figure>
+
+<p>また<code>$$</code>を使ってワンライナーで書くことも可能です。</p>
+<p>$$ 5 + 5 $$</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span><span class="symbol">$</span> <span class="number">5</span> + <span class="number">5</span> <span class="symbol">$</span><span class="symbol">$</span></span><br></pre></td></tr></table></figure>
+
+<p>インラインにしたいときは<code>\$$</code>を使います。</p>
+<p>$$ 5 + 5 $$</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\<span class="symbol">$</span><span class="symbol">$</span> <span class="number">5</span> + <span class="number">5</span> <span class="symbol">$</span><span class="symbol">$</span></span><br></pre></td></tr></table></figure>
+
+<p>このように文字中に数式を埋め込むことができます。</p>
+<p>光は真空中を1秒間に約 $$ 3.0 × 10^8  $$メートル進む。 光速を $$ cc $$ で表す</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">光は真空中を<span class="number">1</span>秒間に約 <span class="symbol">$</span><span class="symbol">$</span> <span class="number">3.0</span> × <span class="number">10</span>^<span class="number">8</span>  <span class="symbol">$</span><span class="symbol">$</span>メートル進む。 光速を <span class="symbol">$</span><span class="symbol">$</span> cc <span class="symbol">$</span><span class="symbol">$</span> で表す</span><br></pre></td></tr></table></figure>
+
+<p>表記の確認には<a href="http://gyafun.jp/ln/MathJax.html" target="_blank" rel="noopener">MathJax checker</a> を使うと便利です。<br>LaTeX 書式の数式をリアルタイムで確認することができます。</p>
+<p>LaTexの書式に関しては以下を参考にしてください。</p>
+<p><a href="http://www.onemathematicalcat.org/MathJaxDocumentation/TeXSyntax.htm" target="_blank" rel="noopener">http://www.onemathematicalcat.org/MathJaxDocumentation/TeXSyntax.htm</a></p>
+<p>参考リンク</p>
+<ul>
+<li><a href="http://kramdown.gettalong.org/syntax.html#math-blocks" target="_blank" rel="noopener">Syntax kramdown</a></li>
+<li><a href="http://jekyllrb.com/docs/extras/" target="_blank" rel="noopener">Extras - Jekyll • Simple, blog-aware, static sites</a></li>
+<li><a href="http://sekika.github.io/2015/10/10/equation-on-jekyll/" target="_blank" rel="noopener">Jekyll 上での数式の表示</a></li>
+<li><a href="http://www.ic.daito.ac.jp/~mizutani/html/mathexpress.html" target="_blank" rel="noopener">Webの数式表現</a></li>
+</ul>
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-06-23T08:14:34.000Z" itemprop="datepublished">
             2016/06/23
           </time>
@@ -405,102 +457,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">⇒  <span class="selector-tag">nkf</span> <span class="selector-tag">-g</span> <span class="selector-tag">hoge</span><span class="selector-class">.csv</span></span><br><span class="line"><span class="selector-tag">Shift_JIS</span></span><br></pre></td></tr></table></figure>
 
 <p>Shift_JISで作成されていることが確認できました。</p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-06-17T06:21:34.000Z" itemprop="datepublished">
-            2016/06/17
-          </time>
-          <time datetime="2016-06-17T06:21:34.000Z" itemprop="modified">
-            (更新日: 2016/06/17)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/06/17/learn-ftp/">FTPについて調べてみた</a>
-        </h1>
-        <div class="content">
-          <p>FTPはすでにご存知のかたも多いと思います。<br>自分はFTPについて、「ファイル転送に使われるプロトコルであり、セキュリティが脆弱である」というくらいしか理解していなかったので詳細を把握するために調べました。</p>
-<h2 id="FTPとは"><a href="#FTPとは" class="headerlink" title="FTPとは"></a>FTPとは</h2><p>FTPとはインターネットの初期の頃から存在するプロトコルで、今でもインターネットでよく使われています。<br>用途としては、以下に使われます。</p>
-<ul>
-<li>ウェブページの各種ファイル(HTMLや画像)をクライアントのPCからサーバーへアップロードする</li>
-<li>ソフトウェアの配布サイトやFTPファイルサーバーからクライアントPCへダウンロードする</li>
-</ul>
-<p>FTPを利用するにはユーザー名とパスワードが必要です。<br>ソフトを配布するための目的で使う匿名でアクセスできるAnonymous(匿名)FTPサーバーもあります。<br>しかし、形式上ユーザー名とパスワードは必要なので、ユーザー名にanonymousやftpを使います。パスワードは何でもよいですが、慣習としてメールアドレスを入力するようです。</p>
-<h2 id="プロトコルの概要"><a href="#プロトコルの概要" class="headerlink" title="プロトコルの概要"></a>プロトコルの概要</h2><p>FTPのプロトコルは<a href="https://tools.ietf.org/html/rfc959" target="_blank" rel="noopener">RFC959</a>に定義してあります。<br>RFC959が書かれたのが1985年なのでおよそ30年前に作られたプロトコルです。</p>
-<p>FTPは大きくわけると、コネクションの確立とデータ転送にわけることができます。<br>そして、使うポートも2つが用意してあります。</p>
-<ul>
-<li>20: データ転送ポート</li>
-<li>21: コントロールポート</li>
-</ul>
-<p>20番がデータを転送するときに使うポートで、21番は認証などの接続に使うためのポートです。</p>
-<h3 id="コネクションの確立"><a href="#コネクションの確立" class="headerlink" title="コネクションの確立"></a>コネクションの確立</h3><p>FTPは <code>アクティブモード</code> か <code>パッシブモード</code> のいずれかで動作し、サーバーとの接続をする際にどちらかを選択します。</p>
-<h3 id="アクティブモードの場合"><a href="#アクティブモードの場合" class="headerlink" title="アクティブモードの場合"></a>アクティブモードの場合</h3><p>アクティブモードの場合、クライアントはデータ転送用のポートを用意しPORTコマンドを使って待ち受けポートをサーバーに伝えます。<br>サーバーはPORTコマンドを受け取ると、そのポートに対して接続を行います。<br>しかし、Firewallがある環境の場合、サーバーからの接続が拒否されうまくいかない場合があります。<br>その際はパッシブモードを使います。</p>
-<h3 id="パッシブモード"><a href="#パッシブモード" class="headerlink" title="パッシブモード"></a>パッシブモード</h3><p>パッシブモードでは、まず最初にクライアントがPASVというコマンドを使いサーバーに送信します。<br>そのコマンドを受け取ったサーバーは自身のIPアドレスとポート番号をクライアントに送信します。<br>クライアントは受け取ったIPアドレスとポート番号へコネクションを確立しにいきます。  </p>
-<p>アクティブモードはサーバーより接続を行う、パッシブモードはクライアントより接続を行うという違いがあります。<br>ちなみに、FTPはよく使われるプロトコルのため、PORTコマンドがFirewallを通過する際にPORTコマンドに書かれたPORTは通過できるようにしてくれるFirewallもあるとのことです。</p>
-<h2 id="データ転送"><a href="#データ転送" class="headerlink" title="データ転送"></a>データ転送</h2><p>接続ができたら、次はデータ転送を行います。<br>FTPにはデータタイプという考え方があって、現在は2つのモードが使われています。</p>
-<h3 id="アスキーモード"><a href="#アスキーモード" class="headerlink" title="アスキーモード"></a>アスキーモード</h3><p>アスキーモードは、必要であればデータを変換します。<br>例えば異なるOS間でファイルを送ると改行コードが違ったりする場合があると思いますが、アスキーモードはファイルを受け取るホストに適した改行コードにファイルを変換します。</p>
-<h3 id="Imageモード-バイナリモード"><a href="#Imageモード-バイナリモード" class="headerlink" title="Imageモード(バイナリモード)"></a>Imageモード(バイナリモード)</h3><p>Imageモードは一般的にバイナリモードと呼ばれます。<br>バイト単位でデータを転送します。<br>アスキーモードのようにデータの変換は行われません。</p>
-<p>データの転送モードには、以下の3つのモードがあります。</p>
-<ul>
-<li>ストリームモード</li>
-<li>ブロックモード</li>
-<li>圧縮モード</li>
-</ul>
-<h3 id="ストリームモード"><a href="#ストリームモード" class="headerlink" title="ストリームモード"></a>ストリームモード</h3><p>データをそのまま転送するモードです。</p>
-<h3 id="ブロックモード"><a href="#ブロックモード" class="headerlink" title="ブロックモード"></a>ブロックモード</h3><p>データをブロックに分割して転送するモードです。</p>
-<h3 id="圧縮モード"><a href="#圧縮モード" class="headerlink" title="圧縮モード"></a>圧縮モード</h3><p>ランレングスエンコーディングを使ってデータを圧縮して転送するモードです。</p>
-<h2 id="セキュリティ上の問題"><a href="#セキュリティ上の問題" class="headerlink" title="セキュリティ上の問題"></a>セキュリティ上の問題</h2><p>FTPはセキュアなプロトコルとして設計されていません。<br>ユーザー名やパスワードを暗号化せずに送信する問題のほかにも数多くのセキュリティ脆弱性があげられています。</p>
-<ul>
-<li>総当たり攻撃</li>
-<li>en:FTP bounce attack</li>
-<li>パケットキャプチャ (sniffing)</li>
-<li>Port stealing</li>
-<li>en:Spoofing attack</li>
-<li>ユーザ名保護</li>
-</ul>
-<p>また、通信内容を暗号化できないので通信経路上でパケットキャプチャすることで盗聴することができてしまいます。<br>セキュアにする一般的な方法として、SSL/TLSセッション上で通信を行うようにします。<br>これをFTPSと言います。<br>また、SSHを介してファイル転送を行うSFTP、SCPを使います。  </p>
-<p>ちなみにFTPSとSFTPの違いは以下のようになります。</p>
-<ul>
-<li>FTPS : FTPの通信をSSL/TLSで暗号化 → FTPの拡張</li>
-<li>SFTP : SSHの通信を使って、FTPを行う → SSHで動作するアプリケーション</li>
-</ul>
-<p>理解を深めるためにtelnetを使って実際にFTPサーバーと通信してみます。  </p>
-<h2 id="実際にFTPを試してみる"><a href="#実際にFTPを試してみる" class="headerlink" title="実際にFTPを試してみる"></a>実際にFTPを試してみる</h2><p>実際にFTPを試してみる場合、FTPサーバーが必要です。<br><a href="https://lolipop.jp" target="_blank" rel="noopener">ロリポップ！レンタルサーバー</a>を使えば無料でFTPサーバーが利用できます。</p>
-<p>ちなみにtelnetでファイルの送受信はできません。<br>というのも、telnetでは1つのポートを使った通信しかサポートしていないからです。<br>FTPはデータ転送用のポートと制御用のポートの2つを利用するため、telnetでは認証しか行えません。  </p>
-<p>まずは、telnetで認証をやってみます(localhostにftpサーバーが起動しているという前提です)。  </p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ telnet localhost 21</span><br><span class="line">Trying 127.0.0.1<span class="built_in">..</span>.</span><br><span class="line">Connected <span class="keyword">to</span> localhost.</span><br><span class="line">Escape character is <span class="string">'^]'</span>.</span><br><span class="line">220 FTP<span class="built_in"> server </span>ready.</span><br></pre></td></tr></table></figure>
-
-<p>まず、ユーザ名を入力します。</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">USER</span> <span class="title">ftp</span></span><br><span class="line"><span class="number">331</span> Password required for example.com</span><br></pre></td></tr></table></figure>
-
-<p>次に、パスワードを入力します。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PASS 123</span><br><span class="line">230<span class="built_in"> User </span>example.com logged <span class="keyword">in</span>.</span><br></pre></td></tr></table></figure>
-
-<p>telnetでは他に何もできませんのでQUITします。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">QUIT</span><br><span class="line">221 Goodbye.</span><br><span class="line">Connection closed by foreign host.</span><br></pre></td></tr></table></figure>
-
-<h3 id="FTPでファイルの送受信を行う"><a href="#FTPでファイルの送受信を行う" class="headerlink" title="FTPでファイルの送受信を行う"></a>FTPでファイルの送受信を行う</h3><p>FTPでファイルの送受信を行うには、ftpコマンドを使います。<br><code>-d</code> オプションはデバッグモードです。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ftp -d localhost <span class="number">21</span></span><br></pre></td></tr></table></figure>
-
-<p>ユーザー名とパスワードを聞かれるので入力します。</p>
-<p><code>ls</code>でファイルの一覧をみることができます。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ftp&gt; ls</span><br><span class="line">---&gt; EPSV</span><br><span class="line"><span class="number">229</span> Entering Extended Passive Mode (|||<span class="number">65086</span>|)</span><br><span class="line"><span class="number">229</span> Entering Extended Passive Mode (|||<span class="number">65086</span>|)</span><br><span class="line">---&gt; LIST</span><br><span class="line"><span class="number">150</span> Opening ASCII mode data connection <span class="keyword">for</span> file list</span><br><span class="line">drwx---r-x   <span class="number">6</span> shoyan shoyan      <span class="number">4096</span> Jun <span class="number">17</span> <span class="number">11</span>:<span class="number">31</span> .</span><br><span class="line">drwx---r-x   <span class="number">6</span> shoyan shoyan     <span class="number">4096</span> Jun <span class="number">17</span> <span class="number">11</span>:<span class="number">31</span> ..</span><br><span class="line">-rw-r--r--   <span class="number">1</span> shoyan shoyan     <span class="number">3096</span> Jun <span class="number">17</span> <span class="number">11</span>:<span class="number">30</span> index.html</span><br><span class="line"><span class="number">226</span> Transfer complete</span><br></pre></td></tr></table></figure>
-
-<p><code>get</code>コマンドでファイルをダウンロードできます。</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">ftp&gt; get index.html</span><br><span class="line">local: index.html remote: index.html</span><br><span class="line">---&gt; SIZE index.html</span><br><span class="line">213 3096</span><br><span class="line">---&gt; EPSV</span><br><span class="line">229 Entering Extended Passive Mode (|||65011|)</span><br><span class="line">229 Entering Extended Passive Mode (|||65011|)</span><br><span class="line">---&gt; RETR index.html</span><br><span class="line">150 Opening BINARY mode data connection for index.html (3096 bytes)</span><br><span class="line">100% |<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span>**|  3096        4.61 MiB/s    00:00 ETA</span><br><span class="line">226 Transfer complete</span><br><span class="line">3096 bytes received in 00:00 (163.72 KiB/s)</span><br><span class="line">---&gt; MDTM index.html</span><br><span class="line">213 20160617023028</span><br><span class="line">parsed date `20160617023028' as 1466130628, Fri, 17 Jun 2016 11:30:28</span><br></pre></td></tr></table></figure>
-
-<p>参考リンク</p>
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/File_Transfer_Protocol" target="_blank" rel="noopener">File Transfer Protocol</a></li>
-<li><a href="https://ja.wikipedia.org/wiki/File_Transfer_Protocol" target="_blank" rel="noopener">File Transfer Protocol(日本語)</a></li>
-<li><a href="http://www5e.biglobe.ne.jp/%257eaji/3min/56.html" target="_blank" rel="noopener">3 Minutes Networking No.56</a></li>
-<li><a href="http://ash.jp/net/ftp_command.htm" target="_blank" rel="noopener">telnetでファイル転送？(FTP)</a></li>
-<li><a href="http://ash.jp/net/telnet_ftp.htm" target="_blank" rel="noopener">FTPコマンドでファイル転送</a></li>
-<li><a href="http://qiita.com/kasei-san/items/bf766e6c2ececa4c3905" target="_blank" rel="noopener">FTPS、SFTPの違いって?</a></li>
-</ul>
 
         </div>
       </div>

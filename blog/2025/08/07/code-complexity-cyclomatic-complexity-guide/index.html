@@ -1,0 +1,468 @@
+
+  <!DOCTYPE html>
+  <html lang="ja">
+
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-37267422-8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-37267422-8');
+</script>
+
+      <meta charset="UTF-8">
+      <title>
+        コードの複雑度を測る：循環的複雑度（Cyclomatic Complexity）の計算方法と実践ガイド - SHOYAN BLOG
+      </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+      
+        <!-- stylesheets list from _config.yml -->
+        
+          <link rel="stylesheet" href="/css/shoyanblog.css">
+          
+            
+              
+                <meta name="description" content="コードの複雑度を定量的に測る方法として、循環的複雑度（Cyclomatic Complexity）について詳しく解説します。計算方法、実践的な測定ツール、複雑度を下げる方法まで網羅的に紹介します。">
+                
+                  
+                      
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@sinn_shoyan" />
+<meta name="twitter:creator" content="@sinn_shoyan" />
+<meta name="og:title" content="コードの複雑度を測る：循環的複雑度（Cyclomatic Complexity）の計算方法と実践ガイド - SHOYAN BLOG" />
+
+  <meta name="og:description" content="コードの複雑度を定量的に測る方法として、循環的複雑度（Cyclomatic Complexity）について詳しく解説します。計算方法、実践的な測定ツール、複雑度を下げる方法まで網羅的に紹介します。" />
+
+
+  <meta name="og:image" content="https://48n.jp/images/logo.png" />
+
+
+                        <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KQX8LKG');</script>
+<!-- End Google Tag Manager -->
+
+                        
+                        <!-- JSON-LD Structured Data -->
+                        <script type="application/ld+json">
+                        {
+                          "@context": "https://schema.org",
+                          "@type": "BlogPosting",
+                          "headline": "コードの複雑度を測る：循環的複雑度（Cyclomatic Complexity）の計算方法と実践ガイド - SHOYAN BLOG",
+                          "author": {
+                            "@type": "Person",
+                            "name": "Shohei Yamasaki",
+                            "url": "https://48n.jp/about/"
+                          },
+                          "publisher": {
+                            "@type": "Organization",
+                            "name": "SHOYAN BLOG",
+                            "url": "https://48n.jp"
+                          },
+                          "datePublished": "Thu Aug 07 2025 10:00:00 GMT+0900",
+                          "dateModified": "Wed Aug 07 2024 10:00:00 GMT+0900",
+                          "description": "コードの複雑度を定量的に測る方法として、循環的複雑度（Cyclomatic Complexity）について詳しく解説します。計算方法、実践的な測定ツール、複雑度を下げる方法まで網羅的に紹介します。",
+                          "mainEntityOfPage": {
+                            "@type": "WebPage",
+                            "@id": "https://48n.jp/blog/2025/08/07/code-complexity-cyclomatic-complexity-guide/"
+                          }
+                        }
+                        </script>
+  <meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
+</head>
+
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KQX8LKG"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+      <div id="menu-outer">
+        <header id="header">
+  <div id="header-outer" class="outer mb-2">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SHOYAN BLOG</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        <a class="nav-link" href="https://twitter.com/sinn_shoyan" target="_blank">
+          <?xml version="1.0" encoding="utf-8"?>
+          <!-- Generator: Adobe Illustrator 20.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+          <svg
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            x="0px"
+            y="0px"
+            viewBox="0 0 400 400"
+            style="enable-background:new 0 0 400 400;"
+            xml:space="preserve"
+            width="25"
+            height="25"
+          >
+            <style type="text/css">
+              .st0 {
+                fill: #1da1f2;
+              }
+              .st1 {
+                fill: #ffffff;
+              }
+            </style>
+            <g id="Dark_Blue">
+              <path
+                class="st0"
+                d="M350,400H50c-27.6,0-50-22.4-50-50V50C0,22.4,22.4,0,50,0h300c27.6,0,50,22.4,50,50v300
+		C400,377.6,377.6,400,350,400z"
+              />
+            </g>
+            <g id="Logo__x2014__FIXED">
+              <path
+                class="st1"
+                d="M153.6,301.6c94.3,0,145.9-78.2,145.9-145.9c0-2.2,0-4.4-0.1-6.6c10-7.2,18.7-16.3,25.6-26.6
+		c-9.2,4.1-19.1,6.8-29.5,8.1c10.6-6.3,18.7-16.4,22.6-28.4c-9.9,5.9-20.9,10.1-32.6,12.4c-9.4-10-22.7-16.2-37.4-16.2
+		c-28.3,0-51.3,23-51.3,51.3c0,4,0.5,7.9,1.3,11.7c-42.6-2.1-80.4-22.6-105.7-53.6c-4.4,7.6-6.9,16.4-6.9,25.8
+		c0,17.8,9.1,33.5,22.8,42.7c-8.4-0.3-16.3-2.6-23.2-6.4c0,0.2,0,0.4,0,0.7c0,24.8,17.7,45.6,41.1,50.3c-4.3,1.2-8.8,1.8-13.5,1.8
+		c-3.3,0-6.5-0.3-9.6-0.9c6.5,20.4,25.5,35.2,47.9,35.6c-17.6,13.8-39.7,22-63.7,22c-4.1,0-8.2-0.2-12.2-0.7
+		C97.7,293.1,124.7,301.6,153.6,301.6"
+              />
+            </g>
+          </svg>
+        </a>
+        
+        <a class="nav-link" href="/atom.xml" title="RSSフィード">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25" viewBox="0 0 100 100">
+            <path
+              class="social"
+              d="M 13.310204,73.332654 C 5.967347,73.332654 0,79.322448 0,86.621428 c 0,7.338776 5.967347,13.262246 13.310204,13.262246 7.370408,0 13.328572,-5.92245 13.328572,-13.262246 0,-7.29898 -5.958164,-13.288774 -13.328572,-13.288774 z M 0.01530612,33.978572 V 53.143878 C 12.493878,53.143878 24.229592,58.02347 33.068368,66.865306 41.894898,75.685714 46.767346,87.47449 46.767346,100 h 19.25 C 66.017346,63.592858 36.4,33.979592 0.01530612,33.978572 l 0,0 z M 0.03877552,0 V 19.17449 C 44.54796,19.17551 80.77551,55.437756 80.77551,100 H 100 C 100,44.87653 55.15102,0 0.03877552,0 z"
+            ></path>
+          </svg>
+        </a>
+         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="https://48n.jp"></form>
+      </nav>
+
+      <nav id="main-nav">
+        
+        <a class="main-nav-link" href="/">Home</a>
+        
+        <a class="main-nav-link" href="/lang/php/">PHP入門</a>
+        
+        <a class="main-nav-link" href="/lesson">プログラミングレッスン</a>
+        
+        <a class="main-nav-link" href="/archives">記事一覧</a>
+        
+        <a class="main-nav-link" href="/about">このページについて</a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+      </div>
+
+      <div id="content-outer">
+        <div id="content-inner">
+          
+<article id="post">
+  <div class="date-box">
+    <time datetime="2025-08-07T01:00:00.000Z" itemprop="datepublished">
+      2025/08/07
+    </time>
+    <time datetime="2024-08-07T01:00:00.000Z" itemprop="modified">
+      (更新日: 2024/08/07)
+    </time>
+  </div>
+  <h1>コードの複雑度を測る：循環的複雑度（Cyclomatic Complexity）の計算方法と実践ガイド</h1>
+  <div class="post-tags">
+    <a class="post-tags-link" href="/tags/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0-%E3%82%B3%E3%83%BC%E3%83%89%E5%93%81%E8%B3%AA-%E8%A4%87%E9%9B%91%E5%BA%A6/" rel="tag">プログラミング コード品質 複雑度</a>
+  </div>
+  <div class="sharing">
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" target="_blank" rel="noopener" class="twitter-share-button" data-via="sinn_shoyan" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <a href="https://b.hatena.ne.jp/entry/" target="_blank" rel="noopener" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+</div>
+  <p>コードの品質を測る指標として「複雑度」がありますが、特に<strong>循環的複雑度（Cyclomatic Complexity）</strong>は、コードの保守性やバグの発生リスクを定量的に評価できる重要な指標です。</p>
+<p>この記事では、循環的複雑度の計算方法から実践的な測定方法まで、詳しく解説していきます。</p>
+<h2 id="循環的複雑度（Cyclomatic-Complexity）とは"><a href="#循環的複雑度（Cyclomatic-Complexity）とは" class="headerlink" title="循環的複雑度（Cyclomatic Complexity）とは"></a>循環的複雑度（Cyclomatic Complexity）とは</h2><p>循環的複雑度は、プログラムの制御フローの分岐の数から算出される複雑度の指標です。この値が高いほど、コードは複雑で理解しにくく、バグが発生しやすくなります。</p>
+<h3 id="基本計算式"><a href="#基本計算式" class="headerlink" title="基本計算式"></a>基本計算式</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">M</span> = E - N + <span class="number">2</span>P</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>M</strong>: 循環的複雑度</li>
+<li><strong>E</strong>: 制御フローグラフの辺の数（edge）</li>
+<li><strong>N</strong>: 制御フローグラフのノード数（node）</li>
+<li><strong>P</strong>: 連結成分の数（通常は1で計算する）</li>
+</ul>
+<h3 id="簡易計算方法（現場でよく使われる）"><a href="#簡易計算方法（現場でよく使われる）" class="headerlink" title="簡易計算方法（現場でよく使われる）"></a>簡易計算方法（現場でよく使われる）</h3><p>実際の開発現場では、以下の簡易計算方法がよく使われます。</p>
+<ol>
+<li><code>if</code>、<code>for</code>、<code>while</code>、<code>case</code>、<code>catch</code> などの分岐やループの数を数える</li>
+<li>その数に <strong>1</strong> を足す</li>
+</ol>
+<h2 id="計算例で理解する循環的複雑度"><a href="#計算例で理解する循環的複雑度" class="headerlink" title="計算例で理解する循環的複雑度"></a>計算例で理解する循環的複雑度</h2><h3 id="例1：シンプルな関数"><a href="#例1：シンプルな関数" class="headerlink" title="例1：シンプルな関数"></a>例1：シンプルな関数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">example</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (x &gt; <span class="number">0</span>) &#123;           <span class="comment">// 分岐 1</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"A"</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (x === <span class="number">0</span>) &#123;  <span class="comment">// 分岐 2</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"B"</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"C"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;  <span class="comment">// 分岐 3</span></span><br><span class="line">    <span class="built_in">console</span>.log(i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>分岐・ループの数：3</li>
+<li>複雑度：3 + 1 = <strong>4</strong></li>
+</ul>
+<p>上記の例のように分岐を繰り返しを数えて+1をすれば概算で計算することができます。</p>
+<h3 id="例2：制御フローグラフを使った詳細計算"><a href="#例2：制御フローグラフを使った詳細計算" class="headerlink" title="例2：制御フローグラフを使った詳細計算"></a>例2：制御フローグラフを使った詳細計算</h3><p>次は <code>M = E - N + 2P</code> を使った計算方法を見ていきましょう。</p>
+<h4 id="シンプルな関数の場合"><a href="#シンプルな関数の場合" class="headerlink" title="シンプルな関数の場合"></a>シンプルな関数の場合</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">helper</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"do something"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>制御フローグラフ：</strong></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-attr">[Start]</span> → <span class="selector-attr">[print]</span> → <span class="selector-attr">[End]</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>計算：</strong></p>
+<ul>
+<li>N（ノード数）= 3（Start, print, End）</li>
+<li>E（辺の数）= 2（Start→print, print→End）</li>
+<li>P（連結成分数）= 1</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">M = E - N + <span class="number">2</span>P</span><br><span class="line">M = <span class="number">2</span> - <span class="number">3</span> + <span class="number">2</span>*<span class="number">1</span></span><br><span class="line">M = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>結果：<strong>複雑度 = 1</strong>（最低値、まったく複雑ではない関数）</p>
+<h4 id="分岐を追加した場合"><a href="#分岐を追加した場合" class="headerlink" title="分岐を追加した場合"></a>分岐を追加した場合</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">helper</span>(<span class="params">flag</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"do something"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>制御フローグラフ：</strong></p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-attr">[Start]</span> → (flag?) ─<span class="selector-tag">Yes</span>→ <span class="selector-attr">[print]</span> → <span class="selector-attr">[End]</span></span><br><span class="line">               └─<span class="selector-tag">No</span>──────────────→ <span class="selector-attr">[End]</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>計算：</strong></p>
+<ul>
+<li>N（ノード数）= 4（Start, 条件判定, print, End）</li>
+<li>E（辺の数）= 4（Start→条件判定, 条件判定→print, 条件判定→End, print→End）</li>
+<li>P（連結成分数）= 1</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">M = E - N + <span class="number">2</span>P</span><br><span class="line">M = <span class="number">4</span> - <span class="number">4</span> + <span class="number">2</span>*<span class="number">1</span></span><br><span class="line">M = <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>結果：<strong>複雑度 = 2</strong>（分岐を1つ追加しただけで、複雑度は 1 → 2 に増加）</p>
+<h3 id="例3：ネストした条件分岐"><a href="#例3：ネストした条件分岐" class="headerlink" title="例3：ネストした条件分岐"></a>例3：ネストした条件分岐</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">helper</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (a &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (b &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">"A and B are positive"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>制御フローグラフ：</strong></p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[Start] </span><br><span class="line">   |<span class="type"></span></span><br><span class="line"><span class="type">(a</span> &gt; <span class="number">0</span>?) ----No----&gt; [<span class="keyword">End</span>]</span><br><span class="line">   |<span class="type"></span></span><br><span class="line"><span class="type">  Yes</span></span><br><span class="line">   |<span class="type"></span></span><br><span class="line"><span class="type">(b</span> &gt; <span class="number">0</span>?) ----No----&gt; [<span class="keyword">End</span>]</span><br><span class="line">   |<span class="type"></span></span><br><span class="line"><span class="type">  Yes</span></span><br><span class="line">   |<span class="type"></span></span><br><span class="line"><span class="type">[print</span>] → [<span class="keyword">End</span>]</span><br></pre></td></tr></table></figure>
+
+<p><strong>計算：</strong></p>
+<ul>
+<li>N（ノード数）= 5（Start, 条件判定1, 条件判定2, print, End）</li>
+<li>E（辺の数）= 6（Start→条件判定1, 条件判定1→End, 条件判定1→条件判定2, 条件判定2→End, 条件判定2→print, print→End）</li>
+<li>P（連結成分数）= 1</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">M = E - N + <span class="number">2</span>P</span><br><span class="line">M = <span class="number">6</span> - <span class="number">5</span> + <span class="number">2</span>*<span class="number">1</span></span><br><span class="line">M = <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<p>結果：<strong>複雑度 = 3</strong></p>
+<h3 id="重要なポイント"><a href="#重要なポイント" class="headerlink" title="重要なポイント"></a>重要なポイント</h3><ul>
+<li>循環的複雑度は「ネストの深さ」ではなく「分岐の総数」で増える</li>
+<li>ただし、ネストが深いと認知的複雑度（Cognitive Complexity）はもっと増える</li>
+<li>人間はネスト構造を理解するのが苦手なので、Cognitive Complexity では深さもペナルティになる</li>
+</ul>
+<h2 id="複雑度の目安"><a href="#複雑度の目安" class="headerlink" title="複雑度の目安"></a>複雑度の目安</h2><table>
+<thead>
+<tr>
+<th>複雑度</th>
+<th>意味</th>
+<th>対応</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1〜10</td>
+<td>シンプル、理解しやすい</td>
+<td>問題なし</td>
+</tr>
+<tr>
+<td>11〜20</td>
+<td>複雑、リファクタリングを検討</td>
+<td>リファクタリング推奨</td>
+</tr>
+<tr>
+<td>21〜50</td>
+<td>非常に複雑、バグの温床</td>
+<td>分割必須</td>
+</tr>
+<tr>
+<td>50+</td>
+<td>ほぼ地獄</td>
+<td>分割必須</td>
+</tr>
+</tbody></table>
+<h2 id="関数呼び出しと複雑度の関係"><a href="#関数呼び出しと複雑度の関係" class="headerlink" title="関数呼び出しと複雑度の関係"></a>関数呼び出しと複雑度の関係</h2><p>循環的複雑度の計算は、原則として「関数ごとに独立して」計測するのが基本です。</p>
+<h3 id="基本ルール"><a href="#基本ルール" class="headerlink" title="基本ルール"></a>基本ルール</h3><ul>
+<li>呼び出している関数の中身はカウントに含めない</li>
+<li>関数呼び出しは、それ自体は「分岐」でも「ループ」でもないので複雑度には直接影響しない</li>
+<li>複雑度に影響するのは、その関数呼び出しが条件式の一部やループの制御として使われている場合</li>
+</ul>
+<h3 id="例1：単純な呼び出し（複雑度に影響なし）"><a href="#例1：単純な呼び出し（複雑度に影響なし）" class="headerlink" title="例1：単純な呼び出し（複雑度に影響なし）"></a>例1：単純な呼び出し（複雑度に影響なし）</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">helper</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"do something"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  helper();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>main</code> の中には分岐もループもなし</li>
+<li><code>main</code> の複雑度 = 1（最低値）</li>
+<li><code>helper</code> は別に計算（=1）</li>
+</ul>
+<h3 id="例2：条件式の中で呼び出し（影響あり）"><a href="#例2：条件式の中で呼び出し（影響あり）" class="headerlink" title="例2：条件式の中で呼び出し（影響あり）"></a>例2：条件式の中で呼び出し（影響あり）</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isValid</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x &gt; <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (isValid(x)) &#123;   <span class="comment">// 分岐1</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"ok"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>isValid()</code> の中身はカウントしないが、<code>if</code> の分岐1つとして <code>main</code> の複雑度に加算される</li>
+<li>複雑度：<ul>
+<li><code>main</code> =  1（if）+ 1 = <strong>2</strong></li>
+<li><code>isValid</code> = 1</li>
+</ul>
+</li>
+</ul>
+<h2 id="複雑度を下げる方法"><a href="#複雑度を下げる方法" class="headerlink" title="複雑度を下げる方法"></a>複雑度を下げる方法</h2><h3 id="1-関数の分割"><a href="#1-関数の分割" class="headerlink" title="1. 関数の分割"></a>1. 関数の分割</h3><p>シンプルに関数を分割することで１つ１つの関数の複雑度は下がります。</p>
+<p><strong>Before（複雑度 = 8）</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">complexFunction</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (data.type === <span class="string">'A'</span>) &#123;</span><br><span class="line">    <span class="comment">// 処理A</span></span><br><span class="line">    <span class="keyword">if</span> (data.value &gt; <span class="number">10</span>) &#123;</span><br><span class="line">      <span class="comment">// 処理A-1</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 処理A-2</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (data.type === <span class="string">'B'</span>) &#123;</span><br><span class="line">    <span class="comment">// 処理B</span></span><br><span class="line">    <span class="keyword">if</span> (data.value &gt; <span class="number">20</span>) &#123;</span><br><span class="line">      <span class="comment">// 処理B-1</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 処理B-2</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>After（複雑度 = 2）</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">processTypeA</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (data.value &gt; <span class="number">10</span>) &#123;</span><br><span class="line">    <span class="comment">// 処理A-1</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 処理A-2</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">processTypeB</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (data.value &gt; <span class="number">20</span>) &#123;</span><br><span class="line">    <span class="comment">// 処理B-1</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 処理B-2</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">complexFunction</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (data.type === <span class="string">'A'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> processTypeA(data);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (data.type === <span class="string">'B'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> processTypeB(data);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-ポリモーフィズムの活用"><a href="#2-ポリモーフィズムの活用" class="headerlink" title="2. ポリモーフィズムの活用"></a>2. ポリモーフィズムの活用</h3><p>ポリモーフィズムを使うことで、分岐がなくなります。それにより、複雑度が下がります。<br><strong>Before（複雑度 = 6）</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">processPayment</span>(<span class="params">payment</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (payment.type === <span class="string">'credit'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> processCreditCard(payment);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (payment.type === <span class="string">'debit'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> processDebitCard(payment);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (payment.type === <span class="string">'bank'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> processBankTransfer(payment);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>After（複雑度 = 1）：</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> paymentProcessors = &#123;</span><br><span class="line">  credit: processCreditCard,</span><br><span class="line">  debit: processDebitCard,</span><br><span class="line">  bank: processBankTransfer</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">processPayment</span>(<span class="params">payment</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> processor = paymentProcessors[payment.type];</span><br><span class="line">  <span class="keyword">return</span> processor ? processor(payment) : <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Unknown payment type'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="測定ツール"><a href="#測定ツール" class="headerlink" title="測定ツール"></a>測定ツール</h2><p>ここでは、循環的複雑度の計算方法について説明してきました。<br>実際の関数は複雑であり、手計算は現実的ではありません。各言語でツールが開発されており、そのツールを利用するのがよいです。</p>
+<ul>
+<li><strong>JavaScript/TypeScript</strong>: ESLint</li>
+<li><strong>Python</strong>: radon</li>
+<li><strong>Java</strong>: SonarQube / PMD</li>
+<li><strong>Go</strong>: gocyclo</li>
+</ul>
+<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>循環的複雑度は、コードの品質を数値で測れる指標です。<strong>チーム開発では「このコードは複雑すぎる」という主観的な意見ではなく、「複雑度が15だからリファクタリングが必要」と客観的に判断できます</strong>。複雑度の計算方法を理解すれば、コードレビューでも「なぜこの関数は複雑なのか」を論理的に説明できるようになり、より建設的な議論ができるようになります。</p>
+
+</article>
+
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2025/08/06/http-proxy-protocol-guide/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">HTTP中継（プロキシ）のプロトコル詳細解説</div>
+    </a>
+  
+</nav>
+
+
+
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2025/08/07/code-complexity-cyclomatic-complexity-guide/">コードの複雑度を測る：循環的複雑度（Cyclomatic Complexity）の計算方法と実践ガイド</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2025/08/06/http-proxy-protocol-guide/">HTTP中継（プロキシ）のプロトコル詳細解説</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2025/07/31/graphql-file-upload-guide/">GraphQLガイド - ファイルアップロード</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2025/07/31/graphql-protocol-guide/">GraphQLガイド - GraphQLのプロトコルと特徴</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2025/07/02/git-japanese-filename-encoding-fix/">Gitで日本語ファイル名が正しく表示されない問題の解決方法</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+            
+    <div class="ltech-ad" id="ltech-ad">
+        <button class="ltech-ad-close" id="ltech-ad-close" aria-label="広告を閉じる">×</button>
+        <a href="https://learning-tech.jp/" target="_blank" rel="noopener">
+            <img src="https://learning-tech.jp/assets/images/lts-logo.png" alt="LTech - プログラミング学習サイト" width="300">
+            <p>LTech - プログラミング学習ならここで学ぼう</p>
+        </a>
+    </div>
+
+    <style>
+        .ltech-ad-close {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            font-size: 14px;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            z-index: 10;
+        }
+
+        .ltech-ad-close:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const closeButton = document.getElementById('ltech-ad-close');
+            const adContainer = document.getElementById('ltech-ad');
+
+            if (closeButton && adContainer) {
+                closeButton.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    adContainer.style.display = 'none';
+                });
+            }
+        });
+    </script>
+        </div>
+      </div>
+
+      <footer>
+        <div id="bottom-outer">
+          <div id="bottom-inner">
+            <div id="author-profile">
+              <div id="author">
+                <p>著者情報</p>
+                <a href="/about/">
+                  <img
+                    src="https://avatars1.githubusercontent.com/u/1150041?s=460&u=f615fc39ae1a47862c73b870898620fc9b5e6d60&v=4"
+                    alt="著者">
+                </a>
+                <a href="/about/">
+                  <p class="author-name">山崎勝平(Yamasaki Shohei)</p>
+                </a>
+                <p class="author-introduction">フリーランスのソフトウェアエンジニア。LINEヤフーやメルカリで開発に従事し、その後独立。現在はIT企業のプロダクト開発や<a href="https://learning-tech.jp" target="_blank">LTech</a>の開発をしています。お仕事に関するご相談は<a href="/about/">お問い合わせ</a>ください。</p>
+              </div>
+              <div id="twitter-timeline">
+                <a class="twitter-timeline" href="https://twitter.com/sinn_shoyan?ref_src=twsrc%5Etfw" target="_blank" rel="noopener">Tweets by
+                  sinn_shoyan</a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+              </div>
+            </div>
+            <div id="footer-bottom">
+              <p>Copyright ©SHOYAN BLOG</p>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      
+        <!-- scripts list from theme config.yml -->
+        
+          <script src="/js/shoyanblog.js"></script>
+          
+            
+
+  </body>
+
+  </html>
