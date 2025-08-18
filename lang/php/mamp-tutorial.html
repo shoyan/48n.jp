@@ -187,7 +187,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" target="_blank" rel="noopener" class="twitter-share-button" data-via="sinn_shoyan" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   <a href="https://b.hatena.ne.jp/entry/" target="_blank" rel="noopener" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 </div>
-  <img src="/images/mamp/mamp-banner.png" alt="MAMPバナー" title="MAMPバナー">
+  <img src="/images/mamp/mamp-banner.png" alt="MAMPバナー" title="MAMPバナー" loading="lazy">
 
 <p>この記事ではPHPの開発環境であるMAMPの使い方を説明します。MAMPを導入することでPHPの開発環境を簡単に準備することができます。</p>
 <p>本記事はMacを対象として解説しています。Windowsをお使いの方は、適宜Windows環境に置き換えて進めてください。</p>
@@ -206,51 +206,51 @@ Apache、Nginx、MySQLなどのプログラムはソフトウェアと呼ばれ�
 <li><a href="https://www.mamp.info/en/downloads/" target="_blank" class="outbound" rel="noopener">MAMPのダウンロード</a></li>
 </ul>
 <p>クリックするとインストーラーがダウンロードされます。</p>
-<img src="/images/mamp/mamp01.png" alt="MAMPインストーラー" title="MAMPインストーラー">
+<img src="/images/mamp/mamp01.png" alt="MAMPインストーラー" title="MAMPインストーラー" loading="lazy">
 
 <h3 id="MAMPのインストール手順（Mac版）"><a href="#MAMPのインストール手順（Mac版）" class="headerlink" title="MAMPのインストール手順（Mac版）"></a>MAMPのインストール手順（Mac版）</h3><p>Mac版の手順です。バージョンによって手順が変わる可能性がありますが、基本的には続けるをクリックしていけばインストールが完了するようになっています。</p>
-<img src="/images/mamp/mamp-install01.png" alt="MAMPインストール手順" title="MAMPインストール手順">
-<img src="/images/mamp/mamp-install02.png" alt="MAMPインストール手順" title="MAMPインストール手順">
-<img src="/images/mamp/mamp-install03.png" alt="MAMPインストール手順" title="MAMPインストール手順">
-<img src="/images/mamp/mamp-install04.png" alt="MAMPインストール手順" title="MAMPインストール手順">
+<img src="/images/mamp/mamp-install01.png" alt="MAMPインストール手順" title="MAMPインストール手順" loading="lazy">
+<img src="/images/mamp/mamp-install02.png" alt="MAMPインストール手順" title="MAMPインストール手順" loading="lazy">
+<img src="/images/mamp/mamp-install03.png" alt="MAMPインストール手順" title="MAMPインストール手順" loading="lazy">
+<img src="/images/mamp/mamp-install04.png" alt="MAMPインストール手順" title="MAMPインストール手順" loading="lazy">
 
 <p>この画面が表示されればインストールは完了です。</p>
-<img src="/images/mamp/mamp-install05.png" alt="MAMPインストール手順" title="MAMPインストール手順">
+<img src="/images/mamp/mamp-install05.png" alt="MAMPインストール手順" title="MAMPインストール手順" loading="lazy">
 
 <h2 id="MAMPの起動-Mac版"><a href="#MAMPの起動-Mac版" class="headerlink" title="MAMPの起動(Mac版)"></a>MAMPの起動(Mac版)</h2><p>LaunchpadからMAMPアプリを起動します。MAMPとMAMP PROの2つがインストールされますが、MAMPの方を使います。</p>
-<img src="/images/mamp/mamp-app.png" alt="MAMPの起動" title="MAMPの起動">
+<img src="/images/mamp/mamp-app.png" alt="MAMPの起動" title="MAMPの起動" loading="lazy">
 
 <p>MAMPアイコンをクリックするとコントロールパネルが表示されます。</p>
-<img src="/images/mamp/mamp-panel.png" alt="MAMPコントロールパネル" title="MAMPコントロールパネル">
+<img src="/images/mamp/mamp-panel.png" alt="MAMPコントロールパネル" title="MAMPコントロールパネル" loading="lazy">
 
 <h2 id="MAMPの設定（Mac版）"><a href="#MAMPの設定（Mac版）" class="headerlink" title="MAMPの設定（Mac版）"></a>MAMPの設定（Mac版）</h2><p>Mac版のMAMPは8888ポートでWebサーバ起動する設定になっています。開発がしやすいようにポートの設定を変更します。</p>
 <p>MAMPコントロールパネル左上のPreferencesボタンをクリックすると設定パネルが開きます。</p>
-<img src="/images/mamp/mamp-preferences.png" alt="MAMP設定パネル" title="MAMP設定パネル">
+<img src="/images/mamp/mamp-preferences.png" alt="MAMP設定パネル" title="MAMP設定パネル" loading="lazy">
 
 <ol>
 <li>「Ports」タブをクリックします。</li>
 <li>「80 &amp; 3306」をクリックします。</li>
 </ol>
-<img src="/images/mamp/mamp-preferences-default.png" alt="MAMP設定パネル" title="MAMP設定パネル">
+<img src="/images/mamp/mamp-preferences-default.png" alt="MAMP設定パネル" title="MAMP設定パネル" loading="lazy">
 
 <p>すると、「Apache Port」と「Nginx Port」が80に、「MySQL Port」が3306に変更されます。OKボタンを押して変更を完了します。</p>
-<img src="/images/mamp/mamp-preferences-port.png" alt="MAMP設定パネル" title="MAMP設定パネル">
+<img src="/images/mamp/mamp-preferences-port.png" alt="MAMP設定パネル" title="MAMP設定パネル" loading="lazy">
 
 <h2 id="MAMPコントロールパネルの操作"><a href="#MAMPコントロールパネルの操作" class="headerlink" title="MAMPコントロールパネルの操作"></a>MAMPコントロールパネルの操作</h2><p>MAMPコントロールパネルの操作について説明します。</p>
 <h3 id="Webサーバの起動"><a href="#Webサーバの起動" class="headerlink" title="Webサーバの起動"></a>Webサーバの起動</h3><p>MAMPコントロールパネル右上のStartボタンをクリックするとWebサーバが起動します。</p>
-<img src="/images/mamp/mamp-start.png" alt="MAMPコントロールパネル" title="MAMPコントロールパネル">
+<img src="/images/mamp/mamp-start.png" alt="MAMPコントロールパネル" title="MAMPコントロールパネル" loading="lazy">
 
 <p>Webサーバが起動するとMAMPコントロールパネル右上のStartボタンが緑色になります。</p>
-<img src="/images/mamp/mamp-started.png" alt="起動後" title="起動後">
+<img src="/images/mamp/mamp-started.png" alt="起動後" title="起動後" loading="lazy">
 
 <h3 id="サーバーの停止"><a href="#サーバーの停止" class="headerlink" title="サーバーの停止"></a>サーバーの停止</h3><p>MAMPコントロールパネル右上のStopボタンをクリックするとWebサーバが停止します。</p>
-<img src="/images/mamp/mamp-started.png" alt="起動後" title="起動後">
+<img src="/images/mamp/mamp-started.png" alt="起動後" title="起動後" loading="lazy">
 
 
 <h2 id="ドキュメントルート"><a href="#ドキュメントルート" class="headerlink" title="ドキュメントルート"></a>ドキュメントルート</h2><p>Webサーバのセキュリティの仕組みとして、ドキュメントルートという仕組みがあります。ドキュメントルートは開発をしていく上でも理解しておく必要があるため、ここで説明しておきます。</p>
 <p>ドキュメントルートとは外部に公開する場所です。ドキュメントルート配下に置かれたファイルのみがサーバの外部に公開されます。<br>ということは、ドキュメントルートに置かれたファイル以外は外部からアクセスができないということです。<br>インターネットは不特定多数のユーザーが利用しており、適切にアクセス制限を施す必要があります。そのための仕組みがドキュメントルートです。</p>
 <h3 id="MAMPのドキュメントルート確認-Mac版"><a href="#MAMPのドキュメントルート確認-Mac版" class="headerlink" title="MAMPのドキュメントルート確認(Mac版)"></a>MAMPのドキュメントルート確認(Mac版)</h3><p>MAMPにもドキュメントルートがあります。デフォルトは <code>/Application/MAMP/htdocs/</code> がドキュメントルートに設定されています。ドキュメントルートはMAMPのコントロールパネルで確認ができます。</p>
-<img src="/images/mamp/mamp-panel-document-root.png" alt="ドキュメントルート" title="ドキュメントルート">
+<img src="/images/mamp/mamp-panel-document-root.png" alt="ドキュメントルート" title="ドキュメントルート" loading="lazy">
 
 
 <h3 id="MAMPのドキュメントルートをFinderで開く"><a href="#MAMPのドキュメントルートをFinderで開く" class="headerlink" title="MAMPのドキュメントルートをFinderで開く"></a>MAMPのドキュメントルートをFinderで開く</h3><p>MAMPのコントロールパネルからドキュメントルートをFinderで開くことができます。</p>
@@ -259,17 +259,17 @@ Apache、Nginx、MySQLなどのプログラムはソフトウェアと呼ばれ�
 <li>Serverタブをクリックする</li>
 <li>「Open in Finder」をクリックする</li>
 </ol>
-<img src="/images/mamp/mamp-preferences-document-root.png" alt="ドキュメントルート設定" title="ドキュメントルート設定">
+<img src="/images/mamp/mamp-preferences-document-root.png" alt="ドキュメントルート設定" title="ドキュメントルート設定" loading="lazy">
 
 <h3 id="MAMPのドキュメントルートを変更する"><a href="#MAMPのドキュメントルートを変更する" class="headerlink" title="MAMPのドキュメントルートを変更する"></a>MAMPのドキュメントルートを変更する</h3><p>MAMPのドキュメントルートを変更することもできます。<br>「choose…」ボタンをクリックするとFinderが起動して、ドキュメントルートを変更することができます。ここでは、ドキュメントルートを変更することはしませんが、変更できるということを認識していただければと思います。</p>
-<img src="/images/mamp/mamp-preferences-document-root-change.png" alt="ドキュメントルート設定" title="ドキュメントルート設定">
+<img src="/images/mamp/mamp-preferences-document-root-change.png" alt="ドキュメントルート設定" title="ドキュメントルート設定" loading="lazy">
 
 <h2 id="PHPファイルの実行"><a href="#PHPファイルの実行" class="headerlink" title="PHPファイルの実行"></a>PHPファイルの実行</h2><p>それでは、PHPファイルを実行してみましょう。まずは、PHPファイルを作っていきます。<br><code>/Application/MAMP/htdocs/</code> ディレクトリに <code>first.php</code> を作ります。次のコードをコピーして<code>first.php</code>にペーストしてください。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">  <span class="keyword">echo</span> <span class="string">"Hello World!"</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>ブラウザで次のURLにアクセスしてみましょう。<br><code>http://localhost/first.php</code></p>
 <p>次のように「Hello World!」と表示されればPHPが動作しています！</p>
-<img src="/images/mamp/hello-world.png" alt="実行結果" title="実行結果">
+<img src="/images/mamp/hello-world.png" alt="実行結果" title="実行結果" loading="lazy">
 
 <h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>MAMPの設定とPHPの実行のチュートリアルは以上です。<br>MAMPは無料でお手軽にPHP開発環境を構築できるツールです。ぜひ、使ってみてください。</p>
 
@@ -278,7 +278,7 @@ Apache、Nginx、MySQLなどのプログラムはソフトウェアと呼ばれ�
     <div class="ltech-ad" id="ltech-ad">
         <button class="ltech-ad-close" id="ltech-ad-close" aria-label="広告を閉じる">×</button>
         <a href="https://learning-tech.jp/" target="_blank" rel="noopener">
-            <img src="https://learning-tech.jp/assets/images/lts-logo.png" alt="LTech - プログラミング学習サイト" width="300">
+            <img src="https://learning-tech.jp/assets/images/lts-logo.png" alt="LTech - プログラミング学習サイト" width="300" loading="lazy">
             <p>LTech - プログラミング学習ならここで学ぼう</p>
         </a>
     </div>
@@ -334,7 +334,7 @@ Apache、Nginx、MySQLなどのプログラムはソフトウェアと呼ばれ�
                 <a href="/about/">
                   <img
                     src="https://avatars1.githubusercontent.com/u/1150041?s=460&u=f615fc39ae1a47862c73b870898620fc9b5e6d60&v=4"
-                    alt="著者">
+                    alt="著者" loading="lazy">
                 </a>
                 <a href="/about/">
                   <p class="author-name">山崎勝平(Yamasaki Shohei)</p>
