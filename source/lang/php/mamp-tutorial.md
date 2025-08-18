@@ -7,7 +7,7 @@ photos:
 description: この記事ではPHPの開発環境であるMAMPの使い方を説明します。MAMPを導入することでPHPの開発環境を簡単に準備することができます。
 ---
 
-<img src="/images/mamp/mamp-banner.png" alt="MAMPバナー" title="MAMPバナー">
+<img src="/images/mamp/mamp-banner.png" alt="MAMPバナー" title="MAMPバナー" loading="lazy">
 
 この記事ではPHPの開発環境であるMAMPの使い方を説明します。MAMPを導入することでPHPの開発環境を簡単に準備することができます。
 
@@ -35,30 +35,30 @@ MAMPはインストーラーを使ってインストールを行います。ま�
 
 クリックするとインストーラーがダウンロードされます。
 
-<img src="/images/mamp/mamp01.png" alt="MAMPインストーラー" title="MAMPインストーラー">
+<img src="/images/mamp/mamp01.png" alt="MAMPインストーラー" title="MAMPインストーラー" loading="lazy">
 
 ### MAMPのインストール手順（Mac版）
 
 Mac版の手順です。バージョンによって手順が変わる可能性がありますが、基本的には続けるをクリックしていけばインストールが完了するようになっています。
 
-<img src="/images/mamp/mamp-install01.png" alt="MAMPインストール手順" title="MAMPインストール手順">
-<img src="/images/mamp/mamp-install02.png" alt="MAMPインストール手順" title="MAMPインストール手順">
-<img src="/images/mamp/mamp-install03.png" alt="MAMPインストール手順" title="MAMPインストール手順">
-<img src="/images/mamp/mamp-install04.png" alt="MAMPインストール手順" title="MAMPインストール手順">
+<img src="/images/mamp/mamp-install01.png" alt="MAMPインストール手順" title="MAMPインストール手順" loading="lazy">
+<img src="/images/mamp/mamp-install02.png" alt="MAMPインストール手順" title="MAMPインストール手順" loading="lazy">
+<img src="/images/mamp/mamp-install03.png" alt="MAMPインストール手順" title="MAMPインストール手順" loading="lazy">
+<img src="/images/mamp/mamp-install04.png" alt="MAMPインストール手順" title="MAMPインストール手順" loading="lazy">
 
 この画面が表示されればインストールは完了です。
 
-<img src="/images/mamp/mamp-install05.png" alt="MAMPインストール手順" title="MAMPインストール手順">
+<img src="/images/mamp/mamp-install05.png" alt="MAMPインストール手順" title="MAMPインストール手順" loading="lazy">
 
 ## MAMPの起動(Mac版)
 
 LaunchpadからMAMPアプリを起動します。MAMPとMAMP PROの2つがインストールされますが、MAMPの方を使います。
 
-<img src="/images/mamp/mamp-app.png" alt="MAMPの起動" title="MAMPの起動">
+<img src="/images/mamp/mamp-app.png" alt="MAMPの起動" title="MAMPの起動" loading="lazy">
 
 MAMPアイコンをクリックするとコントロールパネルが表示されます。
 
-<img src="/images/mamp/mamp-panel.png" alt="MAMPコントロールパネル" title="MAMPコントロールパネル">
+<img src="/images/mamp/mamp-panel.png" alt="MAMPコントロールパネル" title="MAMPコントロールパネル" loading="lazy">
 
 ## MAMPの設定（Mac版）
 
@@ -66,16 +66,16 @@ Mac版のMAMPは8888ポートでWebサーバ起動する設定になっていま
 
 MAMPコントロールパネル左上のPreferencesボタンをクリックすると設定パネルが開きます。
 
-<img src="/images/mamp/mamp-preferences.png" alt="MAMP設定パネル" title="MAMP設定パネル">
+<img src="/images/mamp/mamp-preferences.png" alt="MAMP設定パネル" title="MAMP設定パネル" loading="lazy">
 
 1. 「Ports」タブをクリックします。
 2. 「80 & 3306」をクリックします。
 
-<img src="/images/mamp/mamp-preferences-default.png" alt="MAMP設定パネル" title="MAMP設定パネル">
+<img src="/images/mamp/mamp-preferences-default.png" alt="MAMP設定パネル" title="MAMP設定パネル" loading="lazy">
 
 すると、「Apache Port」と「Nginx Port」が80に、「MySQL Port」が3306に変更されます。OKボタンを押して変更を完了します。
 
-<img src="/images/mamp/mamp-preferences-port.png" alt="MAMP設定パネル" title="MAMP設定パネル">
+<img src="/images/mamp/mamp-preferences-port.png" alt="MAMP設定パネル" title="MAMP設定パネル" loading="lazy">
 
 ## MAMPコントロールパネルの操作
 
@@ -85,17 +85,17 @@ MAMPコントロールパネルの操作について説明します。
 
 MAMPコントロールパネル右上のStartボタンをクリックするとWebサーバが起動します。
 
-<img src="/images/mamp/mamp-start.png" alt="MAMPコントロールパネル" title="MAMPコントロールパネル">
+<img src="/images/mamp/mamp-start.png" alt="MAMPコントロールパネル" title="MAMPコントロールパネル" loading="lazy">
 
 Webサーバが起動するとMAMPコントロールパネル右上のStartボタンが緑色になります。
 
-<img src="/images/mamp/mamp-started.png" alt="起動後" title="起動後">
+<img src="/images/mamp/mamp-started.png" alt="起動後" title="起動後" loading="lazy">
 
 ### サーバーの停止
 
 MAMPコントロールパネル右上のStopボタンをクリックするとWebサーバが停止します。
 
-<img src="/images/mamp/mamp-started.png" alt="起動後" title="起動後">
+<img src="/images/mamp/mamp-started.png" alt="起動後" title="起動後" loading="lazy">
 
 
 ## ドキュメントルート
@@ -108,7 +108,7 @@ Webサーバのセキュリティの仕組みとして、ドキュメントル�
 ### MAMPのドキュメントルート確認(Mac版)
 MAMPにもドキュメントルートがあります。デフォルトは `/Application/MAMP/htdocs/` がドキュメントルートに設定されています。ドキュメントルートはMAMPのコントロールパネルで確認ができます。
 
-<img src="/images/mamp/mamp-panel-document-root.png" alt="ドキュメントルート" title="ドキュメントルート">
+<img src="/images/mamp/mamp-panel-document-root.png" alt="ドキュメントルート" title="ドキュメントルート" loading="lazy">
 
 
 ### MAMPのドキュメントルートをFinderで開く
@@ -119,14 +119,14 @@ MAMPのコントロールパネルからドキュメントルートをFinderで�
 2. Serverタブをクリックする
 3. 「Open in Finder」をクリックする
 
-<img src="/images/mamp/mamp-preferences-document-root.png" alt="ドキュメントルート設定" title="ドキュメントルート設定">
+<img src="/images/mamp/mamp-preferences-document-root.png" alt="ドキュメントルート設定" title="ドキュメントルート設定" loading="lazy">
 
 ### MAMPのドキュメントルートを変更する
 
 MAMPのドキュメントルートを変更することもできます。
 「choose...」ボタンをクリックするとFinderが起動して、ドキュメントルートを変更することができます。ここでは、ドキュメントルートを変更することはしませんが、変更できるということを認識していただければと思います。
 
-<img src="/images/mamp/mamp-preferences-document-root-change.png" alt="ドキュメントルート設定" title="ドキュメントルート設定">
+<img src="/images/mamp/mamp-preferences-document-root-change.png" alt="ドキュメントルート設定" title="ドキュメントルート設定" loading="lazy">
 
 ## PHPファイルの実行
 
@@ -144,7 +144,7 @@ MAMPのドキュメントルートを変更することもできます。
 
 次のように「Hello World!」と表示されればPHPが動作しています！
 
-<img src="/images/mamp/hello-world.png" alt="実行結果" title="実行結果">
+<img src="/images/mamp/hello-world.png" alt="実行結果" title="実行結果" loading="lazy">
 
 ## まとめ
 

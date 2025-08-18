@@ -33,7 +33,7 @@ updated: 2021-08-31 13:00:00
 
 <div class="memo" style="margin-bottom: 40px;">穴の空いたバケツに多額の資金を投資することは避けましょう。</div>
 
-<img src="/images/child-392971_640.jpg" alt="穴の空いたバケツ">
+<img src="/images/child-392971_640.jpg" alt="穴の空いたバケツ" loading="lazy">
 <p style="color: gray;">穴の空いたバケツに水を入れてもほとんどが流れていってしまう</p>
 
 ## エンジニアを目指す人が最初にすべきこと
