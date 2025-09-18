@@ -176,6 +176,38 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-06-02T10:37:47.000Z" itemprop="datepublished">
+            2016/06/02
+          </time>
+          <time datetime="2016-06-02T10:37:47.000Z" itemprop="modified">
+            (更新日: 2016/06/02)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/06/02/convert-to-idna-on-the-shell/">Shellで日本語ドメインをPunycode(IDNドメイン)に変換する方法</a>
+        </h1>
+        <div class="content">
+          <p>Shellで日本語ドメインをIDNフォーマットに変換する方法を紹介します。<br>対象のOSはMacです。</p>
+<p><a href="http://www.gnu.org/software/libidn/" target="_blank" rel="noopener">libidn</a>というGNUのライブラリがあるので、それを使います。</p>
+<h2 id="libidnのインストール"><a href="#libidnのインストール" class="headerlink" title="libidnのインストール"></a>libidnのインストール</h2><p>homebrewでインストールします。</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">brew </span><span class="keyword">install </span>libidn</span><br></pre></td></tr></table></figure>
+
+<p>インストールしたら、idnコマンドが使えるようになります。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ idn</span><br><span class="line">libidn 1.32</span><br><span class="line">Copyright 2002-2015 Simon Josefsson.</span><br><span class="line">GNU Libidn is free software <span class="keyword">with</span> ABSOLUTELY <span class="keyword">NO</span> WARRANTY.  <span class="keyword">For</span> more</span><br><span class="line">information about these matters, see &lt;<span class="keyword">http</span>://www.gnu.org/licenses/&gt;.</span><br><span class="line"><span class="keyword">Type</span> <span class="keyword">each</span> <span class="keyword">input</span> <span class="keyword">string</span> <span class="keyword">on</span> a line <span class="keyword">by</span> itself, <span class="keyword">terminated</span> <span class="keyword">by</span> a <span class="keyword">newline</span> character.</span><br><span class="line"></span><br><span class="line">idn: tld_check_4z: <span class="keyword">Missing</span> <span class="keyword">input</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="libidnでPunycodeに変換する"><a href="#libidnでPunycodeに変換する" class="headerlink" title="libidnでPunycodeに変換する"></a>libidnでPunycodeに変換する</h2><p>以下のようにPunycodeに変換できます。</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ idn しょーやん<span class="string">.xyz</span></span><br><span class="line">xn<span class="params">--68jwei3c27a</span>.xyz</span><br></pre></td></tr></table></figure>
+
+<p>unicodeに変換する場合は<code>-u</code>オプションを使います。</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ idn -u xn<span class="params">--68jwei3c27a</span>.xyz</span><br><span class="line">しょーやん<span class="string">.xyz</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="digとidnを組み合わせて使う"><a href="#digとidnを組み合わせて使う" class="headerlink" title="digとidnを組み合わせて使う"></a>digとidnを組み合わせて使う</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">⇒</span>  <span class="string">dig</span> <span class="string">`idn</span> <span class="string">しょーやん.xyz`</span> <span class="string">NS</span></span><br><span class="line"></span><br><span class="line"><span class="string">;</span> <span class="string">&lt;&lt;&gt;&gt;</span> <span class="string">DiG</span> <span class="number">9.8</span><span class="number">.3</span><span class="string">-P1</span> <span class="string">&lt;&lt;&gt;&gt;</span> <span class="string">xn--68jwei3c27a.xyz</span> <span class="string">NS</span></span><br><span class="line"><span class="string">;;</span> <span class="attr">global options:</span> <span class="string">+cmd</span></span><br><span class="line"><span class="string">;;</span> <span class="attr">Got answer:</span></span><br><span class="line"><span class="string">;;</span> <span class="string">-&gt;&gt;HEADER&lt;&lt;-</span> <span class="attr">opcode:</span> <span class="string">QUERY,</span> <span class="attr">status:</span> <span class="string">NOERROR,</span> <span class="attr">id:</span> <span class="number">59533</span></span><br><span class="line"><span class="string">;;</span> <span class="attr">flags:</span> <span class="string">qr</span> <span class="string">rd</span> <span class="string">ra;</span> <span class="attr">QUERY:</span> <span class="number">1</span><span class="string">,</span> <span class="attr">ANSWER:</span> <span class="number">2</span><span class="string">,</span> <span class="attr">AUTHORITY:</span> <span class="number">0</span><span class="string">,</span> <span class="attr">ADDITIONAL:</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="string">;;</span> <span class="attr">QUESTION SECTION:</span></span><br><span class="line"><span class="string">;xn--68jwei3c27a.xyz.</span>   <span class="string">IN</span>  <span class="string">NS</span></span><br><span class="line"></span><br><span class="line"><span class="string">;;</span> <span class="attr">ANSWER SECTION:</span></span><br><span class="line"><span class="string">xn--68jwei3c27a.xyz.</span>  <span class="number">3578</span>  <span class="string">IN</span>  <span class="string">NS</span>  <span class="string">dns01.muumuu-domain.com.</span></span><br><span class="line"><span class="string">xn--68jwei3c27a.xyz.</span>  <span class="number">3578</span>  <span class="string">IN</span>  <span class="string">NS</span>  <span class="string">dns02.muumuu-domain.com.</span></span><br><span class="line"></span><br><span class="line"><span class="string">;;</span> <span class="attr">Query time:</span> <span class="number">34</span> <span class="string">msec</span></span><br><span class="line"><span class="string">;;</span> <span class="attr">SERVER:</span> <span class="number">192.168</span><span class="number">.74</span><span class="number">.20</span><span class="comment">#53(192.168.74.20)</span></span><br><span class="line"><span class="string">;;</span> <span class="attr">WHEN:</span> <span class="string">Fri</span> <span class="string">Jun</span>  <span class="number">3</span> <span class="number">09</span><span class="string">:25:40</span> <span class="number">2016</span></span><br><span class="line"><span class="string">;;</span> <span class="attr">MSG SIZE  rcvd:</span> <span class="number">94</span><span class="string">)&gt;&gt;&gt;&gt;&gt;&gt;</span></span><br></pre></td></tr></table></figure>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-06-01T05:17:45.000Z" itemprop="datepublished">
             2016/06/01
           </time>
@@ -383,62 +415,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>こちらは類似案件。</p>
 <ul>
 <li><a href="http://shoyan.github.io/blog/2016/04/13/no-space-left-on-device-on-docker/" target="_blank" rel="noopener">Dockerでno Space Left on Deviceが出てbuildできなくなった</a></li>
-</ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-05-27T04:48:34.000Z" itemprop="datepublished">
-            2016/05/27
-          </time>
-          <time datetime="2016-05-27T04:48:34.000Z" itemprop="modified">
-            (更新日: 2016/05/27)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/05/27/sinatra-logger/">Sinatraのロギング機構について調べてみた</a>
-        </h1>
-        <div class="content">
-          <p>Sinatraのloggerヘルパーを使ったところ、なぜか標準エラーの出力先にログが吐かれており、標準出力の出力先にはログが吐かれない。<br>標準出力先にログを吐くものだと思っていたのだが、自分が想定していた挙動と違うので調べてみた。</p>
-<p>まずは、Sinatraのloggerヘルパーのソースコードを確認してみる。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logger</span></span></span><br><span class="line">  request.logger</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p><a href="https://github.com/sinatra/sinatra/blob/939ce04c1b77d24dd78285ba0836768ad57aff6c/lib/sinatra/base.rb#L327" target="_blank" rel="noopener">https://github.com/sinatra/sinatra/blob/939ce04c1b77d24dd78285ba0836768ad57aff6c/lib/sinatra/base.rb#L327</a></p>
-<p>request.loggerを返している。<br>レシーバであるrequestは rack::requestなので、rack::request#loggerは何を返しているかを確認する。</p>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logger</span></span>; get_header(RACK_LOGGER) <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p><a href="https://github.com/rack/rack/blob/master/lib/rack/request.rb#L136" target="_blank" rel="noopener">https://github.com/rack/rack/blob/master/lib/rack/request.rb#L136</a></p>
-<p>get_headerは@envから引数に与えられた値を返すだけのメソッド。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_header</span><span class="params">(name)</span></span></span><br><span class="line">  @env[name]</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>RACK_LOGGERは以下のように定義されている。</p>
-<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RACK_LOGGER = <span class="string">'rack.logger'</span>.<span class="keyword">freeze</span></span><br></pre></td></tr></table></figure>
-
-<p><a href="https://github.com/rack/rack/blob/9073125f71afd615091f575d74ec468a0b1b79bf/lib/rack.rb#L64" target="_blank" rel="noopener">https://github.com/rack/rack/blob/9073125f71afd615091f575d74ec468a0b1b79bf/lib/rack.rb#L64</a></p>
-<p>ここまでで、loggerヘルパーは<code>env[&#39;rack.logger’]</code>を取得していることがわかった。</p>
-<p>では、rack.loggerには何が設定されているのかという疑問が湧いてくる。<br>rackには3つのロガーがある。</p>
-<ul>
-<li>CommonLogger</li>
-<li>Logger</li>
-<li>NullLogger</li>
-</ul>
-<p>このうち、LoggerとNullLoggerがRACK_LOGGERにセットしていた。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Rack::Logger</span></span><br><span class="line"><span class="keyword">require</span> <span class="string">'logger'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Rack</span></span></span><br><span class="line">  <span class="comment"># Sets up rack.logger to write to rack.errors stream</span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Logger</span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initialize</span><span class="params">(app, level = <span class="symbol">:</span><span class="symbol">:Logger</span><span class="symbol">:</span><span class="symbol">:INFO</span>)</span></span></span><br><span class="line">      @app, @level = app, level</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">call</span><span class="params">(env)</span></span></span><br><span class="line">      logger = <span class="symbol">:</span><span class="symbol">:Logger</span>.new(env[RACK_ERRORS])</span><br><span class="line">      logger.level = @level</span><br><span class="line"></span><br><span class="line">      env[RACK_LOGGER] = logger</span><br><span class="line">      @app.call(env)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Rack::NullLogger</span></span><br><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Rack</span></span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">NullLogger</span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initialize</span><span class="params">(app)</span></span></span><br><span class="line">      @app = app</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">call</span><span class="params">(env)</span></span></span><br><span class="line">      env[RACK_LOGGER] = <span class="keyword">self</span></span><br><span class="line">      @app.call(env)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    ...........</span><br></pre></td></tr></table></figure>
-
-<p>通常、Rack::Loggerが使われる。<br>Rack::LoggerはRubyのloggerライブラリのラッパーで、log deviceにenv[RACK_ERRORS]をセットしている。<br>env[RACK_ERRORS]が何かを調べたところ、基本的には$stderrがセットされるようだ。</p>
-<p>(例)webrickの場合は、$stderrがセットされている。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">env.update(</span><br><span class="line">  RACK_VERSION =&gt; Rack::VERSION,</span><br><span class="line">  RACK_INPUT =&gt; rack_input,</span><br><span class="line">  RACK_ERRORS =&gt; $stderr,</span><br><span class="line">  RACK_MULTITHREAD =&gt; <span class="literal">true</span>,</span><br><span class="line">  RACK_MULTIPROCESS =&gt; <span class="literal">false</span>,</span><br><span class="line">  RACK_RUNONCE =&gt; <span class="literal">false</span>,</span><br><span class="line">  RACK_URL_SCHEME =&gt; [<span class="string">"yes"</span>, <span class="string">"on"</span>, <span class="string">"1"</span>].include?(env[HTTPS]) ? <span class="string">"https"</span> : <span class="string">"http"</span>,</span><br><span class="line">  RACK_IS_HIJACK =&gt; <span class="literal">true</span>,</span><br><span class="line">  RACK_HIJACK =&gt; lambda &#123; raise NotImplementedError, <span class="string">"only partial hijack is supported."</span>&#125;,</span><br><span class="line">  RACK_HIJACK_IO =&gt; nil</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://github.com/rack/rack/blob/95172a60fe5c2a3850163fc75e0981fe440c064e/lib/rack/handler/webrick.rb#L68" target="_blank" rel="noopener">https://github.com/rack/rack/blob/95172a60fe5c2a3850163fc75e0981fe440c064e/lib/rack/handler/webrick.rb#L68</a></p>
-<p>ということで、結果的にSinatraのloggerは標準エラーに出力されることになる。</p>
-<h2 id="アプリケーションログを任意のファイルに出力するには"><a href="#アプリケーションログを任意のファイルに出力するには" class="headerlink" title="アプリケーションログを任意のファイルに出力するには"></a>アプリケーションログを任意のファイルに出力するには</h2><p>任意のファイルにログを出力したい場合は、自前でloggerを定義してやればよい。</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logger</span></span></span><br><span class="line">  <span class="keyword">return</span> <span class="variable">@logger</span> <span class="keyword">unless</span> <span class="variable">@logger</span>.<span class="keyword">nil</span>?</span><br><span class="line">  file = File.new(<span class="string">"<span class="subst">#&#123;settings.root&#125;</span>/log/<span class="subst">#&#123;settings.environment&#125;</span>.log"</span>, <span class="string">'a+'</span>)</span><br><span class="line">  file.sync = <span class="keyword">true</span></span><br><span class="line">  <span class="variable">@logger</span> = ::Logger.new(file)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">logger.info <span class="string">"Hello"</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
-<li><a href="http://koseki.hatenablog.com/entry/20120309/SinatraAppLog" target="_blank" rel="noopener">Sinatra でアプリケーションログをファイルに書く方法。</a></li>
-<li><a href="http://recipes.sinatrarb.com/p/middleware/rack_commonlogger" target="_blank" rel="noopener">Sinatra Recipes - Middleware - Rack Commonlogger</a></li>
 </ul>
 
         </div>

@@ -176,6 +176,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2018-06-29T06:26:49.000Z" itemprop="datepublished">
+            2018/06/29
+          </time>
+          <time datetime="2018-06-29T06:26:49.000Z" itemprop="modified">
+            (更新日: 2018/06/29)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2018/06/29/graduate-from-lombok/">そろそろlombokから卒業しようと考えています</a>
+        </h1>
+        <div class="content">
+          <p>便利な<a href="https://projectlombok.org/" target="_blank">lombok</a>ですが、そろそろオワコンな感じがしています。理由はJavaのアップデートに追従することが困難になってきているからです。詳しくは<a href="https://qiita.com/tmurakam99/items/b5ffe7f18bc06577f619" target="_blank">Lombok の Java9以降対応</a>の記事に書いてあります。実際、Java9対応も遅かったですね。lombokを使い続けると、Javaのアップデートに追従していけなくなる未来が想像できます。</p>
+<p>Spring Bootも2系からはlombokは使っていませんね。</p>
+<p>lombokは便利ですが、別に無くてもなんとかなるライブラリなので、あえてこれから使う選択をする必要はないと思います。</p>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2018-06-28T05:42:53.000Z" itemprop="datepublished">
             2018/06/28
           </time>
@@ -264,65 +284,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=syoyama-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B072J2J26T&linkId=b397d3e0d93479554f7ad256a1279272"></iframe>
 
 
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2018-03-20T09:41:09.000Z" itemprop="datepublished">
-            2018/03/20
-          </time>
-          <time datetime="2018-03-20T09:41:09.000Z" itemprop="modified">
-            (更新日: 2018/03/20)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2018/03/20/usage-pmd/">PMDでJavaのコードのバグをチェックする</a>
-        </h1>
-        <div class="content">
-          <p>Javaにおいてバグの要因となりそうなコードをチェックするツールとして、FindBugsがあります。しかし、FindBugsは2015年以降の開発が止まっているため、言語のアップデートに追従できていません。そこで、FindBugsの代替えとなる<a href="https://pmd.github.io/pmd-6.1.0/index.html" target="_blank">PMD</a>を紹介します。PMDを使えばバグの原因となりそうなコードを検知することができるため、不具合を未然に防ぐことが可能です。</p>
-<h2 id="PMDとは"><a href="#PMDとは" class="headerlink" title="PMDとは"></a>PMDとは</h2><p>PMDは次の4つの問題があるコードを検知することができるツールです。</p>
-<ul>
-<li>Possible bugs - バグの要因となるコード</li>
-<li>Dead code - 使われていないコード</li>
-<li>Suboptimal code - 効率の悪いコード</li>
-<li>Overcomplicated expressions - 複雑な構文</li>
-</ul>
-<p>PMD自体はJavaで実装されていますが、Java以外の言語にも対応しています。今回はJavaのコードを対象に使い方を紹介します。</p>
-<h2 id="PMDのインストール方法"><a href="#PMDのインストール方法" class="headerlink" title="PMDのインストール方法"></a>PMDのインストール方法</h2><h3 id="Homebrewでインストールする"><a href="#Homebrewでインストールする" class="headerlink" title="Homebrewでインストールする"></a>Homebrewでインストールする</h3><p>Macであれば、次のコマンドでインストールできます。</p>
-<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">brew </span><span class="keyword">install </span>pmd</span><br></pre></td></tr></table></figure>
-
-<h3 id="バイナリをダウンロードする"><a href="#バイナリをダウンロードする" class="headerlink" title="バイナリをダウンロードする"></a>バイナリをダウンロードする</h3><p>バイナリをダウンロードしてインストールすることができます。次のページからダウンロードしてください。</p>
-<ul>
-<li><a href="https://github.com/pmd/pmd/releases" target="_blank">the github releases page</a></li>
-</ul>
-<h2 id="PMDでコードをチェックする"><a href="#PMDでコードをチェックする" class="headerlink" title="PMDでコードをチェックする"></a>PMDでコードをチェックする</h2><h3 id="サンプルコードの準備"><a href="#サンプルコードの準備" class="headerlink" title="サンプルコードの準備"></a>サンプルコードの準備</h3><p>PMDでコードをチェックしてみます。今回はサンプルコードを作って検証します。サンプルコードはGithubにアップロードしているのでクローンしてご利用ください。</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> <span class="title">git</span>@github.com:shoyan/pmd-samples.git</span><br><span class="line">cd pad-samples</span><br></pre></td></tr></table></figure>
-
-<h3 id="PMDの実行"><a href="#PMDの実行" class="headerlink" title="PMDの実行"></a>PMDの実行</h3><p>Pmdを実行します。<code>-d</code>がソースコードのパス、<code>-R</code>がルールが設定してあるファイルのパス、<code>-l</code>に言語を指定します。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pmd pmd -d src/main/java -R rules.xml -l java</span><br><span class="line">3月 20, 2018 6:03:49 午後 net.sourceforge.pmd.cache.NoopAnalysisCache &lt;init&gt;</span><br><span class="line">警告: This analysis could be faster, please <span class="keyword">consider</span> <span class="keyword">using</span> Incremental Analysis: https://pmd.github.io/pmd<span class="number">-6.1</span><span class="number">.0</span>/pmd_userdocs_getting_started.html<span class="comment">#incremental-analysis</span></span><br><span class="line">/pmd-samples/src/<span class="keyword">main</span>/<span class="keyword">java</span>/UnusedCode.java:<span class="number">2</span>:        Avoid <span class="keyword">unused</span> <span class="keyword">private</span> <span class="keyword">fields</span> such <span class="keyword">as</span> <span class="string">'FOO'</span>.</span><br><span class="line">/pmd-samples/src/<span class="keyword">main</span>/<span class="keyword">java</span>/UnusedCode.java:<span class="number">4</span>:        Avoid <span class="keyword">unused</span> <span class="keyword">local</span> <span class="keyword">variables</span> such <span class="keyword">as</span> <span class="string">'i'</span>.</span><br><span class="line">/pmd-samples/src/<span class="keyword">main</span>/<span class="keyword">java</span>/UnusedCode.java:<span class="number">6</span>:        Avoid <span class="keyword">unused</span> <span class="keyword">private</span> methods such <span class="keyword">as</span> <span class="string">'foo()'</span>.</span><br></pre></td></tr></table></figure>
-
-<p>3つの問題が検知されています。UnusedCode.javaの2行目を見てみると、使われていないメンバ変数があります。他のエラーも同様に使われていないローカル変数とプライベートメソッドを検知しています。</p>
-<h3 id="ルールについて"><a href="#ルールについて" class="headerlink" title="ルールについて"></a>ルールについて</h3><p>ルールの一覧については次のリンクよりご覧ください。</p>
-<ul>
-<li><a href="https://pmd.github.io/pmd-6.1.0/pmd_rules_java.html" target="_blank">Java Rules</a></li>
-</ul>
-<p>0の状態からルールを構築するのは大変です。そのため、PMDのリポジトリには様々なルールのサンプルが定義されています。基本的なルールが網羅されているbasic.xmlを利用するとよいでしょう。他にも様々なルールがあるので参考にしてください。</p>
-<ul>
-<li><a href="https://github.com/pmd/pmd/tree/master/pmd-java/src/main/resources/rulesets/java" target="_blank">rulesets java</a></li>
-</ul>
-<h3 id="カテゴリ"><a href="#カテゴリ" class="headerlink" title="カテゴリ"></a>カテゴリ</h3><p>PMDのルールはカテゴリに分類されています。例えば、ベストプラクティスであれば、ベストプラクティスに沿ったルールが定義されています。カテゴリの詳細については次のリンクでご覧ください。</p>
-<ul>
-<li><a href="https://github.com/pmd/pmd/tree/master/pmd-java/src/main/resources/category/java" target="_blank">category</a></li>
-</ul>
-<h2 id="トラブルシューティング"><a href="#トラブルシューティング" class="headerlink" title="トラブルシューティング"></a>トラブルシューティング</h2><p>PMD6.1.0はPMD7への過渡期バージョンのようで、Deprecatedの警告が山のように出ます。<br>設定ファイルでしか警告を消す術がないので設定ファイルを修正します。</p>
-<p>次のようにdeprecatedをfalseにするか、プロパティ自体を削除してください。</p>
-<figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;rule <span class="keyword">ref</span>=<span class="string">"category/java/errorprone.xml/AvoidBranchingStatementAsLastInLoop"</span> <span class="keyword">deprecated</span>=“<span class="literal">false</span><span class="string">" /&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
-<li><a href="https://pmd.github.io/pmd-6.1.0/index.html" target="_blank">PMD Introduction</a></li>
-</ul>
 
         </div>
       </div>
