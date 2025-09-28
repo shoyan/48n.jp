@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プロフィール - SHOYAN BLOG</title>
+    <link rel="stylesheet" href="/css/shoyanblog.css">
+    <style>
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .profile-image {
+            margin-right: 2rem;
+            flex-shrink: 0;
+        }
+
+        .profile-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .profile-info h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            text-align: start;
+        }
+
+        .profile-title {
+            font-size: 1.4rem;
+            margin: 0 0 0.5rem 0;
+            opacity: 0.9;
+        }
+
+        .profile-location {
+            margin: 0 0 1.5rem 0;
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+
+        .profile-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .profile-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .profile-link:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .content-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #333;
+            border-bottom: 4px solid #667eea;
+            padding-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: #764ba2;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1.5rem;
+            top: 1.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #667eea;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #e0e0e0;
+        }
+
+        .timeline-item.current::before {
+            background: #4CAF50;
+        }
+
+        .timeline-date {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .company-info {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .company-info h3 {
+            margin: 0;
+            color: #333;
+            font-size: 1.3rem;
+        }
+
+        .duration {
+            background: #f0f0f0;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .status {
+            background: #4CAF50;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .role {
+            font-weight: bold;
+            color: #764ba2;
+            margin: 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        .description {
+            color: #666;
+            line-height: 1.7;
+            margin: 1rem 0;
+        }
+
+        .publications {
+            margin-top: 1.5rem;
+        }
+
+        .publication-item {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+
+        .publication-content h4 {
+            margin: 0 0 0.5rem 0;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .publication-source, .publication-date {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .publications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .publication-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .publication-card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .publication-card h3 {
+            margin: 0 0 1rem 0;
+            color: #333;
+            font-size: 1.2rem;
+            line-height: 1.4;
+        }
+
+        .publication-meta {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #764ba2;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0.5rem 1rem;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.5rem;
+            }
+            
+            .profile-image {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .profile-info h1 {
+                font-size: 2rem;
+            }
+
+            .profile-links {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .timeline {
+                padding-left: 1.5rem;
+            }
+            
+            .timeline-item {
+                padding-left: 1.5rem;
+                padding: 1rem;
+            }
+
+            .timeline-item::before {
+                left: -1.25rem;
+            }
+            
+            .company-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .publications-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .timeline::before {
+                left: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-header">
+            <div class="profile-image">
+                <img src="/images/profile.jpg" alt="山崎勝平のプロフィール写真" class="profile-photo">
+            </div>
+            <div class="profile-info">
+                <h1>山崎 勝平</h1>
+                <p class="profile-title">フリーランスエンジニア</p>
+                <p class="profile-location">📍 福岡県糸島市</p>
+                <div class="profile-links">
+                    <a href="https://github.com/shoyan" target="_blank" class="profile-link">GitHub</a>
+                    <a href="https://x.com/48njp" target="_blank" class="profile-link">Twitter</a>
+                    <a href="https://speakerdeck.com/shoyan" target="_blank" class="profile-link">SpeakerDeck</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">職務経歴</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item current">
+                    <div class="timeline-date">2025年1月 - 現在</div>
+                    <div class="company-info">
+                        <h3>フリーランス</h3>
+                        <span class="status">現在</span>
+                    </div>
+                    <p class="description">フリーランスエンジニアとして独立しました。IT企業のプロダクト開発支援、個人PJのLTech (<a href="https://learning-tech.jp" target="_blank">https://learning-tech.jp</a>) の開発に従事しています。</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2022年3月 - 2024年10月</div>
+                    <div class="company-info">
+                        <h3>株式会社メルカリ</h3>
+                        <span class="duration">3年間</span>
+                    </div>
+                    <p class="role">エンジニアリングマネージャー</p>
+                    <p class="description">メルカリの顧客基盤の開発、ピープルマネジメント</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2017年10月 - 2022年2月</div>
+                    <div class="company-info">
+                        <h3>ヤフー株式会社</h3>
+                        <span class="duration">5年間</span>
+                    </div>
+                    <p class="role">エンジニアリーダー</p>
+                    <p class="description">Yahoo!カード天神チームでの開発リーダーシップ</p>
+                    
+                    <div class="publications">
+                        <a href="https://codezine.jp/article/detail/11096" target="_blank" rel="noopener">
+                        <div class="publication-item">
+                            <div class="publication-content">
+                                <h4>「アジャイル開発はあくまでゴール達成のための手段」――Yahoo!カード天神チームがたどり着いた開発スタイルと技術</h4>
+                                <p class="publication-source">codezine.jp</p>
+                                <p class="publication-date">2018年10月</p>
+                            </div>
+                        </div>
+                        </a>
+                        <a href="https://event.shoeisha.jp/devsumi/20180906" target="_blank" rel="noopener">
+                        <div class="publication-item">
+                            <div class="publication-content">
+                                <h4>Developers Summit 2018 FUKUOKA</h4>
+                                <p class="publication-source">event.shoeisha.jp</p>
+                                <p class="publication-date">2018年9月</p>
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2012年5月 - 2017年9月</div>
+                    <div class="company-info">
+                        <h3>GMOペパボ</h3>
+                        <span class="duration">6年間</span>
+                    </div>
+                    <p class="role">ソフトウェアエンジニア</p>
+                   
+                    <div class="publications">
+                        <a href="https://gihyo.jp/magazine/wdpress/archive/2017/vol99" target="_blank" rel="noopener">
+                        <div class="publication-item">
+                            <div class="publication-content">
+                                <h4>WEB+DB PRESS Vol.99</h4>
+                                <p class="publication-source">gihyo.jp</p>
+                                <p class="publication-date">2017年6月</p>
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2009年4月 - 2012年3月</div>
+                    <div class="company-info">
+                        <h3>株式会社クインテット</h3>
+                        <span class="duration">3年間</span>
+                    </div>
+                    <p class="role">ソフトウェアエンジニア</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2008年4月 - 2009年3月</div>
+                    <div class="company-info">
+                        <h3>トリオシステムプランズ株式会社</h3>
+                        <span class="duration">1年間</span>
+                    </div>
+                    <p class="role">ソフトウェアエンジニア</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">出版と執筆</h2>
+            <div class="publications-grid">
+                <a href="https://codezine.jp/article/detail/11096" target="_blank" rel="noopener">
+                <div class="publication-card">
+                    <h3>「アジャイル開発はあくまでゴール達成のための手段」――Yahoo!カード天神チームがたどり着いた開発スタイルと技術</h3>
+                    <p class="publication-meta">codezine.jp | 2018年10月</p>
+                </div>
+                </a>
+                <a href="https://event.shoeisha.jp/devsumi/20180906" target="_blank" rel="noopener">
+                <div class="publication-card">
+                    <h3>Developers Summit 2018 FUKUOKA</h3>
+                    <p class="publication-meta">event.shoeisha.jp | 2018年9月</p>
+                </div>
+                </a>
+                <a href="https://gihyo.jp/magazine/wdpress/archive/2017/vol99" target="_blank" rel="noopener">
+                <div class="publication-card">
+                    <h3>WEB+DB PRESS Vol.99</h3>
+                    <p class="publication-meta">gihyo.jp | 2017年6月</p>
+                </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

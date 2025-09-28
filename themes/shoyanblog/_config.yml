@@ -4,6 +4,7 @@ language: ja
 # main menu navigation
 menu:
   Home: /
+  "プロフィール": /profile
   "PHP入門": /lang/php/
   "プログラミングレッスン": /lesson
   "記事一覧": /archives
