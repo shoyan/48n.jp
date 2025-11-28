@@ -66,7 +66,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             "url": "https://48n.jp"
                           },
                           "datePublished": "Fri Nov 28 2025 18:07:53 GMT+0900",
-                          "dateModified": "Fri Nov 28 2025 20:31:23 GMT+0900",
+                          "dateModified": "Fri Nov 28 2025 20:35:47 GMT+0900",
                           "description": "多言語対応におけるTypeScriptの型チェックの仕組みについて説明します。翻訳キーのタイポや必須キーの欠落をコンパイル時に防ぐ方法を解説します。",
                           "mainEntityOfPage": {
                             "@type": "WebPage",
@@ -179,7 +179,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <time datetime="2025-11-28T09:07:53.000Z" itemprop="datepublished">
       2025/11/28
     </time>
-    <time datetime="2025-11-28T11:31:23.760Z" itemprop="modified">
+    <time datetime="2025-11-28T11:35:47.550Z" itemprop="modified">
       (更新日: 2025/11/28)
     </time>
   </div>
@@ -193,7 +193,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
   <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>多言語対応は一般的に翻訳関数に翻訳キーを渡すことで実装されます。その際に問題になるのが、キー名の間違い、キー名の変更漏れなどによる実装不備です。このようなエラーを人の目で全て確認するのは難しいため、システムによる検知が有効です。</p>
 <p>この記事では、TypeScriptの型システムを活用した、型チェックの方法を説明します。これにより、正しい翻訳キーが割り当てられていることがコンパイル時にチェックされ、アプリケーションの品質向上に大きな効果が期待できます。</p>
-<h2 id="多言語システムの実装"><a href="#多言語システムの実装" class="headerlink" title="多言語システムの実装"></a>多言語システムの実装</h2><h3 id="1-ベースとなる型の定義"><a href="#1-ベースとなる型の定義" class="headerlink" title="1. ベースとなる型の定義"></a>1. ベースとなる型の定義</h3><p>翻訳の型チェックは、日本語のメッセージファイル（<code>ja.ts</code>）をベースとして構築します。</p>
+<h2 id="多言語システムの実装"><a href="#多言語システムの実装" class="headerlink" title="多言語システムの実装"></a>多言語システムの実装</h2><h3 id="1-ベースとなる型の定義"><a href="#1-ベースとなる型の定義" class="headerlink" title="1. ベースとなる型の定義"></a>1. ベースとなる型の定義</h3><p>翻訳の型チェックは、日本語のメッセージファイル（<code>ja.ts</code>）をベースとして構築します。翻訳ファイルはJSONファイルで扱われることもありますが、型チェックという観点ではtsファイルで管理するのがおすすめです。</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; jaMessage &#125; <span class="keyword">from</span> <span class="string">'./ja'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> JaMessage = <span class="keyword">typeof</span> jaMessage</span><br></pre></td></tr></table></figure>
 
 <h4 id="TypeScriptの機能：typeof演算子"><a href="#TypeScriptの機能：typeof演算子" class="headerlink" title="TypeScriptの機能：typeof演算子"></a>TypeScriptの機能：<code>typeof</code>演算子</h4><p><code>typeof</code>演算子は、値から型を抽出するTypeScriptの機能です。<code>typeof jaMessage</code>により、<code>jaMessage</code>オブジェクトの構造から型を自動的に生成します。これにより、<code>jaMessage</code>の構造が変更されると、型定義も自動的に更新されます。</p>
