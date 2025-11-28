@@ -1,0 +1,418 @@
+
+  <!DOCTYPE html>
+  <html lang="ja">
+
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-37267422-8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-37267422-8');
+</script>
+
+      <meta charset="UTF-8">
+      <title>
+        TypeScriptで多言語システムの型チェックを実装する - SHOYAN BLOG
+      </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+      
+        <!-- stylesheets list from _config.yml -->
+        
+          <link rel="stylesheet" href="/css/shoyanblog.css">
+          
+            
+              
+                <meta name="description" content="多言語対応におけるTypeScriptの型チェックの仕組みについて説明します。翻訳キーのタイポや必須キーの欠落をコンパイル時に防ぐ方法を解説します。">
+                
+                  
+                      
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@sinn_shoyan" />
+<meta name="twitter:creator" content="@sinn_shoyan" />
+<meta name="og:title" content="TypeScriptで多言語システムの型チェックを実装する - SHOYAN BLOG" />
+
+  <meta name="og:description" content="多言語対応におけるTypeScriptの型チェックの仕組みについて説明します。翻訳キーのタイポや必須キーの欠落をコンパイル時に防ぐ方法を解説します。" />
+
+
+  <meta name="og:image" content="https://48n.jp/images/logo.png" />
+
+
+                        <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KQX8LKG');</script>
+<!-- End Google Tag Manager -->
+
+                        
+                        <!-- JSON-LD Structured Data -->
+                        <script type="application/ld+json">
+                        {
+                          "@context": "https://schema.org",
+                          "@type": "BlogPosting",
+                          "headline": "TypeScriptで多言語システムの型チェックを実装する - SHOYAN BLOG",
+                          "author": {
+                            "@type": "Person",
+                            "name": "Shohei Yamasaki",
+                            "url": "https://48n.jp/about/"
+                          },
+                          "publisher": {
+                            "@type": "Organization",
+                            "name": "SHOYAN BLOG",
+                            "url": "https://48n.jp"
+                          },
+                          "datePublished": "Fri Nov 28 2025 18:07:53 GMT+0900",
+                          "dateModified": "Fri Nov 28 2025 20:31:23 GMT+0900",
+                          "description": "多言語対応におけるTypeScriptの型チェックの仕組みについて説明します。翻訳キーのタイポや必須キーの欠落をコンパイル時に防ぐ方法を解説します。",
+                          "mainEntityOfPage": {
+                            "@type": "WebPage",
+                            "@id": "https://48n.jp/blog/2025/11/28/translation-type-check-mechanism/"
+                          }
+                        }
+                        </script>
+  <meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
+</head>
+
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KQX8LKG"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+      <div id="menu-outer">
+        <header id="header">
+  <div id="header-outer" class="outer mb-2">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SHOYAN BLOG</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        <a class="nav-link" href="https://twitter.com/sinn_shoyan" target="_blank">
+          <?xml version="1.0" encoding="utf-8"?>
+          <!-- Generator: Adobe Illustrator 20.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+          <svg
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            x="0px"
+            y="0px"
+            viewBox="0 0 400 400"
+            style="enable-background:new 0 0 400 400;"
+            xml:space="preserve"
+            width="25"
+            height="25"
+          >
+            <style type="text/css">
+              .st0 {
+                fill: #1da1f2;
+              }
+              .st1 {
+                fill: #ffffff;
+              }
+            </style>
+            <g id="Dark_Blue">
+              <path
+                class="st0"
+                d="M350,400H50c-27.6,0-50-22.4-50-50V50C0,22.4,22.4,0,50,0h300c27.6,0,50,22.4,50,50v300
+		C400,377.6,377.6,400,350,400z"
+              />
+            </g>
+            <g id="Logo__x2014__FIXED">
+              <path
+                class="st1"
+                d="M153.6,301.6c94.3,0,145.9-78.2,145.9-145.9c0-2.2,0-4.4-0.1-6.6c10-7.2,18.7-16.3,25.6-26.6
+		c-9.2,4.1-19.1,6.8-29.5,8.1c10.6-6.3,18.7-16.4,22.6-28.4c-9.9,5.9-20.9,10.1-32.6,12.4c-9.4-10-22.7-16.2-37.4-16.2
+		c-28.3,0-51.3,23-51.3,51.3c0,4,0.5,7.9,1.3,11.7c-42.6-2.1-80.4-22.6-105.7-53.6c-4.4,7.6-6.9,16.4-6.9,25.8
+		c0,17.8,9.1,33.5,22.8,42.7c-8.4-0.3-16.3-2.6-23.2-6.4c0,0.2,0,0.4,0,0.7c0,24.8,17.7,45.6,41.1,50.3c-4.3,1.2-8.8,1.8-13.5,1.8
+		c-3.3,0-6.5-0.3-9.6-0.9c6.5,20.4,25.5,35.2,47.9,35.6c-17.6,13.8-39.7,22-63.7,22c-4.1,0-8.2-0.2-12.2-0.7
+		C97.7,293.1,124.7,301.6,153.6,301.6"
+              />
+            </g>
+          </svg>
+        </a>
+        
+        <a class="nav-link" href="/atom.xml" title="RSSフィード">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25" viewBox="0 0 100 100">
+            <path
+              class="social"
+              d="M 13.310204,73.332654 C 5.967347,73.332654 0,79.322448 0,86.621428 c 0,7.338776 5.967347,13.262246 13.310204,13.262246 7.370408,0 13.328572,-5.92245 13.328572,-13.262246 0,-7.29898 -5.958164,-13.288774 -13.328572,-13.288774 z M 0.01530612,33.978572 V 53.143878 C 12.493878,53.143878 24.229592,58.02347 33.068368,66.865306 41.894898,75.685714 46.767346,87.47449 46.767346,100 h 19.25 C 66.017346,63.592858 36.4,33.979592 0.01530612,33.978572 l 0,0 z M 0.03877552,0 V 19.17449 C 44.54796,19.17551 80.77551,55.437756 80.77551,100 H 100 C 100,44.87653 55.15102,0 0.03877552,0 z"
+            ></path>
+          </svg>
+        </a>
+         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="https://48n.jp"></form>
+      </nav>
+
+      <nav id="main-nav">
+        
+        <a class="main-nav-link" href="/">Home</a>
+        
+        <a class="main-nav-link" href="/profile">プロフィール</a>
+        
+        <a class="main-nav-link" href="/lang/php/">PHP入門</a>
+        
+        <a class="main-nav-link" href="/lesson">プログラミングレッスン</a>
+        
+        <a class="main-nav-link" href="/archives">記事一覧</a>
+        
+        <a class="main-nav-link" href="/about">このページについて</a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+      </div>
+
+      <div id="content-outer">
+        <div id="content-inner">
+          
+<article id="post">
+  <div class="date-box">
+    <time datetime="2025-11-28T09:07:53.000Z" itemprop="datepublished">
+      2025/11/28
+    </time>
+    <time datetime="2025-11-28T11:31:23.760Z" itemprop="modified">
+      (更新日: 2025/11/28)
+    </time>
+  </div>
+  <h1>TypeScriptで多言語システムの型チェックを実装する</h1>
+  <div class="post-tags">
+    <a class="post-tags-link" href="/tags/TypeScript/" rel="tag">TypeScript</a> <a class="post-tags-link" href="/tags/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0/" rel="tag">プログラミング</a>
+  </div>
+  <div class="sharing">
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" target="_blank" rel="noopener" class="twitter-share-button" data-via="sinn_shoyan" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <a href="https://b.hatena.ne.jp/entry/" target="_blank" rel="noopener" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+</div>
+  <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>多言語対応は一般的に翻訳関数に翻訳キーを渡すことで実装されます。その際に問題になるのが、キー名の間違い、キー名の変更漏れなどによる実装不備です。このようなエラーを人の目で全て確認するのは難しいため、システムによる検知が有効です。</p>
+<p>この記事では、TypeScriptの型システムを活用した、型チェックの方法を説明します。これにより、正しい翻訳キーが割り当てられていることがコンパイル時にチェックされ、アプリケーションの品質向上に大きな効果が期待できます。</p>
+<h2 id="多言語システムの実装"><a href="#多言語システムの実装" class="headerlink" title="多言語システムの実装"></a>多言語システムの実装</h2><h3 id="1-ベースとなる型の定義"><a href="#1-ベースとなる型の定義" class="headerlink" title="1. ベースとなる型の定義"></a>1. ベースとなる型の定義</h3><p>翻訳の型チェックは、日本語のメッセージファイル（<code>ja.ts</code>）をベースとして構築します。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; jaMessage &#125; <span class="keyword">from</span> <span class="string">'./ja'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> JaMessage = <span class="keyword">typeof</span> jaMessage</span><br></pre></td></tr></table></figure>
+
+<h4 id="TypeScriptの機能：typeof演算子"><a href="#TypeScriptの機能：typeof演算子" class="headerlink" title="TypeScriptの機能：typeof演算子"></a>TypeScriptの機能：<code>typeof</code>演算子</h4><p><code>typeof</code>演算子は、値から型を抽出するTypeScriptの機能です。<code>typeof jaMessage</code>により、<code>jaMessage</code>オブジェクトの構造から型を自動的に生成します。これにより、<code>jaMessage</code>の構造が変更されると、型定義も自動的に更新されます。</p>
+<h4 id="ja-tsのサンプルコード"><a href="#ja-tsのサンプルコード" class="headerlink" title="ja.tsのサンプルコード"></a><code>ja.ts</code>のサンプルコード</h4><p>以下は、日本語メッセージファイル（<code>ja.ts</code>）のサンプルです。このファイルが型定義のベースとなります。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> jaMessage = &#123;</span><br><span class="line">  term: &#123;</span><br><span class="line">    next: <span class="string">'次へ'</span>,</span><br><span class="line">    back: <span class="string">'戻る'</span>,</span><br><span class="line">    cancel: <span class="string">'キャンセル'</span>,</span><br><span class="line">    submit: <span class="string">'送信'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  pages: &#123;</span><br><span class="line">    home: &#123;</span><br><span class="line">      title: <span class="string">'ホーム'</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    about: &#123;</span><br><span class="line">      title: <span class="string">'紹介'</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    contact: &#123;</span><br><span class="line">      title: <span class="string">'お問い合わせ'</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    terms: &#123;</span><br><span class="line">      title: <span class="string">'利用規約'</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125; <span class="keyword">as</span> <span class="keyword">const</span></span><br></pre></td></tr></table></figure>
+
+<p>このファイルでは、<code>as const</code>を使用することで、値がリテラル型として推論されます。これにより、型の精度が向上し、より厳密な型チェックが可能になります。</p>
+<h4 id="as-constとは"><a href="#as-constとは" class="headerlink" title="as constとは"></a>as constとは</h4><p><code>as const</code>は、TypeScriptの「constアサーション」という機能です。オブジェクトや配列に<code>as const</code>を付けることで、以下の効果が得られます。</p>
+<ol>
+<li><strong>リテラル型として推論される</strong>: 値が具体的なリテラル型（例：<code>&#39;マイページ&#39;</code>）として推論されます</li>
+<li><strong>読み取り専用になる</strong>: オブジェクトのプロパティが<code>readonly</code>になります</li>
+<li><strong>型の精度が向上する</strong>: より具体的な型情報が保持されます</li>
+</ol>
+<h4 id="as-constがない場合"><a href="#as-constがない場合" class="headerlink" title="as constがない場合"></a>as constがない場合</h4><p><code>as const</code>がない場合、TypeScriptは値の型を一般的な型として推論します。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// as const がない場合</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> jaMessage = &#123;</span><br><span class="line">  term: &#123;</span><br><span class="line">    next: <span class="string">'次へ'</span>,</span><br><span class="line">    back: <span class="string">'戻る'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 推論される型</span></span><br><span class="line"><span class="comment">// &#123;</span></span><br><span class="line"><span class="comment">//   term: &#123;</span></span><br><span class="line"><span class="comment">//     next: string;  // 一般的な string 型</span></span><br><span class="line"><span class="comment">//     back: string;  // 一般的な string 型</span></span><br><span class="line"><span class="comment">//   &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>この場合、<code>typeof jaMessage</code>で取得できる型は、値が<code>string</code>型として推論されます。</p>
+<h4 id="as-constがある場合"><a href="#as-constがある場合" class="headerlink" title="as constがある場合"></a><code>as const</code>がある場合</h4><p><code>as const</code>がある場合、TypeScriptは値の型をリテラル型として推論します。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// as const がある場合</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> jaMessage = &#123;</span><br><span class="line">  term: &#123;</span><br><span class="line">    next: <span class="string">'次へ'</span>,</span><br><span class="line">    back: <span class="string">'戻る'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125; <span class="keyword">as</span> <span class="keyword">const</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 推論される型</span></span><br><span class="line"><span class="comment">// &#123;</span></span><br><span class="line"><span class="comment">//   readonly term: &#123;</span></span><br><span class="line"><span class="comment">//     readonly next: '次へ';         // リテラル型</span></span><br><span class="line"><span class="comment">//     readonly back: '戻る';         // リテラル型</span></span><br><span class="line"><span class="comment">//   &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>この場合、<code>typeof jaMessage</code>で取得できる型は、値が具体的なリテラル型（<code>&#39;次へ&#39;</code>、<code>&#39;戻る&#39;</code>）として推論されます。</p>
+<h4 id="なぜas-constが必要なのか"><a href="#なぜas-constが必要なのか" class="headerlink" title="なぜas constが必要なのか"></a>なぜ<code>as const</code>が必要なのか</h4><p>翻訳メッセージの型チェックにおいて、<code>as const</code>は以下の理由で重要です。</p>
+<ol>
+<li><strong>型の一貫性</strong>: <code>typeof jaMessage</code>で取得した型が、実際の値の構造を正確に反映します</li>
+<li><strong>型の精度</strong>: <code>GenericType</code>が適用される際、元の構造が正確に保持されます</li>
+<li><strong>読み取り専用の保証</strong>: 翻訳メッセージが誤って変更されることを防ぎます</li>
+</ol>
+<h4 id="実際の違い"><a href="#実際の違い" class="headerlink" title="実際の違い"></a>実際の違い</h4><p><code>as const</code>の有無による型の違いを確認してみましょう。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// as const がない場合</span></span><br><span class="line"><span class="keyword">const</span> message1 = &#123; term: &#123; next: <span class="string">'次へ'</span> &#125; &#125;</span><br><span class="line"><span class="keyword">type</span> Type1 = <span class="keyword">typeof</span> message1</span><br><span class="line"><span class="comment">// Type1 = &#123; term: &#123; next: string &#125; &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// as const がある場合</span></span><br><span class="line"><span class="keyword">const</span> message2 = &#123; term: &#123; next: <span class="string">'次へ'</span> &#125; &#125; <span class="keyword">as</span> <span class="keyword">const</span></span><br><span class="line"><span class="keyword">type</span> Type2 = <span class="keyword">typeof</span> message2</span><br><span class="line"><span class="comment">// Type2 = &#123; readonly term: &#123; readonly next: '次へ' &#125; &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>as const</code>がある場合、<code>next</code>の型は<code>&#39;次へ&#39;</code>という具体的なリテラル型になります。これにより、型システムがより正確に動作し、翻訳キーの型チェックがより厳密になります。</p>
+<h3 id="2-再帰的な型変換"><a href="#2-再帰的な型変換" class="headerlink" title="2. 再帰的な型変換"></a>2. 再帰的な型変換</h3><p>翻訳メッセージはネストされたオブジェクト構造を持っています。この構造を型として表現するために、<code>GenericType</code>というユーティリティ型を使用しています。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> GenericType&lt;T <span class="keyword">extends</span> object&gt; = &#123;</span><br><span class="line">  [K <span class="keyword">in</span> keyof T]: T[K] <span class="keyword">extends</span> object ? GenericType&lt;T[K]&gt; : <span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> I18nMessage = GenericType&lt;JaMessage&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="TypeScriptの機能：条件型（Conditional-Types）と再帰的な型"><a href="#TypeScriptの機能：条件型（Conditional-Types）と再帰的な型" class="headerlink" title="TypeScriptの機能：条件型（Conditional Types）と再帰的な型"></a>TypeScriptの機能：条件型（Conditional Types）と再帰的な型</h4><ul>
+<li><p><code>[K in keyof T]</code>: マップ型（Mapped Types）により、オブジェクトの各キーを反復処理します</p>
+</li>
+<li><p><code>T[K] extends object ? GenericType&lt;T[K]&gt; : string</code>: 条件型により、値がオブジェクトの場合は再帰的に<code>GenericType</code>を適用し、そうでない場合は<code>string</code>型とします</p>
+</li>
+</ul>
+<p>これにより、以下のような構造が正しく型付けされます。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  term: &#123;</span><br><span class="line">    next: <span class="built_in">string</span>  <span class="comment">// 文字列型</span></span><br><span class="line">    back: <span class="built_in">string</span></span><br><span class="line">    cancel: <span class="built_in">string</span></span><br><span class="line">    submit: <span class="built_in">string</span></span><br><span class="line">  &#125;,</span><br><span class="line">  pages: &#123;</span><br><span class="line">    home: &#123;</span><br><span class="line">      title: <span class="built_in">string</span>  <span class="comment">// 3段階のネストも正しく型付けされる</span></span><br><span class="line">    &#125;,</span><br><span class="line">    about: &#123;</span><br><span class="line">      title: <span class="built_in">string</span></span><br><span class="line">    &#125;,</span><br><span class="line">    contact: &#123;</span><br><span class="line">      title: <span class="built_in">string</span></span><br><span class="line">    &#125;,</span><br><span class="line">    terms: &#123;</span><br><span class="line">      title: <span class="built_in">string</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>GenericType</code>は再帰的に動作するため、何段階のネストでも正しく型付けされます。</p>
+<h3 id="3-各言語ファイルでの型チェック"><a href="#3-各言語ファイルでの型チェック" class="headerlink" title="3. 各言語ファイルでの型チェック"></a>3. 各言語ファイルでの型チェック</h3><p>各言語ファイルでは、<code>I18nMessage</code>型を明示的に指定することで、型チェックが行われます。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; I18nMessage &#125; <span class="keyword">from</span> <span class="string">'./types'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> enMessage: I18nMessage = &#123;</span><br><span class="line">  term: &#123;</span><br><span class="line">    next: <span class="string">'Next'</span>,</span><br><span class="line">    back: <span class="string">'Back'</span>,</span><br><span class="line">    cancel: <span class="string">'Cancel'</span>,</span><br><span class="line">    submit: <span class="string">'Submit'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  pages: &#123;</span><br><span class="line">    home: &#123;</span><br><span class="line">      title: <span class="string">'Home'</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    about: &#123;</span><br><span class="line">      title: <span class="string">'About'</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    contact: &#123;</span><br><span class="line">      title: <span class="string">'Contact'</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    terms: &#123;</span><br><span class="line">      title: <span class="string">'Terms'</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>型チェックの効果</strong></p>
+<ul>
+<li><p>必須キーが欠落している場合、コンパイルエラーが発生します</p>
+</li>
+<li><p>存在しないキーを追加しようとすると、エラーが発生します</p>
+</li>
+<li><p>値の型が<code>string</code>でない場合、エラーが発生します</p>
+</li>
+<li><p>キーのタイポがある場合、エラーが発生します</p>
+</li>
+</ul>
+<h3 id="4-翻訳関数の型安全な実装"><a href="#4-翻訳関数の型安全な実装" class="headerlink" title="4. 翻訳関数の型安全な実装"></a>4. 翻訳関数の型安全な実装</h3><p>翻訳関数はライブラリを利用してもよいですが、シンプルな翻訳システムであれば自前で実装するのもよいと思います。ここでは、必要最低限の翻訳関数のサンプルを紹介します。</p>
+<p>翻訳関数についても型安全を担保する必要があります。型システムを実装するために、<code>Paths</code>型と<code>PathValue</code>型を使用します。</p>
+<h4 id="キーパスの型生成"><a href="#キーパスの型生成" class="headerlink" title="キーパスの型生成"></a>キーパスの型生成</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> PathsInternal&lt;T&gt; = T <span class="keyword">extends</span> <span class="built_in">string</span></span><br><span class="line">  ? never</span><br><span class="line">  : T <span class="keyword">extends</span> object</span><br><span class="line">  ? &#123;</span><br><span class="line">      [K <span class="keyword">in</span> keyof T]: K <span class="keyword">extends</span> <span class="built_in">string</span></span><br><span class="line">        ? T[K] <span class="keyword">extends</span> object</span><br><span class="line">          ? T[K] <span class="keyword">extends</span> <span class="built_in">string</span></span><br><span class="line">            ? K</span><br><span class="line">            : <span class="string">`<span class="subst">$&#123;K&#125;</span>.<span class="subst">$&#123;PathsInternal&lt;T[K]&gt;&#125;</span>`</span></span><br><span class="line">          : K</span><br><span class="line">        : never</span><br><span class="line">    &#125;[keyof T]</span><br><span class="line">  : never</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> Paths = PathsInternal&lt;JaMessage&gt;</span><br></pre></td></tr></table></figure>
+
+<p>この型により、<code>&#39;term.next&#39;</code>、<code>&#39;pages.home.title&#39;</code>のような文字列リテラル型が自動生成されます。</p>
+<h4 id="キーパスから値を取得する型"><a href="#キーパスから値を取得する型" class="headerlink" title="キーパスから値を取得する型"></a>キーパスから値を取得する型</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> PathValue&lt;T, P <span class="keyword">extends</span> <span class="built_in">string</span>&gt; = P <span class="keyword">extends</span> <span class="string">`<span class="subst">$&#123;infer Key&#125;</span>.<span class="subst">$&#123;infer Rest&#125;</span>`</span></span><br><span class="line">  ? Key <span class="keyword">extends</span> keyof T</span><br><span class="line">    ? T[Key] <span class="keyword">extends</span> object</span><br><span class="line">      ? PathValue&lt;T[Key], Rest&gt;</span><br><span class="line">      : never</span><br><span class="line">    : never</span><br><span class="line">  : P <span class="keyword">extends</span> keyof T</span><br><span class="line">  ? T[P] <span class="keyword">extends</span> <span class="built_in">string</span></span><br><span class="line">    ? T[P]</span><br><span class="line">    : never</span><br><span class="line">  : never</span><br></pre></td></tr></table></figure>
+
+<p>この型により、キーパスから対応する文字列型を取得できます。</p>
+<h4 id="翻訳関数の実装"><a href="#翻訳関数の実装" class="headerlink" title="翻訳関数の実装"></a>翻訳関数の実装</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; I18nMessage, Paths, PathValue &#125; <span class="keyword">from</span> <span class="string">'./types'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> I18nFunction = &lt;P <span class="keyword">extends</span> Paths&gt;(</span><br><span class="line">  key: P</span><br><span class="line">) =&gt; PathValue&lt;I18nMessage, P&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">createI18n</span>(<span class="params">message: I18nMessage</span>): <span class="title">I18nFunction</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> &lt;<span class="title">P</span> <span class="title">extends</span> <span class="title">Paths</span>&gt;(<span class="params">key: P &amp; <span class="built_in">string</span></span>): <span class="title">PathValue</span>&lt;<span class="title">I18nMessage</span>, <span class="title">P</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> keys = (key <span class="keyword">as</span> <span class="built_in">string</span>).split(<span class="string">'.'</span>)</span><br><span class="line">    <span class="keyword">let</span> value: <span class="built_in">any</span> = message</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> k of keys) &#123;</span><br><span class="line">      <span class="keyword">if</span> (value &amp;&amp; <span class="keyword">typeof</span> value === <span class="string">'object'</span> &amp;&amp; k <span class="keyword">in</span> value) &#123;</span><br><span class="line">        value = value[k <span class="keyword">as</span> keyof <span class="keyword">typeof</span> value]</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`Translation key "<span class="subst">$&#123;key&#125;</span>" not found`</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> value !== <span class="string">'string'</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`Translation key "<span class="subst">$&#123;key&#125;</span>" does not point to a string value`</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> value <span class="keyword">as</span> PathValue&lt;I18nMessage, P&gt;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用例"><a href="#使用例" class="headerlink" title="使用例"></a>使用例</h2><p>翻訳関数の使用例です。</p>
+<h3 id="翻訳関数の使用"><a href="#翻訳関数の使用" class="headerlink" title="翻訳関数の使用"></a>翻訳関数の使用</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createI18n &#125; <span class="keyword">from</span> <span class="string">'./i18n'</span></span><br><span class="line"><span class="keyword">import</span> &#123; jaMessage &#125; <span class="keyword">from</span> <span class="string">'./ja'</span></span><br><span class="line"><span class="keyword">import</span> &#123; enMessage &#125; <span class="keyword">from</span> <span class="string">'./en'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 日本語の翻訳関数を作成</span></span><br><span class="line"><span class="keyword">const</span> tJa = createI18n(jaMessage)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 英語の翻訳関数を作成</span></span><br><span class="line"><span class="keyword">const</span> tEn = createI18n(enMessage)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用例</span></span><br><span class="line"><span class="built_in">console</span>.log(tJa(<span class="string">'term.next'</span>)) <span class="comment">// '次へ'</span></span><br><span class="line"><span class="built_in">console</span>.log(tJa(<span class="string">'pages.home.title'</span>)) <span class="comment">// 'ホーム'</span></span><br><span class="line"><span class="built_in">console</span>.log(tJa(<span class="string">'pages.about.title'</span>)) <span class="comment">// '紹介'</span></span><br><span class="line"><span class="built_in">console</span>.log(tJa(<span class="string">'pages.contact.title'</span>)) <span class="comment">// 'お問い合わせ'</span></span><br><span class="line"><span class="built_in">console</span>.log(tJa(<span class="string">'pages.terms.title'</span>)) <span class="comment">// '利用規約'</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(tEn(<span class="string">'term.next'</span>)) <span class="comment">// 'Next'</span></span><br><span class="line"><span class="built_in">console</span>.log(tEn(<span class="string">'pages.home.title'</span>)) <span class="comment">// 'Home'</span></span><br><span class="line"><span class="built_in">console</span>.log(tEn(<span class="string">'pages.about.title'</span>)) <span class="comment">// 'About'</span></span><br><span class="line"><span class="built_in">console</span>.log(tEn(<span class="string">'pages.contact.title'</span>)) <span class="comment">// 'Contact'</span></span><br><span class="line"><span class="built_in">console</span>.log(tEn(<span class="string">'pages.terms.title'</span>)) <span class="comment">// 'Terms'</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="正しい使用例"><a href="#正しい使用例" class="headerlink" title="正しい使用例"></a>正しい使用例</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> enMessage: I18nMessage = &#123;</span><br><span class="line">  term: &#123;</span><br><span class="line">    next: <span class="string">'Next'</span>, <span class="comment">// ✅ 正しい</span></span><br><span class="line">    back: <span class="string">'Back'</span>,</span><br><span class="line">    cancel: <span class="string">'Cancel'</span>,</span><br><span class="line">    submit: <span class="string">'Submit'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  pages: &#123;</span><br><span class="line">    home: &#123;</span><br><span class="line">      title: <span class="string">'Home'</span>,  <span class="comment">// ✅ 3段階のネストも正しい</span></span><br><span class="line">    &#125;,</span><br><span class="line">    about: &#123;</span><br><span class="line">      title: <span class="string">'About'</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    contact: &#123;</span><br><span class="line">      title: <span class="string">'Contact'</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    terms: &#123;</span><br><span class="line">      title: <span class="string">'Terms'</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="エラーが発生する例"><a href="#エラーが発生する例" class="headerlink" title="エラーが発生する例"></a>エラーが発生する例</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> enMessage: I18nMessage = &#123;</span><br><span class="line">  term: &#123;</span><br><span class="line">    next: <span class="string">'Next'</span>,</span><br><span class="line">    <span class="comment">// ❌ エラー: 'back' プロパティが必須だが欠落している</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ❌ エラー: 'unknownKey' は存在しないキー</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> enMessage: I18nMessage = &#123;</span><br><span class="line">  term: &#123;</span><br><span class="line">    next: <span class="string">'Next'</span>,</span><br><span class="line">    unknownKey: <span class="string">'Value'</span>,  <span class="comment">// エラー</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ❌ エラー: 翻訳関数で存在しないキーを指定</span></span><br><span class="line"><span class="keyword">const</span> t = createI18n(enMessage)</span><br><span class="line">t(<span class="string">'term.invalidKey'</span>)      <span class="comment">// コンパイルエラー</span></span><br><span class="line">t(<span class="string">'pages.home.invalid'</span>)   <span class="comment">// コンパイルエラー</span></span><br><span class="line">t(<span class="string">'invalid.path'</span>)         <span class="comment">// コンパイルエラー</span></span><br><span class="line">t(<span class="string">'pages.invalid.title'</span>)  <span class="comment">// コンパイルエラー</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="メリット"><a href="#メリット" class="headerlink" title="メリット"></a>メリット</h2><ol>
+<li><p><strong>コンパイル時の安全性</strong>: 翻訳キーのエラーを実行前に検出できます</p>
+</li>
+<li><p><strong>自動補完</strong>: IDEが翻訳キーを自動補完してくれます</p>
+</li>
+<li><p><strong>リファクタリングの安全性</strong>: キー名を変更する際、使用箇所を自動的に検出できます</p>
+</li>
+<li><p><strong>ドキュメントとしての役割</strong>: 型定義自体が、利用可能な翻訳キーのドキュメントとなります</p>
+</li>
+<li><p><strong>翻訳関数の型安全</strong>: 翻訳関数を使用する際も、存在しないキーを指定するとコンパイルエラーが発生します</p>
+</li>
+</ol>
+<h2 id="サンプルコード"><a href="#サンプルコード" class="headerlink" title="サンプルコード"></a>サンプルコード</h2><p>サンプルコードは <a href="https://github.com/shoyan/i18n-sample" target="_blank" rel="noopener">https://github.com/shoyan/i18n-sample</a> で公開しています。</p>
+
+</article>
+
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2025/09/17/go-interface-implementation-check/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">Goのインターフェース実装チェックイディオムを理解する</div>
+    </a>
+  
+</nav>
+
+
+
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2025/11/28/translation-type-check-mechanism/">TypeScriptで多言語システムの型チェックを実装する</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2025/09/17/go-interface-implementation-check/">Goのインターフェース実装チェックイディオムを理解する</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2025/08/07/code-complexity-cyclomatic-complexity-guide/">コードの複雑度を測る：循環的複雑度（Cyclomatic Complexity）の計算方法と実践ガイド</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2025/08/06/http-proxy-protocol-guide/">HTTP中継（プロキシ）のプロトコル詳細解説</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2025/07/31/graphql-file-upload-guide/">GraphQLガイド - ファイルアップロード</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+            
+    <div class="ltech-ad" id="ltech-ad">
+        <button class="ltech-ad-close" id="ltech-ad-close" aria-label="広告を閉じる">×</button>
+        <a href="https://learning-tech.jp/" target="_blank" rel="noopener">
+            <img src="https://learning-tech.jp/assets/images/lts-logo.png" alt="LTech - プログラミング学習サイト" width="300" loading="lazy">
+            <p>LTech - プログラミング学習ならここで学ぼう</p>
+        </a>
+    </div>
+
+    <style>
+        .ltech-ad-close {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            font-size: 14px;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            z-index: 10;
+        }
+
+        .ltech-ad-close:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const closeButton = document.getElementById('ltech-ad-close');
+            const adContainer = document.getElementById('ltech-ad');
+
+            if (closeButton && adContainer) {
+                closeButton.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    adContainer.style.display = 'none';
+                });
+            }
+        });
+    </script>
+        </div>
+      </div>
+
+      <footer>
+        <div id="bottom-outer">
+          <div id="bottom-inner">
+            <div id="author-profile">
+              <div id="author">
+                <p>著者情報</p>
+                <a href="/about/">
+                  <img
+                    src="https://avatars1.githubusercontent.com/u/1150041?s=460&u=f615fc39ae1a47862c73b870898620fc9b5e6d60&v=4"
+                    alt="著者" loading="lazy">
+                </a>
+                <a href="/about/">
+                  <p class="author-name">山崎勝平(Yamasaki Shohei)</p>
+                </a>
+                <p class="author-introduction">フリーランスのソフトウェアエンジニア。LINEヤフーやメルカリで開発に従事し、その後独立。現在はIT企業のプロダクト開発や<a href="https://learning-tech.jp" target="_blank">LTech</a>の開発をしています。お仕事に関するご相談は<a href="/about/">お問い合わせ</a>ください。</p>
+              </div>
+              <div id="twitter-timeline">
+                <a class="twitter-timeline" href="https://twitter.com/sinn_shoyan?ref_src=twsrc%5Etfw" target="_blank" rel="noopener">Tweets by
+                  sinn_shoyan</a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+              </div>
+            </div>
+            <div id="footer-bottom">
+              <p>Copyright ©SHOYAN BLOG</p>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      
+        <!-- scripts list from theme config.yml -->
+        
+          <script src="/js/shoyanblog.js"></script>
+          
+            
+
+  </body>
+
+  </html>

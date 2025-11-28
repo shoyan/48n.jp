@@ -178,6 +178,29 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-09-06T05:26:15.000Z" itemprop="datepublished">
+            2016/09/06
+          </time>
+          <time datetime="2016-09-06T05:26:15.000Z" itemprop="modified">
+            (更新日: 2016/09/06)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/09/06/sql-injection/">mysql_real_escape_string()のみで防げないSQLインジェクション</a>
+        </h1>
+        <div class="content">
+          <p>PHPアプリのSQLインジェクション対策として、<code>mysql_real_escape_string()</code> 等があるがこれだけでは万全ではないことがあるのでメモ。</p>
+<p>例えば以下のSQLでは<code>mysql_real_escape_string()</code>を使っているが、脆弱性が存在する。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$id = mysql_real_escape_string(<span class="string">"1 OR 1=1"</span>);</span><br><span class="line">$sql = <span class="string">"SELECT * FROM table_name WHERE id = $id"</span>;</span><br></pre></td></tr></table></figure>
+
+<p><code>mysql_real_escape_string()</code> では上記を防ぐことができない。<br>クエリ内の変数をシングルクォート（<code>&#39;</code>）で囲むことで上記を防ぐことができる。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$id = mysql_real_escape_string(<span class="string">"1 OR 1=1"</span>);</span><br><span class="line">$sql = <span class="string">"SELECT * FROM table_name WHERE id = '$id'"</span>;</span><br></pre></td></tr></table></figure>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-09-02T04:36:58.000Z" itemprop="datepublished">
             2016/09/02
           </time>
@@ -268,34 +291,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p>rspecをアップデートしたら出なくなった。</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ bundle update rspec-rails</span><br><span class="line"></span><br><span class="line">$ bundle exec rspec spec</span><br><span class="line"><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span></span><br><span class="line"></span><br><span class="line">Finished <span class="keyword">in</span> 2.33 seconds (files took 8.85 seconds <span class="keyword">to</span> load)</span><br><span class="line">102 examples, 0 failures</span><br></pre></td></tr></table></figure>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-08-22T04:53:14.000Z" itemprop="datepublished">
-            2016/08/22
-          </time>
-          <time datetime="2016-08-22T04:53:14.000Z" itemprop="modified">
-            (更新日: 2016/08/22)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/08/22/freeze-iphone6/">iPhone6の画面が真っ暗で反応しなくなった</a>
-        </h1>
-        <div class="content">
-          <p>iPhone6の画面が真っ暗になり操作できなくなった。<br>画面は真っ暗だが、Siriが反応するので電源は入っている模様。</p>
-<p>電源ケーブルを挿してみたが症状は変わらず。<br>電源ボタンを押しても反応がない。</p>
-<p>修理となるとショップまで足を運ぶのが面倒くさいし、色々とクリアしないといけない問題が浮かんでくる。<br>まずは、家から出るのが1つめの難関だ。<br>高い確率で上の子がついてくるとダダをこね、下の子は泣くだろう。それを見た妻からは怪訝な顔をされる。<br>なんとか家を出れたとしても、近くのショップの駐車場が空いていないかもしれないし、駐車できたとしても待ち時間があるかもしれない。以前、近くのドコモショップにいったら1時間くらい待ち時間がかかりますと言われたことがある。<br>また、ショップ店員に見せても要領の得ない回答をされて、無駄に時間がかかってしまう可能性もありそうだ。<br>そういうことを考えるとショップに行くのがとても億劫になる。</p>
-<p>自分でなんとかできないだろうかと自宅のPCでググった。そして、iPhoneを強制再起動する方法を見つけた。<br>やりかたは、電源ボタンとホームボタンを10秒以上長押しする。<br>するとアップルのリンゴマークが表示されるので、そのまま待っていると再起動する。<br>見事、このやり方で復活した。</p>
-<p>iPhoneが操作不能になった場合、以下のことを試してみるとよい。</p>
-<ul>
-<li>電源ボタンで電源を切って再起動</li>
-<li>電源コードを挿す</li>
-<li>強制再起動する</li>
-<li>どうしようもないのでショップに相談する</li>
-</ul>
 
         </div>
       </div>

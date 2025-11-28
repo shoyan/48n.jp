@@ -178,6 +178,45 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-09-16T08:37:10.000Z" itemprop="datepublished">
+            2016/09/16
+          </time>
+          <time datetime="2016-09-16T08:37:10.000Z" itemprop="modified">
+            (更新日: 2016/09/16)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/09/16/links-container-for-docker/">Dockerのコンテナ間を繋ぐLinksを使ってPHPとMySQLコンテナを連携させる</a>
+        </h1>
+        <div class="content">
+          <p>DockerはLinksというコンテナ間のネットワークを繋ぐ仕組みを持つ。<br>例えば、アプリケーションコンテナとデータベースコンテナを連携して使いたいときに有用だ。<br>今回はMySQLとPHPのコンテナを連携させる方法を紹介する。</p>
+<h2 id="MySQLコンテナの作成"><a href="#MySQLコンテナの作成" class="headerlink" title="MySQLコンテナの作成"></a>MySQLコンテナの作成</h2><p>まずは、mysqlコンテナを作成する。<br>バックグラウンドで起動させるための <code>--detach</code>オプションと3306ポートを解放するための <code>expose</code>オプションを指定している。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="builtin-name">run</span> --detach <span class="attribute">--expose</span>=3306 <span class="attribute">--name</span>=test-mysql <span class="attribute">--env</span>=<span class="string">"MYSQL_ROOT_PASSWORD=mypassword"</span> mysql</span><br></pre></td></tr></table></figure>
+
+<p>以下のようにコンテナが起動していることを確認できるはずだ。</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">⇒  docker ps</span><br><span class="line">CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES</span><br><span class="line">b18a5159fe7c        mysql               <span class="string">"docker-entrypoint.sh"</span>   <span class="number">1</span> minutes ago      Up <span class="number">1</span> minutes       <span class="number">3306</span>/tcp            test-mysql</span><br></pre></td></tr></table></figure>
+
+<h2 id="PHPコンテナの作成"><a href="#PHPコンテナの作成" class="headerlink" title="PHPコンテナの作成"></a>PHPコンテナの作成</h2><p>次にPHPコンテナを作成する。<br>以下のDockerfileと確認用のconnect.phpを用意しておく。</p>
+<p>Dockerfile</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> php:7.1</span><br><span class="line"><span class="builtin-name">RUN</span> apt-<span class="builtin-name">get</span> update</span><br><span class="line"><span class="builtin-name">RUN</span> docker-php-ext-install pdo_mysql mbstring</span><br><span class="line"><span class="builtin-name">ADD</span> . /app</span><br></pre></td></tr></table></figure>
+
+<p>connect.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">$dsn = <span class="string">'mysql:host='</span> . $_ENV[<span class="string">'MYSQL_PORT_3306_TCP_ADDR'</span>];</span><br><span class="line">$user = <span class="string">'root'</span>;</span><br><span class="line">$password = $_ENV[<span class="string">'MYSQL_ENV_MYSQL_ROOT_PASSWORD'</span>];</span><br><span class="line"></span><br><span class="line">$dbh = <span class="keyword">new</span> PDO($dsn, $user, $password);</span><br><span class="line"></span><br><span class="line">$sql = <span class="string">"SELECT version();"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span> ($dbh-&gt;query($sql, PDO::FETCH_ASSOC) <span class="keyword">as</span> $row) &#123;</span><br><span class="line">    print_r($row);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ビルドする。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t mysql-php .</span><br></pre></td></tr></table></figure>
+
+<p>以下のように <code>--link 連携したいコンテナ名:エイリアス名</code> でPHPコンテナを起動すると、起動したコンテナの環境変数に連携したいコンテナに関する情報が登録される。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="builtin-name">run</span> -it --link test-mysql:mysql mysql-php bash</span><br><span class="line"><span class="comment"># root@9ec43f759596:/#</span></span><br><span class="line"><span class="comment"># env</span></span><br><span class="line"><span class="attribute">MYSQL_PORT_3306_TCP_PORT</span>=3306</span><br><span class="line"><span class="attribute">MYSQL_PORT_3306_TCP</span>=tcp://172.17.0.3:3306</span><br><span class="line"><span class="attribute">MYSQL_ENV_MYSQL_VERSION</span>=5.7.15-1debian8</span><br><span class="line"><span class="attribute">MYSQL_NAME</span>=/big_shirley/mysql</span><br><span class="line"><span class="attribute">MYSQL_PORT_3306_TCP_PROTO</span>=tcp</span><br><span class="line"><span class="attribute">MYSQL_PORT_3306_TCP_ADDR</span>=172.17.0.3</span><br><span class="line"><span class="attribute">MYSQL_ENV_MYSQL_MAJOR</span>=5.7</span><br><span class="line"><span class="attribute">MYSQL_PORT</span>=tcp://172.17.0.3:3306</span><br></pre></td></tr></table></figure>
+
+<p>最後にPHPのコンテナでconnect.phpを実行して接続できることを確認してみる。<br>version名が表示されれば成功だ。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># php /app/connect.php</span><br><span class="line">=&gt;</span><br><span class="line">Array</span><br><span class="line">(</span><br><span class="line">    [version()] =&gt; <span class="number">5.7</span>.<span class="number">15</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-09-15T04:46:15.000Z" itemprop="datepublished">
             2016/09/15
           </time>
@@ -295,29 +334,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>社会人になってから小説は読むのに時間がかかるのでそれとなく敬遠していたのだが、小説を読む必要性があるのではないかと考えを改めた。<br>最近、視野が狭くなっていると感じている。<br>同じオフィスで働く毎日を繰り返すと、どうしてもその日常での視点で物事を見てしまう。<br>その組織の常識が自分の常識となり、それはどうもおもしろくない。<br>そんなことを考えず、ただ目の前の仕事をこなしそれでうまくいけばいいのだが私はそうではないので、視野を広げてみようと思ったのが小説を読むきっかけである。</p>
 <p>そういう理由なので、サラリーマンが題材の小説を中心に読むつもりだ。<br>職種は違えど、会社に勤めるサラリーマンであれば皆似たような悩みや問題を持っていると思う。<br>それをどのように解決し成長していくのかを学び、あわよくば取り込んでしまおうと思っている。</p>
 <p>「起業前夜」の次は何を読むのかというと、楡周平の「プラチナタウン」だ。<br>寂れた地方を元気にしていく内容の小説。<br>色々と学べることがありそうで楽しみだ。</p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-09-06T05:26:15.000Z" itemprop="datepublished">
-            2016/09/06
-          </time>
-          <time datetime="2016-09-06T05:26:15.000Z" itemprop="modified">
-            (更新日: 2016/09/06)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/09/06/sql-injection/">mysql_real_escape_string()のみで防げないSQLインジェクション</a>
-        </h1>
-        <div class="content">
-          <p>PHPアプリのSQLインジェクション対策として、<code>mysql_real_escape_string()</code> 等があるがこれだけでは万全ではないことがあるのでメモ。</p>
-<p>例えば以下のSQLでは<code>mysql_real_escape_string()</code>を使っているが、脆弱性が存在する。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$id = mysql_real_escape_string(<span class="string">"1 OR 1=1"</span>);</span><br><span class="line">$sql = <span class="string">"SELECT * FROM table_name WHERE id = $id"</span>;</span><br></pre></td></tr></table></figure>
-
-<p><code>mysql_real_escape_string()</code> では上記を防ぐことができない。<br>クエリ内の変数をシングルクォート（<code>&#39;</code>）で囲むことで上記を防ぐことができる。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$id = mysql_real_escape_string(<span class="string">"1 OR 1=1"</span>);</span><br><span class="line">$sql = <span class="string">"SELECT * FROM table_name WHERE id = '$id'"</span>;</span><br></pre></td></tr></table></figure>
 
         </div>
       </div>
