@@ -178,6 +178,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2018-11-29T05:55:51.000Z" itemprop="datepublished">
+            2018/11/29
+          </time>
+          <time datetime="2018-11-29T05:55:51.000Z" itemprop="modified">
+            (更新日: 2018/11/29)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2018/11/29/check-other-process/">シェルスクリプトで別プロセスの終了ステータスを取得する</a>
+        </h1>
+        <div class="content">
+          <p>シェルスクリプトで別プロセスの終了ステータスを取得するTipを紹介します。</p>
+<h3 id="ユースケース"><a href="#ユースケース" class="headerlink" title="ユースケース"></a>ユースケース</h3><p>時間のかかる処理などを並列で行い、その実行結果(終了ステータス)を取得したい。</p>
+<h3 id="サンプルコード"><a href="#サンプルコード" class="headerlink" title="サンプルコード"></a>サンプルコード</h3><p>Bashのサンプルコードです。スクリプトに解説を記入しています。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">command1</span></span>() &#123;</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"executing commnad1"</span></span><br><span class="line">  sleep 3</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">command2</span></span>() &#123;</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"executing commnad2"</span></span><br><span class="line">  sleep 3</span><br><span class="line">  <span class="comment"># エラーとして終了させる</span></span><br><span class="line">  <span class="built_in">exit</span> 1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"start"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># バックグラウンドで実行</span></span><br><span class="line">command1 &amp;</span><br><span class="line"><span class="comment"># $!で直前に実行されたコマンドのプロセスIDを取得し、変数に保存している</span></span><br><span class="line">pid1=$!</span><br><span class="line"></span><br><span class="line">command2 &amp;</span><br><span class="line">pid2=$!</span><br><span class="line"></span><br><span class="line"><span class="comment"># waitは指定されたプロセスIDの処理が終わるまで待つ</span></span><br><span class="line"><span class="built_in">wait</span> <span class="variable">$pid1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># $?でwaitで指定しているプロセスの終了ステータスを取得することができる</span></span><br><span class="line"><span class="keyword">if</span> [ $? != 0 ]; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"command1 error"</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"commnad1 success"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">wait</span> <span class="variable">$pid2</span></span><br><span class="line"><span class="keyword">if</span> [ $? != 0 ]; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"command2 error"</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"command2 success"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"end"</span></span><br></pre></td></tr></table></figure>
+
+<p>gistにもコードをアップしています。</p>
+<ul>
+<li><a href="https://gist.github.com/shoyan/6f45b6a005fd34a44264fa1dcb4d56e6" target="_blank">wait_process.sh</a></li>
+</ul>
+<p>shellの学習は次の書籍を1冊やっておけば大丈夫です。</p>
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=syoyama-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4797321946&linkId=98e93361f2c0071d8749d5526b9a8b64"></iframe>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2018-11-20T07:04:35.000Z" itemprop="datepublished">
             2018/11/20
           </time>
@@ -306,35 +334,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
     
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2018-07-05T07:34:33.000Z" itemprop="datepublished">
-            2018/07/05
-          </time>
-          <time datetime="2018-07-05T07:34:33.000Z" itemprop="modified">
-            (更新日: 2018/07/05)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2018/07/05/why-the-morning-is-wasted-on-one-meeting/">1つのMTGが午前中をダメにする</a>
-        </h1>
-        <div class="content">
-          <blockquote>
-<p>基本的に、予定があることがわかっている時は、何も仕事を終わらせられません。時計を見て｢1時間後に会議があるから、この大事な仕事はまだやらないほうがいいな｣と思ったり、1時間を20分くらいに感じるせいか、一番小さな仕事ですら無意識のうちに先延ばしにします。</p>
-</blockquote>
-<p><a href="https://www.lifehacker.jp/2018/07/overscheduling-your-days-can-wreck-your-productivity.html" target="_blank">生産的な1日は｢予定を入れすぎない｣ことからはじまる</a></p>
-<p>30分後にMTGが予定されているだけで次の仕事をやる気がしなくなります。中途半端にやるくらいなら、MTGが終わってからやろうと思うからです。そして、MTGが終わると何だか疲れてしまい、少し休憩してからやろうと思います。さて、休憩もしたので仕事に取り掛かったのもつかの間、昼休みになります。このような感じで午前中に1つMTGが入っただけで、ほとんど生産的なことができずに午前中が終わってしまいます。たった30分のMTGが午前中をダメにしてしまいます。</p>
-<p>このMTGのように、それ自身は些細な時間でも与える影響は大きいものです。その影響についても考える必要があります。</p>
-
-        </div>
-      </div>
-    
   </div>
 
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/4/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><a class="extend next" rel="next" href="/page/6/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/4/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="extend next" rel="next" href="/page/6/">Next</a>
 </div>
 
             

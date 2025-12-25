@@ -178,6 +178,36 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-07-22T05:12:06.000Z" itemprop="datepublished">
+            2016/07/22
+          </time>
+          <time datetime="2016-07-22T05:12:06.000Z" itemprop="modified">
+            (更新日: 2016/07/22)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/07/22/introduce-to-circle-ci/">CircleCIでお手軽にCI環境をつくる</a>
+        </h1>
+        <div class="content">
+          <p>最近はCIプラットフォームが充実していて、Travice CI、Wercker、Droneなど様々なプラットフォームが開発されています。<br>最近は<a href="https://circleci.com/" target="_blank" rel="noopener">CircleCI</a>を使っているのですが、なかなか便利です。</p>
+<h2 id="CircleCIの便利な点"><a href="#CircleCIの便利な点" class="headerlink" title="CircleCIの便利な点"></a>CircleCIの便利な点</h2><p>CircleCIの便利な点は特別な設定をせずにテストコードさえあればCIができてしまうことです。<br>CircleCIにアカウントを作って、CIを行うリポジトリを設定すればOKです。<br>リポジトリにpushするとCIが実行されます。<br>ソースコードからbundle installなどの必要な前処理をしてくれるので、CIを行うための前準備的な設定が必要ありません。</p>
+<p>私は<a href="https://github.com/shoyan/git_find_committer" target="_blank" rel="noopener">git_find_commiter</a>や<a href="https://github.com/shoyan/php-syntax-check" target="_blank" rel="noopener">php-syntax-check</a>でCircleCIを使っています。</p>
+<h2 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h2><p>デフォルトのRubyのバージョンが古いので(マニュアルによるとUbuntu 12.04 and Ubuntu 14.04 build imagesのもの)、Ruby1.9から導入されたキーワード引数など比較的新しく導入された機構を使うと構文エラーが発生することがあります。<br>その場合は<code>circle.yml</code>ファイルにRubyのバージョンを設定できます。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">machine:</span></span><br><span class="line">  <span class="attr">ruby:</span></span><br><span class="line">    <span class="attr">version:</span> <span class="number">2.3</span><span class="number">.0</span></span><br></pre></td></tr></table></figure>
+
+<p>また、bundlerのバージョンでエラーが発生することがありました。<br>その場合は、以下のようにバージョンを指定することができます。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">dependencies:</span></span><br><span class="line">  <span class="attr">pre:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">gem</span> <span class="string">install</span> <span class="string">bundler</span> <span class="string">-v</span> <span class="number">1.12</span><span class="number">.5</span></span><br></pre></td></tr></table></figure>
+
+<p>circle.ymlの構文についてはドキュメントを参考にしてください。</p>
+<ul>
+<li><a href="https://circleci.com/docs/configuration/" target="_blank" rel="noopener">Configuring CircleCI - CircleCI</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-07-21T09:41:04.000Z" itemprop="datepublished">
             2016/07/21
           </time>
@@ -369,51 +399,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
     
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-07-14T04:43:40.000Z" itemprop="datepublished">
-            2016/07/14
-          </time>
-          <time datetime="2016-07-14T04:43:40.000Z" itemprop="modified">
-            (更新日: 2016/07/14)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/07/14/useful-ruby-tips/">知っていると便利なRubyの小技集</a>
-        </h1>
-        <div class="content">
-          <h3 id="a-zの文字列を作成する"><a href="#a-zの文字列を作成する" class="headerlink" title="a-zの文字列を作成する"></a>a-zの文字列を作成する</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">'a'</span>..<span class="string">'z'</span>).to_a.join</span><br><span class="line">=&gt; <span class="string">"abcdefghijklmnopqrstuvwxyz"</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="特定のkeyのみ抽出する"><a href="#特定のkeyのみ抽出する" class="headerlink" title="特定のkeyのみ抽出する"></a>特定のkeyのみ抽出する</h3><p>特定のkeyのみ抽出するにはvalues_atメソッドを使います。</p>
-<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">h = &#123; <span class="string">"cat"</span> = <span class="string">"feline"</span>, <span class="string">"dog"</span> = <span class="string">"canine"</span>, <span class="string">"cow"</span> = <span class="string">"bovine"</span> &#125;</span><br><span class="line">h.values_at(<span class="string">"cow"</span>, <span class="string">"cat"</span>)  <span class="meta">#=&gt; [<span class="string">"bovine"</span>, <span class="string">"feline"</span>]</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="keyとvalueの配列からhashを作成する"><a href="#keyとvalueの配列からhashを作成する" class="headerlink" title="keyとvalueの配列からhashを作成する"></a>keyとvalueの配列からhashを作成する</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">keys</span>   = [<span class="string">"suzuki"</span>, <span class="string">"itou"</span>, <span class="string">"yamada"</span>]</span><br><span class="line"><span class="attr">values</span> = [<span class="number">87</span>, <span class="number">76</span>, <span class="number">69</span>]</span><br><span class="line"><span class="attr">ary</span> = [keys, values].transpose</span><br><span class="line"><span class="attr">h</span> = Hash[*ary.flatten]</span><br></pre></td></tr></table></figure>
-
-<h3 id="特定の範囲の要素を取得する"><a href="#特定の範囲の要素を取得する" class="headerlink" title="特定の範囲の要素を取得する"></a>特定の範囲の要素を取得する</h3><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>][<span class="number">0</span>..<span class="number">2</span>]</span><br><span class="line">=&gt; [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>]</span><br></pre></td></tr></table></figure>
-
-<h3 id="配列からnilを取り除く"><a href="#配列からnilを取り除く" class="headerlink" title="配列からnilを取り除く"></a>配列からnilを取り除く</h3><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">2</span>, nil, <span class="number">3</span>, <span class="number">4</span>, nil].compact</span><br><span class="line">=&gt; [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br></pre></td></tr></table></figure>
-
-<h3 id="配列から特定の条件に一致する要素を取り除く"><a href="#配列から特定の条件に一致する要素を取り除く" class="headerlink" title="配列から特定の条件に一致する要素を取り除く"></a>配列から特定の条件に一致する要素を取り除く</h3><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>].delete_if &#123; |x| x % <span class="number">2</span> == <span class="number">0</span> &#125;</span><br><span class="line">=&gt; [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>]</span><br></pre></td></tr></table></figure>
-
-<h3 id="10進数を基数変換する"><a href="#10進数を基数変換する" class="headerlink" title="10進数を基数変換する"></a>10進数を基数変換する</h3><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">255</span>.to_s(<span class="number">2</span>)</span><br><span class="line">=&gt; <span class="string">"11111111"</span></span><br><span class="line"><span class="number">255</span>.to_s(<span class="number">8</span>)</span><br><span class="line">=&gt; <span class="string">"377"</span></span><br><span class="line"><span class="number">255</span>.to_s(<span class="number">16</span>)</span><br><span class="line">=&gt; <span class="string">"ff"</span></span><br></pre></td></tr></table></figure>
-
-<p>逆の操作を行う場合は<code>to_i</code>メソッドを使います。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"11111111"</span>.to_i(<span class="number">2</span>)</span><br><span class="line">=&gt; <span class="number">255</span></span><br><span class="line"><span class="string">"377"</span>.to_i(<span class="number">8</span>)</span><br><span class="line">=&gt; <span class="number">255</span></span><br><span class="line"><span class="string">"ff"</span>.to_i(<span class="number">16</span>)</span><br><span class="line">=&gt; <span class="number">255</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="ハッシュのvalueでソートする"><a href="#ハッシュのvalueでソートする" class="headerlink" title="ハッシュのvalueでソートする"></a>ハッシュのvalueでソートする</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scores = &#123; <span class="string">'Carol'</span> =&gt; <span class="number">90</span>, <span class="string">'Alice'</span> =&gt; <span class="number">50</span>, <span class="string">'Bob'</span> =&gt; <span class="number">60</span>, <span class="string">'David'</span> =&gt; <span class="number">40</span> &#125;</span><br><span class="line">scores.sort &#123;|(k1, v1), (k2, v2)| v2 &lt;=&gt; v1 &#125;</span><br><span class="line">=&gt; [[<span class="string">"Carol"</span>, <span class="number">90</span>], [<span class="string">"Bob"</span>, <span class="number">60</span>], [<span class="string">"Alice"</span>, <span class="number">50</span>], [<span class="string">"David"</span>, <span class="number">40</span>]]</span><br></pre></td></tr></table></figure>
-
-<h3 id="同じ値を数える"><a href="#同じ値を数える" class="headerlink" title="同じ値を数える"></a>同じ値を数える</h3><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"b"</span>].each_with_object(Hash.new(<span class="number">0</span>)) &#123;|r, arr| arr[r]+=<span class="number">1</span> &#125;</span><br><span class="line">=&gt; &#123;<span class="string">"a"</span>=&gt;<span class="number">2</span>, <span class="string">"b"</span>=&gt;<span class="number">3</span>, <span class="string">"c"</span>=&gt;<span class="number">1</span>&#125;</span><br></pre></td></tr></table></figure>
-
-
-        </div>
-      </div>
-    
   </div>
 
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/17/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><a class="extend next" rel="next" href="/page/19/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/17/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="extend next" rel="next" href="/page/19/">Next</a>
 </div>
 
             

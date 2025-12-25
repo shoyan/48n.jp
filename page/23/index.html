@@ -178,6 +178,55 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-06-06T10:33:59.000Z" itemprop="datepublished">
+            2016/06/06
+          </time>
+          <time datetime="2016-06-06T10:33:59.000Z" itemprop="modified">
+            (更新日: 2016/06/06)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/06/06/guide-tcpwrappers/">TCPWrappersとは何なのかを調べてみた</a>
+        </h1>
+        <div class="content">
+          <p>sshのハンドシェイクでこけてしまい、その原因がわからずハマりました。<br>原因としては、TCPWrappersで拒否されていました。<br>TCPWrappersとはなんだろうということで調べてみました。</p>
+<h2 id="TCPWrappersとは"><a href="#TCPWrappersとは" class="headerlink" title="TCPWrappersとは"></a>TCPWrappersとは</h2><p>TCPWrapperとは、ネットワークのアクセス制御をする機能です。<br>デフォルトでインストールされています。</p>
+<h2 id="Linuxの基本的なアクセス制御の仕組み"><a href="#Linuxの基本的なアクセス制御の仕組み" class="headerlink" title="Linuxの基本的なアクセス制御の仕組み"></a>Linuxの基本的なアクセス制御の仕組み</h2><p><img src="https://www.centos.org/docs/5/html/Deployment_Guide-en-US/images/tcp-wrappers/tcp_wrap_diagram.png" alt="Access Control to Network Services"></p>
+<p>アクセス制御の仕組みとして、FirewallとTCP Wrappersがあります。<br>Firewallはiptablesで制御します。<br>なぜ2つの仕組みが存在するのかはわかりません（誰か教えてください）。</p>
+<p>クライアント→Firewall→TCPWrappers→サービスという流れで処理を行います。<br>TCPWrappersは接続を許可するかどうかのファイルを参照し、許可リストにあればサービスに処理を受け渡します。</p>
+<p>処理のログはsyslog daemon (syslogd)によってクライアントと接続先サービスの情報を <code>/var/log/secure</code> または <code>/var/log/messages</code> に書き込まれます。</p>
+<h2 id="TCPWrappersのアドバンテージ"><a href="#TCPWrappersのアドバンテージ" class="headerlink" title="TCPWrappersのアドバンテージ"></a>TCPWrappersのアドバンテージ</h2><p>TCPWrappersを使うことで、以下のメリットがあるとのこと。</p>
+<ul>
+<li>接続したクライアントとそのサービスがログに残る</li>
+<li>様々なプロトコルを集約して管理できる</li>
+</ul>
+<p>##TCPWrappersの設定ファイル</p>
+<p>以下の2つのファイルがあります。</p>
+<ul>
+<li>/etc/hosts.allow</li>
+<li>/etc/hosts.deny</li>
+</ul>
+<p>TCPWrappersはクライアントからのリクエストを受けると、以下の処理を行います。</p>
+<ul>
+<li><code>/etc/hosts.allow</code> を参照します。クライアントがリストに存在した場合、接続を許可します。リストに存在しない場合は次のステップに進みます。</li>
+<li><code>/etc/hosts.deny</code>を参照します。クライアントがリストに存在した場合、接続を拒否します。リストにない場合は接続を許可します。</li>
+</ul>
+<h3 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h3><ul>
+<li><code>/etc/hosts.allow</code>から先に評価され、そこでリストに一致した場合<code>/etc/hosts.deny</code>は評価されません。<code>/etc/hosts.allow</code>と<code>/etc/hosts.deny</code>に同じクライアントを指定した場合は<code>/etc/hosts.allow</code>が優先されます。</li>
+<li>ファイルの上から評価されていき、一致した時点で評価を打ち切ります。順番が重要です。</li>
+<li>TCPWrappersはキャッシュを持ちません。ですので、設定ファイルを書き換えたら即反映されます。デーモンをリスタートする必要はありません。</li>
+<li>最後に改行を含めるとエラーメッセージが出るとのことなので、含めないほうがよさそうです。<code>warning: /etc/hosts.allow, line 20: missing newline or line too long</code>というメッセージが <code>/var/log/messages</code> または <code>/var/log/secure</code>に出力されるとのことです。</li>
+</ul>
+<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
+<li><a href="http://lpi.or.jp/column/linux/linux_m06.shtml" target="_blank" rel="noopener">【第6回】TCPWrappers(hosts.allow,hosts.deny)とSSHの公開鍵認証について</a></li>
+<li><a href="https://www.centos.org/docs/5/html/Deployment_Guide-en-US/ch-tcpwrappers.html" target="_blank" rel="noopener">42.5. TCP Wrappers and xinetd</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-06-03T08:45:45.000Z" itemprop="datepublished">
             2016/06/03
           </time>
@@ -373,68 +422,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
     
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-05-31T04:58:42.000Z" itemprop="datepublished">
-            2016/05/31
-          </time>
-          <time datetime="2016-05-31T04:58:42.000Z" itemprop="modified">
-            (更新日: 2016/05/31)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/05/31/to-draw-a-graph-using-high-charts/">グラフを描画するHighChartsで平均気温のグラフを描画する</a>
-        </h1>
-        <div class="content">
-          <p>グラフを描画する<a href="http://www.highcharts.com/" target="_blank" rel="noopener">HighCharts</a>を紹介します。<br>HighChartsはJavaScriptのグラフ描画ライブラリです。<br>HighChartsを使えば簡単にグラフの描画ができます。</p>
-<h2 id="デモページ"><a href="#デモページ" class="headerlink" title="デモページ"></a>デモページ</h2><p>福岡市の平均気温をグラフで表示してみました。</p>
-<p><a href="http://codepen.io/shoyan/details/jrOjWK/" target="_blank" rel="noopener">http://codepen.io/shoyan/details/jrOjWK/</a></p>
-<h2 id="サンプルを作ってみる"><a href="#サンプルを作ってみる" class="headerlink" title="サンプルを作ってみる"></a>サンプルを作ってみる</h2><p>簡単なサンプルを作ってみましょう。<br>私がサンプルとして利用していた<a href="http://codepen.io/" target="_blank" rel="noopener">CODEPEN</a>を利用すると簡単に作成できるのでオススメです。</p>
-<p>HighChartsを使うには、jQueryとhighCharts.jsが必要です。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://code.highcharts.com/highcharts.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://code.jquery.com/jquery-2.2.4.min.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>index.htmlのbody部は以下を定義します。<br>div要素にグラフが描画されます。</p>
-<p>index.html</p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span> <span class="built_in">id</span>=<span class="string">"container"</span> style=<span class="string">"width:100%; height:400px;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<p>JavaScript tag <code>&lt;script&gt; &lt;/script&gt;</code> に書くか、外部ファイルに定義してください。</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">$(function</span> <span class="string">()</span> <span class="string">&#123;</span></span><br><span class="line">    <span class="string">$('#container').highcharts(&#123;</span></span><br><span class="line">        <span class="attr">chart:</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">type:</span> <span class="string">'bar'</span></span><br><span class="line">        <span class="string">&#125;,</span></span><br><span class="line">        <span class="attr">title:</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">text:</span> <span class="string">'Fruit Consumption'</span></span><br><span class="line">        <span class="string">&#125;,</span></span><br><span class="line">        <span class="attr">xAxis:</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">tags:</span> <span class="string">['Apples',</span> <span class="string">'Bananas'</span><span class="string">,</span> <span class="string">'Oranges'</span><span class="string">]</span></span><br><span class="line">        <span class="string">&#125;,</span></span><br><span class="line">        <span class="attr">yAxis:</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">title:</span> <span class="string">&#123;</span></span><br><span class="line">                <span class="attr">text:</span> <span class="string">'Fruit eaten'</span></span><br><span class="line">            <span class="string">&#125;</span></span><br><span class="line">        <span class="string">&#125;,</span></span><br><span class="line">        <span class="attr">series:</span> <span class="string">[&#123;</span></span><br><span class="line">            <span class="attr">name:</span> <span class="string">'Jane'</span><span class="string">,</span></span><br><span class="line">            <span class="attr">data:</span> <span class="string">[1,</span> <span class="number">0</span><span class="string">,</span> <span class="number">4</span><span class="string">]</span></span><br><span class="line">        <span class="string">&#125;,</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">name:</span> <span class="string">'John'</span><span class="string">,</span></span><br><span class="line">            <span class="attr">data:</span> <span class="string">[5,</span> <span class="number">7</span><span class="string">,</span> <span class="number">3</span><span class="string">]</span></span><br><span class="line">        <span class="string">&#125;]</span></span><br><span class="line">    <span class="string">&#125;);</span></span><br><span class="line"><span class="string">&#125;);</span></span><br></pre></td></tr></table></figure>
-
-<p>あとは、ブラウザでアクセスすればグラフが描画されます。</p>
-<h2 id="構文"><a href="#構文" class="headerlink" title="構文"></a>構文</h2><p>基本的な構文は以下です。</p>
-<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span>(<span class="string">"グラフを描画するhtml要素"</span>).highcharts(<span class="keyword">option</span>)</span><br></pre></td></tr></table></figure>
-
-<h3 id="HighChartsの基本的なパラメーター-option"><a href="#HighChartsの基本的なパラメーター-option" class="headerlink" title="HighChartsの基本的なパラメーター(option)"></a>HighChartsの基本的なパラメーター(option)</h3><p>HighChartsの基本的なパラメーター(option)を紹介します。</p>
-<ul>
-<li><strong>TITLE</strong>: チャートのタイトル</li>
-<li><strong>SERIES</strong>: 描画するデータの値</li>
-<li><strong>TOOLTIP</strong>: チャートにマウスオーバーしたときに表示されるツールチップの設定</li>
-<li><strong>LEGEND</strong>: SERIESの説明</li>
-<li><strong>AXES</strong>: 縦軸と横軸の説明を設定します。</li>
-</ul>
-<h3 id="グラフの種類について"><a href="#グラフの種類について" class="headerlink" title="グラフの種類について"></a>グラフの種類について</h3><p>typeにグラフの種類を設定できます。</p>
-<ul>
-<li>棒グラフ: column</li>
-<li>折れ線グラフ: line</li>
-<li>円グラフ: pie</li>
-<li>帯グラフ: bar</li>
-<li>ヒストグラム: column</li>
-<li>散布図: scatter</li>
-<li>箱ひげ図: boxplot</li>
-<li>三角グラフ: pyramid</li>
-</ul>
-<p>様々なグラフのデモページが用意されており、参考になります。</p>
-<p><a href="http://www.highcharts.com/demo" target="_blank" rel="noopener">http://www.highcharts.com/demo</a></p>
-
-        </div>
-      </div>
-    
   </div>
 
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/22/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><a class="extend next" rel="next" href="/page/24/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/22/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="extend next" rel="next" href="/page/24/">Next</a>
 </div>
 
             

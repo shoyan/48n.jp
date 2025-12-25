@@ -178,6 +178,45 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-07-14T04:43:40.000Z" itemprop="datepublished">
+            2016/07/14
+          </time>
+          <time datetime="2016-07-14T04:43:40.000Z" itemprop="modified">
+            (更新日: 2016/07/14)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/07/14/useful-ruby-tips/">知っていると便利なRubyの小技集</a>
+        </h1>
+        <div class="content">
+          <h3 id="a-zの文字列を作成する"><a href="#a-zの文字列を作成する" class="headerlink" title="a-zの文字列を作成する"></a>a-zの文字列を作成する</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">'a'</span>..<span class="string">'z'</span>).to_a.join</span><br><span class="line">=&gt; <span class="string">"abcdefghijklmnopqrstuvwxyz"</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="特定のkeyのみ抽出する"><a href="#特定のkeyのみ抽出する" class="headerlink" title="特定のkeyのみ抽出する"></a>特定のkeyのみ抽出する</h3><p>特定のkeyのみ抽出するにはvalues_atメソッドを使います。</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">h = &#123; <span class="string">"cat"</span> = <span class="string">"feline"</span>, <span class="string">"dog"</span> = <span class="string">"canine"</span>, <span class="string">"cow"</span> = <span class="string">"bovine"</span> &#125;</span><br><span class="line">h.values_at(<span class="string">"cow"</span>, <span class="string">"cat"</span>)  <span class="meta">#=&gt; [<span class="string">"bovine"</span>, <span class="string">"feline"</span>]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="keyとvalueの配列からhashを作成する"><a href="#keyとvalueの配列からhashを作成する" class="headerlink" title="keyとvalueの配列からhashを作成する"></a>keyとvalueの配列からhashを作成する</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">keys</span>   = [<span class="string">"suzuki"</span>, <span class="string">"itou"</span>, <span class="string">"yamada"</span>]</span><br><span class="line"><span class="attr">values</span> = [<span class="number">87</span>, <span class="number">76</span>, <span class="number">69</span>]</span><br><span class="line"><span class="attr">ary</span> = [keys, values].transpose</span><br><span class="line"><span class="attr">h</span> = Hash[*ary.flatten]</span><br></pre></td></tr></table></figure>
+
+<h3 id="特定の範囲の要素を取得する"><a href="#特定の範囲の要素を取得する" class="headerlink" title="特定の範囲の要素を取得する"></a>特定の範囲の要素を取得する</h3><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>][<span class="number">0</span>..<span class="number">2</span>]</span><br><span class="line">=&gt; [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>]</span><br></pre></td></tr></table></figure>
+
+<h3 id="配列からnilを取り除く"><a href="#配列からnilを取り除く" class="headerlink" title="配列からnilを取り除く"></a>配列からnilを取り除く</h3><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">2</span>, nil, <span class="number">3</span>, <span class="number">4</span>, nil].compact</span><br><span class="line">=&gt; [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+
+<h3 id="配列から特定の条件に一致する要素を取り除く"><a href="#配列から特定の条件に一致する要素を取り除く" class="headerlink" title="配列から特定の条件に一致する要素を取り除く"></a>配列から特定の条件に一致する要素を取り除く</h3><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>].delete_if &#123; |x| x % <span class="number">2</span> == <span class="number">0</span> &#125;</span><br><span class="line">=&gt; [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>]</span><br></pre></td></tr></table></figure>
+
+<h3 id="10進数を基数変換する"><a href="#10進数を基数変換する" class="headerlink" title="10進数を基数変換する"></a>10進数を基数変換する</h3><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">255</span>.to_s(<span class="number">2</span>)</span><br><span class="line">=&gt; <span class="string">"11111111"</span></span><br><span class="line"><span class="number">255</span>.to_s(<span class="number">8</span>)</span><br><span class="line">=&gt; <span class="string">"377"</span></span><br><span class="line"><span class="number">255</span>.to_s(<span class="number">16</span>)</span><br><span class="line">=&gt; <span class="string">"ff"</span></span><br></pre></td></tr></table></figure>
+
+<p>逆の操作を行う場合は<code>to_i</code>メソッドを使います。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"11111111"</span>.to_i(<span class="number">2</span>)</span><br><span class="line">=&gt; <span class="number">255</span></span><br><span class="line"><span class="string">"377"</span>.to_i(<span class="number">8</span>)</span><br><span class="line">=&gt; <span class="number">255</span></span><br><span class="line"><span class="string">"ff"</span>.to_i(<span class="number">16</span>)</span><br><span class="line">=&gt; <span class="number">255</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="ハッシュのvalueでソートする"><a href="#ハッシュのvalueでソートする" class="headerlink" title="ハッシュのvalueでソートする"></a>ハッシュのvalueでソートする</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scores = &#123; <span class="string">'Carol'</span> =&gt; <span class="number">90</span>, <span class="string">'Alice'</span> =&gt; <span class="number">50</span>, <span class="string">'Bob'</span> =&gt; <span class="number">60</span>, <span class="string">'David'</span> =&gt; <span class="number">40</span> &#125;</span><br><span class="line">scores.sort &#123;|(k1, v1), (k2, v2)| v2 &lt;=&gt; v1 &#125;</span><br><span class="line">=&gt; [[<span class="string">"Carol"</span>, <span class="number">90</span>], [<span class="string">"Bob"</span>, <span class="number">60</span>], [<span class="string">"Alice"</span>, <span class="number">50</span>], [<span class="string">"David"</span>, <span class="number">40</span>]]</span><br></pre></td></tr></table></figure>
+
+<h3 id="同じ値を数える"><a href="#同じ値を数える" class="headerlink" title="同じ値を数える"></a>同じ値を数える</h3><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"b"</span>].each_with_object(Hash.new(<span class="number">0</span>)) &#123;|r, arr| arr[r]+=<span class="number">1</span> &#125;</span><br><span class="line">=&gt; &#123;<span class="string">"a"</span>=&gt;<span class="number">2</span>, <span class="string">"b"</span>=&gt;<span class="number">3</span>, <span class="string">"c"</span>=&gt;<span class="number">1</span>&#125;</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-07-12T05:45:29.000Z" itemprop="datepublished">
             2016/07/12
           </time>
@@ -1055,100 +1094,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
     
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-06-30T01:23:38.000Z" itemprop="datepublished">
-            2016/06/30
-          </time>
-          <time datetime="2016-06-30T01:23:38.000Z" itemprop="modified">
-            (更新日: 2016/06/30)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/06/30/learn-huffman-coding-and-entropy/">ハフマン符号化のアルゴリズムとエントロピーを学ぶ</a>
-        </h1>
-        <div class="content">
-          <p>ハフマン符号とは1952年にデビッド・ハフマンという人が考え出したアルゴリズムです。<br>文字列をはじめとするデータの可逆圧縮に使われます。<br>よく使われる文字には短いビットを、あまり使われない文字には長いビットを割り当てることで全体としてサイズが削減されることを狙ったアルゴリズムです。</p>
-<h2 id="符号化の原理"><a href="#符号化の原理" class="headerlink" title="符号化の原理"></a>符号化の原理</h2><p>実際にアルゴリズムを確認していきます。</p>
-<p><code>DAEBCBACBBBC</code> という12文字のメッセージをハフマン符号化します。</p>
-<p>このメッセージでは、ABCDEという5種類の文字が使われているため、それぞれの文字を固有のビット長で表す場合は、3ビットが必要です。</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">A:</span> <span class="number">000</span></span><br><span class="line"><span class="attr">B:</span> <span class="number">001</span></span><br><span class="line"><span class="attr">C:</span> <span class="number">010</span></span><br><span class="line"><span class="attr">D:</span> <span class="number">011</span></span><br><span class="line"><span class="attr">E:</span> <span class="number">100</span></span><br></pre></td></tr></table></figure>
-
-<p>上記の対応表をもとに、文字列をビットに変換します。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DAEBCBACBBBC</span><br><span class="line"><span class="number">011</span> <span class="number">000</span> <span class="number">100</span> <span class="number">001</span> <span class="number">010</span> <span class="number">001</span> <span class="number">000</span> <span class="number">010</span> <span class="number">001</span> <span class="number">001</span> <span class="number">001</span> <span class="number">010</span></span><br></pre></td></tr></table></figure>
-
-<p>1文字3ビットで12文字あることから全体のビット数は36ビットとなります。</p>
-<p>ここで、よく出てくる文字には短いビットを、あまりでてこない文字には短いビットを与えます。<br>対応表を以下のように作ります。</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">A:</span> <span class="number">110</span></span><br><span class="line"><span class="attr">B:</span> <span class="number">0</span></span><br><span class="line"><span class="attr">C:</span> <span class="number">10</span></span><br><span class="line"><span class="attr">D:</span> <span class="number">1110</span></span><br><span class="line"><span class="attr">E:</span> <span class="number">1111</span></span><br></pre></td></tr></table></figure>
-
-<p>メッセージ全体では以下のようになります。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DAEBCBACBBBC</span><br><span class="line"><span class="number">1110</span> <span class="number">110</span> <span class="number">1111</span> <span class="number">0</span> <span class="number">10</span> <span class="number">0</span> <span class="number">110</span> <span class="number">10</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">10</span></span><br></pre></td></tr></table></figure>
-
-<p>全体のビット数は25ビットとなり、固定長の方式と比べると70%ほどのデータ量に抑えられています。</p>
-<h3 id="対応表をつくる"><a href="#対応表をつくる" class="headerlink" title="対応表をつくる"></a>対応表をつくる</h3><p>以下の手順で文字とビット列の対応表をつくります。</p>
-<ul>
-<li>データに出現する文字の出現回数を求める</li>
-<li>それをもとにハフマン木とよばれる二分木(バイナリツリー)を構成する</li>
-</ul>
-<p>ハフマン木の構成の仕方は次のアルゴリズムとなります。</p>
-<ol>
-<li>各記号に対応する葉を作成する。この葉には、記号の出現頻度をあらかじめ格納しておく。</li>
-<li>出現頻度の最も少ない2つの葉をとりだす。取り出した2つの葉を格納する節をつくり、左右の枝に記号0と1を割り当てる。この節には2つの葉の出現頻度を足した値を格納し、新しい葉として追加する</li>
-<li>葉が1つになるまで手順2を繰り返す。</li>
-</ol>
-<p><code>DAEBCBACBBBC</code> を題材に、ハフマン木を作ります。</p>
-<h3 id="1-各記号に対応する葉を作成する"><a href="#1-各記号に対応する葉を作成する" class="headerlink" title="1. 各記号に対応する葉を作成する"></a>1. 各記号に対応する葉を作成する</h3><p>まずは、各記号に対応する葉を作成し、データの出現回数をあらかじめ格納しておきます。</p>
-<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">"B"</span>=&gt;<span class="number">5</span>, <span class="string">"C"</span>=&gt;<span class="number">3</span>, <span class="string">"A"</span>=&gt;<span class="number">2</span>, <span class="string">"D"</span>=&gt;<span class="number">1</span>, <span class="string">"E"</span>=&gt;<span class="number">1</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-出現頻度が少ない2つの葉をとりだす"><a href="#2-出現頻度が少ない2つの葉をとりだす" class="headerlink" title="2.出現頻度が少ない2つの葉をとりだす"></a>2.出現頻度が少ない2つの葉をとりだす</h3><p>DとEが1番小さいので、この2つを取り出します。<br>そして、DとEの葉を足し合わせた節を1つ作ります。<br>この手順を最終的に葉が1つになるまで繰り返します。</p>
-<h3 id="ハフマン木が作られる工程"><a href="#ハフマン木が作られる工程" class="headerlink" title="ハフマン木が作られる工程"></a>ハフマン木が作られる工程</h3><script async class="speakerdeck-embed" data-id="cf8ab792cb9742cdb5e492dc98c2931b" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
-
-<p><code>DAEBCBACBBBC</code> を作成した対応表で符号化します。</p>
-<p>文字 | 個数 | 符号<br>B | 5 | 0<br>C | 3 | 10<br>A | 2 | 110<br>D | 1 | 1110<br>E | 1 | 1111</p>
-<h2 id="データ圧縮アルゴリズムについて"><a href="#データ圧縮アルゴリズムについて" class="headerlink" title="データ圧縮アルゴリズムについて"></a>データ圧縮アルゴリズムについて</h2><p>一般的にデータ圧縮アルゴリズムは「モデル化」と「符号化」の2つにわけて考えることができます。<br>「モデル化」は入力された記号(データ)から各記号の出現確率を求めます。<br>「符号化」は出現確率に基づいて符号語を割り当て、入力されたデータを各符号語に変換して出力します。<br>モデル化についてはいろいろな方法がありますが、ハフマン符号のように記号の出現確率を求めそれに基づいて符号語を割り当てるモデルを「無記憶情報源モデル」といいます。<br>「情報源」は記号を生成する基となるデータのことです。<br>情報源が記号を生成するとき、以前に生成した記号との間に関連性がないことを「無記憶」といいます。<br>記号aの次は記号bが生成されるといった関係性はなく、確率でのみ記号が作成されるということです。</p>
-<p>データ圧縮アルゴリズムを評価する場合、圧縮率のほかに「平均符号長」という尺度があります。<br>これは、符号化された記号列のビット長を入力された記号数で割った値として定義されます。</p>
-<p>たとえば <code>DAEBCBACBBBC</code> をハフマン符号化すると<code>1110110111101001101000010</code>となります。<br>符号化された記号列のビット長(1110110111101001101000010)を入力された記号数(DAEBCBACBBBC)で割ると平均符号長は 25 / 12 = 2.0833333 となります。</p>
-<p>無記憶情報源モデルの場合、各記号 $$ a_i $$ の出現確率 $$ p(a_i) $$ がわかると、次の式で平均符号長の下限値を求めることができます。  </p>
-<p>$$ H=-\sum_{i=1}^n p(a_i) \log _2 p(a_i) $$</p>
-<p>$$ H $$ を平均情報量、またはエントロピー(Entropy)と呼びます。</p>
-<p>情報源符号化定理によると、平均符号長はエントロピーより短くすることができません。  </p>
-<h3 id="情報源符号化定理"><a href="#情報源符号化定理" class="headerlink" title="情報源符号化定理"></a>情報源符号化定理</h3><blockquote>
-<p>意復号可能な平均符号長 L は、無記憶情報源のエントロピー H よりも小さくすることができない。すなわち不等式 H &lt;= L が成り立つ。また、平均符号長 L が H &lt;= L &lt; H + 1 を満足する瞬時に復号可能な符号が構成できる。</p>
-</blockquote>
-<p>先ほどの記号列のエントロピーを求めてみます。</p>
-<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">記号列: DAEBCBACBBBC</span><br><span class="line">記号: 確率: -p(ai) / log2 p(ai)</span><br><span class="line">------------------------------------------</span><br><span class="line">D: 1 / 12: 0.29874687506009634</span><br><span class="line">A: 2 / 12: 0.430827083453526</span><br><span class="line">E: 1 / 12: 0.29874687506009634</span><br><span class="line">B: 5 / 12: 0.5262643357640807</span><br><span class="line">C: 3 / 12: 0.5</span><br><span class="line">------------------------------------------</span><br><span class="line">エントロピー = 2.054585169337799</span><br><span class="line">12 * 2.054585169337799 = 24.65502203205359 bit</span><br></pre></td></tr></table></figure>
-
-<p>したがって、この記号列では平均符号長を 2.05 ビット以下にすることはできません。<br>いいかえると、この記号列を表すには少なくても 12 * 2.054585169337799 = 24.65502203205359 ビット以上が必要になる、ということです。</p>
-<h3 id="エントロピーの算出コード"><a href="#エントロピーの算出コード" class="headerlink" title="エントロピーの算出コード"></a>エントロピーの算出コード</h3><p>エントロピーを算出するコードをRubyで書きました。</p>
-<script src="https://gist.github.com/shoyan/cfa5528ccd9388eee25b2e120c4c452b.js"></script>
-
-<p>以下のように使います。</p>
-<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span> ./<span class="built-in">entropy</span> <span class="keyword">file</span>.txt</span><br><span class="line"><span class="number">2.054585169337799</span></span><br></pre></td></tr></table></figure>
-
-<p>文字列を渡す場合はパイプで繋ぎます。</p>
-<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span> echo <span class="string">"DAEBCBACBBBC"</span> | ./<span class="built-in">entropy</span></span><br><span class="line"><span class="number">2.054585169337799</span></span><br></pre></td></tr></table></figure>
-
-<p>また、 <code>-v</code> オプションで詳細を表示できます。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ ./entropy -v file.txt</span><br><span class="line">記号: 確率 : 値</span><br><span class="line">D: <span class="number">1</span> / <span class="number">12</span>: <span class="number">0.29874687506009634</span></span><br><span class="line">A: <span class="number">2</span> / <span class="number">12</span>: <span class="number">0.430827083453526</span></span><br><span class="line">E: <span class="number">1</span> / <span class="number">12</span>: <span class="number">0.29874687506009634</span></span><br><span class="line">B: <span class="number">5</span> / <span class="number">12</span>: <span class="number">0.5262643357640807</span></span><br><span class="line">C: <span class="number">3</span> / <span class="number">12</span>: <span class="number">0.5</span></span><br><span class="line"></span><br><span class="line">サイズ エントロピー 下限値</span><br><span class="line"><span class="number">12</span> <span class="number">2.054585169337799</span> <span class="number">3</span></span><br></pre></td></tr></table></figure>
-
-<p>ファイルサイズ * エントロピー で圧縮の下限値を計算することができます。<br>上記の場合は3バイトよりも圧縮することはできないということです。</p>
-<p>ただし、この結果は無記憶情報源モデルの場合であり、モデル化によってエントロピーの値は異なることに注意してください。エントロピーをより小さくするモデルを作成することがでれきば、これよりも高い圧縮率を達成することができます。</p>
-<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
-<li><a href="http://www.geocities.jp/m_hiroi/light/pyalgo31.html" target="_blank" rel="noopener">Algorithms with Python / シャノン・ファノ符号とハフマン符号</a></li>
-<li><a href="http://fussy.web.fc2.com/algo/compress3_huffman.htm" target="_blank" rel="noopener">圧縮アルゴリズム (3) ハフマン符号化 - 静的ハフマン圧縮</a></li>
-<li><a href="http://www.infonet.co.jp/ueyama/ip/concept/entropy.html" target="_blank" rel="noopener">平均情報量／エントロピー</a></li>
-</ul>
-<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-        </div>
-      </div>
-    
   </div>
 
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/18/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><a class="page-number" href="/page/21/">21</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><a class="extend next" rel="next" href="/page/20/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/18/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><a class="page-number" href="/page/21/">21</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="extend next" rel="next" href="/page/20/">Next</a>
 </div>
 
             

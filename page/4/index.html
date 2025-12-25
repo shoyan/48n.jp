@@ -178,6 +178,56 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2019-10-31T09:30:30.000Z" itemprop="datepublished">
+            2019/10/31
+          </time>
+          <time datetime="2019-10-31T09:30:30.000Z" itemprop="modified">
+            (更新日: 2019/10/31)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2019/10/31/replace-blog-system/">ブログシステムをHexoにしました</a>
+        </h1>
+        <div class="content">
+          <p>ブログシステムを<a href="https://hexo.io/" target="_blank" class="outbound">Hexo</a>にしました。ブログデザインも新規で作成しました。ブログシステムはそのうちリプレースしたいなと常々思っていたのですが、なかなかこれといったものがなく時間が経ってしまいましたが、ついにリプレースすることができました。</p>
+<h2 id="以前のブログシステム"><a href="#以前のブログシステム" class="headerlink" title="以前のブログシステム"></a>以前のブログシステム</h2><p>以前のブログシステムはOctopressを使っていました。このOctopress、いくつか問題点がありました。</p>
+<h3 id="動作が遅い"><a href="#動作が遅い" class="headerlink" title="動作が遅い"></a>動作が遅い</h3><p>Markdownで書いてそれをhtmlに変換する仕組みなのですが、その速度が遅いです。<br>記事数が少ない場合はそれほど気にならなかったのですが、100記事くらいになってくると明らかに遅くなってきます。<br>現在では、プレビューモードで変換するのに10秒程度かかってしまい、気持ちよく記事が書けない状態でした。</p>
+<h3 id="メンテナンスされていない"><a href="#メンテナンスされていない" class="headerlink" title="メンテナンスされていない"></a>メンテナンスされていない</h3><p>2015年で開発が止まっています。新機能や改善もないですし、機能に問題がある場合も修正がされません。開発が止まっているものは使うべきではありません。今から使うのはやめたほうがいいでしょう。</p>
+<h2 id="なぜHexoにしたのか"><a href="#なぜHexoにしたのか" class="headerlink" title="なぜHexoにしたのか"></a>なぜHexoにしたのか</h2><h3 id="Node-jsで書かれているから"><a href="#Node-jsで書かれているから" class="headerlink" title="Node.jsで書かれているから"></a>Node.jsで書かれているから</h3><p>HexoはNode.jsで書かれています。<br>最近はNode.jsを使うことが多いので、Node.jsで書かれているブログシステムを使いたかったのです。</p>
+<h3 id="静的サイトジェネレーターだから"><a href="#静的サイトジェネレーターだから" class="headerlink" title="静的サイトジェネレーターだから"></a>静的サイトジェネレーターだから</h3><p>ブログシステムには大きく分けて静的サイトジェネレーターとデータベースを使ったブログシステムがあります。Hexoは静的サイトジェネレーターと言われるシステムです。静的サイトジェネレーターはMarkdown等の形式で書かれたファイルをhtmlに変換するソフトウェアです。</p>
+<p>静的サイトジェネレーターのメリットは表示速度が早い、セキュリティリスクがほとんどない、他のシステムに移行しやすいなどのメリットがあります。個人ブログであれば静的サイトジェネレーターがおすすめです。</p>
+<h3 id="人気のあるブログシステムだから"><a href="#人気のあるブログシステムだから" class="headerlink" title="人気のあるブログシステムだから"></a>人気のあるブログシステムだから</h3><p>Node.jsで書かれていて人気のあるブログシステムはHexoとGatsby、あとは最近VuePressも人気が出てきているようです。<br>他にどんなソフトウェアがあるかはこちらで確認することができます。</p>
+<ul>
+<li><a href="https://github.com/topics/static-site-generator" target="_blank" class="outbound">static-site-generator · GitHub Topics</a></li>
+</ul>
+<p>人気のあるソフトウェアは開発が活発で便利な機能も多く、使いやすいことが多いです。</p>
+<h3 id="現在も開発が行われているから"><a href="#現在も開発が行われているから" class="headerlink" title="現在も開発が行われているから"></a>現在も開発が行われているから</h3><p>Hexoは現在も開発が行われています。2019-10-14にバージョン4.0のリリースが行われました。</p>
+<ul>
+<li><a href="https://hexo.io/news/2019/10/14/hexo-4-released/" target="_blank" class="outbound">Hexo 4.0.0 Released | Hexo</a></li>
+</ul>
+<h2 id="Hexo-vs-Gatsby-vs-VuePress"><a href="#Hexo-vs-Gatsby-vs-VuePress" class="headerlink" title="Hexo vs Gatsby vs VuePress"></a>Hexo vs Gatsby vs VuePress</h2><p>Node.js環境の静的サイトジェネレーターはHexo、Gatsby、VuePressの3つが人気です。GatsbyとVuePressは次の理由で採用しませんでした。</p>
+<h3 id="Gatsbyを採用しなかった理由"><a href="#Gatsbyを採用しなかった理由" class="headerlink" title="Gatsbyを採用しなかった理由"></a>Gatsbyを採用しなかった理由</h3><p><a href="https://www.gatsbyjs.org/" target="_blank" class="outbound">Gatsby</a>はReactベースの静的サイトジェネレーターです。Reactに慣れている人であればいいかもしれませんが、私がReactに詳しくないのもあり、Gatsbyは学習コストが高いという印象です。あえてその学習コストを払ってGatsbyを使うメリットが見当たらないので採用を見送りました。</p>
+<h3 id="VuePressを採用しなかった理由"><a href="#VuePressを採用しなかった理由" class="headerlink" title="VuePressを採用しなかった理由"></a>VuePressを採用しなかった理由</h3><p><a href="https://vuepress.vuejs.org/" target="_blank" class="outbound">VuePress</a>がメジャーバージョンになったということもあり、VuePressも試してみました。情報が少なくまだまだ使いづらいというのが正直なところで、VuePressを使うメリットが見当たりませんでした。<br>ブログではなく、ドキュメントなどのシステムとして使うならありかもしれません。<br>一応、サンプルコードをGitHubにあげているので興味のある方は参考にしてみてください。</p>
+<ul>
+<li><a href="https://github.com/shoyan/vuepress-sample" target="_blank" class="outbound">vuepress-sample</a></li>
+</ul>
+<h3 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h3><p>特にこだわりがなくブログを楽に構築したいということであれば、Hexo一択ではないかと思います。最後にHexoを使うメリットについて説明します。</p>
+<h2 id="Hexoを使うメリット"><a href="#Hexoを使うメリット" class="headerlink" title="Hexoを使うメリット"></a>Hexoを使うメリット</h2><h3 id="ブログの基本機能が簡単に作成できる"><a href="#ブログの基本機能が簡単に作成できる" class="headerlink" title="ブログの基本機能が簡単に作成できる"></a>ブログの基本機能が簡単に作成できる</h3><p>Hexoでのブログ構築は5つのコマンドを実行するだけです。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br><span class="line">$ hexo init blog</span><br><span class="line">$ <span class="built_in">cd</span> blog</span><br><span class="line">$ npm install</span><br><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p><code>hexo server</code> を実行後に<code>http://localhost:4000</code> にアクセスするとブログが表示されます。</p>
+<h3 id="テーマの作成がしやすい"><a href="#テーマの作成がしやすい" class="headerlink" title="テーマの作成がしやすい"></a>テーマの作成がしやすい</h3><p>Hexoにはテーマ作成をサポートするツールが用意されています。<br><a href="https://www.npmjs.com/package/generator-hexo-theme" target="_blank" class="outbound">generator-hexo-theme</a>を使えば簡単にブログテーマの雛形を用意することができます。<br>ブログテーマは自作したのですが、その雛形はgenerator-hexo-themeで作成しました。</p>
+<h3 id="CI-CDも簡単"><a href="#CI-CDも簡単" class="headerlink" title="CI/CDも簡単"></a>CI/CDも簡単</h3><p>masterにマージしたら自動的にデプロイする設定を入れています。そのあたりも公式のマニュアルが用意してあり、手順にそって設定していくだけでCI/CD環境を作ることができます。私はGitHub Pagesを使っており、サーバー費用0円でブログを運営しています。コストパフォーマンスは最高ですね。</p>
+<ul>
+<li><a href="https://hexo.io/docs/github-pages.html" target="_blank" class="outbound">GitHub Pages | Hexo</a></li>
+</ul>
+<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>Hexoは学習コストが低く、テーマ作成もわりと簡単にできるので楽にブログを作りたい人におすすめです。Node.js環境でブログを作りたいときは検討してみてはいかがでしょうか。</p>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2019-08-19T03:48:14.000Z" itemprop="datepublished">
             2019/08/19
           </time>
@@ -321,40 +371,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
     
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2018-11-29T05:55:51.000Z" itemprop="datepublished">
-            2018/11/29
-          </time>
-          <time datetime="2018-11-29T05:55:51.000Z" itemprop="modified">
-            (更新日: 2018/11/29)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2018/11/29/check-other-process/">シェルスクリプトで別プロセスの終了ステータスを取得する</a>
-        </h1>
-        <div class="content">
-          <p>シェルスクリプトで別プロセスの終了ステータスを取得するTipを紹介します。</p>
-<h3 id="ユースケース"><a href="#ユースケース" class="headerlink" title="ユースケース"></a>ユースケース</h3><p>時間のかかる処理などを並列で行い、その実行結果(終了ステータス)を取得したい。</p>
-<h3 id="サンプルコード"><a href="#サンプルコード" class="headerlink" title="サンプルコード"></a>サンプルコード</h3><p>Bashのサンプルコードです。スクリプトに解説を記入しています。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">command1</span></span>() &#123;</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"executing commnad1"</span></span><br><span class="line">  sleep 3</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">command2</span></span>() &#123;</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"executing commnad2"</span></span><br><span class="line">  sleep 3</span><br><span class="line">  <span class="comment"># エラーとして終了させる</span></span><br><span class="line">  <span class="built_in">exit</span> 1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"start"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># バックグラウンドで実行</span></span><br><span class="line">command1 &amp;</span><br><span class="line"><span class="comment"># $!で直前に実行されたコマンドのプロセスIDを取得し、変数に保存している</span></span><br><span class="line">pid1=$!</span><br><span class="line"></span><br><span class="line">command2 &amp;</span><br><span class="line">pid2=$!</span><br><span class="line"></span><br><span class="line"><span class="comment"># waitは指定されたプロセスIDの処理が終わるまで待つ</span></span><br><span class="line"><span class="built_in">wait</span> <span class="variable">$pid1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># $?でwaitで指定しているプロセスの終了ステータスを取得することができる</span></span><br><span class="line"><span class="keyword">if</span> [ $? != 0 ]; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"command1 error"</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"commnad1 success"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">wait</span> <span class="variable">$pid2</span></span><br><span class="line"><span class="keyword">if</span> [ $? != 0 ]; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"command2 error"</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"command2 success"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"end"</span></span><br></pre></td></tr></table></figure>
-
-<p>gistにもコードをアップしています。</p>
-<ul>
-<li><a href="https://gist.github.com/shoyan/6f45b6a005fd34a44264fa1dcb4d56e6" target="_blank">wait_process.sh</a></li>
-</ul>
-<p>shellの学習は次の書籍を1冊やっておけば大丈夫です。</p>
-<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=syoyama-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4797321946&linkId=98e93361f2c0071d8749d5526b9a8b64"></iframe>
-
-        </div>
-      </div>
-    
   </div>
 
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/3/">Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><a class="extend next" rel="next" href="/page/5/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/3/">Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="extend next" rel="next" href="/page/5/">Next</a>
 </div>
 
             
