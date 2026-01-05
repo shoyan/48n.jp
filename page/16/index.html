@@ -156,10 +156,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         
         <a class="main-nav-link" href="/profile">プロフィール</a>
         
-        <a class="main-nav-link" href="/lang/php/">PHP入門</a>
-        
-        <a class="main-nav-link" href="/lesson">プログラミングレッスン</a>
-        
         <a class="main-nav-link" href="/archives">記事一覧</a>
         
         <a class="main-nav-link" href="/about">このページについて</a>
@@ -175,6 +171,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div id="content-inner">
           
   <div id="recent-posts">
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-08-24T08:32:51.000Z" itemprop="datepublished">
+            2016/08/24
+          </time>
+          <time datetime="2016-08-24T08:32:51.000Z" itemprop="modified">
+            (更新日: 2016/08/24)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/08/24/sets-locale-on-docker/">Dockerでlocaleを設定する</a>
+        </h1>
+        <div class="content">
+          <p>Dockerでlocaleを設定したいときがある。<br>例えばマルチバイトを扱うときだ。<br>localeを設定していないイメージで処理を行うと <code>ArgumentError: invalid byte sequence in US-ASCII</code> のようなエラーが発生することがある。<br>Dockerでlocaleを設定する場合は、以下のようにDockerfileに定義する。</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">RUN</span><span class="bash"> locale-gen ja_JP.UTF-8</span></span><br><span class="line"><span class="keyword">ENV</span> LANG ja_JP.UTF-<span class="number">8</span></span><br><span class="line"><span class="keyword">ENV</span> LANGUAGE ja_JP:en</span><br><span class="line"><span class="keyword">ENV</span> LC_ALL ja_JP.UTF-<span class="number">8</span></span><br></pre></td></tr></table></figure>
+
+<p>タイムゾーンも変えたい場合は以下も追記しておく。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RUN ln -fs <span class="regexp">/usr/</span>share<span class="regexp">/zoneinfo/</span>Asia<span class="regexp">/Tokyo /</span>etc<span class="regexp">/localtime</span></span><br></pre></td></tr></table></figure>
+
+<p>コンテナに入ってlocaleを表示すると以下のようになった。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">root@e893a5fa3eea:/# locale</span><br><span class="line"><span class="attribute">LANG</span>=ja_JP.UTF-8</span><br><span class="line"><span class="attribute">LANGUAGE</span>=ja_JP:en</span><br><span class="line"><span class="attribute">LC_CTYPE</span>=<span class="string">"ja_JP.UTF-8"</span></span><br><span class="line"><span class="attribute">LC_NUMERIC</span>=<span class="string">"ja_JP.UTF-8"</span></span><br><span class="line"><span class="attribute">LC_TIME</span>=<span class="string">"ja_JP.UTF-8"</span></span><br><span class="line"><span class="attribute">LC_COLLATE</span>=<span class="string">"ja_JP.UTF-8"</span></span><br><span class="line"><span class="attribute">LC_MONETARY</span>=<span class="string">"ja_JP.UTF-8"</span></span><br><span class="line"><span class="attribute">LC_MESSAGES</span>=<span class="string">"ja_JP.UTF-8"</span></span><br><span class="line"><span class="attribute">LC_PAPER</span>=<span class="string">"ja_JP.UTF-8"</span></span><br><span class="line"><span class="attribute">LC_NAME</span>=<span class="string">"ja_JP.UTF-8"</span></span><br><span class="line"><span class="attribute">LC_ADDRESS</span>=<span class="string">"ja_JP.UTF-8"</span></span><br><span class="line"><span class="attribute">LC_TELEPHONE</span>=<span class="string">"ja_JP.UTF-8"</span></span><br><span class="line"><span class="attribute">LC_MEASUREMENT</span>=<span class="string">"ja_JP.UTF-8"</span></span><br><span class="line"><span class="attribute">LC_IDENTIFICATION</span>=<span class="string">"ja_JP.UTF-8"</span></span><br><span class="line"><span class="attribute">LC_ALL</span>=ja_JP.UTF-8</span><br></pre></td></tr></table></figure>
+
+        </div>
+      </div>
     
       <div class="recent-post-item">
         <div class="date-box">
@@ -280,57 +301,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>例えば、Droneでチェックする場合は以下のように設定します。</p>
 <p>.drone.yml</p>
 <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">scrip</span><span class="variable">t:</span></span><br><span class="line">  - ./php-lint.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-08-03T04:42:38.000Z" itemprop="datepublished">
-            2016/08/03
-          </time>
-          <time datetime="2016-08-03T04:42:38.000Z" itemprop="modified">
-            (更新日: 2016/08/03)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/08/03/docker-auto-build-tutorial/">GitHubにpushしたらDockerイメージを自動ビルドする</a>
-        </h1>
-        <div class="content">
-          <p>Docker HubとGitHubを使ってDockerイメージの自動ビルドを行う方法を紹介します。</p>
-<h2 id="自動ビルドのメリット"><a href="#自動ビルドのメリット" class="headerlink" title="自動ビルドのメリット"></a>自動ビルドのメリット</h2><p>自動ビルドのメリットは以下です。</p>
-<ul>
-<li>常に最新のイメージがDocker Hubに用意される</li>
-<li>Dockerfileが公開され使う人が安心できる</li>
-<li>READMEも常に最新のものがDocker Hubに公開される</li>
-</ul>
-<p>Docker Hubを利用するには事前にアカウントの作成が必要です。<br>Docker Hubのアカウントの作成は以下を参考にしてください。</p>
-<ul>
-<li><a href="https://docs.docker.com/engine/getstarted/step_five/" target="_blank" rel="noopener">Create a Docker Hub account &amp; repository</a></li>
-</ul>
-<h2 id="Docker-Hubで自動ビルドの設定をする"><a href="#Docker-Hubで自動ビルドの設定をする" class="headerlink" title="Docker Hubで自動ビルドの設定をする"></a>Docker Hubで自動ビルドの設定をする</h2><p>すでにDockerfileがGitHubで管理されていることを前提に話しを進めます。</p>
-<p>Docker Hubにログインしたら「Profile &gt; Settings &gt; Linked Accounts &amp; Services.」を選択します。</p>
-<p>GitHubを使うのでGitHubのパネルを選択し、認証をしてください。<br>認証が成功すると、以下のような画面になります。</p>
-<p><img src="/images/docker-auto-build-01.png" alt="docker-auto-build-01"></p>
-<p>認証が済んだら、Docker Hubにリポジトリを作成します。</p>
-<p>「 Create &gt; Create Automated Build」を選択します。<br><img src="/images/docker-auto-build-02.png" alt="docker-auto-build-02"></p>
-<p>すると以下の画面が表示されます。</p>
-<p><img src="/images/docker-auto-build-03.png" alt="docker-auto-build-03"></p>
-<p>GitHubを選択すると 「Users/Organizations」とリポジトリを選択できる画面になるので、自動ビルドを行うリポジトリを選択します。</p>
-<p>Createボタンを押すと登録され、Docker Hubに表示されるようになります。</p>
-<p><img src="/images/docker-auto-build-04.png" alt="docker-auto-build-04"></p>
-<p><img src="/images/docker-auto-build-05.png" alt="docker-auto-build-05"></p>
-<p>リポジトリの「Build Settings」でビルドの設定ができます。</p>
-<p>Triggerボタンを押すとビルドが始まります。</p>
-<p><img src="/images/docker-auto-build-06.png" alt="docker-auto-build-06"></p>
-<p>ビルドの状態は「Build Details」で確認できます。</p>
-<p><img src="/images/docker-auto-build-07.png" alt="docker-auto-build-07"></p>
-<p>Queuedはビルド待ちのステータス。<br>Buildingはビルド中のステータスです。</p>
-<p>GitHubにpushすればBuild Settingsで設定したブランチが自動的にビルドされます。</p>
-<p>以上、簡単ですがDockerの自動ビルドの設定方法の紹介でした。<br>英語版ですが、詳しい方法が書いてあるのでこちらも参考にしてください。</p>
-<ul>
-<li><a href="https://docs.docker.com/docker-hub/builds/" target="_blank" rel="noopener">Automated Builds on Docker Hub</a></li>
-</ul>
 
         </div>
       </div>

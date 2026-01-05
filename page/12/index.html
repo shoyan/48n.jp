@@ -156,10 +156,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         
         <a class="main-nav-link" href="/profile">プロフィール</a>
         
-        <a class="main-nav-link" href="/lang/php/">PHP入門</a>
-        
-        <a class="main-nav-link" href="/lesson">プログラミングレッスン</a>
-        
         <a class="main-nav-link" href="/archives">記事一覧</a>
         
         <a class="main-nav-link" href="/about">このページについて</a>
@@ -175,6 +171,45 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div id="content-inner">
           
   <div id="recent-posts">
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-12-07T04:55:09.000Z" itemprop="datepublished">
+            2016/12/07
+          </time>
+          <time datetime="2016-12-07T04:55:09.000Z" itemprop="modified">
+            (更新日: 2016/12/07)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/12/07/guard-rubocop/">Guardでrubocopを自動化する</a>
+        </h1>
+        <div class="content">
+          <p>RubyのシンタックスチェックにRubocopを使っていて、リポジトリにpushした時にチェックするようにしている。<br>push→シンタックスエラー→直してもう1回pushというのがまどろこしいので<a href="https://github.com/yujinakayama/guard-rubocop" target="_blank" rel="noopener">guard-rubocop</a>を使ってファイルを保存する度にチェックするようにしてみた。<br>ストレスが軽減され、良い感じだったので紹介する。</p>
+<h2 id="guard-rubocopの導入"><a href="#guard-rubocopの導入" class="headerlink" title="guard-rubocopの導入"></a>guard-rubocopの導入</h2><p>gurad-rubocopを導入するにはまず、rubocopを導入している必要がある。<br>この記事ではrubocopは導入済みという前提で進める。</p>
+<p>gurad-rubocopの導入はいたって簡単。<br>3分で導入できるので是非やってほしい。</p>
+<p>Gemfileに以下を定義する。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">group <span class="symbol">:development</span> <span class="keyword">do</span></span><br><span class="line">  gem <span class="string">'guard'</span></span><br><span class="line">  gem <span class="string">'guard-rubocop'</span>, <span class="symbol">require:</span> <span class="literal">false</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p><code>bundle install</code> を行うと、guardコマンドが利用できるようになる。<br><code>bundle exec guard init rubocop</code> で <code>Guardfile</code> が生成される。</p>
+<p>これでインストール完了。</p>
+<p>あとはターミナルで <code>bundle exec guard</code> コマンドを実行する。<br>その状態でファイルを変更するとそのファイルを対象にrubocopコマンドが実行される。</p>
+<h2 id="オプション"><a href="#オプション" class="headerlink" title="オプション"></a>オプション</h2><p>デフォルトだとgurad起動時にrubocopコマンドが実行されるようになっている。<br>起動時に実行したくない時はGuardfileに以下の設定を行えばよい。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">guard <span class="symbol">:rubocop</span> <span class="keyword">do</span></span><br></pre></td></tr></table></figure>
+
+<p>以下のように変更する。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">guard <span class="symbol">:rubocop</span>, <span class="symbol">all_on_start:</span> <span class="keyword">false</span> <span class="keyword">do</span></span><br></pre></td></tr></table></figure>
+
+<p>他にもオプションがあるので詳しくはREADMEを参照してほしい。</p>
+<ul>
+<li><a href="https://github.com/yujinakayama/guard-rubocop#options" target="_blank" rel="noopener">https://github.com/yujinakayama/guard-rubocop#options</a></li>
+</ul>
+<h3 id="関連記事"><a href="#関連記事" class="headerlink" title="関連記事"></a>関連記事</h3><ul>
+<li><a href="/blog/2016/05/24/introduce-guard-gem-and-guard-rspec/">Guardでrspecのテストを自動化する</a></li>
+</ul>
+
+        </div>
+      </div>
     
       <div class="recent-post-item">
         <div class="date-box">
@@ -310,34 +345,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>以下が変更後のMySQLのクエリログだ。<br>最後にTRUNCATEが実行されている。</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.367260Z</span>       <span class="number">120</span> <span class="string">Connect</span>   <span class="string">root@192.168.75.91</span> <span class="string">on</span> <span class="string">app_test</span> <span class="string">using</span> <span class="string">TCP/IP</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.367966Z</span>       <span class="number">120</span> <span class="string">Query</span>     <span class="string">SET</span> <span class="string">NAMES</span> <span class="string">'ujis'</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.626685Z</span>       <span class="number">121</span> <span class="string">Connect</span>   <span class="string">root@192.168.75.91</span> <span class="string">on</span> <span class="string">app_test</span> <span class="string">using</span> <span class="string">TCP/IP</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.743978Z</span>       <span class="number">122</span> <span class="string">Connect</span>   <span class="string">root@192.168.75.91</span> <span class="string">on</span>  <span class="string">using</span> <span class="string">TCP/IP</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.744418Z</span>       <span class="number">122</span> <span class="string">Init</span> <span class="string">DB</span>   <span class="string">app_test</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.751453Z</span>       <span class="number">122</span> <span class="string">Init</span> <span class="string">DB</span>   <span class="string">app_test</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.752239Z</span>       <span class="number">122</span> <span class="string">Query</span>     <span class="string">select</span> <span class="string">*</span> <span class="string">from</span> <span class="string">users</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.758493Z</span>       <span class="number">122</span> <span class="string">Init</span> <span class="string">DB</span>   <span class="string">aap_test</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.759944Z</span>       <span class="number">122</span> <span class="string">Init</span> <span class="string">DB</span>   <span class="string">app_test</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.760656Z</span>       <span class="number">122</span> <span class="string">Query</span>     <span class="string">select</span> <span class="string">*</span> <span class="string">from</span> <span class="string">users</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.828928Z</span>       <span class="number">121</span> <span class="string">Query</span>     <span class="string">SET</span> <span class="string">FOREIGN_KEY_CHECKS</span> <span class="string">=</span> <span class="number">0</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.829372Z</span>       <span class="number">121</span> <span class="string">Query</span>     <span class="string">TRUNCATE</span> <span class="string">`users`</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.852672Z</span>       <span class="number">121</span> <span class="string">Query</span>     <span class="string">SET</span> <span class="string">FOREIGN_KEY_CHECKS</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.853435Z</span>       <span class="number">121</span> <span class="string">Query</span>     <span class="string">SHOW</span> <span class="string">COLUMNS</span> <span class="string">FROM</span> <span class="string">`users`</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.854605Z</span>       <span class="number">121</span> <span class="string">Query</span>     <span class="string">SHOW</span> <span class="string">INDEX</span> <span class="string">FROM</span> <span class="string">`users`</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.855462Z</span>       <span class="number">121</span> <span class="string">Query</span>     <span class="string">INSERT</span> <span class="string">INTO</span> <span class="string">`users`</span></span><br><span class="line">                <span class="string">(`account_id`,</span> <span class="string">`domain`,</span> <span class="string">`created_at`)</span></span><br><span class="line">                <span class="string">VALUES</span></span><br><span class="line">                <span class="string">('1',</span> <span class="string">‘example.com',</span> <span class="string">'2016-11-02 18:40:10'</span><span class="string">)</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.863268Z</span>       <span class="number">122</span> <span class="string">Init</span> <span class="string">DB</span>   <span class="string">app_test</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.864301Z</span>       <span class="number">122</span> <span class="string">Init</span> <span class="string">DB</span>   <span class="string">app_test</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.864678Z</span>       <span class="number">122</span> <span class="string">Query</span>     <span class="string">select</span> <span class="string">*</span> <span class="string">from</span> <span class="string">users</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.869473Z</span>       <span class="number">121</span> <span class="string">Query</span>     <span class="string">SET</span> <span class="string">FOREIGN_KEY_CHECKS</span> <span class="string">=</span> <span class="number">0</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.869882Z</span>       <span class="number">121</span> <span class="string">Query</span>     <span class="string">TRUNCATE</span> <span class="string">`users`</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.885689Z</span>       <span class="number">121</span> <span class="string">Query</span>     <span class="string">SET</span> <span class="string">FOREIGN_KEY_CHECKS</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.888006Z</span>       <span class="number">120</span> <span class="string">Quit</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.914728Z</span>       <span class="number">121</span> <span class="string">Quit</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="string">-08T08:43:49.941933Z</span>       <span class="number">122</span> <span class="string">Quit</span></span><br></pre></td></tr></table></figure>
 
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-10-31T08:17:19.000Z" itemprop="datepublished">
-            2016/10/31
-          </time>
-          <time datetime="2016-10-31T08:17:19.000Z" itemprop="modified">
-            (更新日: 2016/10/31)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/10/31/study-english-fifth-month/">StudyPlusを使った英語の勉強をはじめて５ヶ月目の記録</a>
-        </h1>
-        <div class="content">
-          <p>StudyPlusに英語の勉強を記録し始めて５ヶ月。<br>幸運なことに継続して学習を続けることができている。</p>
-<p>勉強時間は128時間(累計)。<br>覚えた単語数は4600。<br>前回が3500だったので１ヶ月で1100、語彙数が増えた。<br>だんだん単語が覚えやすくなってきた感じがしている。</p>
-<p>前回から変わった点としては洋書を読み始めたことがあげられる。<br>Kindle Unlimitedを契約したので、洋書の入手に事欠かなくなったからだ。</p>
-<p>最近読んだのは以下の本。<br>英語の効果的な勉強法を英語で勉強できるので1粒で2度おいしい。</p>
-<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=syoyama-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B00WGZ38EC&linkId=4a85af93a9eabd53705c3c8a4d7c1305"></iframe>
-
-<p>Kindle Unlimitedは洋書が132万冊あるので、これから存分に活用させてもらうつもりだ。<br>ちなみにLearn Englishによると、知っている映画の本を読むのがリーディングに最適だそうだ。</p>
-<p>また、洋画を観ることも始めた。<br>こちらはまだ習慣化するところまで至っていないが、基本的には同じ映画のセリフを覚えるまで何回も繰り返し観るということをやろうと考えている。<br>題材はThe Devil Wears Plada(プラダを着た悪魔)だ。<br>これにした理由はニューヨークを舞台とした映画が良いと思っていて（これについては完全なる好みの問題）たまたま手元にあったのがプラダを着た悪魔だった。</p>
-<h2 id="過去の英語の勉強記録"><a href="#過去の英語の勉強記録" class="headerlink" title="過去の英語の勉強記録"></a>過去の英語の勉強記録</h2><ul>
-<li><a href="http://localhost:4000/blog/2016/09/12/study-english-four-month/" target="_blank" rel="noopener">英語の勉強をはじめて4ヶ月の記録</a></li>
-</ul>
 
         </div>
       </div>

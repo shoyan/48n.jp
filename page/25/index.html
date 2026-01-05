@@ -156,10 +156,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         
         <a class="main-nav-link" href="/profile">プロフィール</a>
         
-        <a class="main-nav-link" href="/lang/php/">PHP入門</a>
-        
-        <a class="main-nav-link" href="/lesson">プログラミングレッスン</a>
-        
         <a class="main-nav-link" href="/archives">記事一覧</a>
         
         <a class="main-nav-link" href="/about">このページについて</a>
@@ -175,6 +171,36 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div id="content-inner">
           
   <div id="recent-posts">
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-05-20T08:40:56.000Z" itemprop="datepublished">
+            2016/05/20
+          </time>
+          <time datetime="2016-05-20T08:40:56.000Z" itemprop="modified">
+            (更新日: 2016/05/20)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/05/20/does-not-proceed-worker-is-blocked-processing-of-chef/">Chefのworkerが詰まって処理が進まなくなった</a>
+        </h1>
+        <div class="content">
+          <p>chefを実行したらこんなメッセージがでた。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARN: Chef<span class="built_in"> client </span>24431 is running, will wait <span class="keyword">for</span> it <span class="keyword">to</span> finish <span class="keyword">and</span> then run.</span><br></pre></td></tr></table></figure>
+
+<p>前回実行したChefが途中で詰まってしまい、ウンともスンとも言わなくなったので Ctrl + Cでとめたが、プロセス自体は残ってしまっている。</p>
+<p>こんな感じで2つchef-clientのworkerが立ち上がっている状態。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[<span class="symbol">shoyan@</span>server01 ~]$ ps aux | grep chef</span><br><span class="line">root     <span class="number">24373</span>  <span class="number">0.0</span>  <span class="number">0.1</span> <span class="number">178168</span>  <span class="number">2992</span> ?        Ss   <span class="number">10</span>:<span class="number">22</span>   <span class="number">0</span>:<span class="number">00</span> sudo -p knife sudo password:  chef-client -S http:<span class="comment">//127.0.0.1:18889</span></span><br><span class="line">root     <span class="number">24426</span>  <span class="number">0.0</span>  <span class="number">3.1</span> <span class="number">262164</span> <span class="number">61072</span> ?        Sl   <span class="number">10</span>:<span class="number">22</span>   <span class="number">0</span>:<span class="number">01</span> /opt/chef/embedded/bin/ruby /usr/bin/chef-client -S http:<span class="comment">//127.0.0.1:18889</span></span><br><span class="line">root     <span class="number">24431</span>  <span class="number">0.0</span>  <span class="number">7.1</span> <span class="number">1078932</span> <span class="number">138052</span> ?      Sl   <span class="number">10</span>:<span class="number">22</span>   <span class="number">0</span>:<span class="number">03</span> chef-client worker: ppid=<span class="number">24426</span>;start=<span class="number">10</span>:<span class="number">22</span>:<span class="number">49</span>;</span><br><span class="line">root     <span class="number">26701</span>  <span class="number">0.0</span>  <span class="number">0.1</span> <span class="number">178168</span>  <span class="number">2996</span> pts/<span class="number">3</span>    Ss+  <span class="number">10</span>:<span class="number">50</span>   <span class="number">0</span>:<span class="number">00</span> sudo -p knife sudo password:  chef-client -S http:<span class="comment">//127.0.0.1:18889</span></span><br><span class="line">root     <span class="number">26754</span>  <span class="number">0.0</span>  <span class="number">3.1</span> <span class="number">261996</span> <span class="number">60896</span> pts/<span class="number">3</span>    Sl+  <span class="number">10</span>:<span class="number">50</span>   <span class="number">0</span>:<span class="number">01</span> /opt/chef/embedded/bin/ruby /usr/bin/chef-client -S http:<span class="comment">//127.0.0.1:18889</span></span><br><span class="line">root     <span class="number">26759</span>  <span class="number">0.0</span>  <span class="number">3.0</span> <span class="number">261996</span> <span class="number">57760</span> pts/<span class="number">3</span>    Sl+  <span class="number">10</span>:<span class="number">50</span>   <span class="number">0</span>:<span class="number">00</span> chef-client worker: ppid=<span class="number">26754</span>;start=<span class="number">10</span>:<span class="number">50</span>:<span class="number">38</span>;</span><br></pre></td></tr></table></figure>
+
+<p>1時間ほど経過しても何も進まないので、プロセスをkillしてみた。</p>
+<p>TERMシグナルを送ってみたが、反応なし。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">kill</span> -s TERM 24431</span></span><br></pre></td></tr></table></figure>
+
+<p>killシグナルを送るとプロセスが終了し、ペンディング状態となっていたChefが実行された。</p>
+<figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">kill</span> -<span class="keyword">s</span> <span class="keyword">KILL</span> <span class="number">24431</span></span><br></pre></td></tr></table></figure>
+
+        </div>
+      </div>
     
       <div class="recent-post-item">
         <div class="date-box">
@@ -389,34 +415,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
 <li><a href="http://ruby-doc.org/core-2.2.0/File.html#method-c-join" target="_blank" rel="noopener">http://ruby-doc.org/core-2.2.0/File.html#method-c-join</a></li>
 </ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-05-13T04:28:11.000Z" itemprop="datepublished">
-            2016/05/13
-          </time>
-          <time datetime="2016-05-13T04:28:11.000Z" itemprop="modified">
-            (更新日: 2016/05/13)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/05/13/exception-notification-and-sinatra/">Exception Notificationでundefined method `current&#39; for Time:Classエラーがでた</a>
-        </h1>
-        <div class="content">
-          <p>例外発生時に<a href="https://github.com/smartinez87/exception_notification" target="_blank" rel="noopener">Exception Notification</a>で通知をしようと思い、導入してみたところ以下のエラーがでました。</p>
-<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR: Failed <span class="keyword">to</span> generate exception summary:</span><br><span class="line">ActionView::Template::Error: undefined <span class="function"><span class="keyword">method</span> `<span class="title">current</span>' <span class="title">for</span> <span class="title">Time</span>:</span><span class="keyword">Class</span></span><br></pre></td></tr></table></figure>
-
-<p>日付の取得に<code>Time.current</code>を使っており、<code>Time.current</code>はActive supportにより拡張されたメソッドなのでActive Supportを使っている環境でしか動作しません(要するにRailsじゃないと動かない。Sinatraは…)。</p>
-<p>PRもでているので対応してほしいところです。</p>
-<ul>
-<li><a href="https://github.com/smartinez87/exception_notification/pull/332" target="_blank" rel="noopener">Fix timestamp error</a></li>
-</ul>
-<h2 id="対応方法"><a href="#対応方法" class="headerlink" title="対応方法"></a>対応方法</h2><p><code>require &#39;active_support/core_ext/time’</code> をすることで<code>Time.current</code>を使えるようにしました。</p>
-<p>サンプルコード</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span> <span class="string">'rubygems'</span></span><br><span class="line"><span class="built_in">require</span> <span class="string">'bundler/setup'</span></span><br><span class="line"><span class="built_in">require</span> <span class="string">"sinatra/base"</span></span><br><span class="line"><span class="built_in">require</span> <span class="string">'exception_notification'</span></span><br><span class="line"># Time.currentを使えるようにする</span><br><span class="line"><span class="built_in">require</span> <span class="string">'active_support/core_ext/time'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> App &lt; Sinatra::Application</span><br><span class="line">  use ExceptionNotification::Rack,</span><br><span class="line">    :<span class="function"><span class="params">email</span> =&gt;</span> &#123;</span><br><span class="line">      :<span class="function"><span class="params">email_prefix</span> =&gt;</span> <span class="string">"[Exception] "</span>,</span><br><span class="line">      :<span class="function"><span class="params">sender_address</span> =&gt;</span> %&#123;<span class="string">"notifier"</span> &lt;notifier<span class="meta">@example</span>.com&gt;&#125;,</span><br><span class="line">      :<span class="function"><span class="params">exception_recipients</span> =&gt;</span> %w&#123;shoyan<span class="meta">@example</span>.com&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">get</span> <span class="string">'/'</span> <span class="keyword">do</span></span><br><span class="line">    begin</span><br><span class="line">      <span class="comment">// 何かの処理</span></span><br><span class="line">    rescue Exception =&gt; e</span><br><span class="line">      status <span class="number">500</span></span><br><span class="line">      ExceptionNotifier.notify_exception(e, env: env)</span><br><span class="line">      e.message</span><br><span class="line">    end</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 
         </div>
       </div>

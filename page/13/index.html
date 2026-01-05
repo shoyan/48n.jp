@@ -156,10 +156,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         
         <a class="main-nav-link" href="/profile">プロフィール</a>
         
-        <a class="main-nav-link" href="/lang/php/">PHP入門</a>
-        
-        <a class="main-nav-link" href="/lesson">プログラミングレッスン</a>
-        
         <a class="main-nav-link" href="/archives">記事一覧</a>
         
         <a class="main-nav-link" href="/about">このページについて</a>
@@ -175,6 +171,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div id="content-inner">
           
   <div id="recent-posts">
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-10-31T08:17:19.000Z" itemprop="datepublished">
+            2016/10/31
+          </time>
+          <time datetime="2016-10-31T08:17:19.000Z" itemprop="modified">
+            (更新日: 2016/10/31)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/10/31/study-english-fifth-month/">StudyPlusを使った英語の勉強をはじめて５ヶ月目の記録</a>
+        </h1>
+        <div class="content">
+          <p>StudyPlusに英語の勉強を記録し始めて５ヶ月。<br>幸運なことに継続して学習を続けることができている。</p>
+<p>勉強時間は128時間(累計)。<br>覚えた単語数は4600。<br>前回が3500だったので１ヶ月で1100、語彙数が増えた。<br>だんだん単語が覚えやすくなってきた感じがしている。</p>
+<p>前回から変わった点としては洋書を読み始めたことがあげられる。<br>Kindle Unlimitedを契約したので、洋書の入手に事欠かなくなったからだ。</p>
+<p>最近読んだのは以下の本。<br>英語の効果的な勉強法を英語で勉強できるので1粒で2度おいしい。</p>
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=syoyama-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B00WGZ38EC&linkId=4a85af93a9eabd53705c3c8a4d7c1305"></iframe>
+
+<p>Kindle Unlimitedは洋書が132万冊あるので、これから存分に活用させてもらうつもりだ。<br>ちなみにLearn Englishによると、知っている映画の本を読むのがリーディングに最適だそうだ。</p>
+<p>また、洋画を観ることも始めた。<br>こちらはまだ習慣化するところまで至っていないが、基本的には同じ映画のセリフを覚えるまで何回も繰り返し観るということをやろうと考えている。<br>題材はThe Devil Wears Plada(プラダを着た悪魔)だ。<br>これにした理由はニューヨークを舞台とした映画が良いと思っていて（これについては完全なる好みの問題）たまたま手元にあったのがプラダを着た悪魔だった。</p>
+<h2 id="過去の英語の勉強記録"><a href="#過去の英語の勉強記録" class="headerlink" title="過去の英語の勉強記録"></a>過去の英語の勉強記録</h2><ul>
+<li><a href="http://localhost:4000/blog/2016/09/12/study-english-four-month/" target="_blank" rel="noopener">英語の勉強をはじめて4ヶ月の記録</a></li>
+</ul>
+
+        </div>
+      </div>
     
       <div class="recent-post-item">
         <div class="date-box">
@@ -277,57 +301,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>Docker for Macがでてそっちに移行した方がよさげな機運を感じるので、そろそろDocker ToolboxからDocker for Macに移行する時期なのかな。</p>
 <ul>
 <li><a href="https://docs.docker.com/docker-for-mac/docker-toolbox/" target="_blank" rel="noopener">https://docs.docker.com/docker-for-mac/docker-toolbox/</a></li>
-</ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-09-27T05:04:11.000Z" itemprop="datepublished">
-            2016/09/27
-          </time>
-          <time datetime="2016-09-27T05:04:11.000Z" itemprop="modified">
-            (更新日: 2016/09/27)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/09/27/links-container-with-docker-compose/">docker-composeを使ってPHPコンテナとMySQLコンテナを連携させる</a>
-        </h1>
-        <div class="content">
-          <p>以前、<a href="/blog/2016/09/16/links-container-for-docker/">Dockerコンテナを連携させる方法</a>を書いたが、コンテナ間の連携が必要な際はdocker-composeを使うと便利だ。<br>今回は前回と同じようにPHPとMySQLのコンテナを連携させるが、その連携にdocker-composeを使った方法を紹介する。</p>
-<p>まずは、適当なディレクトリをつくる。<br>今回は <code>docker-compose-sample</code>とする。</p>
-<p><code>docker-compose-sample/</code> 配下にDockerfileを作成する。</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> shoyan/www-ci</span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> . /app</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /app</span></span><br><span class="line"><span class="keyword">ENV</span> MYSQL_HOST mysql</span><br><span class="line"><span class="keyword">ENV</span> MYSQL_PASSWORD <span class="string">''</span></span><br></pre></td></tr></table></figure>
-
-<p>次に <code>docker-compose.yml</code>を作成する。</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">version</span>: <span class="string">'2'</span></span><br><span class="line"><span class="attribute">services</span>:</span><br><span class="line">  <span class="attribute">web</span>:</span><br><span class="line">    <span class="attribute">build</span>: .</span><br><span class="line">    <span class="attribute">links</span>:</span><br><span class="line">      - <span class="attribute">mysql</span>:mysql</span><br><span class="line">  <span class="attribute">mysql</span>:</span><br><span class="line">    <span class="attribute">image</span>: <span class="attribute">mysql</span>:<span class="number">5.5</span></span><br><span class="line">    <span class="attribute">environment</span>:</span><br><span class="line">      <span class="attribute">MYSQL_ALLOW_EMPTY_PASSWORD</span>: <span class="string">'yes'</span></span><br><span class="line">    <span class="attribute">expose</span>:</span><br><span class="line">      - <span class="string">"3306"</span></span><br><span class="line">    <span class="attribute">volumes</span>:</span><br><span class="line">      - ./docker-entrypoint-initdb.<span class="attribute">d</span>:/docker-entrypoint-initdb.d</span><br></pre></td></tr></table></figure>
-
-<p>servicesにwebとmysqlという名前でコンテナを定義している。</p>
-<h3 id="webコンテナ"><a href="#webコンテナ" class="headerlink" title="webコンテナ"></a>webコンテナ</h3><p>webコンテナはDockerfileをbuildして、mysqlコンテナと連携させる定義をしている。<br>これによりwebコンテナからはmysqlという名前でmysqlコンテナにアクセスできるようになる。</p>
-<h3 id="mysqlコンテナについて"><a href="#mysqlコンテナについて" class="headerlink" title="mysqlコンテナについて"></a>mysqlコンテナについて</h3><p>MySQLは公式のイメージを使っている。<br>他のコンテナからアクセスできるようにexposeで3306ポートを指定している。</p>
-<p>公式のMySQLイメージから作成したコンテナは<code>/docker-entrypoint-initdb.d/</code> 配下にあるシェルスクリプトやsqlファイルを起動時に実行するようになっている。<br>今回はデータベースとテーブルを作成するためにこの機構を利用する。<br>volumesを利用してファイルを配置している。</p>
-<p>以下の<code>docker-compose-sample/docker-entrypoint-initdb.d/setup.sql</code> を作成しておく。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> app_test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">`app_test`</span>.<span class="string">`user`</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`app_test`</span>.<span class="string">`user`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">8</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`status`</span> <span class="built_in">tinyint</span>(<span class="number">1</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`email`</span> <span class="built_in">varchar</span>(<span class="number">64</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`postal_code`</span> <span class="built_in">char</span>(<span class="number">7</span>) <span class="keyword">DEFAULT</span> <span class="string">''</span>,</span><br><span class="line">  <span class="string">`character_text`</span> <span class="built_in">text</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br></pre></td></tr></table></figure>
-
-<h3 id="確認用スクリプト"><a href="#確認用スクリプト" class="headerlink" title="確認用スクリプト"></a>確認用スクリプト</h3><p>DBにアクセスできているかを確認するためのスクリプト <code>connect.php</code> を用意しておく。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$dsn = sprintf(<span class="string">'mysql:host=%s:3306;dbname=%s'</span>,  $_ENV[<span class="string">'MYSQL_HOST'</span>], <span class="string">'app_test'</span>);</span><br><span class="line">$user = <span class="string">'root'</span>;</span><br><span class="line">$password = $_ENV[<span class="string">'MYSQL_PASSWORD'</span>];</span><br><span class="line">$dbh = <span class="keyword">new</span> PDO($dsn, $user, $password);</span><br><span class="line">$sql = <span class="string">"SELECT version();"</span>;</span><br><span class="line"><span class="keyword">foreach</span> ($dbh-&gt;query($sql, PDO::FETCH_ASSOC) <span class="keyword">as</span> $row) &#123;</span><br><span class="line">    print_r($row);</span><br><span class="line">&#125;</span><br><span class="line">$sql = <span class="string">"show tables;"</span>;</span><br><span class="line"><span class="keyword">foreach</span> ($dbh-&gt;query($sql, PDO::FETCH_ASSOC) <span class="keyword">as</span> $row) &#123;</span><br><span class="line">    print_r($row);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="docker-composeでコンテナを起動する"><a href="#docker-composeでコンテナを起動する" class="headerlink" title="docker-composeでコンテナを起動する"></a>docker-composeでコンテナを起動する</h3><p>準備ができたのでdocker-composeコマンドでコンテナを起動する。<br>以下のようにネットワークとコンテナが作成される。<br><code>-d</code> オプションはバックグラウンドでコンテナを起動するために指定している。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ docker-compose up -d</span><br><span class="line">Creating network &quot;dockercomposesample_default&quot; with the default driver</span><br><span class="line">Creating dockercomposesample_mysql_1</span><br><span class="line">Creating dockercomposesample_web_1</span><br></pre></td></tr></table></figure>
-
-<p>コンテナにログインしてみる。</p>
-<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="keyword">run</span> --<span class="keyword">rm</span> -it -v `<span class="keyword">pwd</span>`:/<span class="keyword">app</span> --<span class="keyword">net</span>=dockercomposesample_default dockercomposesample_web bash</span><br></pre></td></tr></table></figure>
-
-<p>確認用スクリプトで疎通を確認する。<br>バージョンとtableが表示されたら成功だ。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root@6237502e4401:/app# php connect.php</span><br><span class="line">Array</span><br><span class="line">(</span><br><span class="line">    [version()] =&gt; 5.5.51</span><br><span class="line">)</span><br><span class="line">Array</span><br><span class="line">(</span><br><span class="line">    [Tables_in_app_test] =&gt; user</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<p>コンテナを削除するには <code>docker-compose down</code> コマンドを使う。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">⇒  docker-compose down</span><br><span class="line">Stopping dockercomposesample_mysql_1 <span class="built_in">..</span>. done</span><br><span class="line">Removing dockercomposesample_web_1 <span class="built_in">..</span>. done</span><br><span class="line">Removing dockercomposesample_mysql_1 <span class="built_in">..</span>. done</span><br><span class="line">Removing<span class="built_in"> network </span>dockercomposesample_default</span><br></pre></td></tr></table></figure>
-
-<p>サンプルコードをgithubで公開しているので参考にしてほしい。</p>
-<ul>
-<li><a href="https://github.com/shoyan/docker-compose-with-link-sample" target="_blank" rel="noopener">https://github.com/shoyan/docker-compose-with-link-sample</a></li>
 </ul>
 
         </div>

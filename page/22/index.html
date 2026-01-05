@@ -156,10 +156,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         
         <a class="main-nav-link" href="/profile">プロフィール</a>
         
-        <a class="main-nav-link" href="/lang/php/">PHP入門</a>
-        
-        <a class="main-nav-link" href="/lesson">プログラミングレッスン</a>
-        
         <a class="main-nav-link" href="/archives">記事一覧</a>
         
         <a class="main-nav-link" href="/about">このページについて</a>
@@ -175,6 +171,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div id="content-inner">
           
   <div id="recent-posts">
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-06-16T04:46:56.000Z" itemprop="datepublished">
+            2016/06/16
+          </time>
+          <time datetime="2016-06-16T04:46:56.000Z" itemprop="modified">
+            (更新日: 2016/06/16)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/06/16/check-file-encoding/">Rubyでファイルエンコーディングを確認する</a>
+        </h1>
+        <div class="content">
+          <p>Rubyでファイルエンコーディングを確認するにはNKFモジュールを使って確認します。</p>
+<p><a href="http://docs.ruby-lang.org/ja/2.3.0/class/NKF.html" target="_blank" rel="noopener">http://docs.ruby-lang.org/ja/2.3.0/class/NKF.html</a></p>
+<p>NKFモジュールとは、nkf(Network Kanji code conversion Filter, <a href="http://sourceforge.jp/projects/nkf/" target="_blank" rel="noopener">http://sourceforge.jp/projects/nkf/</a>) をRubyから使うためのモジュールです。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">'nkf'</span></span><br><span class="line"></span><br><span class="line">content = File.read(<span class="string">"path/to/file.txt"</span>)</span><br><span class="line">NKF.guess(content).to_s</span><br><span class="line">=&gt; <span class="string">"Shift_JIS"</span></span><br></pre></td></tr></table></figure>
+
+<p>このような感じでrspecでテストするときにも使えます。</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span> <span class="string">'nkf'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">it</span> <span class="string">'file encoding is Shift_JIS'</span> <span class="built_in">do</span></span><br><span class="line"> content = File.<span class="built_in">read</span>(<span class="string">"filename.csv"</span>)</span><br><span class="line"> expect(NKF.guess(content).to_s).<span class="built_in">to</span> eq <span class="string">'Shift_JIS'</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+        </div>
+      </div>
     
       <div class="recent-post-item">
         <div class="date-box">
@@ -374,31 +394,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h3 id="Rubyで実装-2"><a href="#Rubyで実装-2" class="headerlink" title="Rubyで実装"></a>Rubyで実装</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">prev_monday</span><span class="params">(date = Date.today - <span class="number">1</span>)</span></span></span><br><span class="line">  <span class="keyword">return</span> date <span class="keyword">if</span> date.monday?</span><br><span class="line">  prev_monday(date - <span class="number">1</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="実行結果"><a href="#実行結果" class="headerlink" title="実行結果"></a>実行結果</h3><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">puts Date.today.strftime(<span class="string">"%Y-%m-%d (%a)"</span>)</span><br><span class="line">=&gt; <span class="number">2016</span>-<span class="number">06</span>-<span class="number">09</span> (Thu)</span><br><span class="line">puts prev_monday.strftime(<span class="string">"%Y-%m-%d (%a)"</span>)</span><br><span class="line">=&gt; <span class="number">2016</span>-<span class="number">06</span>-<span class="number">06</span> (Mon)</span><br><span class="line">puts next_monday.strftime(<span class="string">"%Y-%m-%d (%a)"</span>)</span><br><span class="line">=&gt; <span class="number">2016</span>-<span class="number">06</span>-<span class="number">13</span> (Mon)</span><br><span class="line">puts last_monday.strftime(<span class="string">"%Y-%m-%d (%a)"</span>)</span><br><span class="line">=&gt; <span class="number">2016</span>-<span class="number">05</span>-<span class="number">30</span> (Mon)</span><br><span class="line">puts last_friday.strftime(<span class="string">"%Y-%m-%d (%a)"</span>)</span><br><span class="line">=&gt; <span class="number">2016</span>-<span class="number">06</span>-<span class="number">03</span> (Fri)</span><br></pre></td></tr></table></figure>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-06-08T09:41:16.000Z" itemprop="datepublished">
-            2016/06/08
-          </time>
-          <time datetime="2016-06-08T09:41:16.000Z" itemprop="modified">
-            (更新日: 2016/06/08)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/06/08/testing-attachment-for-action-mailer/">ActionMailerの添付ファイルをRspecでテストする</a>
-        </h1>
-        <div class="content">
-          <p>ActionMailerで添付ファイルを送るようにしたのですが、そのテストをするときの情報があまりなかったのでまとめました。</p>
-<p>以下のようにテストしました。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">RSpec.describe AppMailer, <span class="symbol">type:</span> <span class="symbol">:mailer</span> <span class="keyword">do</span></span><br><span class="line"></span><br><span class="line">  before(<span class="symbol">:all</span>) <span class="keyword">do</span></span><br><span class="line">    Archive::Zip.archive(</span><br><span class="line">      <span class="string">"tmp/app.zip"</span>,</span><br><span class="line">      <span class="string">"README.md"</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  after(<span class="symbol">:all</span>) <span class="keyword">do</span></span><br><span class="line">    FileUtils.rm <span class="string">"tmp/app.zip"</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  let(<span class="symbol">:mail</span>) <span class="keyword">do</span></span><br><span class="line">    AppMailer.send_email(zip_path)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  it <span class="string">'assings the attachment file'</span> <span class="keyword">do</span></span><br><span class="line">    attachment = mail.attachments[<span class="number">0</span>]</span><br><span class="line">    expect(attachment).to be_a_kind_of(Mail::Part)</span><br><span class="line">    expect(attachment.content_type).to be_start_with(<span class="string">'application/zip'</span>)</span><br><span class="line">    expect(attachment.filename).to eq <span class="string">"app.zip"</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>まず、before(:all)でテストに使うzipファイルを作成します。<br>zipファイルは<a href="https://github.com/javanthropus/archive-zip" target="_blank" rel="noopener">archive-zip</a>を使って作成しています。<br>アーカイブするファイルは何でもよいですが、この記事ではREADME.mdとしています。<br>テストで作成したzipファイルはafter(:all)で消しています。<br>mail.attachments[0]に添付ファイルが入っているので、その種類やファイル名を確認しています。</p>
-<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
-<li><a href="http://stackoverflow.com/questions/14286179/rails-how-to-test-that-actionmailer-sent-a-specific-attachment" target="_blank" rel="noopener">rails-how-to-test-that-actionmailer-sent-a-specific-attachment</a></li>
-</ul>
 
         </div>
       </div>
