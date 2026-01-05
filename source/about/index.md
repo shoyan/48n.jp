@@ -9,7 +9,7 @@ updated: 2019-10-17 15:07:07
 ## Links
 
 * <a href="https://github.com/shoyan" target="_blank">GitHub</a>
-* <a href="https://twitter.com/sinn_shoyan" target="_blank">Twitter</a>
+* <a href="https://twitter.com/48njp" target="_blank">Twitter</a>
 * <a href="https://speakerdeck.com/shoyan" target="_blank">SlideShare</a>
 
 ## Amazon.co.jpアソシエイトに関するプライバシーポリシー

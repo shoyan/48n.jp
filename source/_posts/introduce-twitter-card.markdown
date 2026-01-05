@@ -33,7 +33,7 @@ Twitterカードのを利用するためにはメタタグの設置が必要で�
 
 ```
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:site" content="@sinn_shoyan" />
+<meta name="twitter:site" content="@48njp" />
 <meta name="twitter:title" content="30歳から始める数学" />
 <meta name="twitter:description" content="とあることから、30歳にして数学を学び始めました。いまは毎日楽しく数学の書籍を読んだり方程式を解いたりしています。本記事では、僕と同じようにもう一度数学を学びたいなと思っている人向けに、数学の魅力を再発見する方法を紹介します。" />
 <meta name="twitter:image" content="http://48n.jp/images/math-1547018_640.jpg" />
