@@ -174,6 +174,58 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2018-08-07T05:23:15.000Z" itemprop="datepublished">
+            2018/08/07
+          </time>
+          <time datetime="2018-08-07T05:23:15.000Z" itemprop="modified">
+            (更新日: 2018/08/07)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2018/08/07/started-video-chat/">最短でビデオチャットを開発したい人へ</a>
+        </h1>
+        <div class="content">
+          <p>ビデオチャットを最短で作りたいと考えている人への備忘録です。次の手順に沿って開発すると4時間程度でビデオチャットを開発できます。</p>
+<ol>
+<li><a href="#1-webrtcの概要を把握する">WebRTCの概要を把握する</a></li>
+<li><a href="#2-webrtcのコードを動かしてみる">WebRTCのコードを動かしてみる</a></li>
+<li><a href="#3-webrtcの開発を支援するサービスを利用する">WebRTCの開発を支援するサービスを利用する</a></li>
+</ol>
+<h2 id="1-WebRTCの概要を把握する"><a href="#1-WebRTCの概要を把握する" class="headerlink" title="1. WebRTCの概要を把握する"></a>1. WebRTCの概要を把握する</h2><p>まずはWebRTCについての概要を把握しておくと、実装するときの理解が深まります。まずは、次の記事を読んでください。</p>
+<ul>
+<li><a href="https://gist.github.com/voluntas/67e5a26915751226fdcf" target="_blank">WebRTC コトハジメ</a></li>
+</ul>
+<p>同じタイトルですが、Qiitaのこの記事もわかりやすいです。</p>
+<ul>
+<li><a href="https://qiita.com/yusuke84/items/286f569d110daede721e" target="_blank">WebRTC コトハジメ</a></li>
+</ul>
+<h2 id="2-WebRTCのコードを動かしてみる"><a href="#2-WebRTCのコードを動かしてみる" class="headerlink" title="2. WebRTCのコードを動かしてみる"></a>2. WebRTCのコードを動かしてみる</h2><p>上記の記事を読んだら、早速コードを動かしてみましょう。コードを実際に動かしてみることで、着実にWebRTCの概念を理解していくことができます。</p>
+<p>次の記事で簡単にPCのカメラの映像をブラウザに表示できることが体感してください。</p>
+<ul>
+<li><a href="https://html5experts.jp/mganeko/19728/" target="_blank">カメラを使ってみよう ーWebRTC入門2016</a></li>
+</ul>
+<p>次の記事でシグナリングの流れを掴みましょう。</p>
+<ul>
+<li><a href="https://html5experts.jp/mganeko/19814/" target="_blank">手動でWebRTCの通信をつなげよう ーWebRTC入門2016</a></li>
+</ul>
+<h2 id="3-WebRTCの開発を支援するサービスを利用する"><a href="#3-WebRTCの開発を支援するサービスを利用する" class="headerlink" title="3. WebRTCの開発を支援するサービスを利用する"></a>3. WebRTCの開発を支援するサービスを利用する</h2><p>本格的なビデオチャットを開発するのはなかなか大変です。その開発を楽にしてくれるサービスが世の中に存在します。私がおすすめするのはSkyWayというサービスです。このサービスを利用することでNAT越えなどの仕組みを自分で実装せずにすみます。日本語ドキュメントが整備されており、サービス自体も無料で試すことができます。</p>
+<ul>
+<li><a href="https://webrtc.ecl.ntt.com/" target="_blank">SkyWay</a></li>
+</ul>
+<p>SkyWayを利用するにあたっては、次のスライドが参考になります。</p>
+<ul>
+<li><a href="https://www.slideshare.net/iwashi86/skyway-how-to-use-skyway-webrtc" target="_blank">SkyWayを使いこなすために - How to use SkyWay (WebRTC)</a></li>
+</ul>
+<p>余談ですが、WebRTCのライブラリであるPeerJSはメンテされてないので使わない方がよいです。</p>
+<ul>
+<li><a href="https://medium.com/@Tukimikage/peerjs%E3%82%92%E4%BB%8A%E5%BE%8C%E3%82%82%E4%BD%BF%E3%81%84%E7%B6%9A%E3%81%91%E3%82%8B%E3%81%AE%E3%81%AF%E5%8D%B1%E9%99%BA-8c3cf68d56a0" target="_blank">PeerJSを今後も使い続けるのは危険</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2018-07-10T00:39:55.000Z" itemprop="datepublished">
             2018/07/10
           </time>
@@ -268,29 +320,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <p>便利な<a href="https://projectlombok.org/" target="_blank">lombok</a>ですが、そろそろオワコンな感じがしています。理由はJavaのアップデートに追従することが困難になってきているからです。詳しくは<a href="https://qiita.com/tmurakam99/items/b5ffe7f18bc06577f619" target="_blank">Lombok の Java9以降対応</a>の記事に書いてあります。実際、Java9対応も遅かったですね。lombokを使い続けると、Javaのアップデートに追従していけなくなる未来が想像できます。</p>
 <p>Spring Bootも2系からはlombokは使っていませんね。</p>
 <p>lombokは便利ですが、別に無くてもなんとかなるライブラリなので、あえてこれから使う選択をする必要はないと思います。</p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2018-06-28T05:42:53.000Z" itemprop="datepublished">
-            2018/06/28
-          </time>
-          <time datetime="2018-06-28T05:42:53.000Z" itemprop="modified">
-            (更新日: 2018/06/28)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2018/06/28/about-remote-work/">リモートワークは効率が悪いはウソ</a>
-        </h1>
-        <div class="content">
-          <p>ここ最近は週に1回ほどリモートワークで働いています。プログラミングであればリモートワークで問題ないです。</p>
-<p>リモートワークの利点として会議に出なくていいことがあります。会社にいると何かと会議に招集されて時間や集中力が奪われてしまいますが、リモートワークであればその心配はありません。本当に出る必要がある会議であればリモートで参加すればいいですし、多くの場合は対面で話さずともドキュメントベースのコミュニケーションで事足ります。</p>
-<p>ほかにも通勤時間が不要になることで1日に余裕ができるメリットがあります。私は往復で通勤時間に2時間が必要です。リモートワークにすればこの2時間が自由に使えるようになります。通勤時間がない分、早めに仕事を切り上げてその後の時間は子供と遊んだりできます。</p>
-<p>リモートワークだと集中できない、生産性が下がるという意見がありますが、実際にやってみるとそんなデメリットはありませんでした。オフィスより家の方が集中できます。なぜなら、集中するには静かな場所が必要だからです。テレビがついているような騒がしい場所で集中することは難しいのです。オフィスはテレビがついている部屋と大して変わらないと思います。</p>
-<p>リモートワーク導入で生産性が下がるのではないかという意見もありますが、そんなことはありません。通勤時間がなくなるうえ、集中できる環境であれば生産性が上がるのは当然でしょう。コミュニケーションが必要な時はSlackなどのツールを利用すればよいです。ただし、100％リモートワークとなるとコミュニケーションの問題が出てくるであろうというのはわかります。ですので、オフィスワークとリモートワークのハイブリットがバランスがよいのではないでしょうか。</p>
-<p>頑張って残業するよりリモートワークを取り入れましょう。そのほうが生産性があがり社員の満足度もあがりますよ。</p>
 
         </div>
       </div>

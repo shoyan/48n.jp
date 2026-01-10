@@ -174,6 +174,59 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-05-24T06:05:01.000Z" itemprop="datepublished">
+            2016/05/24
+          </time>
+          <time datetime="2016-05-24T06:05:01.000Z" itemprop="modified">
+            (更新日: 2016/05/24)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/05/24/introduce-guard-gem-and-guard-rspec/">Guardでrspecのテストを自動化する</a>
+        </h1>
+        <div class="content">
+          <p>自動化ツールのGuardの紹介をします。<br>Guardはファイルを監視して、ファイルになんらかの変更がされたら、指定した処理を実行するツールです。<br>この機能を使ってファイルが変更されたらテストを自動で実行させたり、シンタックスチェックをすることができます。<br>今回はrspecで自動的にテストを実行する方法を紹介します。  </p>
+<p>まずはGuardのinstallをします。<br>Gemfileに定義してインストールします。  </p>
+<p>Gemfile</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">group <span class="symbol">:development</span> <span class="keyword">do</span></span><br><span class="line">  gem <span class="string">'guard'</span></span><br><span class="line">  gem <span class="string">'guard-rspec'</span>, <span class="symbol">require:</span> <span class="literal">false</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>bundle installして、Guardfileを作成します。<br>GuardfileはGuardの設定を定義するファイルです。</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">bundle </span><span class="keyword">install</span></span><br><span class="line"><span class="keyword">$ </span><span class="keyword">bundle </span>exec guard init rspec</span><br></pre></td></tr></table></figure>
+
+<p>guard init rspecを実行するとrspecの設定が書かれたGuardfileが作成されます。<br>Railsを想定した設定が書かれていますので、Railsの場合はそのままでOKです。</p>
+<h2 id="ファイルが実行されたらrspecを実行する"><a href="#ファイルが実行されたらrspecを実行する" class="headerlink" title="ファイルが実行されたらrspecを実行する"></a>ファイルが実行されたらrspecを実行する</h2><p>ファイルが実行されたらrspecを実行するようにしましょう。<br>別でウィンドウを開いてguardを実行します。  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> bundle <span class="built_in">exec</span> guard</span></span><br></pre></td></tr></table></figure>
+
+<p>ファイルを変更するとそのファイルのテストが実行され、テスト結果が表示されます。</p>
+<h2 id="Guard-rspecのDSL"><a href="#Guard-rspecのDSL" class="headerlink" title="Guard-rspecのDSL"></a>Guard-rspecのDSL</h2><p>Guardの設定はGuardのDSLを用いて設定します。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rspecのグループを定義し、監視しているファイルに変更があった場合は"bundle exec rspec""を実行する。</span></span><br><span class="line">guard <span class="symbol">:rspec</span>, <span class="symbol">cmd:</span> <span class="string">"bundle exec rspec"</span> <span class="keyword">do</span></span><br><span class="line">  <span class="comment"># Guard::RspecのDSLのインスタンスを作成</span></span><br><span class="line">  dsl = Guard::RSpec::Dsl.new(<span class="keyword">self</span>)</span><br><span class="line">  rspec = dsl.rspec</span><br><span class="line">  watch(rspec.spec_helper) &#123; rspec.spec_dir &#125;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>watchで監視するファイルを設定します。<br>watchの引数は以下です。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watch(監視するファイル) &#123; コマンドに渡される引数 &#125;</span><br></pre></td></tr></table></figure>
+
+<p>ここででてきた、<code>rspec.spec_helper</code> と <code>rspec.spec_dir</code> はどんな値を返すのでしょうか。<br>pryで覗いてみましょう。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ pry</span><br><span class="line">&gt; <span class="keyword">require</span> <span class="string">'guard/rspec/dsl'</span></span><br><span class="line">&gt; dsl = Guard::RSpec::Dsl.new(<span class="keyword">self</span>)</span><br><span class="line">&gt; rspec = dsl.rspec</span><br><span class="line">&gt; rspec.spec_helper</span><br><span class="line">=&gt; <span class="string">"spec/spec_helper.rb"</span></span><br><span class="line">&gt; rspec.spec_dir</span><br><span class="line">=&gt; <span class="string">"spec"</span></span><br></pre></td></tr></table></figure>
+
+<p>ソースを少し見てみましょう。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rspec</span></span></span><br><span class="line">  @rspec <span class="params">||</span>= OpenStruct.new(<span class="symbol">to_s:</span> <span class="string">"spec"</span>).tap <span class="keyword">do</span> <span class="params">|rspec|</span></span><br><span class="line">    rspec.spec_dir = <span class="string">"spec"</span></span><br><span class="line">    rspec.spec = -(m) &#123; Dsl.detect_spec_file_for(rspec, m) &#125;</span><br><span class="line">    rspec.spec_helper = <span class="string">"<span class="subst">#&#123;rspec.spec_dir&#125;</span>/spec_helper.rb"</span></span><br><span class="line">    rspec.spec_files = <span class="regexp">%r&#123;^<span class="subst">#&#123;rspec.spec_dir&#125;</span>/.+_spec\.rb$&#125;</span></span><br><span class="line">    rspec.spec_support = <span class="regexp">%r&#123;^<span class="subst">#&#123;rspec.spec_dir&#125;</span>/support/(.+)\.rb$&#125;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p><a href="https://github.com/guard/guard-rspec/blob/master/lib/guard/rspec/dsl.rb#L28" target="_blank" rel="noopener">https://github.com/guard/guard-rspec/blob/master/lib/guard/rspec/dsl.rb#L28</a></p>
+<p>実装には<code>OpenStruct</code>が使われています。<br><code>OpenStruct</code>とは要素を動的に追加・削除できる手軽な構造体を提供するクラスです<br><a href="http://docs.ruby-lang.org/ja/2.1.0/class/OpenStruct.html" target="_blank" rel="noopener">http://docs.ruby-lang.org/ja/2.1.0/class/OpenStruct.html</a></p>
+<p>要素を追加するためにtapメソッドを使っています。<br><code>OpenStruct</code>とtapメソッドをうまく使っていますね。  </p>
+<p>実は、というか当たり前なのですがOpenStructなので値の上書きも簡単にできてしまいます。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; rspec.spec_helper</span><br><span class="line">=&gt; <span class="string">"spec/spec_helper.rb"</span></span><br><span class="line">&gt; rspec.spec_helper = 'hoge'</span><br><span class="line">=&gt; <span class="string">"hoge"</span></span><br><span class="line">&gt; rspec.spec_helper</span><br><span class="line">=&gt; <span class="string">"hoge"</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Guardのカスタマイズ"><a href="#Guardのカスタマイズ" class="headerlink" title="Guardのカスタマイズ"></a>Guardのカスタマイズ</h2><p>Guardの様々なプラグインが開発されています。<br>プラグインは以下のページで参照できます。<br><a href="https://github.com/guard/guard/wiki/Guard-Plugins" target="_blank" rel="noopener">https://github.com/guard/guard/wiki/Guard-Plugins</a></p>
+<p>ちなみに、今回使った<code>guard-rspec</code>もGuardのプラグインです。<br>他にも様々なプラグインが用意されています。</p>
+<h2 id="関連記事"><a href="#関連記事" class="headerlink" title="関連記事"></a>関連記事</h2><ul>
+<li><a href="/blog/2016/12/07/guard-rubocop/">Guardでrubocopを自動化する</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-05-20T08:40:56.000Z" itemprop="datepublished">
             2016/05/20
           </time>
@@ -381,39 +434,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>Expressの構成は把握できました。<br>次はExpressを使ってチャットアプリケーションを作ってみたいと思います(次回へ続く)。</p>
 <h3 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h3><ul>
 <li><a href="http://expressjs.com/en/starter/installing.html" target="_blank" rel="noopener">Installing Express</a></li>
-</ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-05-16T04:25:01.000Z" itemprop="datepublished">
-            2016/05/16
-          </time>
-          <time datetime="2016-05-16T04:25:01.000Z" itemprop="modified">
-            (更新日: 2016/05/16)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/05/16/cording-without-separator-on-ruby/">Rubyでスラッシュを意識せずにコーディングする方法</a>
-        </h1>
-        <div class="content">
-          <p>ファイルのパスを生成する際にセパレーターを意識しなくてはならず、どうにもいけていないコードがあります(ありますというか自分が量産していました)。<br>以下のようなコードです。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">path = <span class="string">"<span class="subst">#&#123;path1&#125;</span>/&#123;$path2&#125;"</span></span><br></pre></td></tr></table></figure>
-
-<p>セパレーターを意識せずコーディングできないものかと調べたところ、<code>File.join</code>を使えばよしなにやってくれることがわかりました。<br><code>File.join</code>を使えばセパレーターを指定する必要はありません。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">File.join(<span class="string">"hoge"</span>, <span class="string">"moge"</span>)</span><br><span class="line">=&gt; <span class="string">"hoge/moge"</span></span><br></pre></td></tr></table></figure>
-
-<p><code>File.join</code>は正しいであろうパスのフォーマットに補正してくれるため、<code>//hoge</code>のようなパスが生成されることもありません。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">File.join(<span class="string">"hoge"</span>, <span class="string">"moge/"</span>, <span class="string">"/fuga"</span>)</span><br><span class="line">=&gt; <span class="string">"hoge/moge/fuga"</span></span><br></pre></td></tr></table></figure>
-
-<p>パラメーターが配列でもよしなにやってくれます。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">File.join(%w(hoge moge/ fuga))</span><br><span class="line">=&gt; <span class="string">"hoge/moge/fuga"</span></span><br></pre></td></tr></table></figure>
-
-<p>地味ですが、これでセパレーターの悩みから解放されて幸せになれます。</p>
-<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
-<li><a href="http://ruby-doc.org/core-2.2.0/File.html#method-c-join" target="_blank" rel="noopener">http://ruby-doc.org/core-2.2.0/File.html#method-c-join</a></li>
 </ul>
 
         </div>

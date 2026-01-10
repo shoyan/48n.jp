@@ -174,6 +174,37 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-10-05T05:27:46.000Z" itemprop="datepublished">
+            2016/10/05
+          </time>
+          <time datetime="2016-10-05T05:27:46.000Z" itemprop="modified">
+            (更新日: 2016/10/05)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/10/05/fix-unable-to-connect-to-docker-daemon/">Macを引っ越ししたらDockerデーモンが起動しなくなった</a>
+        </h1>
+        <div class="content">
+          <p>Macを引っ越ししたらDockerデーモンが起動しなくなった。<br>Dockerを起動しようとすると <code>Cannot connect to the Docker daemon. Is the docker daemon running on this host?</code> というメッセージがでて起動しない。<br>docker-machineコマンドで確認してみると以下のエラーが出ていた。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ docker-machine ls</span><br><span class="line"><span class="type">NAME</span>      ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER    ERRORS</span><br><span class="line"><span class="keyword">default</span>   -        virtualbox   Running   tcp://<span class="number">192.168</span><span class="number">.99</span><span class="number">.100</span>:<span class="number">2376</span>           <span class="type">Unknown</span>   Unable <span class="keyword">to</span> query docker <span class="keyword">version</span>: Cannot <span class="keyword">connect</span> <span class="keyword">to</span> the docker engine endpoint</span><br></pre></td></tr></table></figure>
+
+<p>1度docker-machineコマンドで既存のDockerを削除して作成するとうまくいった。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker-machine rm -f default</span><br><span class="line">$ docker-machine create -d virtualbox default</span><br></pre></td></tr></table></figure>
+
+<p>今度はDockerのバージョンがv1.12.1と表示されている。</p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">⇒  docker-machine ls</span><br><span class="line"><span class="built_in">NAME</span>      ACTIVE   <span class="built_in">DRIVER</span>       STATE     URL                         SWARM   DOCKER    ERRORS</span><br><span class="line"><span class="keyword">default</span>   -        virtualbox   Running   tcp:<span class="comment">//192.168.99.100:2376           v1.12.1</span></span><br></pre></td></tr></table></figure>
+
+<p>ちなみに既存のDockerを削除すると今までのimageは消えてしまう。</p>
+<p>Docker for Macがでてそっちに移行した方がよさげな機運を感じるので、そろそろDocker ToolboxからDocker for Macに移行する時期なのかな。</p>
+<ul>
+<li><a href="https://docs.docker.com/docker-for-mac/docker-toolbox/" target="_blank" rel="noopener">https://docs.docker.com/docker-for-mac/docker-toolbox/</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-09-27T05:04:11.000Z" itemprop="datepublished">
             2016/09/27
           </time>
@@ -316,47 +347,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h2 id="やってみた感想"><a href="#やってみた感想" class="headerlink" title="やってみた感想"></a>やってみた感想</h2><p>やってみた感想としては、たしかに一定の時間を集中することで集中力が高まることを感じた。<br>気分的にのれなくても25分集中するんだと気合をいれてやれば、けっこう集中できるものだ。<br>効率よく仕事をこなす方法としてポモドーロ・テクニックはよい手法だと思う。</p>
 <p>しかし、走ると歩くを繰り返すと疲れるようにポモドーロ・テクニックを使うと神経を消耗する。<br>実際、途中に長めの休憩をとるようにと解説もしてある。</p>
 <p>ただし、これは慣れもあるのではと思う。<br>走ると歩くことを繰り返すのはたしかにしんどいがそれが習慣化してしまえば、最初に感じた負荷よりもぐっと負担は減るはずだ。<br>もうしばらくポモドーロ・テクニックを使っていくつもりだ。</p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-09-12T04:56:43.000Z" itemprop="datepublished">
-            2016/09/12
-          </time>
-          <time datetime="2016-09-12T04:56:43.000Z" itemprop="modified">
-            (更新日: 2016/09/12)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/09/12/study-english-four-month/">英語の勉強をはじめて4ヶ月の記録</a>
-        </h1>
-        <div class="content">
-          <p>英語の勉強時間をStudyPlusに記録しはじめて4ヶ月がたった。<br>StudePlusに関しては以下の記事を参照してほしい。<br><a href="/blog/2016/05/04/introduce-studyplus/">勉強が楽しく続くようになるStudyplus</a></p>
-<p>勉強時間は合計91時間。<br>最近は英語の勉強のルーティンが生活の中に確立して自然にできるようになった。<br>いまやっていることは以下のような感じ。</p>
-<h3 id="家から駅まで"><a href="#家から駅まで" class="headerlink" title="家から駅まで"></a>家から駅まで</h3><p>NHKのラジオ英会話(アプリ版)を聞きながら15分歩く。<br>アプリ版は好きな時間に聞けるので重宝している。</p>
-<h3 id="会社"><a href="#会社" class="headerlink" title="会社"></a>会社</h3><p>休み時間にマジタンという英単語アプリで英単語を覚える。</p>
-<h3 id="駅から家まで"><a href="#駅から家まで" class="headerlink" title="駅から家まで"></a>駅から家まで</h3><p>超右脳つぶやき英語トレーニングを聞きながら15分歩く。<br>(現在は廃盤になっており、現行は<a  href="https://www.amazon.co.jp/gp/product/4862801315/ref=as_li_qf_sp_asin_tl?ie=UTF8&camp=247&creative=1211&creativeASIN=4862801315&linkCode=as2&tag=syoyama-22" target="_blank" rel="noopener">超速つぶやき英語トレーニング</a><img src="http://ir-jp.amazon-adsystem.com/e/ir?t=syoyama-22&l=as2&o=9&a=4862801315" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />という名前で出版されている)</p>
-<iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?t=syoyama-22&o=9&p=8&l=as1&asins=4862801315&ref=qf_sp_asin_til&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1=000000&bg1=FFFFFF&f=ifr" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
-
-<h3 id="寝る前"><a href="#寝る前" class="headerlink" title="寝る前"></a>寝る前</h3><p>データベース3000基本英単語・熟語を30分。<br>発音とリスニングをする。</p>
-<iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?t=syoyama-22&o=9&p=8&l=as1&asins=4342012952&ref=tf_til&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1=000000&bg1=FFFFFF&f=ifr" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
-
-<p>以上でだいたい1時間くらいだ。</p>
-<p>語彙数を増やすこととリスニング力の向上を目指している。<br>理由は以下の通り。</p>
-<ul>
-<li>英語の勉強に関する著書を読むと語彙数が必要と書いてあることが多い</li>
-<li>英会話をやってみて、そもそもリスニングができないと会話が成り立たないことを痛感した</li>
-</ul>
-<p>英単語学習についての考え方は以下の記事が大変参考になった。</p>
-<ul>
-<li><a href="http://eitango-anki.com/%E7%AC%AC2%E8%A9%B1%EF%BC%9A%E6%9C%AC%E5%BD%93%E3%81%AB3000%E8%AA%9E%E5%BD%99%E3%81%A7%E8%B6%B3%E3%82%8A%E3%82%8B%E3%81%AE%E3%81%8B%EF%BC%9F/" target="_blank" rel="noopener">第2話：本当に3000語彙で足りるのか？ - 1日33分で1000の語彙が増える英単語の暗記カード</a></li>
-</ul>
-<h2 id="4ヶ月前と比べて"><a href="#4ヶ月前と比べて" class="headerlink" title="4ヶ月前と比べて"></a>4ヶ月前と比べて</h2><p>4ヶ月前と比べ、以下のような変化があった。</p>
-<p>覚えた英単語は3500。<br>4ヶ月前はネイティブが話す速度の英語はほとんど聞き取れなかったが、いまは単語として聞き取れる割合が増えた。<br>超右脳つぶやき英語トレーニングに付属しているCDはネイティブが普通に話すスピードなのでさっぱり聞き取れなくて愕然としたが、いまは6割くらい聞き取れてていると思う。何度も聞いて内容を覚えてしまっているからでもある。<br>しかし、聞き取れる単語は増えてきたが、意味がわからないことが多い。</p>
-<p>リーディング、ライティングはほとんどやっていないが、語彙数が向上したことでリーディングもあがっていると思う。<br>しかし、語彙数3500程度だとわからない単語が多く理解できない部分が多い。<br>当然、日本語のように英語を読むことは不可能である。<br>ライティングはほとんど向上していない。</p>
-<p>今後は語彙数をもっと増やして10000語を目指すつもりだ。</p>
 
         </div>
       </div>

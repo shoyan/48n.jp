@@ -174,6 +174,65 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-07-19T05:07:16.000Z" itemprop="datepublished">
+            2016/07/19
+          </time>
+          <time datetime="2016-07-19T05:07:16.000Z" itemprop="modified">
+            (更新日: 2016/07/19)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/07/19/ruby-load/">Rubyのロード機構について</a>
+        </h1>
+        <div class="content">
+          <p>Rubyはロード機構として、以下を備えています。</p>
+<ul>
+<li>require</li>
+<li>load</li>
+<li>autoload</li>
+<li>require_relative</li>
+</ul>
+<h2 id="require"><a href="#require" class="headerlink" title="require"></a>require</h2><p>requireは以下の特徴を備えています。</p>
+<ul>
+<li>ロードパスからファイルを探してくる</li>
+<li>拡張ライブラリもロードできる</li>
+<li>拡張子 .rb / .so を省略できる</li>
+<li>同じファイルは2度以上ロードしない</li>
+</ul>
+<p>Rubyのロードパスは <code>$:</code>に入っています。<br>私の環境では以下のように表示されました。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>] pry(main)&gt; puts <span class="string">$:</span></span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>rbenv.d<span class="regexp">/exec/</span>gem-rehash</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>gems<span class="regexp">/2.3.0/</span>gems<span class="regexp">/did_you_mean-1.0.0/</span>lib</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>gems<span class="regexp">/2.3.0/</span>gems<span class="regexp">/coderay-1.1.1/</span>lib</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>gems<span class="regexp">/2.3.0/</span>gems<span class="regexp">/slop-3.6.0/</span>lib</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>gems<span class="regexp">/2.3.0/</span>gems<span class="regexp">/method_source-0.8.2/</span>lib</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>gems<span class="regexp">/2.3.0/</span>gems<span class="regexp">/pry-0.10.3/</span>lib</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>site_ruby/<span class="number">2.3</span><span class="number">.0</span></span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>site_ruby<span class="regexp">/2.3.0/</span>x86_64-darwin14</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>site_ruby</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>vendor_ruby/<span class="number">2.3</span><span class="number">.0</span></span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>vendor_ruby<span class="regexp">/2.3.0/</span>x86_64-darwin14</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>vendor_ruby</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span><span class="number">2.3</span><span class="number">.0</span></span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span><span class="number">2.3</span><span class="number">.0</span>/x86_64-darwin14</span><br></pre></td></tr></table></figure>
+
+<h2 id="load"><a href="#load" class="headerlink" title="load"></a>load</h2><p>loadもrequireと同じくロードパスからファイルを探してロードします。<br>しかし、requireのように拡張ライブラリはロードできません。<br>また、ロードできるファイルもRubyプログラムだけです。<br>requireのように2回以上の読み込みを制御する機構もなく、callされた回数分ファイルは読み込まれます。</p>
+<h2 id="autoload"><a href="#autoload" class="headerlink" title="autoload"></a>autoload</h2><p>autoloadはrequireと似ていますが、すぐには読み込まれず、必要になった段階でrequrieされます。以下、サンプルコードです。</p>
+<p>autoload.rb</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">autoload <span class="symbol">:Outer</span>, <span class="string">'./outer'</span></span><br><span class="line">puts Outer.new</span><br></pre></td></tr></table></figure>
+
+<p>outer.rb</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="symbol">Outer</span></span><br><span class="line"><span class="symbol">end</span></span><br><span class="line"></span><br><span class="line"><span class="symbol">puts</span> '<span class="symbol">Outer</span> <span class="symbol">loaded</span>!'</span><br></pre></td></tr></table></figure>
+
+<p>実行すると、Outerがloadされているのが確認できます。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">⇒  ruby <span class="built_in">auto</span>load.rb</span><br><span class="line">Outer loaded!</span><br><span class="line">#&lt;Outer:<span class="number">0x007fcc14040e60</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>autoloadはネストされたクラスやモジュールもloadすることができます。</p>
+<p>autoload.rb</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">autoload :<span class="keyword">Outer</span>, <span class="string">'./outer'</span></span><br><span class="line">puts <span class="keyword">Outer</span>.<span class="built_in">new</span></span><br><span class="line">puts <span class="keyword">Outer</span>::<span class="keyword">Inner</span>.<span class="built_in">new</span></span><br></pre></td></tr></table></figure>
+
+<p>outer.rb</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Outer</span></span></span><br><span class="line">  autoload <span class="symbol">:Inner</span>, <span class="string">'./inner'</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">puts <span class="string">'Outer loaded!'</span></span><br></pre></td></tr></table></figure>
+
+<p>inner.rb</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="symbol">Outer</span></span><br><span class="line">  <span class="symbol">class</span> <span class="symbol">Inner</span></span><br><span class="line">  <span class="symbol">end</span></span><br><span class="line"><span class="symbol">end</span></span><br><span class="line"></span><br><span class="line"><span class="symbol">puts</span> "<span class="symbol">Outer::<span class="symbol">Inner</span></span> <span class="symbol">loaded</span>!"</span><br></pre></td></tr></table></figure>
+
+<p>実行すると、Outer::Innerがloadされているのが確認できます。</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">⇒  ruby autoload.rb</span><br><span class="line"><span class="keyword">Outer</span> loaded!</span><br><span class="line">#&lt;<span class="keyword">Outer</span>:<span class="number">0x007f9fd4054df0</span>&gt;</span><br><span class="line"><span class="keyword">Outer</span>::<span class="keyword">Inner</span> loaded!</span><br><span class="line">#&lt;<span class="keyword">Outer</span>::<span class="keyword">Inner</span>:<span class="number">0x007f9fd404f990</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="require-relative"><a href="#require-relative" class="headerlink" title="require_relative"></a>require_relative</h2><p>あまり見かけることがありませんが、<code>require_relative</code> というメソッドがRuby1.9.2から追加されています。<br>例えば<code>require</code>で同じ階層のファイルをロードする場合は、<code>require &#39;./filename&#39;</code> のように明示的に<code>./</code>を指定する必要があります。<br><code>require_relative</code>を使えば、<code>require_relative &#39;filename&#39;</code> のように定義することができます。</p>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-07-15T05:05:31.000Z" itemprop="datepublished">
             2016/07/15
           </time>
@@ -1022,62 +1081,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>tmpwatchは再帰的にファイルを削除するので、サブディレクトリがあればその配下のファイルも削除されます。<br>シンボリックの場合はリンクが削除されるだけでリンク先のファイルは削除されないとのことです。</p>
 <h3 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h3><ul>
 <li><a href="http://spring-mt.tumblr.com/post/18484633412/tmpwatch%E3%81%8C%E4%BE%BF%E5%88%A9" target="_blank" rel="noopener">tmpwatchが便利！</a></li>
-</ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-07-05T08:21:32.000Z" itemprop="datepublished">
-            2016/07/05
-          </time>
-          <time datetime="2016-07-05T08:21:32.000Z" itemprop="modified">
-            (更新日: 2016/07/05)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/07/05/introduce-to-fluentd-elasticsearch-kibana/">Fluentd、ElasticsearchとKibanaでログ検索とグラフ表示を可能にする</a>
-        </h1>
-        <div class="content">
-          <p><a href="/blog/2016/07/04/fluentd-tutorial/">前回の記事</a>で<a href="http://www.fluentd.org/" target="_blank" rel="noopener">Fluentd</a>を使ってログをログ収集サーバに転送する方法を紹介しました。<br>今回は転送されたログを<a href="https://www.elastic.co/jp/products/elasticsearch" target="_blank" rel="noopener">Elasticsearch</a>に登録し、<a href="https://www.elastic.co/jp/products/kibana" target="_blank" rel="noopener">Kibana</a>でログ検索とグラフ表示する方法を紹介します。</p>
-<p>ログ収集サーバー(前回の記事でいうVagrant)の変更を行っていきます。</p>
-<h2 id="FluentdのElasticsearchプラグインをインストール"><a href="#FluentdのElasticsearchプラグインをインストール" class="headerlink" title="FluentdのElasticsearchプラグインをインストール"></a>FluentdのElasticsearchプラグインをインストール</h2><p>まずは、FluetndのElasticsearchプラグインをインストールしておきます。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo /usr/sbin/td-agent-gem <span class="keyword">install</span> fluent-<span class="keyword">plugin</span>-elasticsearch</span><br></pre></td></tr></table></figure>
-
-<h2 id="Javaのインストール"><a href="#Javaのインストール" class="headerlink" title="Javaのインストール"></a>Javaのインストール</h2><p>Elasticsearchを動かすにはJavaが必要なのでJavaをインストールします。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum <span class="keyword">install</span> <span class="keyword">java</span><span class="number">-1.7</span><span class="number">.0</span>-openjdk</span><br><span class="line">$ sudo yum <span class="keyword">install</span> <span class="keyword">java</span><span class="number">-1.7</span><span class="number">.0</span>-openjdk-devel</span><br><span class="line">$ <span class="keyword">java</span> -<span class="keyword">version</span></span><br><span class="line"><span class="keyword">java</span> <span class="keyword">version</span> <span class="string">"1.7.0_101"</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Elasticsearchのインストールと起動"><a href="#Elasticsearchのインストールと起動" class="headerlink" title="Elasticsearchのインストールと起動"></a>Elasticsearchのインストールと起動</h2><p>今回はアーカイブをダウンロードしてきてインストールします。<br>インストールといっても特に設定は不要でアーカイブを展開して<code>bin/elasticsearch</code>を実行するだけです。</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>curl -O <span class="symbol">https:</span>/<span class="regexp">/download.elastic.co/elasticsearch</span><span class="regexp">/release/org</span><span class="regexp">/elasticsearch/distribution</span><span class="regexp">/tar/elasticsearch</span><span class="regexp">/2.3.3/elasticsearch</span><span class="number">-2.3</span>.<span class="number">3</span>.tar.gz</span><br><span class="line"><span class="variable">$ </span>cd elastic search<span class="number">-2.3</span>.<span class="number">3</span></span><br><span class="line"><span class="variable">$ </span>./bin/elasticsearch</span><br></pre></td></tr></table></figure>
-
-<h2 id="kibanaのインストールと起動"><a href="#kibanaのインストールと起動" class="headerlink" title="kibanaのインストールと起動"></a>kibanaのインストールと起動</h2><p>Kibanaも同じようにアーカイブをダウンロードして起動します。</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>curl -O <span class="symbol">https:</span>/<span class="regexp">/download.elastic.co/kibana</span><span class="regexp">/kibana/kibana</span><span class="number">-4.5</span>.<span class="number">1</span>-linux-x64.tar.gz</span><br><span class="line"><span class="variable">$ </span>cd kibana<span class="number">-4.5</span>.<span class="number">1</span>-linux-x64</span><br><span class="line"><span class="variable">$ </span>./bin/kibana</span><br></pre></td></tr></table></figure>
-
-<p><code>http://192.168.33.10:5601</code> にブラウザでアクセスするとKibanaの管理画面が表示されます。<br>Indexの設定が必要ですが、ここでは何もせず次に進みます。</p>
-<h2 id="syslogのログをElasticsearchに格納する"><a href="#syslogのログをElasticsearchに格納する" class="headerlink" title="syslogのログをElasticsearchに格納する"></a>syslogのログをElasticsearchに格納する</h2><p>syslogのログをElasticsearchに格納し、Kibanaで参照します。</p>
-<p><code>/etc/td-agent/td-agent.conf</code>に以下を追記します。</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;source&gt;</span></span><br><span class="line">  @<span class="keyword">type</span> syslog <span class="comment"># syslogプラグイン</span></span><br><span class="line">  port <span class="number">42185</span>   <span class="comment"># portは42185を指定</span></span><br><span class="line">  <span class="keyword">tag</span> <span class="title">syslog</span>   <span class="comment"># syslogというtagをつける</span></span><br><span class="line"><span class="tag">&lt;/source&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;match syslog.**&gt;</span></span><br><span class="line">  @<span class="keyword">type</span> elasticsearch <span class="comment"># elasticsearchプラグインを使う</span></span><br><span class="line">  logstash_format <span class="literal">true</span> <span class="comment"># ログのフォーマット</span></span><br><span class="line">  flush_interval <span class="number">10s</span> <span class="comment"># 10秒ごとに登録する</span></span><br><span class="line"><span class="tag">&lt;/match&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>fluendをリスタートします。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo<span class="built_in"> service </span>td-agent restart</span><br></pre></td></tr></table></figure>
-
-<p>次にsyslogの設定をします。</p>
-<p><code>/etc/rsyslog.conf</code> に以下を追記します。<br>syslogが出力するログをFlutedがlistenするポート、42185に転送するための設定です。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*.* @<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">42185</span></span><br></pre></td></tr></table></figure>
-
-<p>設定を反映させるため、syslogをリスタートします。</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo <span class="regexp">/etc/i</span>nit.d<span class="regexp">/rsyslog restart</span></span><br></pre></td></tr></table></figure>
-
-<p>先ほど確認した <code>http://192.168.33.10:5601</code> に戻ります。<br>syslogの出力がElasticsearchに登録されると、Indexを登録できるようになります。<br>Indexは<code>logstash-2016.07.05</code> のような名前で作成されます。<br>セレクトボックスからIndexを選択し、Createボタンを押下後にKibanaでログの表示、検索が行えます。</p>
-<p>手動でElasticsearchにログを送りたい場合は以下のコマンドで登録できます。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> logger -t <span class="built_in">test</span> foobar</span></span><br></pre></td></tr></table></figure>
-
-<p>もしくは、Fluentdのhttpポートにリクエストします。</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X POST -d <span class="symbol">'json</span>=&#123;<span class="string">"json"</span>:<span class="string">"Hello"</span>&#125;' http:<span class="comment">//localhost:8888/syslog.test</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
-<li><a href="http://docs.fluentd.org/articles/free-alternative-to-splunk-by-fluentd" target="_blank" rel="noopener">Free Alternative to Splunk Using Fluentd</a></li>
 </ul>
 
         </div>
