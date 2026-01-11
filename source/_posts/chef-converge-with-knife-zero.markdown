@@ -4,8 +4,9 @@ title: "knife zeroを使ってレシピを適用する"
 date: 2016-05-10 13:29:15
 updated: 2016-05-10 13:29:15
 comments: true
-tags: Chef
 description: "Chefでよく使われるknifeコマンドですが、そのプラグインであるknife zeroを使ってレシピを適用する方法を紹介します。knife zeroはknifeプラグインで、リモートnode上でchef-clientを実行するツールです。"
+categories:
+ - プログラミング
 ---
 
 Chefでよく使われるknifeコマンドですが、そのプラグインである[knife zero](https://github.com/higanworks/knife-zero)を使ってレシピを適用する方法を紹介します。  

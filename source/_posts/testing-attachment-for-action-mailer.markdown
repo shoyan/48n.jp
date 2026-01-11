@@ -4,8 +4,11 @@ title: "ActionMailerの添付ファイルをRspecでテストする"
 date: 2016-06-08 18:41:16
 updated: 2016-06-08 18:41:16
 comments: true
-tags: RubyonRails
 description: "ActionMailerで添付ファイルを送るようにしたのですが、そのテストをするときの情報があまりなかったのでまとめました。Rspecを使ってテストするサンプルコードを紹介します。"
+categories:
+  - プログラミング
+tags:
+  - Ruby
 ---
 
 ActionMailerで添付ファイルを送るようにしたのですが、そのテストをするときの情報があまりなかったのでまとめました。

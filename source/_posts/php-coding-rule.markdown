@@ -5,6 +5,8 @@ date: 2016-03-17 00:41:01
 updated: 2016-03-17 00:41:01
 comments: true
 tags: "PHP"
+categories:
+  - プログラミング
 ---
 
 ## この記事の内容

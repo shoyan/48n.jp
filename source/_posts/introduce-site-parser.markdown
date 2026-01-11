@@ -4,7 +4,10 @@ title: "Webサイトのメタタグを取得するsite-parserをつくった"
 date: 2016-04-27 13:37:10
 updated: 2016-04-27 13:37:10
 comments: true
-tags: Ruby
+categories:
+  - プログラミング
+tags:
+  - Ruby
 ---
 
 Webサイトのメタデータを抽出するツールを作成しました。  

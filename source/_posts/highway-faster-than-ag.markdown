@@ -3,8 +3,8 @@ layout: post
 title: "超高速grep「The Silver Searcher(ag)」からhighwayに乗り換えた"
 date: 2015-10-28 13:51:49
 updated: 2015-10-28 13:51:49
-comments: true
-tags: 
+categories:
+  - プログラミング
 ---
 プログラマーにとって，grepコマンドはなくてはならない存在です。  
 基本的かつ古典的なユーティリティであるgrepですが，使いにくい面もあります。

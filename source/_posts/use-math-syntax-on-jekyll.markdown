@@ -4,8 +4,9 @@ title: "Jekyllで数式を表示する方法"
 date: 2016-06-27 12:25:08
 updated: 2016-06-27 12:25:08
 comments: true
-tags: 
 description: "Jekyllで数式を使いたい場合は、markdownにkramdownを使うのがおすすめです。次にMathjax.jsを読み込みます。以上で準備が整ったので、LaTexの書式で数式を表現できます。"
+categories:
+  - プログラミング
 ---
 Jekyllで数式を使いたい場合は、markdownにkramdownを使うのがおすすめです。  
 というのも、`redcarpet` はワンライナーの書式しか使えません。  

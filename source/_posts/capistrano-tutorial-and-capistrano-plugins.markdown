@@ -4,10 +4,11 @@ title: "Capistranoの導入手順とプラグインの紹介"
 date: 2016-06-01 14:17:45
 updated: 2016-06-01 14:17:45
 comments: true
+description: "Capistranoのインストールと設定、プラグインの紹介をします。Capistranoには様々なプラグインがあります。ここでは私が使っているプラグインを紹介します。"
+categories:
+ - プログラミング
 tags: 
   - Ruby 
-  - Gem
-description: "Capistranoのインストールと設定、プラグインの紹介をします。Capistranoには様々なプラグインがあります。ここでは私が使っているプラグインを紹介します。"
 ---
 
 Capistranoのインストールと設定、プラグインの紹介をします。

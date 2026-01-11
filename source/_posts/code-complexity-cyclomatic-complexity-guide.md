@@ -3,9 +3,9 @@ layout: post
 title: "コードの複雑度を測る：循環的複雑度（Cyclomatic Complexity）の計算方法と実践ガイド"
 date: 2025-08-07 10:00:00
 updated: 2024-08-07 10:00:00
-comments: true
-tags: プログラミング コード品質 複雑度
 description: "コードの複雑度を定量的に測る方法として、循環的複雑度（Cyclomatic Complexity）について詳しく解説します。計算方法、実践的な測定ツール、複雑度を下げる方法まで網羅的に紹介します。"
+categories:
+ - プログラミング
 ---
 
 コードの品質を測る指標として「複雑度」がありますが、特に**循環的複雑度（Cyclomatic Complexity）**は、コードの保守性やバグの発生リスクを定量的に評価できる指標です。

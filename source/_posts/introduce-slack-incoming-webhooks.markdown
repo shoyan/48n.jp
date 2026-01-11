@@ -4,10 +4,10 @@ title: "RubyでSlack通知をする"
 date: 2015-09-28 12:15:42
 updated: 2015-09-28 12:15:42
 comments: true
-tags: 
+categories:
+  - プログラミング
+tags:
   - Ruby
-  - Gem
-  - Slack
 ---
 
 [Slack](https://slack.com/)は使っていますか？  

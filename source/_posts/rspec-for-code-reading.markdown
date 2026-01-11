@@ -4,7 +4,10 @@ title: Rspecのコードリーディング
 date: 2015-07-16 17:13:38
 updated: 2015-07-16 17:13:38
 comments: true
-tags: 
+categories:
+  - プログラミング
+tags:
+  - Ruby
 ---
 
 bundle exec rspecを実行したときの処理を追ってみた。  

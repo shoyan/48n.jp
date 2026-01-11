@@ -4,9 +4,8 @@ title: "毎日技術ブログを書いたらアクセスは増えるの？"
 date: 2017-06-23 13:43:07
 updated: 2017-06-23 13:43:07
 comments: true
-tags: 
-  - ブログ
-  - SEO
+categories:
+  - コラム
 image: 2017-03-08-main.png
 ---
 

@@ -4,9 +4,10 @@ title: "SinatraのインストールとRspecでテストする"
 date: 2016-04-20 13:53:28
 updated: 2016-04-20 13:53:28
 comments: true
+categories:
+  - プログラミング
 tags: 
   - Ruby 
-  - Sinatra
 ---
 
 RubyのフレームワークといえばRuby on Railsが有名ですが、DBを使わないシンプルなアプリケーションの場合はSinatraで十分な気がします。  

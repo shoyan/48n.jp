@@ -4,10 +4,11 @@ title: "capistrano/wheneverで cannot load such fileがでる"
 date: 2016-06-15 13:42:55
 updated: 2016-06-15 13:42:55
 comments: true
-tags: 
-  - Ruby 
-  - Gem
 description: "wheneverでLoadError: cannot load such fileとinstance variable @_env not definedがでた。その回避策とその後の記録です。"
+categories:
+  - プログラミング
+tags:
+  - Ruby
 ---
 
 wheneverを導入するため`Capfile`に `require "whenever/capistrano"`と定義して `bundle exec cap -T` とすると以下のエラーがでた。

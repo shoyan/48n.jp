@@ -6,7 +6,8 @@ updated: 2016-04-21 18:19:01
 comments: true
 tags: 
   - Docker 
-  - Chef
+categories:
+  - プログラミング
 ---
 Chefのレシピを書くとき、Dockerコンテナにレシピを流せると気軽に確認ができてよいなと思い、DockerコンテナにChefを流せるようにしてみました。
 

@@ -4,11 +4,11 @@ title: "Rails 4.2.7.1 に更新した後に [DEPRECATION] last_comment is deprec
 date: 2016-08-23 13:37:27
 updated: 2016-08-23 13:37:27
 comments: true
-tags: 
-  - Ruby 
-  - Gem 
-  - RubyonRails
 description: "Railsを4.2.7.1にアップデートをしてrspecを実行すると、以下のエラーが発生するようになった。[DEPRECATION] last_comment is deprecated.  Please use last_description instead."
+categories:
+  - プログラミング
+tags:
+  - Ruby
 ---
 
 Railsを4.2.7.1にアップデートをしてrspecを実行すると、以下のエラーが発生するようになった。

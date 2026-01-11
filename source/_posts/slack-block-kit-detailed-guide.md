@@ -1,12 +1,6 @@
 ---
 title: Slack Block Kitの制約とデザインパターンガイド
 date: 2025-06-05 11:00:00
-tags:
-  - Slack
-  - Block Kit
-  - API
-  - UI
-  - デザイン
 categories:
   - プログラミング
 ---

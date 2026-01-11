@@ -4,9 +4,10 @@ title: "IntelliJでSpringBootのアプリケーションを作成する"
 date: 2018-01-19 11:48:27
 updated: 2018-01-19 11:48:27
 comments: true
+categories:
+ - プログラミング
 tags: 
   - Java 
-  - Spring
 ---
 SpringBootのアプリケーションを作成する方法はいくつかありますが、今回はIntelliJで作成する方法を紹介します。
 

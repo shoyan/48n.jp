@@ -4,7 +4,10 @@ title: "Rails4でlibディレクトリをautoloadするときのルール"
 date: 2015-10-30 13:53:03
 updated: 2015-10-30 13:53:03
 comments: true
-tags: RubyonRails
+tags:
+  - Ruby
+categories:
+  - プログラミング
 ---
 
 Rails4でlibディレクトリに作ったライブラリを読み込むときはautoloadを利用すると便利です。  

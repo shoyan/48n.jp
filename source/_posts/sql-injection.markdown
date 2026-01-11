@@ -4,10 +4,11 @@ title: "mysql_real_escape_string()のみで防げないSQLインジェクショ�
 date: 2016-09-06 14:26:15
 updated: 2016-09-06 14:26:15
 comments: true
-tags: 
-  - SQL 
-  - PHP
 description: "PHPアプリのSQLインジェクション対策として、mysql_real_escape_string() 等があるがこれだけでは万全ではないことがあるのでメモ。例えば以下のSQLではmysql_real_escape_string()を使っているが、脆弱性が存在する。"
+categories:
+  - プログラミング
+tags:
+  - PHP
 ---
 
 PHPアプリのSQLインジェクション対策として、`mysql_real_escape_string()` 等があるがこれだけでは万全ではないことがあるのでメモ。

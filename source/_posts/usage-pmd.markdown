@@ -4,7 +4,10 @@ title: "PMDでJavaのコードのバグをチェックする"
 date: 2018-03-20 18:41:09
 updated: 2018-03-20 18:41:09
 comments: true
-tags: Java
+categories:
+  - プログラミング
+tags:
+  - Java
 ---
 
 Javaにおいてバグの要因となりそうなコードをチェックするツールとして、FindBugsがあります。しかし、FindBugsは2015年以降の開発が止まっているため、言語のアップデートに追従できていません。そこで、FindBugsの代替えとなる<a href="https://pmd.github.io/pmd-6.1.0/index.html" target="_blank">PMD</a>を紹介します。PMDを使えばバグの原因となりそうなコードを検知することができるため、不具合を未然に防ぐことが可能です。

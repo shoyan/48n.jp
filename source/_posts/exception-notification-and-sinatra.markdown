@@ -4,10 +4,11 @@ title: "Exception Notificationでundefined method `current' for Time:Classエラ
 date: 2016-05-13 13:28:11
 updated: 2016-05-13 13:28:11
 comments: true
-tags: 
-  - Sinatra 
-  - Ruby
 description: "例外発生時にException Notificationで通知をしようと思い、導入してみたところTime.currentがundefined methodだというエラーがでました。active_supportを読みこむことでSinatraで使えるようにしました。"
+categories:
+ - プログラミング
+tags: 
+  - Ruby
 ---
 
 例外発生時に[Exception Notification](https://github.com/smartinez87/exception_notification)で通知をしようと思い、導入してみたところ以下のエラーがでました。

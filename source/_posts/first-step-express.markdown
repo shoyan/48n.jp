@@ -3,11 +3,11 @@ layout: post
 title: "Expressのインストールと構成を把握する"
 date: 2016-05-17 13:33:55
 updated: 2016-05-17 13:33:55
-comments: true
+description: "Node.jsのフレームワークExpressを試してみました。ExpressはNode.jsでwebアプリケーションを作成するためのフレームワークです。Expressのインストール、express-generatorを使ったスケルトンアプリケーションの作り方を紹介します。"
+categories:
+ - プログラミング
 tags: 
   - Node.js 
-  - Express
-description: "Node.jsのフレームワークExpressを試してみました。ExpressはNode.jsでwebアプリケーションを作成するためのフレームワークです。Expressのインストール、express-generatorを使ったスケルトンアプリケーションの作り方を紹介します。"
 ---
 
 Node.jsのフレームワーク、[Express](http://expressjs.com)を試してみました。  

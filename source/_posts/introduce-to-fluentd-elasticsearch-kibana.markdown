@@ -4,8 +4,9 @@ title: "Fluentd、ElasticsearchとKibanaでログ検索とグラフ表示を可�
 date: 2016-07-05 17:21:32
 updated: 2016-07-05 17:21:32
 comments: true
-tags: Fluentd
 description: "Fluentdで転送されたログをElasticsearchに登録し、Kibanaでログ検索とグラフ表示する方法を紹介します。今回はsyslogのログをFluentd経由でElasticsearchに登録し、Kibanaで表示します。"
+categories:
+  - プログラミング
 ---
 
 [前回の記事](/blog/2016/07/04/fluentd-tutorial/)で[Fluentd](http://www.fluentd.org/)を使ってログをログ収集サーバに転送する方法を紹介しました。

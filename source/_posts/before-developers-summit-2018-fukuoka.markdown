@@ -4,7 +4,8 @@ title: "Developers Summit 2018 FUKUOKAに登壇します"
 date: 2018-09-05 19:40:36
 updated: 2018-09-05 19:40:36
 comments: true
-tags: 
+categories:
+  - 登壇
 ---
 2018年9月7日にアクロス福岡で開催される <a href="https://event.shoeisha.jp/devsumi/20180906" target="_blank">Developers Summit 2018 FUKUOKA</a>(デブサミ福岡)に登壇します。
 明日はどのような話しから入ろうかがまだ決まっていなくて、どうしようかと考えています。

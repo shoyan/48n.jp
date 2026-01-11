@@ -4,9 +4,10 @@ title: "Gradleのjavaプラグインとは"
 date: 2018-01-21 00:52:36
 updated: 2018-01-21 00:52:36
 comments: true
+categories:
+  - プログラミング
 tags: 
   - Java 
-  - Gradle
 ---
 
 build.gradleでよく見かける`apply plugin: ‘java'`という記述について説明します。この記述をするとgradleにjavaプラグインが追加されます。プラグインはgradleの機能を拡張するためのもので、javaプラグインを追加するとjavaに関連するタスクが使えるようになります。

@@ -3,7 +3,6 @@ title: TypeScriptで多言語システムの型チェックを実装する
 date: 2025-11-28 18:07:53
 tags:
   - TypeScript
-  - プログラミング
 categories:
   - プログラミング
 description: 多言語対応におけるTypeScriptの型チェックの仕組みについて説明します。翻訳キーのタイポや必須キーの欠落をコンパイル時に防ぐ方法を解説します。

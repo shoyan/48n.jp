@@ -4,8 +4,9 @@ title: "Google spreadsheetsを使ってデータの分析をする"
 date: 2016-05-18 13:46:32
 updated: 2016-05-18 13:46:32
 comments: true
-tags: 
 description: "データの分析によく使われるエクセルですが、Google Spreadsheetsでも様々な関数が用意されています。関数を使えば日付の差分を調べたり、特定の条件に一致するデータをカウントすることができます。"
+categories:
+  - プログラミング
 ---
 
 データの分析によく使われるエクセルですが、Google Spreadsheetsでも様々な関数が用意されています。  

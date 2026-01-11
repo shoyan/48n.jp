@@ -4,10 +4,11 @@ title: "Slackで定期的にRubotyに仕事をさせる"
 date: 2016-10-31 16:58:56
 updated: 2016-10-31 16:58:56
 comments: true
-tags: 
-  - Ruby 
-  - ChatOps
 description: "ChatOpsの一環としてSlackにRubotyを常駐させているのだが、Rubotyに定期的にタスクを実行させたいことがあった。cronを使った方法を紹介する。"
+categories:
+  - プログラミング
+tags:
+  - Ruby
 ---
 
 ChatOpsの一環としてSlackにRubotyを常駐させているのだが、Rubotyに定期的にタスクを実行させたいことがあった。

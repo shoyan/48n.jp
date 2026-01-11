@@ -4,11 +4,11 @@ title: "5分でできるRubotyのインストールとプラグインチュー�
 date: 2016-07-29 13:55:33
 updated: 2016-07-29 13:55:33
 comments: true
+description: "RubotyはhubotクローンでRubyで書けるbotです。このチュートリアルではRubotyのインストールとプラグインの作成方法を紹介します。冗長な説明をあえて除きRubotyを動かすために重要な部分のみ解説することでスピーディにRubotyを動作できるようにしています。"
+categories:
+ - プログラミング
 tags: 
   - Ruby
-  - Gem 
-  - ChatOps
-description: "RubotyはhubotクローンでRubyで書けるbotです。このチュートリアルではRubotyのインストールとプラグインの作成方法を紹介します。冗長な説明をあえて除きRubotyを動かすために重要な部分のみ解説することでスピーディにRubotyを動作できるようにしています。"
 ---
 
 [Ruboty](https://github.com/r7kamura/ruboty/)はhubotクローンでRubyで書けるbotです。

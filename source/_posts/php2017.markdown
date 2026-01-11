@@ -6,6 +6,8 @@ updated: 2017-12-12 17:22:48
 comments: true
 tags: PHP
 description: "2017年ももうすぐ終わりということで、2017年のPHPをふりかえってみるのはいかがでしょうか。この記事ではPHPに関係する情報を集め、数値としてまとめました。"
+categories:
+  - プログラミング
 ---
 
 この記事は[PHP Advent Calendar 2017](https://qiita.com/advent-calendar/2017/php) 14日目の記事です。

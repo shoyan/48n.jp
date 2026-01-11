@@ -4,8 +4,9 @@ title: "ハッカソンでチャットBotを作って感じた課題"
 date: 2017-09-01 17:30:56
 updated: 2017-09-01 17:30:56
 comments: true
-tags: Chatbot
 description: "GMOペパボで開催されたハッカソンに参加するため東京へ行ってきました。今回は人工知能(AI)のテクノロジーを使ったチャットBotを作り、デモを行いました。"
+categories:
+  - コラム
 ---
 
 GMOペパボで開催された[ハッカソン](http://osan.pepabo.com/)に参加するため東京へ行ってきました。

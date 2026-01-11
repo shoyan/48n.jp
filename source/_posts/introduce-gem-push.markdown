@@ -4,10 +4,11 @@ title: "RubyGems.orgに反映させるRakeタスクの紹介"
 date: 2016-10-25 14:17:29
 updated: 2016-10-25 14:17:29
 comments: true
-tags: 
-  - Ruby 
-  - Gem
 description: "Gemを更新した場合はRubyGems.orgに反映させる手続きが必要だ。Gemを更新することはそんなに多くないので（私の場合）よく手順を忘れてしまう。毎回手順を探すのはストレスなので以下のようなRakeタスクを作成した。"
+categories:
+  - プログラミング
+tags:
+  - Ruby
 ---
 
 Gemを更新した場合はRubyGems.orgに反映させる手続きが必要だ。

@@ -4,8 +4,9 @@ title: "Sinatraのレスポンスの設定とストリーミングヘルパー"
 date: 2016-04-26 13:52:30
 updated: 2016-04-26 13:52:30
 comments: true
-tags: 
-  - Sinatra 
+categories:
+  - プログラミング
+tags:
   - Ruby
 ---
 

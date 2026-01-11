@@ -4,8 +4,9 @@ title: "sedやawkを使ってテキストから必要な列のみ取得する"
 date: 2016-06-29 17:01:36
 updated: 2016-06-29 17:01:36
 comments: true
-tags: Linux
 description: "文字列からsedやawkを使ってlabelだけとるshell芸を紹介します。"
+categories:
+ - プログラミング
 ---
 
 以下のような文字列(ファイルに保存されているとする)からsedやawkを使ってlabelだけとるshell芸を紹介します。

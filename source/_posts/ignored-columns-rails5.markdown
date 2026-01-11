@@ -4,8 +4,11 @@ title: "Rails5のignored_columnsで予約語のエラーを回避する"
 date: 2017-03-06 18:28:48
 updated: 2017-03-06 18:28:48
 comments: true
-tags: RubyonRails
 description: "Railsには様々な予約語がありますが、歴史の長いシステムを扱っているとDBのカラムがその予約語に該当する場合があります。rails5で追加されたignored_columnsで回避する方法を紹介します。"
+categories:
+  - プログラミング
+tags:
+  - Ruby 
 ---
 
 こんにちは、SHOYANです。

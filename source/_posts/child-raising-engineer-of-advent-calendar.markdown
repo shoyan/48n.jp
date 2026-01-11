@@ -4,7 +4,8 @@ title: "幸せな子育てとエンジニアライフ"
 date: 2015-12-06 22:23:14
 updated: 2015-12-06 22:23:14
 comments: true
-tags: 
+categories:
+ - コラム
 ---
 
 この記事は[子育てプログラマ・ITエンジニア・Webデザイナー Advent Calendar 2015](http://www.adventar.org/calendars/853) 7日目の記事です。

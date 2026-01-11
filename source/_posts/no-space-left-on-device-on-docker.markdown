@@ -5,6 +5,8 @@ date: 2016-04-13 16:14:05
 updated: 2016-04-13 16:14:05
 comments: true
 tags: Docker
+categories:
+  - プログラミング
 ---
 
 Dockerのbuild時に以下のエラーが発生するようになった。

@@ -4,8 +4,11 @@ title: "iptablesことはじめ"
 date: 2016-07-15 14:05:31
 updated: 2016-07-15 14:05:31
 comments: true
-tags: Linux
 description: "iptablesの概念と設定方法を調べました。iptablesとはパケットをフィルタリングするためのツールです。また、NATとしても使えます。また、iptablesを理解するにあたって必要な用語もまとめています。"
+categories:
+  - プログラミング
+tags: 
+  - Linux
 ---
 
 iptablesの概念と設定方法を調べました。
