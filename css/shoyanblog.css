@@ -532,6 +532,31 @@ details.answer {
   text-align: right;
 }
 
+.post-categories {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.post-category {
+  display: inline-block;
+  padding: 3px 8px;
+  background-color: #e8f0fe;
+  border-radius: 12px;
+  color: #1a73e8;
+  text-decoration: none;
+  font-size: 0.9em;
+  transition: background-color 0.2s;
+  margin-left: 5px;
+}
+
+.post-category:hover {
+  background-color: #d2e3fc;
+}
+
+.post-category:first-child {
+  margin-left: 0;
+}
+
 /* for Tablet */
 @media screen and (min-width: 768px) {
   #content-outer {
