@@ -1,6 +1,6 @@
 <% var pageTitle=page.title || config.subtitle || '' ; if (is_archive()) pageTitle='Archives' ; if (is_tag())
   pageTitle='Tag: ' + page.tag; if (is_category()) pageTitle='Category: ' + page.category; if (is_month()) pageTitle
-  +=': ' + page.month + '/' + page.year; if (is_year()) pageTitle +=': ' + page.year; pageTitle +=' - ' + config.title;
+  +=': ' + page.month + '/' + page.year; if (is_year()) pageTitle +=': ' + page.year; if (pageTitle) { pageTitle +=' - ' + config.title; } else { pageTitle = config.title; }
   var description='' ; var keyword='' ; if (page.title) { description=page.description || '' ; keyword=page.keyword
   || '' ; } else { description=config.description || '' ; keyword=config.keyword || '' ; } %>
   <!DOCTYPE html>
