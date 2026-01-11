@@ -174,86 +174,132 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2016-07-27T04:37:18.000Z" itemprop="datepublished">
-            2016/07/27
+          <time datetime="2016-07-19T05:07:16.000Z" itemprop="datepublished">
+            2016/07/19
           </time>
-          <time datetime="2016-07-27T04:37:18.000Z" itemprop="modified">
-            (更新日: 2016/07/27)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/07/27/introduce-to-git-monitor/">GitHubのリポジトリを監視するGitMonitor</a>
-        </h1>
-        <div class="content">
-          <p>GitHubのリポジトリを監視する<a href="https://gitmonitor.com/" target="_blank" rel="noopener">GitMonitor</a>というサービスを紹介します。<br>このサービスはGithubのリポジトリを監視して、そのリポジトリに行った操作をダッシュボードで確認することができます。<br>また、Flowdock、Slack、Emailに通知することも可能のようです。</p>
-<p>以下は、masterに直接pushしたときのログです。</p>
-<p><img src="/images/git_monitor.png" alt="git-monitor-image"></p>
-<p>GitMonitorは様々なルールが設定でき、そのルールに該当したものがダッシュボードに表示されます。<br>例えば、LGTMがないPull Requestがマージされたときや、リストに定義していない人がマージしたときに通知することもできるようです。</p>
-<p>操作の制限ができるわけではなく、ルールに該当したときにダッシュボードに通知されるだけのようです。</p>
-<p>30日間は無料で使えて、それ以降は有料プランとなります。<br>有料プランは3つあって、Small($10 / mon)、Medium($20 / mon)、Large($35 / mon) が選べます。<br>監視するリポジトリの数がプランによって違います。</p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-07-25T09:09:52.000Z" itemprop="datepublished">
-            2016/07/25
-          </time>
-          <time datetime="2016-07-25T09:09:52.000Z" itemprop="modified">
-            (更新日: 2016/07/25)
+          <time datetime="2016-07-19T05:07:16.000Z" itemprop="modified">
+            (更新日: 2016/07/19)
           </time>
         </div>
         <h1>
-        <a href="/blog/2016/07/25/introduce-to-git-find-committer/">Gitのコミッターを集計するGitFindCommitterをつくった</a>
+        <a href="/blog/2016/07/19/ruby-load/">Rubyのロード機構について</a>
         </h1>
         <div class="content">
-          <p>Gitのコミッターを集計する<a href="https://github.com/shoyan/git_find_committer" target="_blank" rel="noopener">GitFindCommitter</a>をつくったので紹介します。</p>
-<h2 id="GitFindCommitterとは"><a href="#GitFindCommitterとは" class="headerlink" title="GitFindCommitterとは"></a>GitFindCommitterとは</h2><p>GitFindCommitterとは変更されたファイルを対象としてコミッターを探すツールです。<br>名前の通り、Gitのコミット履歴からコミッターを探します。<br>例えば、fixブランチでhoge.rbとfuga.rbを修正したとします。<br>GitFindCommitterはhoge.rbとfugue.rbを対象にコミッターを探します。</p>
-<h2 id="なぜつくったのか"><a href="#なぜつくったのか" class="headerlink" title="なぜつくったのか"></a>なぜつくったのか</h2><p>チーム内でコードレビューを行っているのですが、なかなかレビューしてもらえないということが時々あります。<br>コードレビューの際に詳しいコミッターをレコメンドすればスムーズにレビューしてもらえるのではと考えました。<br>レビュアーのレコメンド機能はまだ作成中なのですが、そのモジュールの1つとしてGemに機能を切り出しました。</p>
-<h2 id="使い方"><a href="#使い方" class="headerlink" title="使い方"></a>使い方</h2><p>以下のコマンドでインストールします。</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gem <span class="keyword">install</span> git_find_committer</span><br></pre></td></tr></table></figure>
-
-<p>searchメソッドにリポジトリとブランチを指定すると、関連するファイルのコミッターを探してきます。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">'git_find_committer'</span></span><br><span class="line"></span><br><span class="line">GitFindCommitter.search(<span class="symbol">repo:</span> <span class="string">'balloonbros/sutekki'</span>, <span class="symbol">branch:</span> <span class="string">'add-ui'</span>)</span><br><span class="line">=&gt; [&#123;<span class="symbol">:name=&gt;<span class="string">"Shohei Yamasaki"</span></span>, <span class="symbol">:commit_count=&gt;</span><span class="number">51</span>&#125;, &#123;<span class="symbol">:name=&gt;<span class="string">"keitakawamoto"</span></span>, <span class="symbol">:commit_count=&gt;</span><span class="number">21</span>&#125;]</span><br></pre></td></tr></table></figure>
-
-<p>GitHub Enterpriseにも対応しており、GitHub Enterpriseで利用する場合は、以下の設定が必要です。</p>
-<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GitFindCommitter.configure <span class="built_in">do</span> |<span class="type">c</span>|<span class="type"></span></span><br><span class="line"><span class="type">  c</span>.url = <span class="string">"https://&lt;hostname&gt;"</span></span><br><span class="line">  c.access_token = <span class="string">"&lt;your 40 char token&gt;"</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="便利なTips"><a href="#便利なTips" class="headerlink" title="便利なTips"></a>便利なTips</h2><p>集計対象のコミッターをフィルターすることができます。</p>
-<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GitFindCommitter.configure <span class="built_in">do</span> |<span class="type">c</span>|<span class="type"></span></span><br><span class="line"><span class="type">  c</span>.available_committer_names = %w(shoyan)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>名前のみ配列で取得します。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GitFindCommitter.search(re<span class="symbol">po:</span> 'balloonbros/sutekki', bran<span class="symbol">ch:</span> 'add-ui’).names(<span class="number">1</span>)</span><br><span class="line">=&gt; [<span class="string">"Shohei Yamasaki"</span>]</span><br></pre></td></tr></table></figure>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-07-22T05:12:06.000Z" itemprop="datepublished">
-            2016/07/22
-          </time>
-          <time datetime="2016-07-22T05:12:06.000Z" itemprop="modified">
-            (更新日: 2016/07/22)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/07/22/introduce-to-circle-ci/">CircleCIでお手軽にCI環境をつくる</a>
-        </h1>
-        <div class="content">
-          <p>最近はCIプラットフォームが充実していて、Travice CI、Wercker、Droneなど様々なプラットフォームが開発されています。<br>最近は<a href="https://circleci.com/" target="_blank" rel="noopener">CircleCI</a>を使っているのですが、なかなか便利です。</p>
-<h2 id="CircleCIの便利な点"><a href="#CircleCIの便利な点" class="headerlink" title="CircleCIの便利な点"></a>CircleCIの便利な点</h2><p>CircleCIの便利な点は特別な設定をせずにテストコードさえあればCIができてしまうことです。<br>CircleCIにアカウントを作って、CIを行うリポジトリを設定すればOKです。<br>リポジトリにpushするとCIが実行されます。<br>ソースコードからbundle installなどの必要な前処理をしてくれるので、CIを行うための前準備的な設定が必要ありません。</p>
-<p>私は<a href="https://github.com/shoyan/git_find_committer" target="_blank" rel="noopener">git_find_commiter</a>や<a href="https://github.com/shoyan/php-syntax-check" target="_blank" rel="noopener">php-syntax-check</a>でCircleCIを使っています。</p>
-<h2 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h2><p>デフォルトのRubyのバージョンが古いので(マニュアルによるとUbuntu 12.04 and Ubuntu 14.04 build imagesのもの)、Ruby1.9から導入されたキーワード引数など比較的新しく導入された機構を使うと構文エラーが発生することがあります。<br>その場合は<code>circle.yml</code>ファイルにRubyのバージョンを設定できます。</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">machine:</span></span><br><span class="line">  <span class="attr">ruby:</span></span><br><span class="line">    <span class="attr">version:</span> <span class="number">2.3</span><span class="number">.0</span></span><br></pre></td></tr></table></figure>
-
-<p>また、bundlerのバージョンでエラーが発生することがありました。<br>その場合は、以下のようにバージョンを指定することができます。</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">dependencies:</span></span><br><span class="line">  <span class="attr">pre:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">gem</span> <span class="string">install</span> <span class="string">bundler</span> <span class="string">-v</span> <span class="number">1.12</span><span class="number">.5</span></span><br></pre></td></tr></table></figure>
-
-<p>circle.ymlの構文についてはドキュメントを参考にしてください。</p>
+          <p>Rubyはロード機構として、以下を備えています。</p>
 <ul>
-<li><a href="https://circleci.com/docs/configuration/" target="_blank" rel="noopener">Configuring CircleCI - CircleCI</a></li>
+<li>require</li>
+<li>load</li>
+<li>autoload</li>
+<li>require_relative</li>
+</ul>
+<h2 id="require"><a href="#require" class="headerlink" title="require"></a>require</h2><p>requireは以下の特徴を備えています。</p>
+<ul>
+<li>ロードパスからファイルを探してくる</li>
+<li>拡張ライブラリもロードできる</li>
+<li>拡張子 .rb / .so を省略できる</li>
+<li>同じファイルは2度以上ロードしない</li>
+</ul>
+<p>Rubyのロードパスは <code>$:</code>に入っています。<br>私の環境では以下のように表示されました。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>] pry(main)&gt; puts <span class="string">$:</span></span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>rbenv.d<span class="regexp">/exec/</span>gem-rehash</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>gems<span class="regexp">/2.3.0/</span>gems<span class="regexp">/did_you_mean-1.0.0/</span>lib</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>gems<span class="regexp">/2.3.0/</span>gems<span class="regexp">/coderay-1.1.1/</span>lib</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>gems<span class="regexp">/2.3.0/</span>gems<span class="regexp">/slop-3.6.0/</span>lib</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>gems<span class="regexp">/2.3.0/</span>gems<span class="regexp">/method_source-0.8.2/</span>lib</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>gems<span class="regexp">/2.3.0/</span>gems<span class="regexp">/pry-0.10.3/</span>lib</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>site_ruby/<span class="number">2.3</span><span class="number">.0</span></span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>site_ruby<span class="regexp">/2.3.0/</span>x86_64-darwin14</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>site_ruby</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>vendor_ruby/<span class="number">2.3</span><span class="number">.0</span></span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>vendor_ruby<span class="regexp">/2.3.0/</span>x86_64-darwin14</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span>vendor_ruby</span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span><span class="number">2.3</span><span class="number">.0</span></span><br><span class="line"><span class="regexp">/Users/</span>shoyan<span class="regexp">/.rbenv/</span>versions<span class="regexp">/2.3.0/</span>lib<span class="regexp">/ruby/</span><span class="number">2.3</span><span class="number">.0</span>/x86_64-darwin14</span><br></pre></td></tr></table></figure>
+
+<h2 id="load"><a href="#load" class="headerlink" title="load"></a>load</h2><p>loadもrequireと同じくロードパスからファイルを探してロードします。<br>しかし、requireのように拡張ライブラリはロードできません。<br>また、ロードできるファイルもRubyプログラムだけです。<br>requireのように2回以上の読み込みを制御する機構もなく、callされた回数分ファイルは読み込まれます。</p>
+<h2 id="autoload"><a href="#autoload" class="headerlink" title="autoload"></a>autoload</h2><p>autoloadはrequireと似ていますが、すぐには読み込まれず、必要になった段階でrequrieされます。以下、サンプルコードです。</p>
+<p>autoload.rb</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">autoload <span class="symbol">:Outer</span>, <span class="string">'./outer'</span></span><br><span class="line">puts Outer.new</span><br></pre></td></tr></table></figure>
+
+<p>outer.rb</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="symbol">Outer</span></span><br><span class="line"><span class="symbol">end</span></span><br><span class="line"></span><br><span class="line"><span class="symbol">puts</span> '<span class="symbol">Outer</span> <span class="symbol">loaded</span>!'</span><br></pre></td></tr></table></figure>
+
+<p>実行すると、Outerがloadされているのが確認できます。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">⇒  ruby <span class="built_in">auto</span>load.rb</span><br><span class="line">Outer loaded!</span><br><span class="line">#&lt;Outer:<span class="number">0x007fcc14040e60</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>autoloadはネストされたクラスやモジュールもloadすることができます。</p>
+<p>autoload.rb</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">autoload :<span class="keyword">Outer</span>, <span class="string">'./outer'</span></span><br><span class="line">puts <span class="keyword">Outer</span>.<span class="built_in">new</span></span><br><span class="line">puts <span class="keyword">Outer</span>::<span class="keyword">Inner</span>.<span class="built_in">new</span></span><br></pre></td></tr></table></figure>
+
+<p>outer.rb</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Outer</span></span></span><br><span class="line">  autoload <span class="symbol">:Inner</span>, <span class="string">'./inner'</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">puts <span class="string">'Outer loaded!'</span></span><br></pre></td></tr></table></figure>
+
+<p>inner.rb</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="symbol">Outer</span></span><br><span class="line">  <span class="symbol">class</span> <span class="symbol">Inner</span></span><br><span class="line">  <span class="symbol">end</span></span><br><span class="line"><span class="symbol">end</span></span><br><span class="line"></span><br><span class="line"><span class="symbol">puts</span> "<span class="symbol">Outer::<span class="symbol">Inner</span></span> <span class="symbol">loaded</span>!"</span><br></pre></td></tr></table></figure>
+
+<p>実行すると、Outer::Innerがloadされているのが確認できます。</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">⇒  ruby autoload.rb</span><br><span class="line"><span class="keyword">Outer</span> loaded!</span><br><span class="line">#&lt;<span class="keyword">Outer</span>:<span class="number">0x007f9fd4054df0</span>&gt;</span><br><span class="line"><span class="keyword">Outer</span>::<span class="keyword">Inner</span> loaded!</span><br><span class="line">#&lt;<span class="keyword">Outer</span>::<span class="keyword">Inner</span>:<span class="number">0x007f9fd404f990</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="require-relative"><a href="#require-relative" class="headerlink" title="require_relative"></a>require_relative</h2><p>あまり見かけることがありませんが、<code>require_relative</code> というメソッドがRuby1.9.2から追加されています。<br>例えば<code>require</code>で同じ階層のファイルをロードする場合は、<code>require &#39;./filename&#39;</code> のように明示的に<code>./</code>を指定する必要があります。<br><code>require_relative</code>を使えば、<code>require_relative &#39;filename&#39;</code> のように定義することができます。</p>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-07-15T05:05:31.000Z" itemprop="datepublished">
+            2016/07/15
+          </time>
+          <time datetime="2016-07-15T05:05:31.000Z" itemprop="modified">
+            (更新日: 2016/07/15)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/07/15/learn-iptables/">iptablesことはじめ</a>
+        </h1>
+        <div class="content">
+          <p>iptablesの概念と設定方法を調べました。</p>
+<h2 id="iptablesとは"><a href="#iptablesとは" class="headerlink" title="iptablesとは"></a>iptablesとは</h2><p>iptablesとはパケットをフィルタリングするためのツールです。<br>また、NATとしても使えます。</p>
+<h2 id="iptablesの用語"><a href="#iptablesの用語" class="headerlink" title="iptablesの用語"></a>iptablesの用語</h2><p>iptablesを理解するにあたって必要な用語をまとめました。</p>
+<h3 id="TARGETS"><a href="#TARGETS" class="headerlink" title="TARGETS"></a>TARGETS</h3><p>iptablesのルールを設定する際に、targetを指定します。<br>targetはユーザー定義のものと特別なtargetである、ACCEPT, DROP, QUEUE or RETURNがあります。<br>パケットに対してどんな操作をするかを定義します。</p>
+<p>代表的なtargetです。</p>
+<p>ACCEPT<br>パケットを通す<br>DROP<br>パケットを破棄する<br>QUEUE<br>パケットをキューにためる<br>RETURN<br>チェインを辿るのをストップして、評価を行う<br>REJECT<br>パケットを破棄し、エラーパケットを返す<br>DNAT<br>送信先IPアドレスを変更する<br>SNAT<br>送信元IPアドレスを変更する<br>MASQUERADE<br>複数の送信元IPアドレスを変更（マスカレード）する<br>LOG<br>ログを出力する</p>
+<h3 id="Chain"><a href="#Chain" class="headerlink" title="Chain"></a>Chain</h3><p>iptablesを設定する際にchainを指定します。<br>chainにはビルトインchainとユーザー定義chainがあります。<br>chainはパケットに対する実行条件を定義します。</p>
+<p>ビルトインchainは以下です。</p>
+<p>INPUT<br>FORWARD<br>OUTPUT<br>PREROUTING<br>POSTROUTING</p>
+<h3 id="TABLES"><a href="#TABLES" class="headerlink" title="TABLES"></a>TABLES</h3><p>一般的にはフィルタリングとして使われることが多いiptablesですが、他にも様々な機能があります。<br>iptablesにはそれをtableという概念で扱っており、5つのtableがあります。</p>
+<p><em>filter</em><br>パケットのフィルタリングを設定するためのテーブルです。<br>デフォルトのテーブルです。tableオプションを明示的に指定しない場合は、filterが指定されたことになります。<br>INPUT、FORWARD、OUTPUTのChainを含みます。</p>
+<p><em>nat</em><br>IPアドレスの変換を設定するためのテーブルです。<br>PREROUTING、POSTROUTING のChainを含みます。</p>
+<p><em>mangle</em><br>パケットの書き換えを設定するためのテーブルです。</p>
+<p><em>raw</em><br>接続の追跡の除外の設定をするためのテーブルです。</p>
+<p><em>security</em><br>アクセスコントロールの設定をするためのテーブルです。</p>
+<h2 id="OPTIONS"><a href="#OPTIONS" class="headerlink" title="OPTIONS"></a>OPTIONS</h2><p>iptablesのコマンドにオプションを指定できます。<br>オプションはいくつかのグループに区別されます。</p>
+<h3 id="COMMANDS"><a href="#COMMANDS" class="headerlink" title="COMMANDS"></a>COMMANDS</h3><p>iptablesに実行してほしいコマンドを指定します。<br>以下のようなコマンドがあります。</p>
+<p>-A, –append<br>選択したチェインにルールを追加します。</p>
+<p>-C, –check<br>指定したチェインにルールが存在するかをチェックします。</p>
+<p>-D, –delete<br>チェインからルールを消します。</p>
+<p>詳細はiptablesのmanをご覧ください。</p>
+<h3 id="PARAMETERS"><a href="#PARAMETERS" class="headerlink" title="PARAMETERS"></a>PARAMETERS</h3><p>ルールを作成する際に指定するパラメーターです。</p>
+<p>-p, –protocol<br>ルールの対象となるプロトコルを指定します。</p>
+<p>-j, –jump<br>ルールの対象となるtargetを指定します。</p>
+<p>-s, –source<br>ルールの対象となるアドレスを指定します。<br>例えば、IPアドレス、ホスト名、ネットワーク名などを指定します。</p>
+<p>詳細はiptablesのmanをご覧ください。</p>
+<h3 id="OTHER-OPTIONS"><a href="#OTHER-OPTIONS" class="headerlink" title="OTHER OPTIONS"></a>OTHER OPTIONS</h3><p>追加オプションです。</p>
+<p>-v, –verbose<br>詳細表示のオプションです。</p>
+<p>詳細はiptablesのmanを参照ください。</p>
+<h2 id="iptablesの基本的な構文"><a href="#iptablesの基本的な構文" class="headerlink" title="iptablesの基本的な構文"></a>iptablesの基本的な構文</h2><p>基本的には以下のように指定します。</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables [-t <span class="keyword">table</span>] command <span class="comment">chain options target</span></span><br></pre></td></tr></table></figure>
+
+<p>例えば、ローカルホストからのping(icmp)を許可する場合は以下となります。</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -p icmp -j <span class="keyword">ACCEPT</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="iptablesの基本的な読み方"><a href="#iptablesの基本的な読み方" class="headerlink" title="iptablesの基本的な読み方"></a>iptablesの基本的な読み方</h2><p>現在のiptablesの設定を表示するには、iptables -L コマンドを使います。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Example: Input Chain Rule Table Listing</span><br><span class="line">Chain INPUT (policy <span class="keyword">DROP</span>)</span><br><span class="line">target     prot opt <span class="keyword">source</span>               destination</span><br><span class="line"><span class="keyword">ACCEPT</span>     <span class="keyword">all</span>  <span class="comment">--  anywhere             anywhere             ctstate RELATED,ESTABLISHED</span></span><br><span class="line"><span class="keyword">ACCEPT</span>     <span class="keyword">all</span>  <span class="comment">--  anywhere             anywhere</span></span><br><span class="line"><span class="keyword">DROP</span>       <span class="keyword">all</span>  <span class="comment">--  anywhere             anywhere             ctstate INVALID</span></span><br><span class="line">UDP        udp  <span class="comment">--  anywhere             anywhere             ctstate NEW</span></span><br><span class="line">TCP        tcp  <span class="comment">--  anywhere             anywhere             tcp flags:FIN,SYN,RST,ACK/SYN ctstate NEW</span></span><br><span class="line">ICMP       icmp <span class="comment">--  anywhere             anywhere             ctstate NEW</span></span><br><span class="line"><span class="keyword">REJECT</span>     udp  <span class="comment">--  anywhere             anywhere             reject-with icmp-port-unreachable</span></span><br><span class="line"><span class="keyword">REJECT</span>     tcp  <span class="comment">--  anywhere             anywhere             reject-with tcp-reset</span></span><br><span class="line"><span class="keyword">REJECT</span>     <span class="keyword">all</span>  <span class="comment">--  anywhere             anywhere             reject-with icmp-proto-unreachable</span></span><br></pre></td></tr></table></figure>
+
+<p>1行目がChainの名前で、次にデフォルトポリシーが表示されています(DROP)。<br>2行目がカラム名です。</p>
+<p><em>target</em>: target名<br><em>prot</em>: プロトコル名。例えば、tcp, udp, icmp, or all<br><em>opt</em>: めったに使われません。<br><em>source</em>: 接続元のIPアドレス or サブネット or anywhere<br><em>destination</em>: 接続先のIPアドレス or サブネット or anywhere</p>
+<h2 id="iptablesコマンドの使い方"><a href="#iptablesコマンドの使い方" class="headerlink" title="iptablesコマンドの使い方"></a>iptablesコマンドの使い方</h2><p>いくつかの例を紹介します。</p>
+<h3 id="特定のサーバーからのhttp通信を許可する"><a href="#特定のサーバーからのhttp通信を許可する" class="headerlink" title="特定のサーバーからのhttp通信を許可する"></a>特定のサーバーからのhttp通信を許可する</h3><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># iptables -A INPUT -p tcp -s 192.168.1.1 --dport 80 -j ACCEPT</span></span><br><span class="line"><span class="meta"># 設定を保存</span></span><br><span class="line"><span class="meta"># service iptables save</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="ルールを消す"><a href="#ルールを消す" class="headerlink" title="ルールを消す"></a>ルールを消す</h3><p>iptables -D ルール で消すことができます。<br><code>iptables -S</code> でルール一覧がでるので、そのルールを指定すれば簡単です。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># iptables -S</span><br><span class="line">-A INPUT -s <span class="number">157.7</span><span class="number">.105</span><span class="number">.69</span>/<span class="number">32</span> -p tcp -m tcp --dport <span class="number">80</span> -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p>以下のコマンドで消します。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -D INPUT -s <span class="number">157.7</span><span class="number">.105</span><span class="number">.69</span>/<span class="number">32</span> -p tcp -m tcp --dport <span class="number">80</span> -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li><a href="http://linux.die.net/man/8/iptables" target="_blank" rel="noopener">Man page of IPTABLES</a></li>
+<li><a href="https://linuxjm.osdn.jp/html/iptables/man8/iptables.8.html" target="_blank" rel="noopener">日本語訳</a></li>
+<li><a href="http://qiita.com/kmikmy/items/d279b1b993661ba7dbe4" target="_blank" rel="noopener">iptablesの読み方覚え書き</a></li>
+<li><a href="http://murayama.hatenablog.com/entry/20100206/1265444193" target="_blank" rel="noopener">iptablesの設定 入門編</a></li>
+<li><a href="https://help.sakura.ad.jp/app/answers/detail/a_id/2423/~/iptables%E3%81%AE%E8%A8%AD%E5%AE%9A%E6%96%B9%E6%B3%95" target="_blank" rel="noopener">iptablesの設定方法</a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-list-and-delete-iptables-firewall-rules" target="_blank" rel="noopener">How To List and Delete Iptables Firewall Rules</a></li>
 </ul>
 
         </div>
@@ -261,60 +307,781 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2016-07-21T09:41:04.000Z" itemprop="datepublished">
-            2016/07/21
+          <time datetime="2016-07-14T04:43:40.000Z" itemprop="datepublished">
+            2016/07/14
           </time>
-          <time datetime="2016-07-21T09:41:04.000Z" itemprop="modified">
-            (更新日: 2016/07/21)
+          <time datetime="2016-07-14T04:43:40.000Z" itemprop="modified">
+            (更新日: 2016/07/14)
           </time>
         </div>
         <h1>
-        <a href="/blog/2016/07/21/remember-scrum/">3年経ってスクラムをふりかえる</a>
+        <a href="/blog/2016/07/14/useful-ruby-tips/">知っていると便利なRubyの小技集</a>
         </h1>
         <div class="content">
-          <p>一時期のスクラムムーブメントは一体なんだったのか。<br>最近はスクラムマスターやファシリテーター、振り返りなどのスクラム用語をめっきりと聞かなくなった。</p>
-<p>私のチームではスクラムの最後のプラクティスである朝会さえもなくなった。<br>結果、それで困っているかというとそんなことはない。</p>
-<p>スクラムムーブメントを振り返ってみたいと思う。</p>
-<h3 id="スクラム黎明期"><a href="#スクラム黎明期" class="headerlink" title="スクラム黎明期"></a>スクラム黎明期</h3><p>スクラムが流行り始めたのは2013年頃だったと思う。<br>次々と新しいスクラム本が出版され、私もSCRUM BOOT CAMP THE BOOKやアジャイルサムライを読んでスクラムの手法について勉強した。<br>会社ではスクラムの講習が開かれ、スクラムマスターやプロダクトオーナーを決めたりもした。</p>
-<p>私のチームでは朝会と夕会を行い、カンバンでタスクを見える化し、プロジェクトの前には見積もりをチームで行い、定期的にふりかえりを行った。<br>スクラムマスターとプロダクトオーナーを決めて、スクラムのプラクティスを実践していた。</p>
-<h3 id="スクラム暗黒時代"><a href="#スクラム暗黒時代" class="headerlink" title="スクラム暗黒時代"></a>スクラム暗黒時代</h3><p>うまくいっているように思われたスクラムだが、雲行きが怪しくなってきた。<br>スクラムのやり方に縛られ、チームの雰囲気がギクシャクしたものになってきたのだ。<br>定例のふりかえりでは発言が出ず、議論も深まることなく、時間の無駄に思えた。</p>
-<h3 id="スクラムとはなんだったのか"><a href="#スクラムとはなんだったのか" class="headerlink" title="スクラムとはなんだったのか"></a>スクラムとはなんだったのか</h3><p>わずか3年でスクラムは姿を消してしまった。<br>誤解のないように言っておくが、スクラム自体がダメではないということである。<br>実際にスクラムを導入して成果をあげているチームもあるだろう。<br>実際によい時期もあったと思う。</p>
-<p>スクラムとは手法であり、その内容は主に人同士のコミュニケーションを増やすためのものだ。<br>よって、人同士のコミュニケーションがうまくいかないと当然スクラムもうまくいかない。<br>また、コミュニケーションが増えるにあたりMTGなどの時間が増えてしまう問題がある。<br>そのコストは無視できるほど小さくない。</p>
-<p>スクラムは悪くない。<br>しかし、スクラムは難しい。</p>
+          <h3 id="a-zの文字列を作成する"><a href="#a-zの文字列を作成する" class="headerlink" title="a-zの文字列を作成する"></a>a-zの文字列を作成する</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">'a'</span>..<span class="string">'z'</span>).to_a.join</span><br><span class="line">=&gt; <span class="string">"abcdefghijklmnopqrstuvwxyz"</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="特定のkeyのみ抽出する"><a href="#特定のkeyのみ抽出する" class="headerlink" title="特定のkeyのみ抽出する"></a>特定のkeyのみ抽出する</h3><p>特定のkeyのみ抽出するにはvalues_atメソッドを使います。</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">h = &#123; <span class="string">"cat"</span> = <span class="string">"feline"</span>, <span class="string">"dog"</span> = <span class="string">"canine"</span>, <span class="string">"cow"</span> = <span class="string">"bovine"</span> &#125;</span><br><span class="line">h.values_at(<span class="string">"cow"</span>, <span class="string">"cat"</span>)  <span class="meta">#=&gt; [<span class="string">"bovine"</span>, <span class="string">"feline"</span>]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="keyとvalueの配列からhashを作成する"><a href="#keyとvalueの配列からhashを作成する" class="headerlink" title="keyとvalueの配列からhashを作成する"></a>keyとvalueの配列からhashを作成する</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">keys</span>   = [<span class="string">"suzuki"</span>, <span class="string">"itou"</span>, <span class="string">"yamada"</span>]</span><br><span class="line"><span class="attr">values</span> = [<span class="number">87</span>, <span class="number">76</span>, <span class="number">69</span>]</span><br><span class="line"><span class="attr">ary</span> = [keys, values].transpose</span><br><span class="line"><span class="attr">h</span> = Hash[*ary.flatten]</span><br></pre></td></tr></table></figure>
+
+<h3 id="特定の範囲の要素を取得する"><a href="#特定の範囲の要素を取得する" class="headerlink" title="特定の範囲の要素を取得する"></a>特定の範囲の要素を取得する</h3><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>][<span class="number">0</span>..<span class="number">2</span>]</span><br><span class="line">=&gt; [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>]</span><br></pre></td></tr></table></figure>
+
+<h3 id="配列からnilを取り除く"><a href="#配列からnilを取り除く" class="headerlink" title="配列からnilを取り除く"></a>配列からnilを取り除く</h3><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">2</span>, nil, <span class="number">3</span>, <span class="number">4</span>, nil].compact</span><br><span class="line">=&gt; [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+
+<h3 id="配列から特定の条件に一致する要素を取り除く"><a href="#配列から特定の条件に一致する要素を取り除く" class="headerlink" title="配列から特定の条件に一致する要素を取り除く"></a>配列から特定の条件に一致する要素を取り除く</h3><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>].delete_if &#123; |x| x % <span class="number">2</span> == <span class="number">0</span> &#125;</span><br><span class="line">=&gt; [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>]</span><br></pre></td></tr></table></figure>
+
+<h3 id="10進数を基数変換する"><a href="#10進数を基数変換する" class="headerlink" title="10進数を基数変換する"></a>10進数を基数変換する</h3><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">255</span>.to_s(<span class="number">2</span>)</span><br><span class="line">=&gt; <span class="string">"11111111"</span></span><br><span class="line"><span class="number">255</span>.to_s(<span class="number">8</span>)</span><br><span class="line">=&gt; <span class="string">"377"</span></span><br><span class="line"><span class="number">255</span>.to_s(<span class="number">16</span>)</span><br><span class="line">=&gt; <span class="string">"ff"</span></span><br></pre></td></tr></table></figure>
+
+<p>逆の操作を行う場合は<code>to_i</code>メソッドを使います。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"11111111"</span>.to_i(<span class="number">2</span>)</span><br><span class="line">=&gt; <span class="number">255</span></span><br><span class="line"><span class="string">"377"</span>.to_i(<span class="number">8</span>)</span><br><span class="line">=&gt; <span class="number">255</span></span><br><span class="line"><span class="string">"ff"</span>.to_i(<span class="number">16</span>)</span><br><span class="line">=&gt; <span class="number">255</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="ハッシュのvalueでソートする"><a href="#ハッシュのvalueでソートする" class="headerlink" title="ハッシュのvalueでソートする"></a>ハッシュのvalueでソートする</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scores = &#123; <span class="string">'Carol'</span> =&gt; <span class="number">90</span>, <span class="string">'Alice'</span> =&gt; <span class="number">50</span>, <span class="string">'Bob'</span> =&gt; <span class="number">60</span>, <span class="string">'David'</span> =&gt; <span class="number">40</span> &#125;</span><br><span class="line">scores.sort &#123;|(k1, v1), (k2, v2)| v2 &lt;=&gt; v1 &#125;</span><br><span class="line">=&gt; [[<span class="string">"Carol"</span>, <span class="number">90</span>], [<span class="string">"Bob"</span>, <span class="number">60</span>], [<span class="string">"Alice"</span>, <span class="number">50</span>], [<span class="string">"David"</span>, <span class="number">40</span>]]</span><br></pre></td></tr></table></figure>
+
+<h3 id="同じ値を数える"><a href="#同じ値を数える" class="headerlink" title="同じ値を数える"></a>同じ値を数える</h3><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"b"</span>].each_with_object(Hash.new(<span class="number">0</span>)) &#123;|r, arr| arr[r]+=<span class="number">1</span> &#125;</span><br><span class="line">=&gt; &#123;<span class="string">"a"</span>=&gt;<span class="number">2</span>, <span class="string">"b"</span>=&gt;<span class="number">3</span>, <span class="string">"c"</span>=&gt;<span class="number">1</span>&#125;</span><br></pre></td></tr></table></figure>
+
 
         </div>
       </div>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2016-07-20T09:42:04.000Z" itemprop="datepublished">
-            2016/07/20
+          <time datetime="2016-07-12T05:45:29.000Z" itemprop="datepublished">
+            2016/07/12
           </time>
-          <time datetime="2016-07-20T09:42:04.000Z" itemprop="modified">
-            (更新日: 2016/07/20)
+          <time datetime="2022-12-18T04:42:29.000Z" itemprop="modified">
+            (更新日: 2022/12/18)
           </time>
         </div>
         <h1>
-        <a href="/blog/2016/07/20/ruby-configuration-pattern/">[Ruby]オブジェクトの設定情報を保持するパターンの紹介</a>
+        <a href="/blog/2016/07/12/sample-of-formula/">LATEXチートシート - 数式記号の読み方・表し方</a>
         </h1>
         <div class="content">
-          <p>オブジェクトの設定情報を保持するパターンを紹介します。<br>このパターンを使えば設定情報を管理するクラスに集約することができ、コードの見通しがよくなります。また、初期設定の定義ができるようになります。</p>
-<p>名前空間で区切ってConfigurationモデルに設定を持たせるようにします。<br>そして、トップにconfigurationとconfigureメソッドを定義します。<br>クラスメソッドで定義するのがポイントです。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hoge</span></span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Configuration</span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initialize</span></span></span><br><span class="line">      @name = <span class="literal">nil</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">attr_accessor</span> <span class="symbol">:name</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">self</span>.<span class="title">configuration</span></span></span><br><span class="line">    @configuration <span class="params">||</span>= Hoge::Configuration.new</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">self</span>.<span class="title">configure</span></span></span><br><span class="line">    <span class="keyword">yield</span> configuration <span class="keyword">if</span> block_given?</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+          <p>LATEXを使った数式記号の読み方・表し方をまとめました。<br><a href="http://izumi-math.jp/sanae/report/suusiki/suusiki.htm" target="_blank" rel="noopener">数式記号の読み方・表し方</a>の数式を実際にLATEXで表示しています。</p>
+<ul>
+<li>数学初心者の私が30歳で数学を学び直したときの経験を書きました。<a href="/blog/2015/11/30/mathematics-of-advent-calendar/">30歳から始める数学</a></li>
+</ul>
+<h2 id="1-数と式"><a href="#1-数と式" class="headerlink" title="1. 数と式"></a>1. 数と式</h2><table>
+<thead>
+<tr>
+<th>記号</th>
+<th>読み方</th>
+<th>LATEX表記</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$$ a \times b $$</td>
+<td>aかけるb</td>
+<td>a \times b</td>
+</tr>
+<tr>
+<td>$$ a \div b $$</td>
+<td>a割るb</td>
+<td>a \div b</td>
+</tr>
+<tr>
+<td>$$ a \pm b $$</td>
+<td>aプラスマイナスb</td>
+<td>a \pm b</td>
+</tr>
+<tr>
+<td>$$ a \times b $$</td>
+<td>aかけるb</td>
+<td>a \times b</td>
+</tr>
+<tr>
+<td>$$ a \div b $$</td>
+<td>a割るb</td>
+<td>a \div b</td>
+</tr>
+<tr>
+<td>$$ a \pm b $$</td>
+<td>aプラスマイナスb</td>
+<td>a \pm b</td>
+</tr>
+<tr>
+<td>$$ a \mp b $$</td>
+<td>aマイナスプラスb</td>
+<td>a \mp b</td>
+</tr>
+<tr>
+<td>$$ a \cdot b $$</td>
+<td>aかけるb</td>
+<td>a \cdot b</td>
+</tr>
+<tr>
+<td>$$ a &lt; b $$</td>
+<td>a小なりb<br>aはbより小さい</td>
+<td>a &lt; b</td>
+</tr>
+<tr>
+<td>$$ a &gt; b $$</td>
+<td>a大なりb<br>aはbより大きい</td>
+<td>a &gt; b</td>
+</tr>
+<tr>
+<td>$$ a \leqq b $$</td>
+<td>a小なりイコールb<br>aはb以下</td>
+<td>a \leqq b</td>
+</tr>
+<tr>
+<td>$$ a \geqq b $$</td>
+<td>a大なりイコールb<br>aはb以上</td>
+<td>a \geqq b</td>
+</tr>
+<tr>
+<td>$$ a \neq b $$</td>
+<td>aはbと等しくない<br>aノットイコールb</td>
+<td>a \neq b</td>
+</tr>
+<tr>
+<td>$$ a \fallingdotseq b $$</td>
+<td>aニアリーイコールb<br>aはbにほぼ等しい</td>
+<td>a \fallingdotseq b</td>
+</tr>
+<tr>
+<td>$$ a^n $$</td>
+<td>aのn乗</td>
+<td>a^n</td>
+</tr>
+<tr>
+<td>$$ ( a^m ) ^n $$</td>
+<td>aのm乗のn乗</td>
+<td>( a^m ) ^n</td>
+</tr>
+<tr>
+<td>$$ \sqrt{a} $$</td>
+<td>ルートa<br>平方根a</td>
+<td>\sqrt{a}</td>
+</tr>
+<tr>
+<td>$$ \sqrt[n]{a} $$</td>
+<td>n乗根a</td>
+<td>\sqrt[n]{a}</td>
+</tr>
+<tr>
+<td>$$ \frac{b}{a} $$</td>
+<td>a分のb<br>b割るa</td>
+<td>\frac{b}{a}</td>
+</tr>
+<tr>
+<td>$$ \mid a \mid $$</td>
+<td>絶対値a<br>aの絶対値</td>
+<td>\mid a \mid</td>
+</tr>
+<tr>
+<td>$$ [x] $$</td>
+<td>xを越えない最大の整数<br>ガウスx</td>
+<td>[x]</td>
+</tr>
+<tr>
+<td>$$ a,b,c,\cdots $$</td>
+<td>a,b,c,…</td>
+<td>a,b,c,\cdots</td>
+</tr>
+</tbody></table>
+<h2 id="2-関数・写像"><a href="#2-関数・写像" class="headerlink" title="2. 関数・写像"></a>2. 関数・写像</h2><table>
+<thead>
+<tr>
+<th>記号</th>
+<th>読み方</th>
+<th>LATEX表記</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$$ y=f(x) $$</td>
+<td>yイコールf,x<br>yイコールf,かっこ,x,（かっこ）</td>
+<td>y=f(x)</td>
+</tr>
+<tr>
+<td>$$ f ^{-1} (x) $$</td>
+<td>f,インバースx<br>f,xの逆関数</td>
+<td>f ^{-1} (x)</td>
+</tr>
+<tr>
+<td>$$ \sin x $$</td>
+<td>サインx</td>
+<td>\sin x</td>
+</tr>
+<tr>
+<td>$$ \cos x $$</td>
+<td>コサインx</td>
+<td>\cos x</td>
+</tr>
+<tr>
+<td>$$ \tan x $$</td>
+<td>タンジェントx</td>
+<td>\tan x</td>
+</tr>
+<tr>
+<td>$$ \sin ^2 x $$</td>
+<td>サイン2乗x</td>
+<td>\sin ^2 x</td>
+</tr>
+<tr>
+<td>$$ \log _a x $$</td>
+<td>ログa,b<br>aを底数とするbの対数</td>
+<td>\log _a x</td>
+</tr>
+<tr>
+<td>$$ \log x $$</td>
+<td>ログ,x</td>
+<td>\log x</td>
+</tr>
+<tr>
+<td>$$ f \circ g $$</td>
+<td>fマルg<br>fとgの合成写像</td>
+<td>f \circ g</td>
+</tr>
+<tr>
+<td>$$ f ^{-1} $$</td>
+<td>fインバース<br>fの逆写像</td>
+<td>f ^{-1}</td>
+</tr>
+<tr>
+<td>$$ X \stackrel{f}{\to} Y $$</td>
+<td>XからYへの写像f<br>X矢印,Y,f</td>
+<td>X \stackrel{f}{\to} Y</td>
+</tr>
+<tr>
+<td>$$ a \stackrel{f}{\to} b $$</td>
+<td>aをbに移す写像f<br>a矢印,b,f</td>
+<td>a \stackrel{f}{\to} b</td>
+</tr>
+<tr>
+<td>$$ f: x \to y $$</td>
+<td>xからyへの写像f<br>f,x矢印,y</td>
+<td>f: x \to y</td>
+</tr>
+<tr>
+<td>$$ f(x,y) $$</td>
+<td>f,x,y<br>f,かっこ,x,y,（かっこ）</td>
+<td>f(x,y)</td>
+</tr>
+</tbody></table>
+<h2 id="3-ベクトル・行列"><a href="#3-ベクトル・行列" class="headerlink" title="3. ベクトル・行列"></a>3. ベクトル・行列</h2><table>
+<thead>
+<tr>
+<th>記号</th>
+<th>読み方</th>
+<th>LATEX表記</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$$ \vec{a} $$</td>
+<td>ベクトルa<br>aベクトル</td>
+<td>\vec{a}</td>
+</tr>
+<tr>
+<td>$$ \overrightarrow{AB} $$</td>
+<td>ベクトルAB<br>ABベクトル</td>
+<td>\overrightarrow{AB}</td>
+</tr>
+<tr>
+<td>$$ \mid \vec{a} \mid $$</td>
+<td>ベクトルaの大きさ<br>ベクトルaの絶対値</td>
+<td>\mid \vec{a} \mid</td>
+</tr>
+<tr>
+<td>$$ \vec{0} $$</td>
+<td>零ベクトル<br>ゼロベクトル</td>
+<td>\vec{0}</td>
+</tr>
+<tr>
+<td>$$ \vec{a} \neq \vec{b} $$</td>
+<td>ベクトルaはベクトルbではない</td>
+<td>\vec{a} \neq \vec{b}</td>
+</tr>
+<tr>
+<td>$$ \vec{a} \parallel \vec{b} $$</td>
+<td>ベクトルa,bは平行<br>ベクトルa平行ベクトルb</td>
+<td>\vec{a} \parallel \vec{b}</td>
+</tr>
+<tr>
+<td>$$ \vec{a} \perp \vec{b} $$</td>
+<td>ベクトルa,bは垂直<br>ベクトルa垂直ベクトルb</td>
+<td>\vec{a} \perp \vec{b}</td>
+</tr>
+<tr>
+<td>$$ \vec{a}=(a_1,a_2) $$</td>
+<td>ベクトルaイコールa1,a2<br>ベクトルaイコール,かっこa1,a2</td>
+<td>\vec{a}=(a_1,a_2)</td>
+</tr>
+<tr>
+<td>$$ \vec{a} \cdot \vec{b} $$</td>
+<td>ベクトルa,bの内積</td>
+<td>\vec{a} \cdot \vec{b}</td>
+</tr>
+<tr>
+<td>$$ ( a \quad b ) $$</td>
+<td>行ベクトルa,b<br>かっこ,a,b,</td>
+<td>( a \quad b )</td>
+</tr>
+<tr>
+<td>$$ \begin{pmatrix} a \ b \end{pmatrix} $$</td>
+<td>列ベクトルa,b<br>かっこ,a,b,</td>
+<td>\begin{pmatrix} a \ b \end{pmatrix}</td>
+</tr>
+<tr>
+<td>$$ m \times n $$</td>
+<td>m,n行列<br>mかけるn行列</td>
+<td>m \times n</td>
+</tr>
+<tr>
+<td>$$ \begin{pmatrix} a &amp; b \ c &amp; d \end{pmatrix} $$</td>
+<td>行列a,b,c,d<br>かっこ,a,b,c,d</td>
+<td>\begin{pmatrix} a &amp; b \ c &amp; d \end{pmatrix}</td>
+</tr>
+<tr>
+<td>$$ A^2 $$</td>
+<td>Aの2乗</td>
+<td>A^2</td>
+</tr>
+<tr>
+<td>$$ A^{-1} $$</td>
+<td>Aの逆行列<br>Aインバース</td>
+<td>A^{-1}</td>
+</tr>
+<tr>
+<td>$$ A \vec{x} $$</td>
+<td>Aベクトルx</td>
+<td>A \vec{x}</td>
+</tr>
+<tr>
+<td>$$ O $$</td>
+<td>零行列</td>
+<td>O</td>
+</tr>
+</tbody></table>
+<h2 id="4-微分・積分"><a href="#4-微分・積分" class="headerlink" title="4. 微分・積分"></a>4. 微分・積分</h2><table>
+<thead>
+<tr>
+<th>記号</th>
+<th>読み方</th>
+<th>LATEX表記</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$$ { a_n } $$</td>
+<td>数列an</td>
+<td>{ a_n }</td>
+</tr>
+<tr>
+<td>$$ \sum _{k=1} ^{n} {k(k+1)} $$</td>
+<td>シグマ,ak,k=1からnまで<br>シグマ,k=1からnまで,ak</td>
+<td>\sum _{k=1} ^{n} {k(k+1)}</td>
+</tr>
+<tr>
+<td>$$ n \to \infty $$</td>
+<td>n矢印無限大<br>n無限大</td>
+<td>n \to \infty</td>
+</tr>
+<tr>
+<td>$$ \lim {n \to \infty} a_n=\alpha $$</td>
+<td>nが限りなく大きくなるときのanの極限値はα<br> リミット,n→∞,an,イコールα</td>
+<td>\lim {n \to \infty} a_n=\alpha</td>
+</tr>
+<tr>
+<td>$$ x \to a $$</td>
+<td>x矢印a<br>xが限りなくaに近づく</td>
+<td>x \to a</td>
+</tr>
+<tr>
+<td>$$ \lim {x \to a} f(x)=b $$</td>
+<td>xが限りなくaに近づくとき,f(x)の極限値はbである<br>リミット,xがaに近づくときのf(x),イコール,b<br>リミット,x矢印a,f(x),イコールb</td>
+<td>\lim {x \to a} f(x)=b</td>
+</tr>
+<tr>
+<td>$$ \lim {x \to a+0} f(x) $$</td>
+<td>xがaに近づくときのf(x)の右極限値<br>リミット,xが大きい方からaに近づくときのf(x)<br>リミット,x矢印a+0,f(x)</td>
+<td>\lim {x \to a+0} f(x)</td>
+</tr>
+<tr>
+<td>$$ \lim {x \to a-0} f(x) $$</td>
+<td>xがaに近づくときのf(x)の左極限値<br>リミット,xが小さい方からaに近づくときのf(x)<br>リミット,x矢印a-0,f(x)</td>
+<td>\lim {x \to a-0} f(x)</td>
+</tr>
+<tr>
+<td>$$ \Delta x \to 0 $$</td>
+<td>デルタx矢印0<br>デルタxが限りなく0に近づく</td>
+<td>\Delta x \to 0</td>
+</tr>
+<tr>
+<td>$$ f’(x) $$</td>
+<td>f,ダッシュ,x</td>
+<td>f’(x)</td>
+</tr>
+<tr>
+<td>$$ y’ $$</td>
+<td>y,ダッシュ</td>
+<td>y’</td>
+</tr>
+<tr>
+<td>$$ \frac{dy}{dx} $$</td>
+<td>dy,dx</td>
+<td>\frac{dy}{dx}</td>
+</tr>
+<tr>
+<td>$$ \frac{d}{dx} f(x) $$</td>
+<td>d,dx,f(x)</td>
+<td>\frac{d}{dx} f(x)</td>
+</tr>
+<tr>
+<td>$$ \frac{d}{dx} f(x) $$</td>
+<td>d,dx,f(x)</td>
+<td>\frac{d}{dx} f(x)</td>
+</tr>
+<tr>
+<td>$$ ( a,b ) $$</td>
+<td>開区間a,b</td>
+<td>( a,b )</td>
+</tr>
+<tr>
+<td>$$ [ a,b ] $$</td>
+<td>閉区間a,b</td>
+<td>[ a,b ]</td>
+</tr>
+<tr>
+<td>$$ f”(x) $$</td>
+<td>f,トゥーダッシュ,x</td>
+<td>f”(x)</td>
+</tr>
+<tr>
+<td>$$ y” $$</td>
+<td>y,トゥーダッシュ</td>
+<td>y”</td>
+</tr>
+<tr>
+<td>$$ \frac{d^2y}{dx^2} $$</td>
+<td>d,トゥー,y,d,x,トゥー yの第2次導関数</td>
+<td>\frac{d^2y}{dx^2}</td>
+</tr>
+<tr>
+<td>$$ \frac{d^y}{dx^2} f(x) $$</td>
+<td>f(x) d,トゥー,d,x,トゥー,f(x)<br>f(x)の第2次導関数</td>
+<td>\frac{d^y}{dx^2} f(x)</td>
+</tr>
+<tr>
+<td>$$ y^{(n)} $$</td>
+<td>yの第n次導関数</td>
+<td>y^{(n)}</td>
+</tr>
+<tr>
+<td>$$ f^{(n)(x)} $$</td>
+<td>f(x)の第n次導関数</td>
+<td>f^{(n)(x)}</td>
+</tr>
+<tr>
+<td>$$ \frac{d^ny}{dx^n} $$</td>
+<td>d,n,d,x,n,f(x)<br>yの第n次導関数</td>
+<td>\frac{d^ny}{dx^n}</td>
+</tr>
+<tr>
+<td>$$ \frac{d^n}{dx^n} f(x) $$</td>
+<td>d,n,d,x,n,f(x)<br>f(x)の第n次導関数</td>
+<td>\frac{d^n}{dx^n} f(x)</td>
+</tr>
+<tr>
+<td>$$ \int _a ^b f(x) dx $$</td>
+<td>インテグラル,aからbまで,f(x),dx</td>
+<td>\int _a ^b f(x) dx</td>
+</tr>
+<tr>
+<td>$$ [ F(x) ] ^b _a $$</td>
+<td>F(x),a,b</td>
+<td>[ F(x) ] ^b _a</td>
+</tr>
+</tbody></table>
+<h2 id="5-集合・理論"><a href="#5-集合・理論" class="headerlink" title="5. 集合・理論"></a>5. 集合・理論</h2><table>
+<thead>
+<tr>
+<th>記号</th>
+<th>読み方</th>
+<th>LATEX表記</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$$ A \subset B $$</td>
+<td>AはBの真部分集合である</td>
+<td>A \subset B</td>
+</tr>
+<tr>
+<td>$$ A \supset B $$</td>
+<td>AはBを真部分集合に持つ</td>
+<td>A \supset B</td>
+</tr>
+<tr>
+<td>$$ A \subseteqq B $$</td>
+<td>A含まれるB<br>AはBの部分集合である<br>AはBに含まれる</td>
+<td>A \subseteqq B</td>
+</tr>
+<tr>
+<td>$$ A \supseteqq B $$</td>
+<td>A含むB<br>AはBを含む<br>BはAを部分集合に持つ</td>
+<td>A \supseteqq B</td>
+</tr>
+<tr>
+<td>$$ a \in A $$</td>
+<td>aはAの要素である<br>aはAに属する<br>a属するA</td>
+<td>a \in A</td>
+</tr>
+<tr>
+<td>$$ a \notin A $$</td>
+<td>aはAの要素でない<br>aはAに属さない<br>a属さないA</td>
+<td>a \notin A</td>
+</tr>
+<tr>
+<td>$$ A \ni a $$</td>
+<td>aを要素とする<br>Aの要素</td>
+<td>A \ni a</td>
+</tr>
+<tr>
+<td>$$ { 1,2,3,4 } $$</td>
+<td>集合1,2,3,4<br>1,2,3,4を要素とする集合</td>
+<td>{ 1,2,3,4 }</td>
+</tr>
+<tr>
+<td>$$ { x \mid x&lt;6 } $$</td>
+<td>x（の集合）ただしx&lt;6<br>x&lt;6を満たす集合</td>
+<td>{ x \mid x&lt;6 }</td>
+</tr>
+<tr>
+<td>$$ A \cap B $$</td>
+<td>AキャップB<br>A 交わり<br>AとBの交わり（共通部分）<br>AインターセクションB</td>
+<td>A \cap B</td>
+</tr>
+<tr>
+<td>$$ A \cup B $$</td>
+<td>A カップ B<br>A結びB<br>AとBの結び<br>AユニオンB</td>
+<td>A \cup B</td>
+</tr>
+<tr>
+<td>$$ A=B $$</td>
+<td>AイコールB<br>AはBに等しい</td>
+<td>A=B</td>
+</tr>
+<tr>
+<td>$$ \bar{A} $$</td>
+<td>Aバー<br>Aの補集合</td>
+<td>\bar{A}</td>
+</tr>
+<tr>
+<td>$$ \phi $$</td>
+<td>空集合<br>ファイ</td>
+<td>\phi</td>
+</tr>
+<tr>
+<td>$$ P \Rightarrow Q $$</td>
+<td>PならばQ</td>
+<td>P \Rightarrow Q</td>
+</tr>
+<tr>
+<td>$$ P \Leftrightarrow Q $$</td>
+<td>PとQは同値</td>
+<td>P \Leftrightarrow Q</td>
+</tr>
+<tr>
+<td>$$ \bar{P} $$</td>
+<td>Pでない<br>Pの否定<br>Pバー</td>
+<td>\bar{P}</td>
+</tr>
+</tbody></table>
+<h2 id="6-確率・統計"><a href="#6-確率・統計" class="headerlink" title="6. 確率・統計"></a>6. 確率・統計</h2><table>
+<thead>
+<tr>
+<th>記号</th>
+<th>読み方</th>
+<th>LATEX表記</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$$ _n P _r $$</td>
+<td>n,P,r<br>Pのn,r<br>パーミュテーション,n,r</td>
+<td>_n P _r</td>
+</tr>
+<tr>
+<td>$$ _n C _r $$</td>
+<td>n,C,r<br>Cのn,r<br>コンビネーション,n,r</td>
+<td>_n C _r</td>
+</tr>
+<tr>
+<td>$$ n! $$</td>
+<td>nの階乗<br>nファクトリアル</td>
+<td>n!</td>
+</tr>
+<tr>
+<td>$$ n(A) $$</td>
+<td>n,A<br>n,かっこ,A,（かっこ）</td>
+<td>n(A)</td>
+</tr>
+<tr>
+<td>$$ P(A) $$</td>
+<td>P,A<br>事象Aの確率</td>
+<td>P(A)</td>
+</tr>
+<tr>
+<td>$$ P _A (B) $$</td>
+<td>P,A,B<br>PのA,B<br>P,A,かっこ,B,（かっこ）</td>
+<td>P _A (B)</td>
+</tr>
+<tr>
+<td>$$ \bar{x} $$</td>
+<td>xバー<br>xの平均</td>
+<td>\bar{x}</td>
+</tr>
+<tr>
+<td>$$ E(X) $$</td>
+<td>E,X<br>Xの平均</td>
+<td>E(X)</td>
+</tr>
+<tr>
+<td>$$ V(X) $$</td>
+<td>V,X<br>Xの分散</td>
+<td>V(X)</td>
+</tr>
+<tr>
+<td>$$ \sigma (X) $$</td>
+<td>シグマ,X<br>Xの標準偏差</td>
+<td>\sigma (X)</td>
+</tr>
+<tr>
+<td>$$ P(X=A) $$</td>
+<td>P,かっこ,X=a,（かっこ）<br>X=aとなる確率</td>
+<td>P(X=A)</td>
+</tr>
+<tr>
+<td>$$ B(n,p) $$</td>
+<td>B,n,p</td>
+<td>B(n,p)</td>
+</tr>
+<tr>
+<td>$$ N(m,\sigma ^2) $$</td>
+<td>N,m,σ2</td>
+<td>N(m,\sigma ^2)</td>
+</tr>
+</tbody></table>
+<h2 id="7-幾何"><a href="#7-幾何" class="headerlink" title="7. 幾何"></a>7. 幾何</h2><table>
+<thead>
+<tr>
+<th>記号</th>
+<th>読み方</th>
+<th>LATEX表記</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$$ x \circ $$</td>
+<td>x度</td>
+<td>x \circ</td>
+</tr>
+<tr>
+<td>$$ \angle A $$</td>
+<td>角A</td>
+<td>\angle A</td>
+</tr>
+<tr>
+<td>$$ \triangle {ABC} $$</td>
+<td>三角形ABC</td>
+<td>\triangle {ABC}</td>
+</tr>
+<tr>
+<td>$$ l \parallel m $$</td>
+<td>l平行m<br>lとmは平行</td>
+<td>l \parallel m</td>
+</tr>
+<tr>
+<td>$$ l \nparallel m $$</td>
+<td>lとmは平行でない</td>
+<td>l \nparallel m</td>
+</tr>
+<tr>
+<td>$$ \triangle {ABC} \equiv \triangle {DEF} $$</td>
+<td>△ABCと△DEF合同<br> △ABC合同△DEF</td>
+<td>\triangle {ABC} \equiv \triangle {DEF}</td>
+</tr>
+<tr>
+<td>$$ \overline{AB} $$</td>
+<td>ABの長さ<br> ABのバー</td>
+<td>\overline{AB}</td>
+</tr>
+</tbody></table>
+<h2 id="8-ギリシャ文字"><a href="#8-ギリシャ文字" class="headerlink" title="8. ギリシャ文字"></a>8. ギリシャ文字</h2><table>
+<thead>
+<tr>
+<th>記号</th>
+<th>読み方</th>
+<th>LATEX表記</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$$ \alpha $$</td>
+<td>アルファ</td>
+<td>\alpha</td>
+</tr>
+<tr>
+<td>$$ \beta $$</td>
+<td>ベータ</td>
+<td>\beta</td>
+</tr>
+<tr>
+<td>$$ \gamma $$</td>
+<td>ガンマ</td>
+<td>\gamma</td>
+</tr>
+<tr>
+<td>$$ \theta $$</td>
+<td>シータ</td>
+<td>\theta</td>
+</tr>
+<tr>
+<td>$$ \pi $$</td>
+<td>パイ</td>
+<td>\pi</td>
+</tr>
+<tr>
+<td>$$ \Delta $$</td>
+<td>デルタ</td>
+<td>\Delta</td>
+</tr>
+</tbody></table>
+<h2 id="関連記事"><a href="#関連記事" class="headerlink" title="関連記事"></a>関連記事</h2><ul>
+<li><p>数学初心者の私が30歳で数学を学び直したときの経験を書きました。<a href="/blog/2015/11/30/mathematics-of-advent-calendar/">30歳から始める数学</a></p>
+</li>
+<li><p>数学初心者の私が数学の勉強会で登壇することに！</p>
+<ul>
+<li><a href="/blog/2015/09/08/mathematics-for-programmer/">プログラマのための数学勉強会@福岡に登壇してきました</a></li>
+<li><a href="/blog/2015/11/10/mathematics-for-programmer-second/">プログラマのための数学勉強会@福岡#2に登壇してきました</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
+<li><a href="http://izumi-math.jp/sanae/report/suusiki/suusiki.htm" target="_blank" rel="noopener">数式記号の読み方・表し方</a></li>
+</ul>
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
-<p><code>configure</code>メソッドは以下のように初期設定したいパラメーターを設定するために使います。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Hope.configure <span class="keyword">do</span> |config|</span><br><span class="line">  config.name = <span class="string">'shoyan'</span></span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">config = Hoge.configuration</span><br><span class="line">config.name</span><br><span class="line">=&gt; <span class="string">"shoyan"</span></span><br></pre></td></tr></table></figure>
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-07-08T04:49:27.000Z" itemprop="datepublished">
+            2016/07/08
+          </time>
+          <time datetime="2016-07-08T04:49:27.000Z" itemprop="modified">
+            (更新日: 2016/07/08)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/07/08/tips-for-tmpwatch/">tmpwatchでさくっと不要なファイルを消す</a>
+        </h1>
+        <div class="content">
+          <p>古いファイルを消したいときにtmpwatchを使うと簡単に消すことができます。</p>
+<p>例えば、<code>/var/www/app/tmp</code> 配下の48時間以上前のファイルやディレクトリを消したい場合は以下で消せます。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmpwatch -m <span class="number">48</span>  <span class="regexp">/var/</span>www<span class="regexp">/app/</span>tmp</span><br></pre></td></tr></table></figure>
 
-<p><code>configure</code>メソッドで設定した情報が保持されています。<br>初期設定はできるようになりました。</p>
-<p>次はこの設定情報を内部で参照するようにします。</p>
-<p>Hopeクラスのinitializeメソッドで設定情報をインスタンス変数に保存します。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hoge</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialize</span></span></span><br><span class="line">    @config = Hoge.configuration</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">greeting</span></span></span><br><span class="line">    puts <span class="string">"Hello <span class="subst">#&#123;@config.name&#125;</span>"</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<p>実行してみます。<br>Hope::Configurationの値が出力されていますね。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hoge = Hoge.new</span><br><span class="line">hope.greeting</span><br><span class="line">=&gt; Hello shoyan</span><br></pre></td></tr></table></figure>
-
-
-<p>Hoge.rb</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hoge</span></span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Configuration</span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initialize</span></span></span><br><span class="line">      @name = <span class="literal">nil</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">attr_accessor</span> <span class="symbol">:name</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialize</span></span></span><br><span class="line">    @config = Hoge.configuration</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">greeting</span></span></span><br><span class="line">    puts <span class="string">"Hello <span class="subst">#&#123;@config.name&#125;</span>"</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">self</span>.<span class="title">configuration</span></span></span><br><span class="line">    @configuration <span class="params">||</span>= Hoge::Configuration.new</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">self</span>.<span class="title">configure</span></span></span><br><span class="line">    <span class="keyword">yield</span> configuration <span class="keyword">if</span> block_given?</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>tmpwatchは再帰的にファイルを削除するので、サブディレクトリがあればその配下のファイルも削除されます。<br>シンボリックの場合はリンクが削除されるだけでリンク先のファイルは削除されないとのことです。</p>
+<h3 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h3><ul>
+<li><a href="http://spring-mt.tumblr.com/post/18484633412/tmpwatch%E3%81%8C%E4%BE%BF%E5%88%A9" target="_blank" rel="noopener">tmpwatchが便利！</a></li>
+</ul>
 
         </div>
       </div>
@@ -324,7 +1091,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/17/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="extend next" rel="next" href="/page/19/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/17/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><a class="extend next" rel="next" href="/page/19/">Next</a>
 </div>
 
             

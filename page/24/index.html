@@ -174,123 +174,142 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2016-06-01T05:17:45.000Z" itemprop="datepublished">
-            2016/06/01
+          <time datetime="2016-05-24T06:05:01.000Z" itemprop="datepublished">
+            2016/05/24
           </time>
-          <time datetime="2016-06-01T05:17:45.000Z" itemprop="modified">
-            (更新日: 2016/06/01)
+          <time datetime="2016-05-24T06:05:01.000Z" itemprop="modified">
+            (更新日: 2016/05/24)
           </time>
         </div>
         <h1>
-        <a href="/blog/2016/06/01/capistrano-tutorial-and-capistrano-plugins/">Capistranoの導入手順とプラグインの紹介</a>
+        <a href="/blog/2016/05/24/introduce-guard-gem-and-guard-rspec/">Guardでrspecのテストを自動化する</a>
         </h1>
         <div class="content">
-          <p>Capistranoのインストールと設定、プラグインの紹介をします。</p>
-<h2 id="Capistranoのインストール"><a href="#Capistranoのインストール" class="headerlink" title="Capistranoのインストール"></a>Capistranoのインストール</h2><p>bundle initコマンドでGemfileを作成します。</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$  bundle init</span><br><span class="line">Writing <span class="keyword">new</span> Gemfile to <span class="regexp">/Users/</span>shoyan<span class="regexp">/app/G</span>emfile</span><br></pre></td></tr></table></figure>
+          <p>自動化ツールのGuardの紹介をします。<br>Guardはファイルを監視して、ファイルになんらかの変更がされたら、指定した処理を実行するツールです。<br>この機能を使ってファイルが変更されたらテストを自動で実行させたり、シンタックスチェックをすることができます。<br>今回はrspecで自動的にテストを実行する方法を紹介します。  </p>
+<p>まずはGuardのinstallをします。<br>Gemfileに定義してインストールします。  </p>
+<p>Gemfile</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">group <span class="symbol">:development</span> <span class="keyword">do</span></span><br><span class="line">  gem <span class="string">'guard'</span></span><br><span class="line">  gem <span class="string">'guard-rspec'</span>, <span class="symbol">require:</span> <span class="literal">false</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
-<p>以下のGemfileが作成されます。</p>
-<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ cat Gemfile</span><br><span class="line"><span class="meta"># A sample Gemfile</span></span><br><span class="line">source <span class="string">"https://rubygems.org"</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># gem "rails"</span></span><br></pre></td></tr></table></figure>
+<p>bundle installして、Guardfileを作成します。<br>GuardfileはGuardの設定を定義するファイルです。</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">bundle </span><span class="keyword">install</span></span><br><span class="line"><span class="keyword">$ </span><span class="keyword">bundle </span>exec guard init rspec</span><br></pre></td></tr></table></figure>
 
-<p>GemfileにCapistranoを定義します。</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">group</span> <span class="title">:development</span> do</span><br><span class="line">  gem <span class="string">"capistrano"</span>, <span class="string">"~&gt; 3.4"</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>guard init rspecを実行するとrspecの設定が書かれたGuardfileが作成されます。<br>Railsを想定した設定が書かれていますので、Railsの場合はそのままでOKです。</p>
+<h2 id="ファイルが実行されたらrspecを実行する"><a href="#ファイルが実行されたらrspecを実行する" class="headerlink" title="ファイルが実行されたらrspecを実行する"></a>ファイルが実行されたらrspecを実行する</h2><p>ファイルが実行されたらrspecを実行するようにしましょう。<br>別でウィンドウを開いてguardを実行します。  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> bundle <span class="built_in">exec</span> guard</span></span><br></pre></td></tr></table></figure>
 
-<p>bundle installコマンドでインストールします。</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">bundle </span>install</span><br></pre></td></tr></table></figure>
+<p>ファイルを変更するとそのファイルのテストが実行され、テスト結果が表示されます。</p>
+<h2 id="Guard-rspecのDSL"><a href="#Guard-rspecのDSL" class="headerlink" title="Guard-rspecのDSL"></a>Guard-rspecのDSL</h2><p>Guardの設定はGuardのDSLを用いて設定します。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rspecのグループを定義し、監視しているファイルに変更があった場合は"bundle exec rspec""を実行する。</span></span><br><span class="line">guard <span class="symbol">:rspec</span>, <span class="symbol">cmd:</span> <span class="string">"bundle exec rspec"</span> <span class="keyword">do</span></span><br><span class="line">  <span class="comment"># Guard::RspecのDSLのインスタンスを作成</span></span><br><span class="line">  dsl = Guard::RSpec::Dsl.new(<span class="keyword">self</span>)</span><br><span class="line">  rspec = dsl.rspec</span><br><span class="line">  watch(rspec.spec_helper) &#123; rspec.spec_dir &#125;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="Capistranoの設定"><a href="#Capistranoの設定" class="headerlink" title="Capistranoの設定"></a>Capistranoの設定</h2><p>Capistranoがインストールできたので、設定をしていきます。<br>cap installコマンドで雛形を作成します。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> bundle <span class="built_in">exec</span> <span class="built_in">cap</span> install</span></span><br></pre></td></tr></table></figure>
+<p>watchで監視するファイルを設定します。<br>watchの引数は以下です。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watch(監視するファイル) &#123; コマンドに渡される引数 &#125;</span><br></pre></td></tr></table></figure>
 
-<p><code>config/deploy.rb</code>と<code>config/deploy/{production, staging}.rb</code> が作成されているので適宜編集します。</p>
-<p>config/deploy.rb</p>
-<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># config valid only <span class="keyword">for</span> current <span class="keyword">version</span> of Capistrano</span><br><span class="line">lock '3.5.0'</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span> :application, ‘<span class="keyword">app</span>'</span><br><span class="line"><span class="keyword">set</span> :repo_url, 'git@github.com:shoyan/shoyan.git'</span><br><span class="line"></span><br><span class="line">ask :branch, `git rev-<span class="keyword">parse</span> --abbrev-ref HEAD`.chomp</span><br><span class="line"><span class="keyword">set</span> :deploy_to, '/<span class="keyword">var</span>/www/<span class="keyword">app</span>'</span><br><span class="line"><span class="keyword">set</span> :scm, :git</span><br><span class="line"><span class="keyword">set</span> :<span class="keyword">format</span>, :airbrussh</span><br><span class="line"><span class="keyword">set</span> :keep_releases, 5</span><br></pre></td></tr></table></figure>
+<p>ここででてきた、<code>rspec.spec_helper</code> と <code>rspec.spec_dir</code> はどんな値を返すのでしょうか。<br>pryで覗いてみましょう。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ pry</span><br><span class="line">&gt; <span class="keyword">require</span> <span class="string">'guard/rspec/dsl'</span></span><br><span class="line">&gt; dsl = Guard::RSpec::Dsl.new(<span class="keyword">self</span>)</span><br><span class="line">&gt; rspec = dsl.rspec</span><br><span class="line">&gt; rspec.spec_helper</span><br><span class="line">=&gt; <span class="string">"spec/spec_helper.rb"</span></span><br><span class="line">&gt; rspec.spec_dir</span><br><span class="line">=&gt; <span class="string">"spec"</span></span><br></pre></td></tr></table></figure>
 
-<ul>
-<li><strong>application</strong>:  アプリケーション名</li>
-<li><strong>repo_url</strong>: リポジトリのURI</li>
-<li><strong>branch</strong>: デプロイ対象のブランチ</li>
-<li><strong>deploy_to</strong>: サーバーのアプリケーションのディレクトリ</li>
-<li><strong>scm</strong>: git or svn</li>
-<li><strong>format</strong>: ログのフォーマット</li>
-<li><strong>keep_releases</strong>: 過去にデプロイしたアプリケーションを何世代保持するか</li>
+<p>ソースを少し見てみましょう。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rspec</span></span></span><br><span class="line">  @rspec <span class="params">||</span>= OpenStruct.new(<span class="symbol">to_s:</span> <span class="string">"spec"</span>).tap <span class="keyword">do</span> <span class="params">|rspec|</span></span><br><span class="line">    rspec.spec_dir = <span class="string">"spec"</span></span><br><span class="line">    rspec.spec = -(m) &#123; Dsl.detect_spec_file_for(rspec, m) &#125;</span><br><span class="line">    rspec.spec_helper = <span class="string">"<span class="subst">#&#123;rspec.spec_dir&#125;</span>/spec_helper.rb"</span></span><br><span class="line">    rspec.spec_files = <span class="regexp">%r&#123;^<span class="subst">#&#123;rspec.spec_dir&#125;</span>/.+_spec\.rb$&#125;</span></span><br><span class="line">    rspec.spec_support = <span class="regexp">%r&#123;^<span class="subst">#&#123;rspec.spec_dir&#125;</span>/support/(.+)\.rb$&#125;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p><a href="https://github.com/guard/guard-rspec/blob/master/lib/guard/rspec/dsl.rb#L28" target="_blank" rel="noopener">https://github.com/guard/guard-rspec/blob/master/lib/guard/rspec/dsl.rb#L28</a></p>
+<p>実装には<code>OpenStruct</code>が使われています。<br><code>OpenStruct</code>とは要素を動的に追加・削除できる手軽な構造体を提供するクラスです<br><a href="http://docs.ruby-lang.org/ja/2.1.0/class/OpenStruct.html" target="_blank" rel="noopener">http://docs.ruby-lang.org/ja/2.1.0/class/OpenStruct.html</a></p>
+<p>要素を追加するためにtapメソッドを使っています。<br><code>OpenStruct</code>とtapメソッドをうまく使っていますね。  </p>
+<p>実は、というか当たり前なのですがOpenStructなので値の上書きも簡単にできてしまいます。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; rspec.spec_helper</span><br><span class="line">=&gt; <span class="string">"spec/spec_helper.rb"</span></span><br><span class="line">&gt; rspec.spec_helper = 'hoge'</span><br><span class="line">=&gt; <span class="string">"hoge"</span></span><br><span class="line">&gt; rspec.spec_helper</span><br><span class="line">=&gt; <span class="string">"hoge"</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Guardのカスタマイズ"><a href="#Guardのカスタマイズ" class="headerlink" title="Guardのカスタマイズ"></a>Guardのカスタマイズ</h2><p>Guardの様々なプラグインが開発されています。<br>プラグインは以下のページで参照できます。<br><a href="https://github.com/guard/guard/wiki/Guard-Plugins" target="_blank" rel="noopener">https://github.com/guard/guard/wiki/Guard-Plugins</a></p>
+<p>ちなみに、今回使った<code>guard-rspec</code>もGuardのプラグインです。<br>他にも様々なプラグインが用意されています。</p>
+<h2 id="関連記事"><a href="#関連記事" class="headerlink" title="関連記事"></a>関連記事</h2><ul>
+<li><a href="/blog/2016/12/07/guard-rubocop/">Guardでrubocopを自動化する</a></li>
 </ul>
-<p>デプロイするサーバーを定義します。<br>事前に鍵認証でsshログインできるようにしておくととスムーズです。</p>
-<p>config/deploy/production.rb</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">role </span>:app, %w&#123;shoyan<span class="variable">@server001</span>.example.jp shoyan<span class="variable">@server002</span>.example.jp&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Capistranoでデプロイする"><a href="#Capistranoでデプロイする" class="headerlink" title="Capistranoでデプロイする"></a>Capistranoでデプロイする</h2><p>以下のコマンドでデプロイします。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> bundle <span class="built_in">exec</span> <span class="built_in">cap</span> production deploy</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="便利なCapistranoプラグイン"><a href="#便利なCapistranoプラグイン" class="headerlink" title="便利なCapistranoプラグイン"></a>便利なCapistranoプラグイン</h2><p>Capistranoには様々なプラグインがあります。<br>ここでは私が使っているプラグインを紹介します。</p>
-<h3 id="capistrano-github-releases"><a href="#capistrano-github-releases" class="headerlink" title="capistrano-github-releases"></a>capistrano-github-releases</h3><p>デプロイ時にタグをつけたり、PRにリリースコメントをつけれます。</p>
-<p><a href="https://github.com/linyows/capistrano-github-releases" target="_blank" rel="noopener">https://github.com/linyows/capistrano-github-releases</a></p>
-<h3 id="capistrano-slack-notification"><a href="#capistrano-slack-notification" class="headerlink" title="capistrano/slack_notification"></a>capistrano/slack_notification</h3><p>デプロイ時にSlackに通知できるようになります。</p>
-<p><a href="https://github.com/linyows/capistrano-slack_notification" target="_blank" rel="noopener">https://github.com/linyows/capistrano-slack_notification</a></p>
-<h3 id="capistrano-banner"><a href="#capistrano-banner" class="headerlink" title="capistrano_banner"></a>capistrano_banner</h3><p>デプロイ時にASCIIアートを設定できます。<br>また、productionにデプロイする前に確認をしてくれるようになります。</p>
-<p><a href="https://github.com/holysugar/capistrano_banner" target="_blank" rel="noopener">https://github.com/holysugar/capistrano_banner</a></p>
-<h3 id="capistrano-bundler"><a href="#capistrano-bundler" class="headerlink" title="capistrano-bundler"></a>capistrano-bundler</h3><p>デプロイ時にbundle installを実行できるようになります。</p>
-<p><a href="https://github.com/capistrano/bundler" target="_blank" rel="noopener">https://github.com/capistrano/bundler</a></p>
-<h3 id="capistrano3-unicorn"><a href="#capistrano3-unicorn" class="headerlink" title="capistrano3-unicorn"></a>capistrano3-unicorn</h3><p>デプロイ時にunicornのコマンドを実行できるようになります。</p>
-<p><a href="https://github.com/tablexi/capistrano3-unicorn" target="_blank" rel="noopener">https://github.com/tablexi/capistrano3-unicorn</a></p>
-<p>###capistrano-withrsync</p>
-<p>rsyncでデプロイしてくれるプラグインです。<br>デプロイするファイルが大きい場合に便利です。</p>
-<p><a href="https://github.com/linyows/capistrano-withrsync" target="_blank" rel="noopener">https://github.com/linyows/capistrano-withrsync</a></p>
 
         </div>
       </div>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2016-05-31T09:03:46.000Z" itemprop="datepublished">
-            2016/05/31
+          <time datetime="2016-05-20T08:40:56.000Z" itemprop="datepublished">
+            2016/05/20
           </time>
-          <time datetime="2016-05-31T09:03:46.000Z" itemprop="modified">
-            (更新日: 2016/05/31)
+          <time datetime="2016-05-20T08:40:56.000Z" itemprop="modified">
+            (更新日: 2016/05/20)
           </time>
         </div>
         <h1>
-        <a href="/blog/2016/05/31/tips-for-nginx-cookbook/">NginxのCookbookでハマった</a>
+        <a href="/blog/2016/05/20/does-not-proceed-worker-is-blocked-processing-of-chef/">Chefのworkerが詰まって処理が進まなくなった</a>
         </h1>
         <div class="content">
-          <p>Nginxのcookbookでversionを指定しているのに、指定したバージョンでインストールされない問題でハマった。</p>
-<p><a href="https://supermarket.chef.io/cookbooks/nginx" target="_blank" rel="noopener">https://supermarket.chef.io/cookbooks/nginx</a></p>
-<h2 id="結果としてわかったこと"><a href="#結果としてわかったこと" class="headerlink" title="結果としてわかったこと"></a>結果としてわかったこと</h2><p>パッケージでインストールする場合はバージョンが指定できない。<br>バージョンを指定したい場合はソースでインストールする必要がある。  </p>
-<p>Nginx cookbookはパッケージでのインストールかソースでのインストールのいずれかを選ぶことができる。<br>デフォルトはパッケージである。<br>ソースでインストールしたい場合は、<code>node[&#39;nginx&#39;][&#39;install_method’]=&#39;source&#39;</code> とする必要がある。<br><code>install_method</code>を指定したときにはじめてversionの指定が可能となる。</p>
-<h2 id="立ちはだかる様々な問題"><a href="#立ちはだかる様々な問題" class="headerlink" title="立ちはだかる様々な問題"></a>立ちはだかる様々な問題</h2><h3 id="versionが反映されない"><a href="#versionが反映されない" class="headerlink" title="versionが反映されない"></a>versionが反映されない</h3><p><code>attributes/default.rb</code>にversionを定義してみたが、指定されたバージョンがインストールされない問題にハマった。<br>デフォルトである、1.4.4がインストールされている。</p>
-<h4 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h4><p>rolesのoverride_attributesとして指定すると指定されたバージョンがインストールされた。<br>基本的にvendor cookbookの値の定義はroleのoverride_attributeで指定したほうがいいのかもしれない。<br>とはいえ、パラメーターによっては上書きされる場合もあってそのあたりの挙動がよくわかっていない。</p>
-<h3 id="Checksumを指定しないといけない"><a href="#Checksumを指定しないといけない" class="headerlink" title="Checksumを指定しないといけない"></a>Checksumを指定しないといけない</h3><p>sourceからインストールする場合、checksumを設定する必要がある。<br>checksumは以下のようにして作成できる。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">shasum</span> <span class="selector-tag">-a</span> 256 <span class="selector-tag">nginx-x</span><span class="selector-class">.x</span><span class="selector-class">.x</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></span><br></pre></td></tr></table></figure>
+          <p>chefを実行したらこんなメッセージがでた。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARN: Chef<span class="built_in"> client </span>24431 is running, will wait <span class="keyword">for</span> it <span class="keyword">to</span> finish <span class="keyword">and</span> then run.</span><br></pre></td></tr></table></figure>
 
-<p>もしくは</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">http:</span><span class="comment">//nginx.org/download/nginx-x.x.x.tar.gz | shasum -a 256</span></span><br></pre></td></tr></table></figure>
+<p>前回実行したChefが途中で詰まってしまい、ウンともスンとも言わなくなったので Ctrl + Cでとめたが、プロセス自体は残ってしまっている。</p>
+<p>こんな感じで2つchef-clientのworkerが立ち上がっている状態。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[<span class="symbol">shoyan@</span>server01 ~]$ ps aux | grep chef</span><br><span class="line">root     <span class="number">24373</span>  <span class="number">0.0</span>  <span class="number">0.1</span> <span class="number">178168</span>  <span class="number">2992</span> ?        Ss   <span class="number">10</span>:<span class="number">22</span>   <span class="number">0</span>:<span class="number">00</span> sudo -p knife sudo password:  chef-client -S http:<span class="comment">//127.0.0.1:18889</span></span><br><span class="line">root     <span class="number">24426</span>  <span class="number">0.0</span>  <span class="number">3.1</span> <span class="number">262164</span> <span class="number">61072</span> ?        Sl   <span class="number">10</span>:<span class="number">22</span>   <span class="number">0</span>:<span class="number">01</span> /opt/chef/embedded/bin/ruby /usr/bin/chef-client -S http:<span class="comment">//127.0.0.1:18889</span></span><br><span class="line">root     <span class="number">24431</span>  <span class="number">0.0</span>  <span class="number">7.1</span> <span class="number">1078932</span> <span class="number">138052</span> ?      Sl   <span class="number">10</span>:<span class="number">22</span>   <span class="number">0</span>:<span class="number">03</span> chef-client worker: ppid=<span class="number">24426</span>;start=<span class="number">10</span>:<span class="number">22</span>:<span class="number">49</span>;</span><br><span class="line">root     <span class="number">26701</span>  <span class="number">0.0</span>  <span class="number">0.1</span> <span class="number">178168</span>  <span class="number">2996</span> pts/<span class="number">3</span>    Ss+  <span class="number">10</span>:<span class="number">50</span>   <span class="number">0</span>:<span class="number">00</span> sudo -p knife sudo password:  chef-client -S http:<span class="comment">//127.0.0.1:18889</span></span><br><span class="line">root     <span class="number">26754</span>  <span class="number">0.0</span>  <span class="number">3.1</span> <span class="number">261996</span> <span class="number">60896</span> pts/<span class="number">3</span>    Sl+  <span class="number">10</span>:<span class="number">50</span>   <span class="number">0</span>:<span class="number">01</span> /opt/chef/embedded/bin/ruby /usr/bin/chef-client -S http:<span class="comment">//127.0.0.1:18889</span></span><br><span class="line">root     <span class="number">26759</span>  <span class="number">0.0</span>  <span class="number">3.0</span> <span class="number">261996</span> <span class="number">57760</span> pts/<span class="number">3</span>    Sl+  <span class="number">10</span>:<span class="number">50</span>   <span class="number">0</span>:<span class="number">00</span> chef-client worker: ppid=<span class="number">26754</span>;start=<span class="number">10</span>:<span class="number">50</span>:<span class="number">38</span>;</span><br></pre></td></tr></table></figure>
 
-<p>checksumは <code>node[&#39;nginx&#39;][&#39;source&#39;][&#39;checksum’]</code> に指定する。</p>
-<h2 id="ChefのAttributeの優先順位について"><a href="#ChefのAttributeの優先順位について" class="headerlink" title="ChefのAttributeの優先順位について"></a>ChefのAttributeの優先順位について</h2><p>マニュアルによると、以下のようになっている(しかし、versionをoverrideで定義しても上書きできなかった)。</p>
+<p>1時間ほど経過しても何も進まないので、プロセスをkillしてみた。</p>
+<p>TERMシグナルを送ってみたが、反応なし。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">kill</span> -s TERM 24431</span></span><br></pre></td></tr></table></figure>
+
+<p>killシグナルを送るとプロセスが終了し、ペンディング状態となっていたChefが実行された。</p>
+<figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">kill</span> -<span class="keyword">s</span> <span class="keyword">KILL</span> <span class="number">24431</span></span><br></pre></td></tr></table></figure>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
+          <time datetime="2016-05-19T05:16:15.000Z" itemprop="datepublished">
+            2016/05/19
+          </time>
+          <time datetime="2016-05-19T05:16:15.000Z" itemprop="modified">
+            (更新日: 2016/05/19)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/05/19/the-server-monitored-by-mackerel/">マカレルでサーバーを監視する</a>
+        </h1>
+        <div class="content">
+          <p>サーバーの監視に<a href="https://mackerel.io/ja/features" target="_blank" rel="noopener">マカレル</a>を導入してみました。<br>使ってみた感想としては、難しい設定もなく簡単に導入することができて、とてもよくできているなぁと関心しました。  </p>
+<h2 id="マカレルエージェントのインストール"><a href="#マカレルエージェントのインストール" class="headerlink" title="マカレルエージェントのインストール"></a>マカレルエージェントのインストール</h2><p>マカレルでサーバーを監視をするには監視対象のサーバーにマカレルエージェントをインストールする必要があります。<br>また、事前に申し込みをして、apikeyを発行しておく必要があります。</p>
+<p>マカレルエージェントのインストールはChefを使って行います。<br><a href="https://github.com/mackerelio/cookbook-mackerel-agent" target="_blank" rel="noopener">cookbook-mackerel-agent</a>を使いました。</p>
+<p>metadata.rb</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">depends</span> <span class="string">'mackerel-agent'</span></span><br></pre></td></tr></table></figure>
+
+<p>recipes/default.rb</p>
+<figure class="highlight sml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">include_recipe <span class="symbol">'mackerel</span>-agent'</span><br><span class="line">include_recipe <span class="symbol">'mackerel</span>-agent::plugins'</span><br><span class="line">yum_package <span class="symbol">'mackerel</span>-check-plugins'</span><br></pre></td></tr></table></figure>
+
+<p>cookbook-mackerel-agentだけだとcheckプラグインが入らなかったので<code>yum_package</code>リソースを使ってインストールしています。  </p>
+<p>attributes/default.rb</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">default[<span class="string">'mackerel-agent'</span>][<span class="symbol">'package-action'</span>] = 'upgrade'</span><br><span class="line">default[<span class="string">'mackerel-agent'</span>][<span class="symbol">'conf'</span>][<span class="string">'apikey'</span>] = ‘API KEYをかく'</span><br><span class="line">default[<span class="string">'mackerel-agent'</span>][<span class="symbol">'conf'</span>][<span class="string">'plugins'</span>] = true</span><br></pre></td></tr></table></figure>
+
+<p>サーバーにレシピを適用するとマカレルの管理画面にサーバーがでてくるのでロールを設定します。<br>これでサーバーのメトリクスを見ることができます。</p>
+<h2 id="プラグインを使う"><a href="#プラグインを使う" class="headerlink" title="プラグインを使う"></a>プラグインを使う</h2><p>マカレルには様々なプラグインが用意されています。<br>使い方はgithubのREADMEに書いてあります。<br><a href="https://github.com/mackerelio/mackerel-agent-plugins" target="_blank" rel="noopener">https://github.com/mackerelio/mackerel-agent-plugins</a></p>
+<p>自分はプラグインを使って以下のことを行っています。</p>
+<h3 id="linuxマカレルプラグインを使って様々なメトリクスをだす"><a href="#linuxマカレルプラグインを使って様々なメトリクスをだす" class="headerlink" title="linuxマカレルプラグインを使って様々なメトリクスをだす"></a>linuxマカレルプラグインを使って様々なメトリクスをだす</h3><p>linuxマカレルプラグインを使えばswapやnetstat、Disk read time 等のグラフを表示することができます。</p>
+<p>attributes/default.rb に以下を定義します。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default[<span class="string">'mackerel-agent'</span>][<span class="symbol">'conf'</span>][<span class="string">'plugin.metrics.linux'</span>][<span class="symbol">'command'</span>] = '/usr/local/bin/mackerel-plugin-linux'</span><br></pre></td></tr></table></figure>
+
+<h3 id="Unicornマカレルプラグインを使ってUnicornのメトリクスをだす"><a href="#Unicornマカレルプラグインを使ってUnicornのメトリクスをだす" class="headerlink" title="Unicornマカレルプラグインを使ってUnicornのメトリクスをだす"></a>Unicornマカレルプラグインを使ってUnicornのメトリクスをだす</h3><p>Unicornマカレルプラグインを使えばダッシュボードにUnicornのメモリとワーカ数のグラフが表示されます。</p>
+<p>attributes/default.rb に以下を定義します。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default[<span class="string">'mackerel-agent'</span>][<span class="symbol">'conf'</span>][<span class="string">'plugin.metrics.unicorn'</span>][<span class="symbol">'command'</span>] = "/usr/local/bin/mackerel-plugin-unicorn -pidfile=/var/www/app/shared/tmp/pids/unicorn.pid"</span><br></pre></td></tr></table></figure>
+
+<h3 id="httpの監視"><a href="#httpの監視" class="headerlink" title="httpの監視"></a>httpの監視</h3><p>httpのレスポンスをチェックして監視を行います。<br>細かい設定を行いたい場合は、<code>check-tcp</code>がよいですが、単純なチェックでよいのであれば<code>http</code>のほうが設定が簡単です。</p>
+<p>attributes/default.rb に以下を定義します。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default[<span class="string">'mackerel-agent'</span>][<span class="symbol">'conf'</span>][<span class="string">'plugin.checks.http'</span>][<span class="symbol">'command'</span>] = "/usr/bin/check-http -u http://localhost"</span><br></pre></td></tr></table></figure>
+
+<h3 id="ログファイルの監視"><a href="#ログファイルの監視" class="headerlink" title="ログファイルの監視"></a>ログファイルの監視</h3><p>nginxのログファイルを監視し、500系のエラーが頻発したときは通知するようにします。</p>
+<p>attributes/default.rb に以下を定義します。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/check-log --file /var/log/nginx/access.log --pattern 'HTTP/1\.[<span class="string">01</span>]" [<span class="string">5</span>][<span class="symbol">0-9</span>][<span class="string">0-9</span>] ' --warning-over 3 --critical-over 10 --return</span><br></pre></td></tr></table></figure>
+
+<h2 id="監視ルールの設定"><a href="#監視ルールの設定" class="headerlink" title="監視ルールの設定"></a>監視ルールの設定</h2><p>監視ルールを設定することで閾値を超えた際に通知をすることができます。<br>CPU、メモリ、ロードアベレージ、ディスク容量等の監視を管理画面より設定できます。<br>詳しい設定方法については以下を参照ください。  </p>
 <ul>
-<li>A default attribute located in a cookbook attribute file</li>
-<li>A default attribute located in a recipe</li>
-<li>A default attribute located in an environment</li>
-<li>A default attribute located in role</li>
-<li>A force_default attribute located in a cookbook attribute file</li>
-<li>A force_default attribute located in a recipe</li>
-<li>A normal attribute located in a cookbook attribute file</li>
-<li>A normal attribute located in a recipe</li>
-<li>An override attribute located in a cookbook attribute file</li>
-<li>An override attribute located in a recipe</li>
-<li>An override attribute located in a role</li>
-<li>An override attribute located in an environment</li>
-<li>A force_override attribute located in a cookbook attribute file</li>
-<li>A force_override attribute located in a recipe</li>
-<li>An automatic attribute identified by Ohai at the start of the chef-client run</li>
+<li><a href="https://mackerel.io/ja/docs/entry/howto/alerts" target="_blank" rel="noopener">監視・通知を設定する - Mackerel ヘルプ</a></li>
 </ul>
-<p><a href="https://docs.chef.io/attributes.html#attribute-precedence" target="_blank" rel="noopener">https://docs.chef.io/attributes.html#attribute-precedence</a></p>
-<h2 id="Attributeの使い分けについて"><a href="#Attributeの使い分けについて" class="headerlink" title="Attributeの使い分けについて"></a>Attributeの使い分けについて</h2><p>以下のようにルール決めをしているという記事もあった。</p>
-<blockquote>
-<p>Attributeファイル=&gt;文言変更<br>recipeファイル=&gt;テスト的に変えたいものがある時のみ。本番では消す。<br>Environmentファイル=&gt;development(開発）,alpha(実験用)、staging(テスト)、production（本番）でのIPやOSバージョンの違い。同じ構成が複数台ある時もここで区別。<br>Role=&gt;ミドルウェアのバージョン違い</p>
-</blockquote>
-<p><a href="http://dev.classmethod.jp/server-side/chef/attribute-overrides-pattern/" target="_blank" rel="noopener">http://dev.classmethod.jp/server-side/chef/attribute-overrides-pattern/</a></p>
+<h2 id="Slackに通知する"><a href="#Slackに通知する" class="headerlink" title="Slackに通知する"></a>Slackに通知する</h2><p>何か異常が起きた場合はSlackに通知をするようにします。<br>こちらも管理画面から設定できます。<br>具体的な設定方法については、ドキュメントを参照ください。  </p>
+<ul>
+<li><a href="https://mackerel.io/ja/docs/entry/howto/alerts" target="_blank" rel="noopener">監視・通知を設定する - Mackerel ヘルプ</a></li>
+</ul>
 <h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
-<li><a href="http://stackoverflow.com/questions/27366774/chefexceptionschecksummismatch-when-installing-nginx-1-7-8-from-source" target="_blank" rel="noopener">http://stackoverflow.com/questions/27366774/chefexceptionschecksummismatch-when-installing-nginx-1-7-8-from-source</a></li>
+<li><a href="https://mackerel.io/ja/docs/" target="_blank" rel="noopener">ヘルプ - Mackerel ヘルプ</a></li>
 </ul>
 
         </div>
@@ -298,145 +317,123 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2016-05-31T04:58:42.000Z" itemprop="datepublished">
-            2016/05/31
+          <time datetime="2016-05-18T04:46:32.000Z" itemprop="datepublished">
+            2016/05/18
           </time>
-          <time datetime="2016-05-31T04:58:42.000Z" itemprop="modified">
-            (更新日: 2016/05/31)
+          <time datetime="2016-05-18T04:46:32.000Z" itemprop="modified">
+            (更新日: 2016/05/18)
           </time>
         </div>
         <h1>
-        <a href="/blog/2016/05/31/to-draw-a-graph-using-high-charts/">グラフを描画するHighChartsで平均気温のグラフを描画する</a>
+        <a href="/blog/2016/05/18/tips-of-google-spreadsheets/">Google spreadsheetsを使ってデータの分析をする</a>
         </h1>
         <div class="content">
-          <p>グラフを描画する<a href="http://www.highcharts.com/" target="_blank" rel="noopener">HighCharts</a>を紹介します。<br>HighChartsはJavaScriptのグラフ描画ライブラリです。<br>HighChartsを使えば簡単にグラフの描画ができます。</p>
-<h2 id="デモページ"><a href="#デモページ" class="headerlink" title="デモページ"></a>デモページ</h2><p>福岡市の平均気温をグラフで表示してみました。</p>
-<p><a href="http://codepen.io/shoyan/details/jrOjWK/" target="_blank" rel="noopener">http://codepen.io/shoyan/details/jrOjWK/</a></p>
-<h2 id="サンプルを作ってみる"><a href="#サンプルを作ってみる" class="headerlink" title="サンプルを作ってみる"></a>サンプルを作ってみる</h2><p>簡単なサンプルを作ってみましょう。<br>私がサンプルとして利用していた<a href="http://codepen.io/" target="_blank" rel="noopener">CODEPEN</a>を利用すると簡単に作成できるのでオススメです。</p>
-<p>HighChartsを使うには、jQueryとhighCharts.jsが必要です。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://code.highcharts.com/highcharts.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://code.jquery.com/jquery-2.2.4.min.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+          <p>データの分析によく使われるエクセルですが、Google Spreadsheetsでも様々な関数が用意されています。<br>関数を使えば日付の差分を調べたり、特定の条件に一致するデータをカウントすることができます。<br>Google Spreadsheetsを使ってデータの集計、分析をするためのTipsの紹介をします。</p>
+<h2 id="日付の差分を調べる"><a href="#日付の差分を調べる" class="headerlink" title="日付の差分を調べる"></a>日付の差分を調べる</h2><p>例えばユーザーの契約日数を調べたいとしましょう。<br><code>DATEVALUE</code>を使って以下のように計算できます。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=<span class="built_in">DATEVALUE</span>(<span class="string">"2016/05/17"</span>) - <span class="built_in">DATEVALUE</span>(<span class="string">"2016/05/01"</span>)</span><br></pre></td></tr></table></figure>
 
-<p>index.htmlのbody部は以下を定義します。<br>div要素にグラフが描画されます。</p>
-<p>index.html</p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span> <span class="built_in">id</span>=<span class="string">"container"</span> style=<span class="string">"width:100%; height:400px;"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>セルを指定することもできます。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=<span class="built_in">DATEVALUE</span>(<span class="symbol">A2</span>) - <span class="built_in">DATEVALUE</span>(<span class="symbol">A1</span>)</span><br></pre></td></tr></table></figure>
 
-<p>JavaScript tag <code>&lt;script&gt; &lt;/script&gt;</code> に書くか、外部ファイルに定義してください。</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">$(function</span> <span class="string">()</span> <span class="string">&#123;</span></span><br><span class="line">    <span class="string">$('#container').highcharts(&#123;</span></span><br><span class="line">        <span class="attr">chart:</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">type:</span> <span class="string">'bar'</span></span><br><span class="line">        <span class="string">&#125;,</span></span><br><span class="line">        <span class="attr">title:</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">text:</span> <span class="string">'Fruit Consumption'</span></span><br><span class="line">        <span class="string">&#125;,</span></span><br><span class="line">        <span class="attr">xAxis:</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">tags:</span> <span class="string">['Apples',</span> <span class="string">'Bananas'</span><span class="string">,</span> <span class="string">'Oranges'</span><span class="string">]</span></span><br><span class="line">        <span class="string">&#125;,</span></span><br><span class="line">        <span class="attr">yAxis:</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">title:</span> <span class="string">&#123;</span></span><br><span class="line">                <span class="attr">text:</span> <span class="string">'Fruit eaten'</span></span><br><span class="line">            <span class="string">&#125;</span></span><br><span class="line">        <span class="string">&#125;,</span></span><br><span class="line">        <span class="attr">series:</span> <span class="string">[&#123;</span></span><br><span class="line">            <span class="attr">name:</span> <span class="string">'Jane'</span><span class="string">,</span></span><br><span class="line">            <span class="attr">data:</span> <span class="string">[1,</span> <span class="number">0</span><span class="string">,</span> <span class="number">4</span><span class="string">]</span></span><br><span class="line">        <span class="string">&#125;,</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="attr">name:</span> <span class="string">'John'</span><span class="string">,</span></span><br><span class="line">            <span class="attr">data:</span> <span class="string">[5,</span> <span class="number">7</span><span class="string">,</span> <span class="number">3</span><span class="string">]</span></span><br><span class="line">        <span class="string">&#125;]</span></span><br><span class="line">    <span class="string">&#125;);</span></span><br><span class="line"><span class="string">&#125;);</span></span><br></pre></td></tr></table></figure>
+<p>月で表示したい場合は30で割ります。<br>FLOORは小数点を切り捨てるために使っています。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=<span class="built_in">FLOOR</span>((<span class="built_in">DATEVALUE</span>(<span class="string">"2016/05/17"</span>) - <span class="built_in">DATEVALUE</span>(<span class="string">"2015/05/01"</span>))/<span class="number">30</span>, <span class="number">0.1</span>)</span><br></pre></td></tr></table></figure>
 
-<p>あとは、ブラウザでアクセスすればグラフが描画されます。</p>
-<h2 id="構文"><a href="#構文" class="headerlink" title="構文"></a>構文</h2><p>基本的な構文は以下です。</p>
-<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span>(<span class="string">"グラフを描画するhtml要素"</span>).highcharts(<span class="keyword">option</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="特定の条件をカウントする"><a href="#特定の条件をカウントする" class="headerlink" title="特定の条件をカウントする"></a>特定の条件をカウントする</h2><p>例えば、契約期間が1年未満のユーザーをカウントする場合は<code>COUNTIFS</code>を使います。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=<span class="built_in">COUNTIFS</span>(<span class="symbol">A1</span>:<span class="symbol">A1000</span>, <span class="string">"&lt;365"</span>)</span><br></pre></td></tr></table></figure>
 
-<h3 id="HighChartsの基本的なパラメーター-option"><a href="#HighChartsの基本的なパラメーター-option" class="headerlink" title="HighChartsの基本的なパラメーター(option)"></a>HighChartsの基本的なパラメーター(option)</h3><p>HighChartsの基本的なパラメーター(option)を紹介します。</p>
-<ul>
-<li><strong>TITLE</strong>: チャートのタイトル</li>
-<li><strong>SERIES</strong>: 描画するデータの値</li>
-<li><strong>TOOLTIP</strong>: チャートにマウスオーバーしたときに表示されるツールチップの設定</li>
-<li><strong>LEGEND</strong>: SERIESの説明</li>
-<li><strong>AXES</strong>: 縦軸と横軸の説明を設定します。</li>
-</ul>
-<h3 id="グラフの種類について"><a href="#グラフの種類について" class="headerlink" title="グラフの種類について"></a>グラフの種類について</h3><p>typeにグラフの種類を設定できます。</p>
-<ul>
-<li>棒グラフ: column</li>
-<li>折れ線グラフ: line</li>
-<li>円グラフ: pie</li>
-<li>帯グラフ: bar</li>
-<li>ヒストグラム: column</li>
-<li>散布図: scatter</li>
-<li>箱ひげ図: boxplot</li>
-<li>三角グラフ: pyramid</li>
-</ul>
-<p>様々なグラフのデモページが用意されており、参考になります。</p>
-<p><a href="http://www.highcharts.com/demo" target="_blank" rel="noopener">http://www.highcharts.com/demo</a></p>
+<p><code>COUNTIFS</code>は複数条件を指定できます。<br>契約期間が1年以上〜2年未満のユーザーをカウントするということができます。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=<span class="built_in">COUNTIFS</span>(<span class="symbol">A1</span>:<span class="symbol">A1000</span>, <span class="string">"&gt;=365"</span>, <span class="symbol">I3</span>:<span class="symbol">I1009</span>, <span class="string">"&lt;730"</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="点数を分析する"><a href="#点数を分析する" class="headerlink" title="点数を分析する"></a>点数を分析する</h2><p>平均点を求めることは <code>AVERAGE</code> を使えばできます。<br>平均だけでなくばらつきを求めると違った角度でデータを捉えることができます。<br>ばらつきは標準偏差を求める関数 <code>STDEVP</code>で求めることができます。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">= <span class="built_in">STDEVP</span>(<span class="symbol">A1</span>:<span class="symbol">E1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>例えばそれぞれの項目にたいして点数をつけるアンケートがあるとします。<br>以下の2つの項目は平均点は同じですが、標準偏差を求めるとばらつきがあることがわかります。<br>標準偏差を使えばこのようなデータを見つけることができます。</p>
+<table>
+<thead>
+<tr>
+<th>点数</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th>平均点</th>
+<th>標準偏差</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>6</td>
+<td>7</td>
+<td>9</td>
+<td>7</td>
+<td>6</td>
+<td>7</td>
+<td>1.095445115</td>
+</tr>
+<tr>
+<td>8</td>
+<td>5</td>
+<td>10</td>
+<td>7</td>
+<td>5</td>
+<td>7</td>
+<td>1.897366596</td>
+</tr>
+</tbody></table>
+<p>サンプルを用意しました。参考にどうぞ。<br><a href="https://docs.google.com/spreadsheets/d/1bOc3s8ikFcbBPGuzxDbRzd8KVT00lgQUDz275TJAIoE/edit#gid=0" target="_blank" rel="noopener">https://docs.google.com/spreadsheets/d/1bOc3s8ikFcbBPGuzxDbRzd8KVT00lgQUDz275TJAIoE/edit#gid=0</a></p>
 
         </div>
       </div>
     
       <div class="recent-post-item">
         <div class="date-box">
-          <time datetime="2016-05-30T03:58:52.000Z" itemprop="datepublished">
-            2016/05/30
+          <time datetime="2016-05-17T04:33:55.000Z" itemprop="datepublished">
+            2016/05/17
           </time>
-          <time datetime="2016-05-30T03:58:52.000Z" itemprop="modified">
-            (更新日: 2016/05/30)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/05/30/yum-install-failed-by-insufficient-space-on-docker/">Dockerのコンテナでyum installが失敗する</a>
-        </h1>
-        <div class="content">
-          <p>Dockerのコンテナでyum installが失敗する。<br>以下のようなエラーがでていた。  </p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Insufficient space <span class="keyword">in</span> download directory <span class="regexp">/var/</span>cache<span class="regexp">/yum/</span>x86_64<span class="regexp">/6/u</span>pdates<span class="regexp">/packages</span></span><br></pre></td></tr></table></figure>
-
-<p>容量が不足しているらしい。</p>
-<p>ディスク容量を確認したところ、100%になっていた。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">bash<span class="number">-4.2</span># df</span><br><span class="line">Filesystem     <span class="number">1</span>K-blocks     Used Available Use% Mounted on</span><br><span class="line">none            <span class="number">19049892</span> <span class="number">18226752</span>         <span class="number">0</span> <span class="number">100</span>% /</span><br><span class="line">tmpfs             <span class="number">509992</span>        <span class="number">0</span>    <span class="number">509992</span>   <span class="number">0</span>% /dev</span><br><span class="line">tmpfs             <span class="number">509992</span>        <span class="number">0</span>    <span class="number">509992</span>   <span class="number">0</span>% /sys/fs/cgroup</span><br><span class="line">/dev/sda1       <span class="number">19049892</span> <span class="number">18226752</span>         <span class="number">0</span> <span class="number">100</span>% /etc/hosts</span><br><span class="line">shm                <span class="number">65536</span>        <span class="number">0</span>     <span class="number">65536</span>   <span class="number">0</span>% /dev/shm</span><br></pre></td></tr></table></figure>
-
-<p>不要なコンテナが溜まっていて、そのせいでディスク容量を圧迫していたようだ。</p>
-<h3 id="コンテナを消す方法"><a href="#コンテナを消す方法" class="headerlink" title="コンテナを消す方法"></a>コンテナを消す方法</h3><ul>
-<li>docker ps -a でコンテナの一覧が表示される</li>
-<li>docker rm  container_id で消す</li>
-</ul>
-<p>コンテナを消すと、ディスク容量に空きができてyum installできるようになった。</p>
-<p>こちらは類似案件。</p>
-<ul>
-<li><a href="http://shoyan.github.io/blog/2016/04/13/no-space-left-on-device-on-docker/" target="_blank" rel="noopener">Dockerでno Space Left on Deviceが出てbuildできなくなった</a></li>
-</ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-05-27T04:48:34.000Z" itemprop="datepublished">
-            2016/05/27
-          </time>
-          <time datetime="2016-05-27T04:48:34.000Z" itemprop="modified">
-            (更新日: 2016/05/27)
+          <time datetime="2016-05-17T04:33:55.000Z" itemprop="modified">
+            (更新日: 2016/05/17)
           </time>
         </div>
         <h1>
-        <a href="/blog/2016/05/27/sinatra-logger/">Sinatraのロギング機構について調べてみた</a>
+        <a href="/blog/2016/05/17/first-step-express/">Expressのインストールと構成を把握する</a>
         </h1>
         <div class="content">
-          <p>Sinatraのloggerヘルパーを使ったところ、なぜか標準エラーの出力先にログが吐かれており、標準出力の出力先にはログが吐かれない。<br>標準出力先にログを吐くものだと思っていたのだが、自分が想定していた挙動と違うので調べてみた。</p>
-<p>まずは、Sinatraのloggerヘルパーのソースコードを確認してみる。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logger</span></span></span><br><span class="line">  request.logger</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+          <p>Node.jsのフレームワーク、<a href="http://expressjs.com" target="_blank" rel="noopener">Express</a>を試してみました。<br>ExpressはNode.jsでwebアプリケーションを作成するためのフレームワークです。</p>
+<h2 id="インストール"><a href="#インストール" class="headerlink" title="インストール"></a>インストール</h2><p>まずは、Node.jsをインストールします。</p>
+<p>以下のページからパッケージをダウンロードしてインストールします。<br><a href="https://nodejs.org/en/" target="_blank" rel="noopener">https://nodejs.org/en/</a></p>
+<p>次にnpmを使って<a href="http://expressjs.com/en/starter/generator.html" target="_blank" rel="noopener">express-generator</a>をインストールします。<br>express-generatorはExpressのスケルトンアプリケーションを作成するコマンドです。<br>npmはNode.jsをインストールした際にインストールされていると思います。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo npm <span class="keyword">install</span> express-generator -g</span><br></pre></td></tr></table></figure>
 
-<p><a href="https://github.com/sinatra/sinatra/blob/939ce04c1b77d24dd78285ba0836768ad57aff6c/lib/sinatra/base.rb#L327" target="_blank" rel="noopener">https://github.com/sinatra/sinatra/blob/939ce04c1b77d24dd78285ba0836768ad57aff6c/lib/sinatra/base.rb#L327</a></p>
-<p>request.loggerを返している。<br>レシーバであるrequestは rack::requestなので、rack::request#loggerは何を返しているかを確認する。</p>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logger</span></span>; get_header(RACK_LOGGER) <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2 id="スケルトンアプリケーションを作成する"><a href="#スケルトンアプリケーションを作成する" class="headerlink" title="スケルトンアプリケーションを作成する"></a>スケルトンアプリケーションを作成する</h2><p>expressコマンドでスケルトンアプリケーションを作成します。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> express myapp</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> myapp</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> npm install</span></span><br></pre></td></tr></table></figure>
 
-<p><a href="https://github.com/rack/rack/blob/master/lib/rack/request.rb#L136" target="_blank" rel="noopener">https://github.com/rack/rack/blob/master/lib/rack/request.rb#L136</a></p>
-<p>get_headerは@envから引数に与えられた値を返すだけのメソッド。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_header</span><span class="params">(name)</span></span></span><br><span class="line">  @env[name]</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>起動してみます。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">⇒  <span class="attribute">DEBUG</span>=myapp:* npm start</span><br><span class="line"></span><br><span class="line">&gt; myapp@0.0.0 start /Users/PMAC025S/Development/sample/nodejs/myapp</span><br><span class="line">&gt; node ./bin/www</span><br><span class="line"></span><br><span class="line">  myapp:server Listening on<span class="built_in"> port </span>3000 +0ms</span><br><span class="line"><span class="builtin-name">GET</span> / 200 659.865 ms - 170</span><br><span class="line"><span class="builtin-name">GET</span> /stylesheets/style.css 200 9.088 ms - 111</span><br><span class="line"><span class="builtin-name">GET</span> /favicon.ico 404 70.846 ms - 1285</span><br></pre></td></tr></table></figure>
 
-<p>RACK_LOGGERは以下のように定義されている。</p>
-<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RACK_LOGGER = <span class="string">'rack.logger'</span>.<span class="keyword">freeze</span></span><br></pre></td></tr></table></figure>
+<p><code>http://localhost:3000</code> にアクセスしてみます。<br>Welcome to Express と表示されていれば正常に起動できています。</p>
+<p>サーバーの停止は<code>Ctrl + C</code>です。</p>
+<h2 id="ルーティング"><a href="#ルーティング" class="headerlink" title="ルーティング"></a>ルーティング</h2><p>ルーティングの基本的な構造です。</p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app<span class="function">.<span class="keyword">METHOD</span><span class="params">(PATH, HANDLER)</span></span></span><br></pre></td></tr></table></figure>
 
-<p><a href="https://github.com/rack/rack/blob/9073125f71afd615091f575d74ec468a0b1b79bf/lib/rack.rb#L64" target="_blank" rel="noopener">https://github.com/rack/rack/blob/9073125f71afd615091f575d74ec468a0b1b79bf/lib/rack.rb#L64</a></p>
-<p>ここまでで、loggerヘルパーは<code>env[&#39;rack.logger’]</code>を取得していることがわかった。</p>
-<p>では、rack.loggerには何が設定されているのかという疑問が湧いてくる。<br>rackには3つのロガーがある。</p>
-<ul>
-<li>CommonLogger</li>
-<li>Logger</li>
-<li>NullLogger</li>
-</ul>
-<p>このうち、LoggerとNullLoggerがRACK_LOGGERにセットしていた。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Rack::Logger</span></span><br><span class="line"><span class="keyword">require</span> <span class="string">'logger'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Rack</span></span></span><br><span class="line">  <span class="comment"># Sets up rack.logger to write to rack.errors stream</span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Logger</span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initialize</span><span class="params">(app, level = <span class="symbol">:</span><span class="symbol">:Logger</span><span class="symbol">:</span><span class="symbol">:INFO</span>)</span></span></span><br><span class="line">      @app, @level = app, level</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">call</span><span class="params">(env)</span></span></span><br><span class="line">      logger = <span class="symbol">:</span><span class="symbol">:Logger</span>.new(env[RACK_ERRORS])</span><br><span class="line">      logger.level = @level</span><br><span class="line"></span><br><span class="line">      env[RACK_LOGGER] = logger</span><br><span class="line">      @app.call(env)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Rack::NullLogger</span></span><br><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Rack</span></span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">NullLogger</span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initialize</span><span class="params">(app)</span></span></span><br><span class="line">      @app = app</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">call</span><span class="params">(env)</span></span></span><br><span class="line">      env[RACK_LOGGER] = <span class="keyword">self</span></span><br><span class="line">      @app.call(env)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    ...........</span><br></pre></td></tr></table></figure>
+<p><strong>app</strong>: expressのインスタンス<br><strong>METHOD</strong>: HTTPメソッド(GET, POST, PUT, PATCH, DELETE等)<br><strong>PATH</strong>: サーバーのパス<br><strong>HANDLER</strong>: 実行する関数  </p>
+<p>Hello World!を返すルーティングのサンプルです。<br><code>/</code>にGETリクエストを送ると、Hello World!が返却されます。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  res.send(<span class="string">'Hello World!'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
-<p>通常、Rack::Loggerが使われる。<br>Rack::LoggerはRubyのloggerライブラリのラッパーで、log deviceにenv[RACK_ERRORS]をセットしている。<br>env[RACK_ERRORS]が何かを調べたところ、基本的には$stderrがセットされるようだ。</p>
-<p>(例)webrickの場合は、$stderrがセットされている。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">env.update(</span><br><span class="line">  RACK_VERSION =&gt; Rack::VERSION,</span><br><span class="line">  RACK_INPUT =&gt; rack_input,</span><br><span class="line">  RACK_ERRORS =&gt; $stderr,</span><br><span class="line">  RACK_MULTITHREAD =&gt; <span class="literal">true</span>,</span><br><span class="line">  RACK_MULTIPROCESS =&gt; <span class="literal">false</span>,</span><br><span class="line">  RACK_RUNONCE =&gt; <span class="literal">false</span>,</span><br><span class="line">  RACK_URL_SCHEME =&gt; [<span class="string">"yes"</span>, <span class="string">"on"</span>, <span class="string">"1"</span>].include?(env[HTTPS]) ? <span class="string">"https"</span> : <span class="string">"http"</span>,</span><br><span class="line">  RACK_IS_HIJACK =&gt; <span class="literal">true</span>,</span><br><span class="line">  RACK_HIJACK =&gt; lambda &#123; raise NotImplementedError, <span class="string">"only partial hijack is supported."</span>&#125;,</span><br><span class="line">  RACK_HIJACK_IO =&gt; nil</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><code>/</code>にPOSTリクエストを送ると、<code>Got a POST request</code>が返却されます。</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.post(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(req, res)</span> </span>&#123;</span><br><span class="line">  res.send(<span class="string">'Got a POST request'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
-<p><a href="https://github.com/rack/rack/blob/95172a60fe5c2a3850163fc75e0981fe440c064e/lib/rack/handler/webrick.rb#L68" target="_blank" rel="noopener">https://github.com/rack/rack/blob/95172a60fe5c2a3850163fc75e0981fe440c064e/lib/rack/handler/webrick.rb#L68</a></p>
-<p>ということで、結果的にSinatraのloggerは標準エラーに出力されることになる。</p>
-<h2 id="アプリケーションログを任意のファイルに出力するには"><a href="#アプリケーションログを任意のファイルに出力するには" class="headerlink" title="アプリケーションログを任意のファイルに出力するには"></a>アプリケーションログを任意のファイルに出力するには</h2><p>任意のファイルにログを出力したい場合は、自前でloggerを定義してやればよい。</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logger</span></span></span><br><span class="line">  <span class="keyword">return</span> <span class="variable">@logger</span> <span class="keyword">unless</span> <span class="variable">@logger</span>.<span class="keyword">nil</span>?</span><br><span class="line">  file = File.new(<span class="string">"<span class="subst">#&#123;settings.root&#125;</span>/log/<span class="subst">#&#123;settings.environment&#125;</span>.log"</span>, <span class="string">'a+'</span>)</span><br><span class="line">  file.sync = <span class="keyword">true</span></span><br><span class="line">  <span class="variable">@logger</span> = ::Logger.new(file)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">logger.info <span class="string">"Hello"</span></span><br></pre></td></tr></table></figure>
+<h2 id="Expressの構造"><a href="#Expressの構造" class="headerlink" title="Expressの構造"></a>Expressの構造</h2><p>express-generator で作成されたファイルを確認していきます。<br>ファイル構成は以下です。</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">⇒  tree -L <span class="number">2</span></span><br><span class="line">.</span><br><span class="line">├── app.<span class="keyword">js</span></span><br><span class="line"><span class="keyword">├── </span><span class="keyword">bin</span></span><br><span class="line"><span class="keyword">│ </span>  └── www</span><br><span class="line">├── node_modules</span><br><span class="line">│   ├── <span class="keyword">body-parser</span></span><br><span class="line"><span class="keyword">│ </span>  ├── cookie-parser</span><br><span class="line">│   ├── <span class="built_in">debug</span></span><br><span class="line">│   ├── express</span><br><span class="line">│   ├── <span class="keyword">jade</span></span><br><span class="line"><span class="keyword">│ </span>  ├── morgan</span><br><span class="line">│   └── serve-favicon</span><br><span class="line">├── package.<span class="keyword">json</span></span><br><span class="line"><span class="keyword">├── </span>public</span><br><span class="line">│   ├── images</span><br><span class="line">│   ├── <span class="keyword">javascripts</span></span><br><span class="line"><span class="keyword">│ </span>  └── stylesheets</span><br><span class="line">├── routes</span><br><span class="line">│   ├── index.<span class="keyword">js</span></span><br><span class="line"><span class="keyword">│ </span>  └── users.<span class="keyword">js</span></span><br><span class="line"><span class="keyword">└── </span>views</span><br><span class="line">    ├── error.<span class="keyword">jade</span></span><br><span class="line"><span class="keyword"> </span>   ├── index.<span class="keyword">jade</span></span><br><span class="line"><span class="keyword"> </span>   └── layout.<span class="keyword">jade</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
-<li><a href="http://koseki.hatenablog.com/entry/20120309/SinatraAppLog" target="_blank" rel="noopener">Sinatra でアプリケーションログをファイルに書く方法。</a></li>
-<li><a href="http://recipes.sinatrarb.com/p/middleware/rack_commonlogger" target="_blank" rel="noopener">Sinatra Recipes - Middleware - Rack Commonlogger</a></li>
+<h3 id="app-js"><a href="#app-js" class="headerlink" title="app.js"></a>app.js</h3><p>app.jsではアプリの設定やルーティングを定義します。<br>簡単なアプリであれば、ここに全て書いてしまってもよいでしょう。<br>express-generatorで作成されたファイル構成では、<code>routes/</code>、<code>views/</code> ディレクトリが作成されており、ルーティングやテンプレートは分離する構成となっています。</p>
+<h3 id="bin"><a href="#bin" class="headerlink" title="bin"></a>bin</h3><p>実行ファイルが格納されます。</p>
+<h3 id="node-modules"><a href="#node-modules" class="headerlink" title="node_modules"></a>node_modules</h3><p>Expressなどのモジュールが入っているディレクトリです。npmでインストールしたファイルが格納されます。</p>
+<h3 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h3><p>アプリの設定やメタ情報を定義するファイルです。</p>
+<h3 id="public"><a href="#public" class="headerlink" title="public"></a>public</h3><p>公開ディレクトリです、cssファイル、imageファイル、JavaScriptファイルを格納します。</p>
+<h3 id="routes"><a href="#routes" class="headerlink" title="routes"></a>routes</h3><p>アプリケーションのルーティングと処理を定義したファイルを格納します。</p>
+<h3 id="viewsディレクトリ"><a href="#viewsディレクトリ" class="headerlink" title="viewsディレクトリ"></a>viewsディレクトリ</h3><p>テンプレートを定義したファイルを格納します。</p>
+<p>Expressの構成は把握できました。<br>次はExpressを使ってチャットアプリケーションを作ってみたいと思います(次回へ続く)。</p>
+<h3 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h3><ul>
+<li><a href="http://expressjs.com/en/starter/installing.html" target="_blank" rel="noopener">Installing Express</a></li>
 </ul>
 
         </div>
@@ -447,7 +444,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 <div id="paginator">
-  <a class="extend prev" rel="prev" href="/page/23/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="extend next" rel="next" href="/page/25/">Next</a>
+  <a class="extend prev" rel="prev" href="/page/23/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><a class="extend next" rel="next" href="/page/25/">Next</a>
 </div>
 
             
