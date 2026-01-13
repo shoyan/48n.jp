@@ -4,6 +4,7 @@ title: "capistrano/wheneverで cannot load such fileがでる"
 date: 2016-06-15 13:42:55
 updated: 2016-06-15 13:42:55
 comments: true
+outdated: true
 description: "wheneverでLoadError: cannot load such fileとinstance variable @_env not definedがでた。その回避策とその後の記録です。"
 categories:
   - プログラミング

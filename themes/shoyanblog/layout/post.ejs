@@ -20,6 +20,25 @@
     <%- list_tags(page.tags, {show_count: false, class: 'post-tags', style: false, separator: ' '}) %>
   </div>
   <%-partial('partials/share')%>
+  <% 
+    var showOutdatedNotice = false;
+    if (page.outdated === true) {
+      showOutdatedNotice = true;
+    } else {
+      // 5年以上前の記事を自動的に古い記事として判定
+      var postDate = new Date(page.date);
+      var now = new Date();
+      var yearsDiff = (now - postDate) / (1000 * 60 * 60 * 24 * 365);
+      if (yearsDiff >= 5) {
+        showOutdatedNotice = true;
+      }
+    }
+  %>
+  <% if (showOutdatedNotice) { %>
+  <div class="outdated-notice">
+    <p>※この記事の内容は古くなっています。当時の状況とは変わっている可能性があるため、あくまで参考としてご利用ください。</p>
+  </div>
+  <% } %>
   <%-page.content%>
 </article>
 <%- partial('partials/nav') %>

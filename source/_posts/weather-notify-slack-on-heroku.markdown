@@ -4,6 +4,7 @@ title: "天気予報をSlackに通知する on Heroku"
 date: 2015-10-06 16:12:17
 updated: 2015-10-06 16:12:17
 comments: true
+outdated: true
 categories:
   - プログラミング
 tags:
