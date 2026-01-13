@@ -194,6 +194,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" target="_blank" rel="noopener" class="twitter-share-button" data-via="48njp" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   <a href="https://b.hatena.ne.jp/entry/" target="_blank" rel="noopener" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 </div>
+  
+  
+  <div class="outdated-notice">
+    <p>※この記事の内容は古くなっています。当時の状況とは変わっている可能性があるため、あくまで参考としてご利用ください。</p>
+  </div>
+  
   <p>PHPアプリのSQLインジェクション対策として、<code>mysql_real_escape_string()</code> 等があるがこれだけでは万全ではないことがあるのでメモ。</p>
 <p>例えば以下のSQLでは<code>mysql_real_escape_string()</code>を使っているが、脆弱性が存在する。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$id = mysql_real_escape_string(<span class="string">"1 OR 1=1"</span>);</span><br><span class="line">$sql = <span class="string">"SELECT * FROM table_name WHERE id = $id"</span>;</span><br></pre></td></tr></table></figure>
