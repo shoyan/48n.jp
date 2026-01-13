@@ -196,10 +196,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
   
   
-  <div class="outdated-notice">
-    <p>※この記事の内容は古くなっています。当時の状況とは変わっている可能性があるため、あくまで参考としてご利用ください。</p>
-  </div>
-  
   <p>PHPアプリのSQLインジェクション対策として、<code>mysql_real_escape_string()</code> 等があるがこれだけでは万全ではないことがあるのでメモ。</p>
 <p>例えば以下のSQLでは<code>mysql_real_escape_string()</code>を使っているが、脆弱性が存在する。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$id = mysql_real_escape_string(<span class="string">"1 OR 1=1"</span>);</span><br><span class="line">$sql = <span class="string">"SELECT * FROM table_name WHERE id = $id"</span>;</span><br></pre></td></tr></table></figure>

@@ -196,10 +196,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
   
   
-  <div class="outdated-notice">
-    <p>※この記事の内容は古くなっています。当時の状況とは変わっている可能性があるため、あくまで参考としてご利用ください。</p>
-  </div>
-  
   <p>日本語の場合、CSVのファイルエンコードをShift JISにする要件がけっこうあると思います。<br>RubyのCSVライブラリは、<code>encoding</code>というオプションが用意されており、<code>encoding: ’sjis’</code> のようにファイルエンコーディングを指定できます。</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">'csv'</span></span><br><span class="line">CSV.open(<span class="string">"hoge.csv"</span>, <span class="string">"wb"</span>, <span class="symbol">encoding:</span> <span class="string">'sjis'</span>) <span class="keyword">do</span> <span class="params">|csv|</span></span><br><span class="line">  csv &lt;&lt; [<span class="string">"ID"</span>, <span class="string">"担当者"</span>, <span class="string">"メールアドレス"</span>]</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 

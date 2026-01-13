@@ -196,10 +196,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
   
   
-  <div class="outdated-notice">
-    <p>※この記事の内容は古くなっています。当時の状況とは変わっている可能性があるため、あくまで参考としてご利用ください。</p>
-  </div>
-  
   <p>Dockerでlocaleを設定したいときがある。<br>例えばマルチバイトを扱うときだ。<br>localeを設定していないイメージで処理を行うと <code>ArgumentError: invalid byte sequence in US-ASCII</code> のようなエラーが発生することがある。<br>Dockerでlocaleを設定する場合は、以下のようにDockerfileに定義する。</p>
 <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">RUN</span><span class="bash"> locale-gen ja_JP.UTF-8</span></span><br><span class="line"><span class="keyword">ENV</span> LANG ja_JP.UTF-<span class="number">8</span></span><br><span class="line"><span class="keyword">ENV</span> LANGUAGE ja_JP:en</span><br><span class="line"><span class="keyword">ENV</span> LC_ALL ja_JP.UTF-<span class="number">8</span></span><br></pre></td></tr></table></figure>
 

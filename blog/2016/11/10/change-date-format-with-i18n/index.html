@@ -196,10 +196,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
   
   
-  <div class="outdated-notice">
-    <p>※この記事の内容は古くなっています。当時の状況とは変わっている可能性があるため、あくまで参考としてご利用ください。</p>
-  </div>
-  
   <p>日付は日本だと <code>/</code>(スラッシュ)区切りが一般的なのでそのように表示したい。<br>しかし、RailsでDateオブジェクトやDateTimeオブジェクトを表示すると以下のような感じになってしまう。</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pry(main)&gt; Date.today.to_s</span><br><span class="line">=&gt; <span class="string">"2016-11-10"</span></span><br><span class="line"></span><br><span class="line">pry(main)&gt; DateTime.now.to_s</span><br><span class="line">=&gt; <span class="string">"2016-11-10T17:47:01+09:00"</span></span><br></pre></td></tr></table></figure>
 

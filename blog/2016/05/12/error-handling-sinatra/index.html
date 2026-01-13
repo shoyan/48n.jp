@@ -196,10 +196,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
   
   
-  <div class="outdated-notice">
-    <p>※この記事の内容は古くなっています。当時の状況とは変わっている可能性があるため、あくまで参考としてご利用ください。</p>
-  </div>
-  
   <p>Sinatraには not_foundハンドラとerrorハンドラの2つのハンドラが用意されています。<br>not_foundハンドラは404エラーを補足するためのエラーハンドラです。<br>errorハンドラは様々なエラーを補足するためのエラーハンドラです。  </p>
 <h2 id="Not-Foundハンドラ"><a href="#Not-Foundハンドラ" class="headerlink" title="Not Foundハンドラ"></a>Not Foundハンドラ</h2><p>not_foundハンドラは404エラーを補足するためのエラーハンドラです。<br><code>Sinatra::NotFound</code>が発生したとき、またはステータスコードが404のときは not_foundハンドラが実行されます。</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">not_found <span class="keyword">do</span></span><br><span class="line">  <span class="string">'This is nowhere to be found.'</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>

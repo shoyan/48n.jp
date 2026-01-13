@@ -196,10 +196,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
   
   
-  <div class="outdated-notice">
-    <p>※この記事の内容は古くなっています。当時の状況とは変わっている可能性があるため、あくまで参考としてご利用ください。</p>
-  </div>
-  
   <p>こんにちは、SHOYANです。</p>
 <p>Railsには様々な予約語がありますが、歴史の長いシステムを扱っているとDBのカラムがその予約語に該当する場合があります。<br>例えば <code>class</code>というカラム名があった場合、そのカラムの影響で以下のエラーが発生します。</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pry(main)&gt; User.all.first</span><br><span class="line"><span class="symbol">NoMethodError:</span> undefined method <span class="string">`fetch_value' for nil:NilClass</span></span><br></pre></td></tr></table></figure>

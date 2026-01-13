@@ -196,10 +196,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
   
   
-  <div class="outdated-notice">
-    <p>※この記事の内容は古くなっています。当時の状況とは変わっている可能性があるため、あくまで参考としてご利用ください。</p>
-  </div>
-  
   <p>sshログインできないので <code>/var/log/secure</code> のログを見てみました。<br>以下のメッセージがでていました。</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Apr 28 14:11:14 server01 sshd[31264]:<span class="built_in"> User </span>shoyan <span class="keyword">from</span> example.jp <span class="keyword">not</span> allowed because none of user<span class="string">'s groups are listed in AllowGroups</span></span><br><span class="line"><span class="string">Apr 28 14:11:14 server01 sshd[31265]: input_userauth_request: invalid user shoyan</span></span><br><span class="line"><span class="string">Apr 28 14:11:14 server01 sshd[31265]: Connection closed by 192.168.1.1</span></span><br></pre></td></tr></table></figure>
 

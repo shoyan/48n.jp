@@ -196,10 +196,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
   
   
-  <div class="outdated-notice">
-    <p>※この記事の内容は古くなっています。当時の状況とは変わっている可能性があるため、あくまで参考としてご利用ください。</p>
-  </div>
-  
   <p>RACK_ENVについて調べた内容とUnicorn、SinatraでのRACK_ENVの扱い方や注意点をまとめました。<br>RACK_ENVとはRACKの環境変数です。<br>何を設定するかによって使用するmiddlewareが変わります。<br>RACK_ENVには、<code>development</code>、<code>deployment</code>、<code>none</code>の3種類があります。</p>
 <p>以下がそれぞれのRACK_ENVで使われるmiddlewareです。</p>
 <figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#       - development: CommonLogger, ShowExceptions, and Lint</span></span><br><span class="line"><span class="meta">#       - deployment: CommonLogger</span></span><br><span class="line"><span class="meta">#       - none: なし</span></span><br></pre></td></tr></table></figure>

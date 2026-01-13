@@ -196,10 +196,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
   
   
-  <div class="outdated-notice">
-    <p>※この記事の内容は古くなっています。当時の状況とは変わっている可能性があるため、あくまで参考としてご利用ください。</p>
-  </div>
-  
   <p>Rails5から <code>belogs_to</code> アソシエーションの挙動が変わった。</p>
 <p>親モデルに属している子モデルは親モデルの外部キーが存在しないとバリデーションエラーになるのがデフォルトの挙動となっている。<br>参照先レコードのidをnullで登録しようとした場合は以下のようなバリデーションエラーが出る。</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">ActiveRecord:</span>:<span class="string">RecordInvalid:</span> Validation <span class="string">failed:</span> Post  must exist</span><br></pre></td></tr></table></figure>

@@ -196,10 +196,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
   
   
-  <div class="outdated-notice">
-    <p>※この記事の内容は古くなっています。当時の状況とは変わっている可能性があるため、あくまで参考としてご利用ください。</p>
-  </div>
-  
   <p>ChatOpsの一環としてSlackにRubotyを常駐させているのだが、Rubotyに定期的にタスクを実行させたいことがあった。<br>最初はruby-cronを使ってみたのだが、Slackだとうまく動かなかった。<br>具体的にはジョブの登録はできるのだがジョブの実行(通知)がされない。</p>
 <p>うまくいかなかったのでSlackのリマインダー機能を使ってみることにした。<br>Slackのリマインダー機能を使うと <code>Reminder:</code> と言うプレフィックスが入るのでRubotyが反応せず、こちらもうまくいかなかった。</p>
 <p>最終的にはcronでスクリプトを定期実行させることにした。<br>Slackに通知するスクリプトを作って、それをcronで定期的に実行させる。<br>メッセージを拾ったRubotyがタスクを実行するといった感じだ。</p>

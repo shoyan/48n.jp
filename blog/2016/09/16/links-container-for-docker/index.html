@@ -196,10 +196,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
   
   
-  <div class="outdated-notice">
-    <p>※この記事の内容は古くなっています。当時の状況とは変わっている可能性があるため、あくまで参考としてご利用ください。</p>
-  </div>
-  
   <p>DockerはLinksというコンテナ間のネットワークを繋ぐ仕組みを持つ。<br>例えば、アプリケーションコンテナとデータベースコンテナを連携して使いたいときに有用だ。<br>今回はMySQLとPHPのコンテナを連携させる方法を紹介する。</p>
 <h2 id="MySQLコンテナの作成"><a href="#MySQLコンテナの作成" class="headerlink" title="MySQLコンテナの作成"></a>MySQLコンテナの作成</h2><p>まずは、mysqlコンテナを作成する。<br>バックグラウンドで起動させるための <code>--detach</code>オプションと3306ポートを解放するための <code>expose</code>オプションを指定している。</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="builtin-name">run</span> --detach <span class="attribute">--expose</span>=3306 <span class="attribute">--name</span>=test-mysql <span class="attribute">--env</span>=<span class="string">"MYSQL_ROOT_PASSWORD=mypassword"</span> mysql</span><br></pre></td></tr></table></figure>
