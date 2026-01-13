@@ -21,18 +21,7 @@
   </div>
   <%-partial('partials/share')%>
   <% 
-    var showOutdatedNotice = false;
-    if (page.outdated === true) {
-      showOutdatedNotice = true;
-    } else {
-      // 5年以上前の記事を自動的に古い記事として判定
-      var postDate = new Date(page.date);
-      var now = new Date();
-      var yearsDiff = (now - postDate) / (1000 * 60 * 60 * 24 * 365);
-      if (yearsDiff >= 5) {
-        showOutdatedNotice = true;
-      }
-    }
+    var showOutdatedNotice = page.outdated === true;
   %>
   <% if (showOutdatedNotice) { %>
   <div class="outdated-notice">
