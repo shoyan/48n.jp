@@ -5,7 +5,7 @@ date: 2017-06-26 10:37:20
 updated: 2017-06-26 10:37:20
 comments: true
 categories:
-  - コラム
+  - 登壇
 ---
 
 こんにちは、SHOYANです。
