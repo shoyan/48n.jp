@@ -174,6 +174,58 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-04-27T04:37:10.000Z" itemprop="datepublished">
+            2016/04/27
+          </time>
+          <time datetime="2016-04-27T04:37:10.000Z" itemprop="modified">
+            (更新日: 2016/04/27)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/04/27/introduce-site-parser/">Webサイトのメタタグを取得するsite-parserをつくった</a>
+        </h1>
+        <div class="content">
+          <p>Webサイトのメタデータを抽出するツールを作成しました。<br><a href="https://github.com/shoyan/site-parser" target="_blank" rel="noopener">https://github.com/shoyan/site-parser</a></p>
+<h2 id="使い方"><a href="#使い方" class="headerlink" title="使い方"></a>使い方</h2><ol>
+<li>git clone <a href="mailto:git@github.com">git@github.com</a>:shoyan/site-parser.git</li>
+<li>cd site-parser</li>
+<li>bundle install</li>
+<li>site.csv をテキストエディタで編集</li>
+<li>ruby site-parser.rb</li>
+</ol>
+<p>site.csv にパースしたいURLを記入して <code>ruby site-parse.rb</code> とすればメタデータが表示されます。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ ruby site-parser.rb</span><br><span class="line"><span class="string">"http://www.yahoo.co.jp/"</span></span><br><span class="line">[</span><br><span class="line">    [<span class="number">0</span>] &#123;</span><br><span class="line">                             <span class="string">"url"</span> =&gt; <span class="string">"http://www.yahoo.co.jp/"</span>,</span><br><span class="line">                           <span class="string">"title"</span> =&gt; <span class="string">"Yahoo! JAPAN"</span>,</span><br><span class="line">                     <span class="string">"description"</span> =&gt; <span class="string">"日本最大級のポータルサイト。検索、オークション、ニュース、メール、コミュニティ、ショッピング、など80以上のサービスを展開。あなたの生活をより豊かにする「ライフ・エンジ ン」を目指していきます。"</span>,</span><br><span class="line">                          <span class="string">"robots"</span> =&gt; <span class="string">"noodp"</span>,</span><br><span class="line">        <span class="string">"google-site-verification"</span> =&gt; <span class="string">"fsLMOiigp5fIpCDMEVodQnQC7jIY1K3UXW5QkQcBmVs"</span></span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>また、サーバーを起動してAPIとして利用することもできます。</p>
+<h3 id="サーバーを起動"><a href="#サーバーを起動" class="headerlink" title="サーバーを起動"></a>サーバーを起動</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ruby server.rb</span><br><span class="line">== Sinatra (v1.4.7) has taken the stage on 4567 <span class="keyword">for</span> development with backup <span class="keyword">from</span> Thin</span><br><span class="line">Thin web<span class="built_in"> server </span>(v1.6.4 codename Gob Bluth)</span><br><span class="line">Maximum connections <span class="builtin-name">set</span> <span class="keyword">to</span> 1024</span><br><span class="line">Listening on 0.0.0.0:4567, CTRL+C <span class="keyword">to</span> stop</span><br></pre></td></tr></table></figure>
+
+<h3 id="APIを実行"><a href="#APIを実行" class="headerlink" title="APIを実行"></a>APIを実行</h3><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl ht<span class="symbol">tp:</span>//localho<span class="symbol">st:4567</span> -X POST -d <span class="string">"url=http://www.yahoo.co.jp/"</span></span><br><span class="line">=&gt; &#123;<span class="string">"url"</span><span class="symbol">:</span><span class="string">"http://www.yahoo.co.jp/"</span>,<span class="string">"title"</span><span class="symbol">:</span><span class="string">"Yahoo! JAPAN"</span>,<span class="string">"description"</span><span class="symbol">:</span><span class="string">"日本最大級のポータルサイト。検索、オークション、ニュース、メール、コミュニティ、ショッピング、など80以上のサービスを展開。あなたの生活をより豊かにする「ライフ・エンジン」を目指していきます。"</span>,<span class="string">"robots"</span><span class="symbol">:</span><span class="string">"noodp"</span>,<span class="string">"google-site-verification"</span><span class="symbol">:</span><span class="string">"fsLMOiigp5fIpCDMEVodQnQC7jIY1K3UXW5QkQcBmVs"</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="その他"><a href="#その他" class="headerlink" title="その他"></a>その他</h2><p>内部的にはNokogiriを使ってhtmlをパースしています。</p>
+<p>文字化けして内容がみれない場合があったので、以下のワークアラウンドをいれました。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">html = URI.parse(url).read</span><br><span class="line">node = Nokogiri::HTML(html.toutf8, <span class="literal">nil</span>, <span class="string">'utf-8'</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考資料"><a href="#参考資料" class="headerlink" title="参考資料"></a>参考資料</h2><p>以下が参考になりました。ありがとうございます。</p>
+<ul>
+<li>Nokogiri を使った Rubyスクレイピング [初心者向けチュートリアル]<ul>
+<li><a href="http://morizyun.github.io/blog/ruby-nokogiri-scraping-tutorial/" target="_blank" rel="noopener">http://morizyun.github.io/blog/ruby-nokogiri-scraping-tutorial/</a></li>
+</ul>
+</li>
+<li>kogiriで文字化けを防ぐ<ul>
+<li><a href="http://qiita.com/foloinfo/items/435f0409a6e33929ef3c" target="_blank" rel="noopener">http://qiita.com/foloinfo/items/435f0409a6e33929ef3c</a></li>
+</ul>
+</li>
+<li>[Ruby]スクレイピングのためのNokogiri利用メモ<ul>
+<li><a href="http://d.hatena.ne.jp/otn/20090509/p1" target="_blank" rel="noopener">http://d.hatena.ne.jp/otn/20090509/p1</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-04-26T04:52:30.000Z" itemprop="datepublished">
             2016/04/26
           </time>
@@ -355,62 +407,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> doker ps</span><br><span class="line">CONTAINER ID        IMAGE                  COMMAND              CREATED             STATUS                        PORTS                                           NAMES</span><br><span class="line"><span class="number">17</span>a11c4b6ce8        <span class="number">6</span>b4d5602119f           <span class="string">"/sbin/init"</span>         <span class="number">2</span> hours ago         Exited (<span class="number">137</span>) <span class="number">12</span> seconds ago                                                   nginx<span class="operator">-and</span><span class="literal">-ruby</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Dockerコンテナを消す</span></span><br><span class="line"><span class="variable">$</span> docker rm <span class="operator">-f</span> <span class="number">17</span>a11c4b6ce8</span><br><span class="line"></span><br><span class="line"><span class="comment"># dockerコンテナを起動する</span></span><br><span class="line"><span class="variable">$</span> docker run -<span class="literal">-privileged</span> <span class="literal">-d</span> -<span class="literal">-name</span> nginx<span class="operator">-and</span><span class="literal">-ruby</span> image_id /sbin/init</span><br></pre></td></tr></table></figure>
 
 <p><a href="https://github.com/shoyan/nginx-and-ruby-on-docker" target="_blank" rel="noopener">https://github.com/shoyan/nginx-and-ruby-on-docker</a></p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-04-20T04:53:28.000Z" itemprop="datepublished">
-            2016/04/20
-          </time>
-          <time datetime="2016-04-20T04:53:28.000Z" itemprop="modified">
-            (更新日: 2016/04/20)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/04/20/try-sinatra/">SinatraのインストールとRspecでテストする</a>
-        </h1>
-        <div class="content">
-          <p>RubyのフレームワークといえばRuby on Railsが有名ですが、DBを使わないシンプルなアプリケーションの場合はSinatraで十分な気がします。<br>この記事では、SinatraのインストールとRspecでテストする方法を紹介します。</p>
-<h3 id="SinatraのInstall"><a href="#SinatraのInstall" class="headerlink" title="SinatraのInstall"></a>SinatraのInstall</h3><p>sinatra_sampleというディレクトリを作成してそこにアプリを作成します。</p>
-<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir sinatr<span class="built_in">a_sample</span></span><br><span class="line">cd sinatr<span class="built_in">a_sample</span></span><br></pre></td></tr></table></figure>
-
-<p>Gemfileを作成します。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Gemfile</span></span><br><span class="line"><span class="built_in">source</span> <span class="string">'https://rubygems.org'</span></span><br><span class="line"></span><br><span class="line">gem <span class="string">'rake'</span></span><br><span class="line">gem <span class="string">'sinatra'</span></span><br></pre></td></tr></table></figure>
-
-<p><code>bundle install</code> でインストールします。</p>
-<h3 id="アプリケーションを作成"><a href="#アプリケーションを作成" class="headerlink" title="アプリケーションを作成"></a>アプリケーションを作成</h3><p>myapp.rbを作成します。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># my_app.rb</span></span><br><span class="line"><span class="keyword">require</span> <span class="string">'sinatra'</span></span><br><span class="line"></span><br><span class="line">get <span class="string">'/'</span> <span class="keyword">do</span></span><br><span class="line">  <span class="string">'Hello world!'</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>以下のコマンドで実行します。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">ruby</span> <span class="selector-tag">myapp</span><span class="selector-class">.rb</span></span><br></pre></td></tr></table></figure>
-
-<p>ブラウザで以下にアクセスするとHello world!と表示されます。<br><a href="http://localhost:4567" target="_blank" rel="noopener">http://localhost:4567</a></p>
-<p>あっという間にできましたね。</p>
-<h3 id="Rspecでテストをする"><a href="#Rspecでテストをする" class="headerlink" title="Rspecでテストをする"></a>Rspecでテストをする</h3><p>RspecでテストするためにRspecをインストールします。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Gemfile</span></span><br><span class="line"></span><br><span class="line">source <span class="string">'https://rubygems.org'</span></span><br><span class="line"></span><br><span class="line">gem <span class="string">'rake'</span></span><br><span class="line">gem <span class="string">'sinatra'</span></span><br><span class="line"></span><br><span class="line">group :test <span class="keyword">do</span></span><br><span class="line">  gem <span class="string">'rspec'</span></span><br><span class="line">  gem <span class="string">'rack-test'</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-
-<p><code>bundle install</code>でインストールします。</p>
-<p>spec/spec_helper.rb を作成します。<br>spec_helper.rbはrspecの設定を行うためのファイルです。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># spec/spec_helper.rb</span></span><br><span class="line"><span class="keyword">require</span> <span class="string">'rack/test'</span></span><br><span class="line"><span class="keyword">require</span> <span class="string">'rspec'</span></span><br><span class="line"></span><br><span class="line">ENV[<span class="string">'RACK_ENV'</span>] = <span class="string">'test'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">require</span> File.expand_path <span class="string">'../../myapp.rb'</span>, __FILE_<span class="number">_</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">RSpecMixin</span></span></span><br><span class="line">  <span class="keyword">include</span> Rack::Test::Methods</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">app</span><span class="params">()</span></span> Sinatra::Application <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">RSpec.configure &#123; <span class="params">|c|</span> c.<span class="keyword">include</span> RSpecMixin &#125;</span><br></pre></td></tr></table></figure>
-
-<p>spec/myapp_spec.rbを作成します。<br>myapp_spec.rbはアプリケーションをテストするためのファイルです。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># spec/app_spec.rb</span></span><br><span class="line"><span class="keyword">require</span> File.expand_path <span class="string">'../spec_helper.rb'</span>, __FILE_<span class="number">_</span></span><br><span class="line"></span><br><span class="line">describe <span class="string">"My Sinatra Application"</span> <span class="keyword">do</span></span><br><span class="line">  it <span class="string">"should allow accessing the home page"</span> <span class="keyword">do</span></span><br><span class="line">    get <span class="string">'/'</span></span><br><span class="line">    expect(last_response).to be_ok</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>テストを実行してみましょう。</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bundle </span>exec rspec spec</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">⇒  bundle exec rspec spec</span><br><span class="line">.</span><br><span class="line"></span><br><span class="line">Finished <span class="keyword">in</span> <span class="number">0.03119</span> <span class="built_in">seconds</span> (<span class="built_in">files</span> took <span class="number">0.20975</span> <span class="built_in">seconds</span> <span class="built_in">to</span> <span class="built_in">load</span>)</span><br><span class="line"><span class="number">1</span> example, <span class="number">0</span> failures</span><br></pre></td></tr></table></figure>
-
-<p>テストが成功しました！</p>
-<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p>資料は以下を参照しました。</p>
-<ul>
-<li>[英語]<a href="http://www.sinatrarb.com/intro.html" target="_blank" rel="noopener">http://www.sinatrarb.com/intro.html</a></li>
-<li>[日本語]<a href="http://www.sinatrarb.com/intro-ja.html" target="_blank" rel="noopener">http://www.sinatrarb.com/intro-ja.html</a></li>
-<li>[Sinatra Recipes]<a href="http://recipes.sinatrarb.com/" target="_blank" rel="noopener">http://recipes.sinatrarb.com/</a></li>
-</ul>
 
         </div>
       </div>

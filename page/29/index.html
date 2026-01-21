@@ -174,6 +174,104 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-03-16T15:41:01.000Z" itemprop="datepublished">
+            2016/03/17
+          </time>
+          <time datetime="2016-03-16T15:41:01.000Z" itemprop="modified">
+            (更新日: 2016/03/17)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/03/16/php-coding-rule/">PHPコーディング規約とサポートするツール</a>
+        </h1>
+        <div class="content">
+          <h2 id="この記事の内容"><a href="#この記事の内容" class="headerlink" title="この記事の内容"></a>この記事の内容</h2><p>PHPのコーディング規約とそれをサポートするツールの紹介です。<br>座学形式で説明していきます。</p>
+<p>概要を知りたい場合は以下のスライドを参照ください。</p>
+<script async class="speakerdeck-embed" data-id="1d8ea4db4cd746b0857ab03889710555" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+
+<h3 id="はじまり、はじまり"><a href="#はじまり、はじまり" class="headerlink" title="はじまり、はじまり"></a>はじまり、はじまり</h3><p>みなさん、こんにちは。<br>PHPが大好きなプログラマことshoyanです。</p>
+<p>今回、PHPのコーディング規約とそれをサポートするツールの紹介をしたいと思います。</p>
+<h3 id="なぜ必要か"><a href="#なぜ必要か" class="headerlink" title="なぜ必要か"></a>なぜ必要か</h3><p>まずはなぜコーディング規約が必要なのでしょうか？</p>
+<p>みんなに質問してみる<br>しばらく沈黙</p>
+<p>目のあった人に質問する<br>なんか適当に答えてくれる</p>
+<p>ありがとうございます。<br>正解です。<br>補足として、なぜコーディング規約が必要になったかを説明します。</p>
+<p>そもそもコーディング規約は一人で開発する場合には必要ありません。<br>二人以上で開発を行う場合に必要となってきます。</p>
+<p>たとえば、太郎くんとドナルドさんが二人で開発をしていたとします。<br>太郎くんがコードレビューを依頼しました。<br>30分後に確認するとコメントがついていました。</p>
+<p>1行で書いていたif文のコードにドナルドさんからコメントがついていました。<br>少し下にスクロールすると、if文のあとにスペースが必要だとコメントが入っていました。<br>少し下にスクロールすると、else ifのスペースは不要だとコメントが。<br>また更にその下には改行は不要とのコメントが…<br>なんと全部で30個のコメントがついていたのです。<br>30個のコメントの27個はコーディングスタイルに関するコメントでした。  </p>
+<p>さて、このレビューは有益でしょうか。<br>お互いにとってあまり有益ではありませんね。</p>
+<p>じゃあ、どうしましょう。</p>
+<p>そこでコーディング規約です。<br>コーディング規約という共通のルールを作ることにより、お互いが納得できるコードを書く指標をつくります。</p>
+<p>さて、コーディング規約に則ったコードを書くぞ！となったとしましょう。<br>では、PHPのコーディング規約を探してみましょう。<br>ところが、PHPの本家にはコーディング規約のドキュメントがありません。  </p>
+<p>ということは、共通ルールがないということになります。<br>PHPの本家はコーディングルールなんて知ったこっちゃない。<br>開発者が勝手にやってくれ。ということです。</p>
+<p>その要望に答えてPHPにはコーディング規約が乱立しています。<br>たとえば、以下のような感じです。</p>
+<ul>
+<li>Flow Framework<ul>
+<li><a href="http://flowframework.readthedocs.org/en/stable/TheDefinitiveGuide/PartV/CodingGuideLines/PHP.html" target="_blank" rel="noopener">http://flowframework.readthedocs.org/en/stable/TheDefinitiveGuide/PartV/CodingGuideLines/PHP.html</a></li>
+</ul>
+</li>
+<li>WordPress<ul>
+<li><a href="https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/" target="_blank" rel="noopener">https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/</a></li>
+</ul>
+</li>
+<li>ZendFramework<ul>
+<li><a href="http://framework.zend.com/manual/1.12/en/coding-standard.coding-style.html" target="_blank" rel="noopener">http://framework.zend.com/manual/1.12/en/coding-standard.coding-style.html</a></li>
+</ul>
+</li>
+<li>PEAR<ul>
+<li><a href="https://pear.php.net/manual/en/standards.php" target="_blank" rel="noopener">https://pear.php.net/manual/en/standards.php</a></li>
+</ul>
+</li>
+<li>FuelPHP<ul>
+<li><a href="http://fuelphp.com/docs/general/coding_standards.html" target="_blank" rel="noopener">http://fuelphp.com/docs/general/coding_standards.html</a></li>
+</ul>
+</li>
+</ul>
+<p>このようにフレームワークごとにコーディングルールが定められています。</p>
+<p>1つのフレームワークであれば問題はありません。<br>しかし、2つのプロジェクトがあって、別々のフレームワークを使っていたらどうでしょう。<br>開発者はそれぞれのフレームワークの規約を切り替えながら開発をしないといけません。<br>これは考えるだけでも面倒くさそうですね。</p>
+<h3 id="PSR"><a href="#PSR" class="headerlink" title="PSR"></a>PSR</h3><p>このような現状をなんとかしようと策定されたのがPSRです。<br>PSRはPHP Standards Recommendations の頭文字をとったものです。<br>日本語にするとPHP標準勧告です。<br>PHP Framework Interop Groupが策定しています。  </p>
+<h3 id="PSRのゴール"><a href="#PSRのゴール" class="headerlink" title="PSRのゴール"></a>PSRのゴール</h3><blockquote>
+<p>We’re a group of established PHP projects whose goal is to talk about commonalities between our projects and find ways we can work better together.</p>
+</blockquote>
+<p>要するにフレームワークに依存しないルールを作って、どのプロジェクト（どのフレームワークを使っているプロジェクト）でも<br>同じようにコードを書くことをできるようにしましょうということです。(意訳)</p>
+<p>ちなみにPSRには状態が色々あって、正式なものはACCEPTEDです。<br>ほかにも、DEPRECATED、REVIEW、DRAFTがあります。<br>以下のページで見ることができます。<br><a href="http://www.php-fig.org/psr/" target="_blank" rel="noopener">http://www.php-fig.org/psr/</a></p>
+<p>StatusがACCEPTEDなPSRは1〜7があります。<br>その中のPSR1とPSR2をここでは紹介します。<br>PSR1はBasic Coding Standardが定義してあります。<br>PSR2はCoding Style Guideで、PSR1を拡張したものです。<br>詳細は以下のページをご覧ください。</p>
+<ul>
+<li><a href="http://www.php-fig.org/psr/psr-1/" target="_blank" rel="noopener">http://www.php-fig.org/psr/psr-1/</a></li>
+<li><a href="http://www.php-fig.org/psr/psr-2/" target="_blank" rel="noopener">http://www.php-fig.org/psr/psr-2/</a></li>
+</ul>
+<h3 id="PHP-Code-Snifferについて"><a href="#PHP-Code-Snifferについて" class="headerlink" title="PHP Code Snifferについて"></a>PHP Code Snifferについて</h3><p>PHPのコーディング規約をチェックするツールはいくつかありますが、ここではPHP_CodeSnifferを紹介します。</p>
+<p>Snifferは嗅覚性探知機という意味です。</p>
+<p>たとえば、捜索犬はsniffer dog 、ガス探知機はgas snifferと英語でいいます。<br>要するにPHP Code探索機です。</p>
+<p>PHP Code Snifferにはツールが2つあります。<br>1つめはphpcsです。</p>
+<p>phpcsはコーディングスタイルのチェックをするツールで、PHP Code Snifferを略したものです。<br>コーディングスタイルを指定することができます。<br>指定できるコーディングスタイルは、MySource, PEAR, PHPCS, PSR1, PSR2, Squiz and Zend です。<br>また、コーディングルールを自分で設定することもできます。</p>
+<p>実行コマンド</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpcs <span class="attribute">--standard</span>=PSR2 check_file <span class="keyword">or</span> check_dir/</span><br></pre></td></tr></table></figure>
+
+<p>2つめはphpcbfです。</p>
+<p>PHP Code Beautifier and Fixerを略したツールです。<br>これは自動でコードを修正してくれるツールです。</p>
+<p>実行コマンド</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpcbf <span class="attribute">--standard</span>=PSR2 check_file <span class="keyword">or</span> check_dir/</span><br></pre></td></tr></table></figure>
+
+<p>PHP Code Snifferのいいところは、チェックと修正のツールがわかれているところです。<br>それにより、CIによるチェックとその修正が簡単に行えます。</p>
+<p>PHP Code Snifferの詳しい使い方はWikiを参照ください。<br><a href="https://github.com/squizlabs/PHP_CodeSniffer/wiki&#39;" target="_blank" rel="noopener">https://github.com/squizlabs/PHP_CodeSniffer/wiki&#39;</a></p>
+<h3 id="コーディング規約の運用"><a href="#コーディング規約の運用" class="headerlink" title="コーディング規約の運用"></a>コーディング規約の運用</h3><p>コーディング規約を運用していくにあたっての問題点はなんだと思いますか？</p>
+<p>しばらく沈黙</p>
+<p>「コーディング規約が存在してもあまり守られない」ことです。</p>
+<p>多分、みんな納得</p>
+<p>では、どうすればコーディング規約を守れるようになるでしょうか。</p>
+<p>CIでチェックするのが1番です。</p>
+<p>コーディング規約に違反しているコードがあればエラーにします。<br>そうすればコーディング規約を違反しているコードがmasterにマージされることはありません。</p>
+<p>コーディング規約の導入はプロジェクトの初期から始めるのがベストですが、<br>途中からでも自動修正ツールを使えば大半は修正することができます。<br>また、CIのプラットホームが最近は充実しているのでチェックの自動化も容易に行えます。</p>
+<p>実際に導入した記事を書きましたので、こちらも参考にしてください。</p>
+<ul>
+<li><a href="/blog/2016/06/23/php-syntax-check/">修正した部分だけPHP構文チェックをする</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-01-12T13:26:16.000Z" itemprop="datepublished">
             2016/01/12
           </time>
@@ -349,41 +447,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h3 id="Twitterのまとめ"><a href="#Twitterのまとめ" class="headerlink" title="Twitterのまとめ"></a>Twitterのまとめ</h3><p><a href="http://togetter.com/li/896545" target="_blank" rel="noopener">プログラマのための数学勉強会@福岡#2まとめ</a></p>
 <h3 id="おわりに"><a href="#おわりに" class="headerlink" title="おわりに"></a>おわりに</h3><p>主催者の<a href="https://twitter.com/tkengo/" target="_blank" rel="noopener">@tkengo</a>氏は急用のため、残念ながら今回は欠席でしたが、今回も面白い内容だったなと思います。  </p>
 <p>場所を提供いただいた、LINE Fukuokaさん、登壇者、参加者のみなさん、ありがとうございました！</p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2015-10-30T04:53:03.000Z" itemprop="datepublished">
-            2015/10/30
-          </time>
-          <time datetime="2015-10-30T04:53:03.000Z" itemprop="modified">
-            (更新日: 2015/10/30)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2015/10/30/auto-load-rails4-lib/">Rails4でlibディレクトリをautoloadするときのルール</a>
-        </h1>
-        <div class="content">
-          <p>Rails4でlibディレクトリに作ったライブラリを読み込むときはautoloadを利用すると便利です。<br>autoloadを利用するにはファイル名とクラス名がautoloadのルールに則っている必要があります。  </p>
-<h2 id="autoload-のパスを設定する"><a href="#autoload-のパスを設定する" class="headerlink" title="autoload のパスを設定する"></a>autoload のパスを設定する</h2><p>まず config/application.rb に autoload 用の設定を行います。</p>
-<p>config/application.rb</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#to auto load lib/directory</span></span><br><span class="line">config.autoload_paths += <span class="string">%W(<span class="subst">#&#123;config.root&#125;</span>/lib)</span></span><br></pre></td></tr></table></figure>
-
-<p>これで、lib ディレクトリ以下のファイルが、以降に説明するディレクトリ・ファイル構成と命名の規約に従うと、自動的に読み込まれるようになります。</p>
-<h2 id="lib-ディレクトリ以下のファイル"><a href="#lib-ディレクトリ以下のファイル" class="headerlink" title="lib ディレクトリ以下のファイル"></a>lib ディレクトリ以下のファイル</h2><p>ファイル名は小文字、単語の区切りは _ (アンダースコア)にする。<br>クラス名はアンダースコアの区切りでキャメルケースにする。</p>
-<p>以下はファイル名とクラス名の例です。</p>
-<p><strong>lib/hoge_fuga.rb</strong></p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HogeFuga</span></span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>lib/hoge ディレクトリにファイルを置くこともできます。</p>
-<p><strong>lib/hoge/fuga.rb</strong></p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Hoge</span></span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Fuga</span></span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以下の様にも書けます。</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hoge::Fuga</span></span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>以下の様な書き方もできます。</p>
-<p><strong>lib/hoge_moge/fuga.rb</strong></p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">HogeMoge</span></span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Fuga</span></span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># もしくは</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HogeMoge::Fuga</span></span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
         </div>
       </div>

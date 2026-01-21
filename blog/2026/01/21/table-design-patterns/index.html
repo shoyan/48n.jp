@@ -1,0 +1,396 @@
+
+  <!DOCTYPE html>
+  <html lang="ja">
+
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-37267422-8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-37267422-8');
+</script>
+
+      <meta charset="UTF-8">
+      <title>
+        テーブル初期設計のポイント：事実（Fact）を元に設計する - SHOYAN BLOG
+      </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+      
+        <!-- stylesheets list from _config.yml -->
+        
+          <link rel="stylesheet" href="/css/shoyanblog.css">
+          
+            
+              
+                <meta name="description" content="テーブル初期設計のポイントである「事実（Fact）を保存し、状態は計算結果として扱う」考え方を解説します。ユーザーの状態管理を例に、事実と派生情報の識別と扱い方を紹介します。">
+                
+                  
+                      
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@48njp" />
+<meta name="twitter:creator" content="@48njp" />
+<meta name="og:title" content="テーブル初期設計のポイント：事実（Fact）を元に設計する - SHOYAN BLOG" />
+
+  <meta name="og:description" content="テーブル初期設計のポイントである「事実（Fact）を保存し、状態は計算結果として扱う」考え方を解説します。ユーザーの状態管理を例に、事実と派生情報の識別と扱い方を紹介します。" />
+
+
+  <meta name="og:image" content="https://48n.jp/images/logo.png" />
+
+
+                        <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KQX8LKG');</script>
+<!-- End Google Tag Manager -->
+
+                        
+                        <!-- JSON-LD Structured Data -->
+                        <script type="application/ld+json">
+                        {
+                          "@context": "https://schema.org",
+                          "@type": "BlogPosting",
+                          "headline": "テーブル初期設計のポイント：事実（Fact）を元に設計する - SHOYAN BLOG",
+                          "author": {
+                            "@type": "Person",
+                            "name": "Shohei Yamasaki",
+                            "url": "https://48n.jp/about/"
+                          },
+                          "publisher": {
+                            "@type": "Organization",
+                            "name": "SHOYAN BLOG",
+                            "url": "https://48n.jp"
+                          },
+                          "datePublished": "Wed Jan 21 2026 10:00:00 GMT+0900",
+                          "dateModified": "Wed Jan 21 2026 11:13:50 GMT+0900",
+                          "description": "テーブル初期設計のポイントである「事実（Fact）を保存し、状態は計算結果として扱う」考え方を解説します。ユーザーの状態管理を例に、事実と派生情報の識別と扱い方を紹介します。",
+                          "mainEntityOfPage": {
+                            "@type": "WebPage",
+                            "@id": "https://48n.jp/blog/2026/01/21/table-design-patterns/"
+                          }
+                        }
+                        </script>
+  <meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
+</head>
+
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KQX8LKG"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+      <div id="menu-outer">
+        <header id="header">
+  <div id="header-outer" class="outer mb-2">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SHOYAN BLOG</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        <a class="nav-link" href="https://twitter.com/48njp" target="_blank">
+          <?xml version="1.0" encoding="utf-8"?>
+          <!-- Generator: Adobe Illustrator 20.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+          <svg
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            x="0px"
+            y="0px"
+            viewBox="0 0 400 400"
+            style="enable-background:new 0 0 400 400;"
+            xml:space="preserve"
+            width="25"
+            height="25"
+          >
+            <style type="text/css">
+              .st0 {
+                fill: #1da1f2;
+              }
+              .st1 {
+                fill: #ffffff;
+              }
+            </style>
+            <g id="Dark_Blue">
+              <path
+                class="st0"
+                d="M350,400H50c-27.6,0-50-22.4-50-50V50C0,22.4,22.4,0,50,0h300c27.6,0,50,22.4,50,50v300
+		C400,377.6,377.6,400,350,400z"
+              />
+            </g>
+            <g id="Logo__x2014__FIXED">
+              <path
+                class="st1"
+                d="M153.6,301.6c94.3,0,145.9-78.2,145.9-145.9c0-2.2,0-4.4-0.1-6.6c10-7.2,18.7-16.3,25.6-26.6
+		c-9.2,4.1-19.1,6.8-29.5,8.1c10.6-6.3,18.7-16.4,22.6-28.4c-9.9,5.9-20.9,10.1-32.6,12.4c-9.4-10-22.7-16.2-37.4-16.2
+		c-28.3,0-51.3,23-51.3,51.3c0,4,0.5,7.9,1.3,11.7c-42.6-2.1-80.4-22.6-105.7-53.6c-4.4,7.6-6.9,16.4-6.9,25.8
+		c0,17.8,9.1,33.5,22.8,42.7c-8.4-0.3-16.3-2.6-23.2-6.4c0,0.2,0,0.4,0,0.7c0,24.8,17.7,45.6,41.1,50.3c-4.3,1.2-8.8,1.8-13.5,1.8
+		c-3.3,0-6.5-0.3-9.6-0.9c6.5,20.4,25.5,35.2,47.9,35.6c-17.6,13.8-39.7,22-63.7,22c-4.1,0-8.2-0.2-12.2-0.7
+		C97.7,293.1,124.7,301.6,153.6,301.6"
+              />
+            </g>
+          </svg>
+        </a>
+        
+        <a class="nav-link" href="/atom.xml" title="RSSフィード">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25" viewBox="0 0 100 100">
+            <path
+              class="social"
+              d="M 13.310204,73.332654 C 5.967347,73.332654 0,79.322448 0,86.621428 c 0,7.338776 5.967347,13.262246 13.310204,13.262246 7.370408,0 13.328572,-5.92245 13.328572,-13.262246 0,-7.29898 -5.958164,-13.288774 -13.328572,-13.288774 z M 0.01530612,33.978572 V 53.143878 C 12.493878,53.143878 24.229592,58.02347 33.068368,66.865306 41.894898,75.685714 46.767346,87.47449 46.767346,100 h 19.25 C 66.017346,63.592858 36.4,33.979592 0.01530612,33.978572 l 0,0 z M 0.03877552,0 V 19.17449 C 44.54796,19.17551 80.77551,55.437756 80.77551,100 H 100 C 100,44.87653 55.15102,0 0.03877552,0 z"
+            ></path>
+          </svg>
+        </a>
+         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="https://48n.jp"></form>
+      </nav>
+
+      <nav id="main-nav">
+        
+        <a class="main-nav-link" href="/">Home</a>
+        
+        <a class="main-nav-link" href="/profile">プロフィール</a>
+        
+        <a class="main-nav-link" href="/archives">記事一覧</a>
+        
+        <a class="main-nav-link" href="/about">このページについて</a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+      </div>
+
+      <div id="content-outer">
+        <div id="content-inner">
+          
+<article id="post">
+  <div class="date-box">
+    <time datetime="2026-01-21T01:00:00.000Z" itemprop="datepublished">
+      2026/01/21
+    </time>
+    <time datetime="2026-01-21T02:13:50.685Z" itemprop="modified">
+      (更新日: 2026/01/21)
+    </time>
+  </div>
+  <h1>テーブル初期設計のポイント：事実（Fact）を元に設計する</h1>
+  
+  <div class="post-categories">
+    
+      <a href="/categories/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E9%96%8B%E7%99%BA/" class="post-category">ソフトウェア開発</a>
+    
+  </div>
+  
+  <div class="post-tags">
+    
+  </div>
+  <div class="sharing">
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" target="_blank" rel="noopener" class="twitter-share-button" data-via="48njp" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <a href="https://b.hatena.ne.jp/entry/" target="_blank" rel="noopener" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+</div>
+  
+  
+  <p>アプリケーションにおいてのコアはデータです。<br>データ設計に問題があるアプリケーションは、意図がわかりづらく、実装が複雑になり、その結果、不具合が発生しやすくなります。また、後からデータ設計を変更することはコストが大きく、簡単に変更もできません。</p>
+<p>この記事では、データベースの初期設計において考慮しておくべきポイントと実務で使いやすい方法について解説します。</p>
+<h2 id="テーブル初期設計の基本ポイント"><a href="#テーブル初期設計の基本ポイント" class="headerlink" title="テーブル初期設計の基本ポイント"></a>テーブル初期設計の基本ポイント</h2><p>テーブル設計において、特に「状態を持つデータ」の設計は難しいものです。<br>ユーザー情報を例にすると、<code>status</code> カラムに <code>active</code> / <code>inactive</code> / <code>banned</code> などの状態を持つという設計はよくある設計でしょう。このように状態を持つ設計は一見シンプルに見えますが、実は後々問題になりがちです。</p>
+<h3 id="なぜ状態を持つ設計が問題になりやすいのか"><a href="#なぜ状態を持つ設計が問題になりやすいのか" class="headerlink" title="なぜ状態を持つ設計が問題になりやすいのか"></a>なぜ状態を持つ設計が問題になりやすいのか</h3><p>状態を1つのカラムで管理する設計は、一見シンプルに見えますが、実際には以下のような問題が発生しやすくなります。</p>
+<h4 id="データの不整合が発生しやすい"><a href="#データの不整合が発生しやすい" class="headerlink" title="データの不整合が発生しやすい"></a>データの不整合が発生しやすい</h4><p>状態を持つとデータの不整合が発生しやすくなります。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 悪い例：派生情報をカラムに保存</span></span><br><span class="line">users</span><br><span class="line">- id</span><br><span class="line">- email</span><br><span class="line">- is_active  <span class="comment">-- 派生情報</span></span><br><span class="line">- deleted_at <span class="comment">-- 事実</span></span><br></pre></td></tr></table></figure>
+
+<p>この設計では、<code>deleted_at</code> が設定されているのに <code>is_active = true</code> のまま、という矛盾した状態が発生する可能性があります。</p>
+<h4 id="データが曖昧になりやすい"><a href="#データが曖昧になりやすい" class="headerlink" title="データが曖昧になりやすい"></a>データが曖昧になりやすい</h4><p>初期設計では <code>active</code> / <code>inactive</code> の2つだった状態が、後から以下のような状態が必要になることがあります。</p>
+<ul>
+<li><code>banned</code> （アカウント停止）</li>
+<li><code>suspended</code>（一時停止）</li>
+<li><code>pending_verification</code>（認証待ち）</li>
+<li><code>trial_expired</code>（トライアル期限切れ）</li>
+</ul>
+<p>このように後から状態を追加していくと、いつの間にか複数の意味を持つステータスが１つのカラムに入っているということが発生します。そうなると、カラムの意味がぼやけてしまい、明確なデータ表現が難しくなってしまいます。</p>
+<h2 id="テーブル設計の原則"><a href="#テーブル設計の原則" class="headerlink" title="テーブル設計の原則"></a>テーブル設計の原則</h2><h3 id="事実-Fact-だけを保存する"><a href="#事実-Fact-だけを保存する" class="headerlink" title="事実(Fact)だけを保存する"></a>事実(Fact)だけを保存する</h3><p>テーブル設計の原則は <strong>業務・ドメインの事実（Fact）だけを保存する</strong> です。</p>
+<ul>
+<li><strong>事実</strong>：登録された、退会した、BANされた、メール認証した</li>
+<li><strong>派生</strong>：有効ユーザーかどうか、ログイン可能かどうか</li>
+</ul>
+<p><strong>派生情報は保存せずに事実から算出します</strong>。<br>このように、事実のみを保存するという原則に則ることにより、データの不整合や曖昧さに強い設計にすることができます。</p>
+<p>以下は、ユーザーの情報を日付型として扱う例です。１つのカラムでは１つの意味を取り扱うことで、明確なデータ設計にしているのがポイントです。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 良い例：日時型を使う（状態が増えたらカラム追加で対応）</span></span><br><span class="line">users</span><br><span class="line">- id</span><br><span class="line">- email</span><br><span class="line">- deleted_at      <span class="comment">-- 退会日時</span></span><br><span class="line">- banned_at        <span class="comment">-- BAN日時</span></span><br><span class="line">- suspended_at     <span class="comment">-- 一時停止日時</span></span><br><span class="line">- email_verified_at <span class="comment">-- メール認証日時</span></span><br><span class="line"><span class="comment">-- 新しい状態が増えても、新しい日時カラムを追加するだけ</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="状態＝「事実の集合」として考える"><a href="#状態＝「事実の集合」として考える" class="headerlink" title="状態＝「事実の集合」として考える"></a>状態＝「事実の集合」として考える</h3><p>状態は事実の組み合わせです。例えば、ユーザーが「利用可能」かどうかは、<strong>これらの事実の組み合わせ</strong>から判断します。</p>
+<ul>
+<li>退会していない</li>
+<li>BANされていない</li>
+<li>メール認証済み</li>
+</ul>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 利用可能ユーザー</span></span><br><span class="line"><span class="keyword">WHERE</span> deleted_at <span class="keyword">IS</span> <span class="keyword">NULL</span></span><br><span class="line">  <span class="keyword">AND</span> banned_at <span class="keyword">IS</span> <span class="keyword">NULL</span></span><br><span class="line">  <span class="keyword">AND</span> email_verified_at <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span></span><br></pre></td></tr></table></figure>
+
+<p>ユーザーが「利用可能」というような状態は事実を元に算出する設計が安定します。</p>
+<h2 id="状態として持つ場合"><a href="#状態として持つ場合" class="headerlink" title="状態として持つ場合"></a>状態として持つ場合</h2><p>一方で <strong>「割り切って状態を持たせた方が“良い設計”になるケース」</strong> は、実務では普通にあります。</p>
+<h3 id="UI-管理画面で即座に使いたいとき"><a href="#UI-管理画面で即座に使いたいとき" class="headerlink" title="UI / 管理画面で即座に使いたいとき"></a>UI / 管理画面で即座に使いたいとき</h3><h4 id="例：決済管理画面"><a href="#例：決済管理画面" class="headerlink" title="例：決済管理画面"></a>例：決済管理画面</h4><p>例えば、一覧で「未払い」「支払済み」「返金済み」を表示したい場合は、状態を持ったほうがよいことがあります。<br>一覧画面で毎回集計の計算をするのはパフォーマンスが重くなりがちです。そういった場合は割り切って状態を持ったほうがトータルとして安定します。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">invoices</span><br><span class="line"><span class="bullet">- </span>id</span><br><span class="line"><span class="bullet">- </span>total_amount</span><br><span class="line"><span class="bullet">- </span>status  -- unpaid / paid</span><br></pre></td></tr></table></figure>
+
+<h4 id="ルール"><a href="#ルール" class="headerlink" title="ルール"></a>ルール</h4><p>状態を持つときは以下のルールを守るのがポイントです。</p>
+<ul>
+<li>状態が事実から再計算できる</li>
+</ul>
+<h3 id="ワークフローが明確に有限なとき"><a href="#ワークフローが明確に有限なとき" class="headerlink" title="ワークフローが明確に有限なとき"></a>ワークフローが明確に有限なとき</h3><h4 id="例：審査フロー"><a href="#例：審査フロー" class="headerlink" title="例：審査フロー"></a>例：審査フロー</h4><p>審査フローのようにワークフローが明確で有限な場合は状態として持って問題ありません。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">draft</span> → <span class="keyword">submitted </span>→ <span class="keyword">reviewing </span>→ approved / rejected</span><br></pre></td></tr></table></figure>
+
+<h4 id="なぜOKか"><a href="#なぜOKか" class="headerlink" title="なぜOKか"></a>なぜOKか</h4><ul>
+<li>状態遷移が業務ルールとして固定</li>
+<li>「今どこか」が重要</li>
+</ul>
+<h3 id="一生変わらない意味の状態"><a href="#一生変わらない意味の状態" class="headerlink" title="一生変わらない意味の状態"></a>一生変わらない意味の状態</h3><p>状態の意味がが変わらない場合は状態として持って問題ありません。例えば、次のような場合です。</p>
+<h4 id="例"><a href="#例" class="headerlink" title="例"></a>例</h4><ul>
+<li>is_admin（管理者かどうか）</li>
+<li>is_trial_user（トライアルユーザーかどうか）</li>
+<li>is_archived（アーカイブされているかどうか）</li>
+</ul>
+<h4 id="補足：YES-NOで判断できるという意味？"><a href="#補足：YES-NOで判断できるという意味？" class="headerlink" title="補足：YES/NOで判断できるという意味？"></a>補足：YES/NOで判断できるという意味？</h4><p>多くの場合は <strong>YES/NO（boolean）で表現できる</strong> ということです。ただし重要なのは、単に2値で表現できることではなく、次の2点です。</p>
+<ul>
+<li><strong>定義が将来もブレない</strong>：運用や要件が変わっても「何を意味するか」が変わらない</li>
+<li><strong>派生状態ではない</strong>：他の複数の事実の組み合わせ（計算結果）になっていない</li>
+</ul>
+<p>例えば <code>is_admin</code> は「管理者権限が付与されているか」という <strong>明確な事実</strong> に近いのでフラグとして持ちやすいです。一方で <code>is_active</code> は「退会していない」「BANされていない」「認証済み」など条件が増えやすい <strong>派生状態</strong> なので、フラグとして持つと破綻しやすくなります。</p>
+<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p><strong>「状態」を保存するのではなく、まずは「事実（Fact）」を保存する</strong>のが、拡張と運用に強い設計です。</p>
+<ul>
+<li><strong>原則</strong>: DBには <strong>事実（イベント・日時）</strong> を保存し、状態は <strong>計算結果</strong> として扱う</li>
+<li><strong>避けたいこと</strong>: <code>status</code> のような1カラムに、意味の違う状態を押し込める（曖昧さ・不整合の原因）</li>
+<li><strong>例外（状態を持ってもよい）</strong>: UI/管理画面で即時に必要、ワークフローが有限で明確（例：請求ステータス、審査フロー）など、<strong>割り切る理由がある</strong></li>
+<li><strong>状態を持つときのルール</strong>: <strong>再計算できる / 壊れても直せる</strong>（できないなら、まずFactの持ち方を見直す）</li>
+</ul>
+<p>テーブルは「状態を持つ存在」ではなく、<strong>「状態を生む出来事を持つ存在」</strong> として設計することがポイントです。</p>
+
+</article>
+
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2026/01/10/freelance-contract-risks/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">「社員と業務委託を区別しない」は法的リスクのサイン</div>
+    </a>
+  
+</nav>
+
+
+
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2026/01/21/table-design-patterns/">テーブル初期設計のポイント：事実（Fact）を元に設計する</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2026/01/10/freelance-contract-risks/">「社員と業務委託を区別しない」は法的リスクのサイン</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2026/01/04/strong-engineers-go-silent/">エンジニアの退職は「人の問題」ではなく「意思決定プロセスの問題」</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2025/12/25/2025-year-in-review/">2025年の振り返り｜フリーランス1年目に学んだ、判断・構造・距離感</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2025/11/28/translation-type-check-mechanism/">TypeScriptで多言語システムの型チェックを実装する</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+            
+    <div class="ltech-ad" id="ltech-ad">
+        <button class="ltech-ad-close" id="ltech-ad-close" aria-label="広告を閉じる">×</button>
+        <a href="https://learning-tech.jp/" target="_blank" rel="noopener">
+            <img src="https://learning-tech.jp/assets/images/lts-logo.png" alt="LTech - プログラミング学習サイト" width="300" loading="lazy">
+            <p>LTech - プログラミング学習ならここで学ぼう</p>
+        </a>
+    </div>
+
+    <style>
+        .ltech-ad-close {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            font-size: 14px;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            z-index: 10;
+        }
+
+        .ltech-ad-close:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const closeButton = document.getElementById('ltech-ad-close');
+            const adContainer = document.getElementById('ltech-ad');
+
+            if (closeButton && adContainer) {
+                closeButton.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    adContainer.style.display = 'none';
+                });
+            }
+        });
+    </script>
+        </div>
+      </div>
+
+      <footer>
+        <div id="bottom-outer">
+          <div id="bottom-inner">
+            <div id="author-profile">
+              <div id="author">
+                <p>著者情報</p>
+                <a href="/about/">
+                  <img
+                    src="https://avatars1.githubusercontent.com/u/1150041?s=460&u=f615fc39ae1a47862c73b870898620fc9b5e6d60&v=4"
+                    alt="著者" loading="lazy">
+                </a>
+                <a href="/about/">
+                  <p class="author-name">山崎勝平(Yamasaki Shohei)</p>
+                </a>
+                <p class="author-introduction">フリーランスのソフトウェアエンジニア。LINEヤフーやメルカリで開発に従事し、その後独立。現在はIT企業のプロダクト開発や<a href="https://learning-tech.jp" target="_blank">LTech</a>の開発をしています。お仕事に関するご相談は<a href="/about/">お問い合わせ</a>ください。</p>
+              </div>
+            </div>
+            <div id="footer-bottom">
+              <p>Copyright ©SHOYAN BLOG</p>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      
+        <!-- scripts list from theme config.yml -->
+        
+          <script src="/js/shoyanblog.js"></script>
+          
+            
+
+  </body>
+
+  </html>

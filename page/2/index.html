@@ -174,6 +174,80 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2025-09-17T03:30:00.000Z" itemprop="datepublished">
+            2025/09/17
+          </time>
+          <time datetime="2026-01-21T02:13:50.680Z" itemprop="modified">
+            (更新日: 2026/01/21)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2025/09/17/go-interface-implementation-check/">Goのインターフェース実装チェックイディオムを理解する</a>
+        </h1>
+        <div class="content">
+          <h2 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h2><p>Goを書いていると、以下のようなコードを見かけることがあります。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> _ Interface = (*Type)(<span class="literal">nil</span>)</span><br></pre></td></tr></table></figure>
+
+<p>この一見奇妙なコードは、Goのインターフェース実装をコンパイル時にチェックするためのイディオムです。今回は、このイディオムの目的、必要性、そして適切な使用場面について詳しく解説します。</p>
+<h2 id="このイディオムの目的"><a href="#このイディオムの目的" class="headerlink" title="このイディオムの目的"></a>このイディオムの目的</h2><h3 id="基本的な仕組み"><a href="#基本的な仕組み" class="headerlink" title="基本的な仕組み"></a>基本的な仕組み</h3><p>もう少し具体的なコードで説明してみます。以下のコードは、Counterインターフェースを実装していることをチェックするイディオムです。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> _ Counter = (*CountRepository)(<span class="literal">nil</span>)</span><br></pre></td></tr></table></figure>
+
+<p>このコードは以下の要素で構成されています：</p>
+<ul>
+<li><code>var _</code> : 空白識別子（blank identifier）を使用した変数宣言</li>
+<li><code>Counter</code> : チェック対象のインターフェース</li>
+<li><code>(*CountRepository)(nil)</code> : チェック対象の型（nilポインタ）</li>
+</ul>
+<h3 id="何をしているのか"><a href="#何をしているのか" class="headerlink" title="何をしているのか"></a>何をしているのか</h3><p>このイディオムは、<code>*CountRepository</code> 型が <code>Counter</code> インターフェースを実装しているかを<strong>コンパイル時に</strong>チェックします。</p>
+<h2 id="実際の動作例"><a href="#実際の動作例" class="headerlink" title="実際の動作例"></a>実際の動作例</h2><h3 id="正常な場合"><a href="#正常な場合" class="headerlink" title="正常な場合"></a>正常な場合</h3><p>以下のコードは <code>Counter</code> インターフェースを実装したサンプルコードです。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"context"</span></span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Counter <span class="keyword">interface</span> &#123;</span><br><span class="line">    Increment(ctx context.Context, key <span class="keyword">string</span>) (<span class="keyword">int</span>, error)</span><br><span class="line">    Get(ctx context.Context, key <span class="keyword">string</span>) (<span class="keyword">int</span>, error)</span><br><span class="line">    Reset(ctx context.Context, key <span class="keyword">string</span>) error</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> CountRepository <span class="keyword">struct</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// すべてのメソッドを実装</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r *CountRepository)</span> <span class="title">Increment</span><span class="params">(ctx context.Context, key <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">int</span>, error)</span></span> &#123;</span><br><span class="line">    <span class="comment">// 実装</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r *CountRepository)</span> <span class="title">Get</span><span class="params">(ctx context.Context, key <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">int</span>, error)</span></span> &#123;</span><br><span class="line">    <span class="comment">// 実装</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r *CountRepository)</span> <span class="title">Reset</span><span class="params">(ctx context.Context, key <span class="keyword">string</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    <span class="comment">// 実装</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// インターフェース実装チェック</span></span><br><span class="line"><span class="keyword">var</span> _ Counter = (*CountRepository)(<span class="literal">nil</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="comment">// インターフェース実装チェックのサンプル</span></span><br><span class="line">    repo := &amp;CountRepository&#123;&#125;</span><br><span class="line">    ctx := context.Background()</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// メソッド呼び出し</span></span><br><span class="line">    count, _ := repo.Increment(ctx, <span class="string">"test"</span>)</span><br><span class="line">    fmt.Printf(<span class="string">"Count: %d\n"</span>, count)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>CountRepositoryはCounterインターフェースで定義してある、Inctement、Get、Resetが実装してあるため、ビルドコマンドでビルドすることができます。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> build sample.<span class="keyword">go</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="エラーの場合"><a href="#エラーの場合" class="headerlink" title="エラーの場合"></a>エラーの場合</h3><p>エラーを発生させるために、<code>Counter</code> インターフェースにDecrementを追加してみましょう。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Counter <span class="keyword">interface</span> &#123;</span><br><span class="line">    Increment(ctx context.Context, key <span class="keyword">string</span>) (<span class="keyword">int</span>, error)</span><br><span class="line">    Get(ctx context.Context, key <span class="keyword">string</span>) (<span class="keyword">int</span>, error)</span><br><span class="line">    Reset(ctx context.Context, key <span class="keyword">string</span>) error</span><br><span class="line">    Decrement(ctx context.Context, key <span class="keyword">string</span>) (<span class="keyword">int</span>, error)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ビルドすると、ビルドエラーが発生します。インターフェースの未実装が検知されていますね。</p>
+<p><strong>コンパイルエラーメッセージ：</strong></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./sample.go:35:17: cannot use (<span class="number">*C</span>ountRepository)(<span class="literal">nil</span>) (value of<span class="built_in"> type </span><span class="number">*C</span>ountRepository) as Counter value <span class="keyword">in</span> variable declaration: <span class="number">*C</span>ountRepository does <span class="keyword">not</span> implement Counter (missing method Decrement)</span><br></pre></td></tr></table></figure>
+
+<p>では、イディオムをコメントアウトしてみるとどうでしょうか。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// インターフェース実装チェック</span></span><br><span class="line"><span class="comment">// var _ Counter = (*CountRepository)(nil)</span></span><br></pre></td></tr></table></figure>
+
+<p>ビルドすると、エラーが発生しなくなりました。これは、コンパイル時にインターフェースの未実装が検知されていないことを意味しています。</p>
+<h2 id="なぜこのイディオムが必要なのか"><a href="#なぜこのイディオムが必要なのか" class="headerlink" title="なぜこのイディオムが必要なのか"></a>なぜこのイディオムが必要なのか</h2><p>このイディオムですが、通常は不要な場合がほとんどです。<br>例えば、以下のように <code>NewCounter</code> 関数を追加して、<code>CountRepository</code> は <code>Counter</code> インターフェースであるということを明示的に指定した場合、GOのコンパイラでインターフェースの実装を検知することができます。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> CountRepository <span class="keyword">struct</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Counterインターフェースという型が明示されている</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewCounter</span><span class="params">()</span> <span class="title">Counter</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &amp;CountRepository&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="エフェクティブGoの指針"><a href="#エフェクティブGoの指針" class="headerlink" title="エフェクティブGoの指針"></a>エフェクティブGoの指針</h2><p>エフェクティブGoでは、このイディオムについて以下のように述べています。</p>
+<blockquote>
+<p>The appearance of the blank identifier in this construct indicates that the declaration exists only for the type checking, not to create a variable. Don’t do this for every type that satisfies an interface, though. By convention, such declarations are only used when there are no static conversions already present in the code, which is a rare event.</p>
+</blockquote>
+<h3 id="重要なポイント"><a href="#重要なポイント" class="headerlink" title="重要なポイント"></a>重要なポイント</h3><ol>
+<li><strong>空白識別子の役割</strong> : 変数を作成せず、型チェックのみを目的とする</li>
+<li><strong>乱用すべきではない</strong> : すべてのインターフェース実装に使うべきではない</li>
+<li><strong>静的変換がない場合のみ</strong> : 既に型チェックの機会がある場合は不要</li>
+</ol>
+<p>使いどころは、<strong>静的変換がない場面</strong> です。</p>
+<h2 id="静的変換とは"><a href="#静的変換とは" class="headerlink" title="静的変換とは"></a>静的変換とは</h2><p><strong>静的変換（static conversion）</strong> とは、コンパイル時に型の互換性をチェックする機会のことです。</p>
+<h3 id="静的変換がある場合（イディオムは不要）"><a href="#静的変換がある場合（イディオムは不要）" class="headerlink" title="静的変換がある場合（イディオムは不要）"></a>静的変換がある場合（イディオムは不要）</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Process</span><span class="params">(repo Counter)</span></span> &#123;  <span class="comment">// ← 静的変換が発生</span></span><br><span class="line">    <span class="comment">// 処理</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    r := &amp;CountRepository&#123;&#125;</span><br><span class="line">    Process(r)  <span class="comment">// ← ここで型チェックが行われる</span></span><br><span class="line">    <span class="comment">// そのため、var _ は不要</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="静的変換がない場合（イディオムが有用）"><a href="#静的変換がない場合（イディオムが有用）" class="headerlink" title="静的変換がない場合（イディオムが有用）"></a>静的変換がない場合（イディオムが有用）</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// インターフェースと実装が分離されていて、</span></span><br><span class="line"><span class="comment">// まだ使用箇所がない場合</span></span><br><span class="line"><span class="keyword">type</span> CountRepository <span class="keyword">struct</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// この時点では静的変換が発生していない</span></span><br><span class="line"><span class="comment">// そのため、明示的に型チェックを行う</span></span><br><span class="line"><span class="keyword">var</span> _ Counter = (*CountRepository)(<span class="literal">nil</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="適切な使用場面"><a href="#適切な使用場面" class="headerlink" title="適切な使用場面"></a>適切な使用場面</h2><h3 id="1-リポジトリパターン"><a href="#1-リポジトリパターン" class="headerlink" title="1. リポジトリパターン"></a>1. リポジトリパターン</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// domain/repository/user.go</span></span><br><span class="line"><span class="keyword">type</span> UserRepository <span class="keyword">interface</span> &#123;</span><br><span class="line">    Get(ctx context.Context, id <span class="keyword">string</span>) (*User, error)</span><br><span class="line">    Create(ctx context.Context, user *User) error</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// infrastructure/repository/user.go</span></span><br><span class="line"><span class="keyword">type</span> UserRepository <span class="keyword">struct</span> &#123;</span><br><span class="line">    db *gorm.DB</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// リポジトリパターンでは、インターフェースと実装が分離されているため有用</span></span><br><span class="line"><span class="keyword">var</span> _ repository.UserRepository = (*UserRepository)(<span class="literal">nil</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-プラグインアーキテクチャ"><a href="#2-プラグインアーキテクチャ" class="headerlink" title="2. プラグインアーキテクチャ"></a>2. プラグインアーキテクチャ</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// plugin/interface.go</span></span><br><span class="line"><span class="keyword">type</span> Plugin <span class="keyword">interface</span> &#123;</span><br><span class="line">    Initialize() error</span><br><span class="line">    Execute() error</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// plugin/example.go</span></span><br><span class="line"><span class="keyword">type</span> ExamplePlugin <span class="keyword">struct</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// プラグインが正しくインターフェースを実装しているかをチェック</span></span><br><span class="line"><span class="keyword">var</span> _ Plugin = (*ExamplePlugin)(<span class="literal">nil</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="不適切な使用例"><a href="#不適切な使用例" class="headerlink" title="不適切な使用例"></a>不適切な使用例</h2><h3 id="既に静的変換がある場合"><a href="#既に静的変換がある場合" class="headerlink" title="既に静的変換がある場合"></a>既に静的変換がある場合</h3><p>既に静的変換がある場合はイディオムは必要ありません。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 既に使用箇所がある場合</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewUserService</span><span class="params">(repo UserRepository)</span> *<span class="title">UserService</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &amp;UserService&#123;repo: repo&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// この場合、NewUserServiceの呼び出し時に既に型チェックが行われるため</span></span><br><span class="line"><span class="comment">// var _ は不要</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p><code>var _ Interface = (*Type)(nil)</code> イディオムは <strong>静的変換がない場合のみ</strong> 使用すればOKです。</p>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2025-08-07T01:00:00.000Z" itemprop="datepublished">
             2025/08/07
           </time>
@@ -622,42 +696,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// サーバー側での実装例</span></span><br><span class="line"><span class="keyword">const</span> depthLimit = <span class="built_in">require</span>(<span class="string">'graphql-depth-limit'</span>);</span><br><span class="line"><span class="keyword">const</span> server = <span class="keyword">new</span> ApolloServer(&#123;</span><br><span class="line">  typeDefs,</span><br><span class="line">  resolvers,</span><br><span class="line">  validationRules: [depthLimit(<span class="number">7</span>)]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
 <h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>GraphQLは、モダンなWebアプリケーション開発において、REST APIの代替として広く採用されており、REST APIと比較して通信量の削減が見込めます。<br>今後もGraphQLの普及は進むことが予想され、API設計の標準的なアプローチの一つとして確立されていくと思われます。 </p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2025-07-02T03:00:00.000Z" itemprop="datepublished">
-            2025/07/02
-          </time>
-          <time datetime="2026-01-13T12:03:59.742Z" itemprop="modified">
-            (更新日: 2026/01/13)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2025/07/02/git-japanese-filename-encoding-fix/">Gitで日本語ファイル名が正しく表示されない問題の解決方法</a>
-        </h1>
-        <div class="content">
-          <h2 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h2><p>Gitで日本語ファイル名が正しく表示されず、エンコードされた文字列として表示されることがあります。<br>エンコードされた文字は一見何が書いてあるかはわからないし、ものすごく表示の幅をとるのでなんとかしたい。</p>
-<h2 id="問題の原因"><a href="#問題の原因" class="headerlink" title="問題の原因"></a>問題の原因</h2><p>Gitはデフォルトで、非ASCII文字（日本語など）を含むファイル名を引用符で囲んで表示したり、適切なエンコーディングで処理しない場合があります。これにより、日本語ファイル名が正しく表示されない問題が発生します。</p>
-<h2 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h2><h3 id="日本語ファイル名を正しく表示するための設定"><a href="#日本語ファイル名を正しく表示するための設定" class="headerlink" title="日本語ファイル名を正しく表示するための設定"></a>日本語ファイル名を正しく表示するための設定</h3><p>以下の3つの設定を変更することで、日本語ファイル名が正しく表示されるようになります。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 日本語などの非ASCII文字を含むファイル名を引用符で囲まずに表示</span></span><br><span class="line">git config --global core.quotepath <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Gitのログ出力をUTF-8エンコーディングで表示</span></span><br><span class="line">git config --global i18n.logoutputencoding utf-8</span><br><span class="line"></span><br><span class="line"><span class="comment"># コミットメッセージをUTF-8エンコーディングで処理</span></span><br><span class="line">git config --global i18n.commitencoding utf-8</span><br></pre></td></tr></table></figure>
-
-<p>設定を変更した後、<code>git status</code> コマンドなどで日本語ファイルを表示してみると、正しく表示されるはずです。</p>
-<h2 id="設定内容の詳細説明"><a href="#設定内容の詳細説明" class="headerlink" title="設定内容の詳細説明"></a>設定内容の詳細説明</h2><p>設定した内容は以下の通りです。</p>
-<h3 id="core-quotepath-false"><a href="#core-quotepath-false" class="headerlink" title="core.quotepath false"></a><code>core.quotepath false</code></h3><ul>
-<li><strong>目的</strong>: 日本語などの非ASCII文字を含むファイル名を引用符で囲まずに表示</li>
-<li><strong>効果</strong>: ファイル名が <code>&quot;日本語ファイル名.txt&quot;</code> ではなく <code>日本語ファイル名.txt</code> として表示される</li>
-</ul>
-<h3 id="i18n-logoutputencoding-utf-8"><a href="#i18n-logoutputencoding-utf-8" class="headerlink" title="i18n.logoutputencoding utf-8"></a><code>i18n.logoutputencoding utf-8</code></h3><ul>
-<li><strong>目的</strong>: Gitのログ出力をUTF-8エンコーディングで表示</li>
-<li><strong>効果</strong>: <code>git log</code> や <code>git status</code> などの出力で日本語が正しく表示される</li>
-</ul>
-<h3 id="i18n-commitencoding-utf-8"><a href="#i18n-commitencoding-utf-8" class="headerlink" title="i18n.commitencoding utf-8"></a><code>i18n.commitencoding utf-8</code></h3><ul>
-<li><strong>目的</strong>: コミットメッセージをUTF-8エンコーディングで処理</li>
-<li><strong>効果</strong>: 日本語のコミットメッセージが正しく保存・表示される（この設定は直接は関係ないが、設定しておいてよいと思う）</li>
-</ul>
 
         </div>
       </div>

@@ -174,6 +174,62 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-05-27T04:48:34.000Z" itemprop="datepublished">
+            2016/05/27
+          </time>
+          <time datetime="2016-05-27T04:48:34.000Z" itemprop="modified">
+            (更新日: 2016/05/27)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/05/27/sinatra-logger/">Sinatraのロギング機構について調べてみた</a>
+        </h1>
+        <div class="content">
+          <p>Sinatraのloggerヘルパーを使ったところ、なぜか標準エラーの出力先にログが吐かれており、標準出力の出力先にはログが吐かれない。<br>標準出力先にログを吐くものだと思っていたのだが、自分が想定していた挙動と違うので調べてみた。</p>
+<p>まずは、Sinatraのloggerヘルパーのソースコードを確認してみる。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logger</span></span></span><br><span class="line">  request.logger</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p><a href="https://github.com/sinatra/sinatra/blob/939ce04c1b77d24dd78285ba0836768ad57aff6c/lib/sinatra/base.rb#L327" target="_blank" rel="noopener">https://github.com/sinatra/sinatra/blob/939ce04c1b77d24dd78285ba0836768ad57aff6c/lib/sinatra/base.rb#L327</a></p>
+<p>request.loggerを返している。<br>レシーバであるrequestは rack::requestなので、rack::request#loggerは何を返しているかを確認する。</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logger</span></span>; get_header(RACK_LOGGER) <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p><a href="https://github.com/rack/rack/blob/master/lib/rack/request.rb#L136" target="_blank" rel="noopener">https://github.com/rack/rack/blob/master/lib/rack/request.rb#L136</a></p>
+<p>get_headerは@envから引数に与えられた値を返すだけのメソッド。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_header</span><span class="params">(name)</span></span></span><br><span class="line">  @env[name]</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>RACK_LOGGERは以下のように定義されている。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RACK_LOGGER = <span class="string">'rack.logger'</span>.<span class="keyword">freeze</span></span><br></pre></td></tr></table></figure>
+
+<p><a href="https://github.com/rack/rack/blob/9073125f71afd615091f575d74ec468a0b1b79bf/lib/rack.rb#L64" target="_blank" rel="noopener">https://github.com/rack/rack/blob/9073125f71afd615091f575d74ec468a0b1b79bf/lib/rack.rb#L64</a></p>
+<p>ここまでで、loggerヘルパーは<code>env[&#39;rack.logger’]</code>を取得していることがわかった。</p>
+<p>では、rack.loggerには何が設定されているのかという疑問が湧いてくる。<br>rackには3つのロガーがある。</p>
+<ul>
+<li>CommonLogger</li>
+<li>Logger</li>
+<li>NullLogger</li>
+</ul>
+<p>このうち、LoggerとNullLoggerがRACK_LOGGERにセットしていた。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Rack::Logger</span></span><br><span class="line"><span class="keyword">require</span> <span class="string">'logger'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Rack</span></span></span><br><span class="line">  <span class="comment"># Sets up rack.logger to write to rack.errors stream</span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Logger</span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initialize</span><span class="params">(app, level = <span class="symbol">:</span><span class="symbol">:Logger</span><span class="symbol">:</span><span class="symbol">:INFO</span>)</span></span></span><br><span class="line">      @app, @level = app, level</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">call</span><span class="params">(env)</span></span></span><br><span class="line">      logger = <span class="symbol">:</span><span class="symbol">:Logger</span>.new(env[RACK_ERRORS])</span><br><span class="line">      logger.level = @level</span><br><span class="line"></span><br><span class="line">      env[RACK_LOGGER] = logger</span><br><span class="line">      @app.call(env)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Rack::NullLogger</span></span><br><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Rack</span></span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">NullLogger</span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initialize</span><span class="params">(app)</span></span></span><br><span class="line">      @app = app</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">call</span><span class="params">(env)</span></span></span><br><span class="line">      env[RACK_LOGGER] = <span class="keyword">self</span></span><br><span class="line">      @app.call(env)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    ...........</span><br></pre></td></tr></table></figure>
+
+<p>通常、Rack::Loggerが使われる。<br>Rack::LoggerはRubyのloggerライブラリのラッパーで、log deviceにenv[RACK_ERRORS]をセットしている。<br>env[RACK_ERRORS]が何かを調べたところ、基本的には$stderrがセットされるようだ。</p>
+<p>(例)webrickの場合は、$stderrがセットされている。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">env.update(</span><br><span class="line">  RACK_VERSION =&gt; Rack::VERSION,</span><br><span class="line">  RACK_INPUT =&gt; rack_input,</span><br><span class="line">  RACK_ERRORS =&gt; $stderr,</span><br><span class="line">  RACK_MULTITHREAD =&gt; <span class="literal">true</span>,</span><br><span class="line">  RACK_MULTIPROCESS =&gt; <span class="literal">false</span>,</span><br><span class="line">  RACK_RUNONCE =&gt; <span class="literal">false</span>,</span><br><span class="line">  RACK_URL_SCHEME =&gt; [<span class="string">"yes"</span>, <span class="string">"on"</span>, <span class="string">"1"</span>].include?(env[HTTPS]) ? <span class="string">"https"</span> : <span class="string">"http"</span>,</span><br><span class="line">  RACK_IS_HIJACK =&gt; <span class="literal">true</span>,</span><br><span class="line">  RACK_HIJACK =&gt; lambda &#123; raise NotImplementedError, <span class="string">"only partial hijack is supported."</span>&#125;,</span><br><span class="line">  RACK_HIJACK_IO =&gt; nil</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://github.com/rack/rack/blob/95172a60fe5c2a3850163fc75e0981fe440c064e/lib/rack/handler/webrick.rb#L68" target="_blank" rel="noopener">https://github.com/rack/rack/blob/95172a60fe5c2a3850163fc75e0981fe440c064e/lib/rack/handler/webrick.rb#L68</a></p>
+<p>ということで、結果的にSinatraのloggerは標準エラーに出力されることになる。</p>
+<h2 id="アプリケーションログを任意のファイルに出力するには"><a href="#アプリケーションログを任意のファイルに出力するには" class="headerlink" title="アプリケーションログを任意のファイルに出力するには"></a>アプリケーションログを任意のファイルに出力するには</h2><p>任意のファイルにログを出力したい場合は、自前でloggerを定義してやればよい。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logger</span></span></span><br><span class="line">  <span class="keyword">return</span> <span class="variable">@logger</span> <span class="keyword">unless</span> <span class="variable">@logger</span>.<span class="keyword">nil</span>?</span><br><span class="line">  file = File.new(<span class="string">"<span class="subst">#&#123;settings.root&#125;</span>/log/<span class="subst">#&#123;settings.environment&#125;</span>.log"</span>, <span class="string">'a+'</span>)</span><br><span class="line">  file.sync = <span class="keyword">true</span></span><br><span class="line">  <span class="variable">@logger</span> = ::Logger.new(file)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">logger.info <span class="string">"Hello"</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
+<li><a href="http://koseki.hatenablog.com/entry/20120309/SinatraAppLog" target="_blank" rel="noopener">Sinatra でアプリケーションログをファイルに書く方法。</a></li>
+<li><a href="http://recipes.sinatrarb.com/p/middleware/rack_commonlogger" target="_blank" rel="noopener">Sinatra Recipes - Middleware - Rack Commonlogger</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-05-24T06:05:01.000Z" itemprop="datepublished">
             2016/05/24
           </time>
@@ -380,61 +436,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </tr>
 </tbody></table>
 <p>サンプルを用意しました。参考にどうぞ。<br><a href="https://docs.google.com/spreadsheets/d/1bOc3s8ikFcbBPGuzxDbRzd8KVT00lgQUDz275TJAIoE/edit#gid=0" target="_blank" rel="noopener">https://docs.google.com/spreadsheets/d/1bOc3s8ikFcbBPGuzxDbRzd8KVT00lgQUDz275TJAIoE/edit#gid=0</a></p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-05-17T04:33:55.000Z" itemprop="datepublished">
-            2016/05/17
-          </time>
-          <time datetime="2016-05-17T04:33:55.000Z" itemprop="modified">
-            (更新日: 2016/05/17)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/05/17/first-step-express/">Expressのインストールと構成を把握する</a>
-        </h1>
-        <div class="content">
-          <p>Node.jsのフレームワーク、<a href="http://expressjs.com" target="_blank" rel="noopener">Express</a>を試してみました。<br>ExpressはNode.jsでwebアプリケーションを作成するためのフレームワークです。</p>
-<h2 id="インストール"><a href="#インストール" class="headerlink" title="インストール"></a>インストール</h2><p>まずは、Node.jsをインストールします。</p>
-<p>以下のページからパッケージをダウンロードしてインストールします。<br><a href="https://nodejs.org/en/" target="_blank" rel="noopener">https://nodejs.org/en/</a></p>
-<p>次にnpmを使って<a href="http://expressjs.com/en/starter/generator.html" target="_blank" rel="noopener">express-generator</a>をインストールします。<br>express-generatorはExpressのスケルトンアプリケーションを作成するコマンドです。<br>npmはNode.jsをインストールした際にインストールされていると思います。</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo npm <span class="keyword">install</span> express-generator -g</span><br></pre></td></tr></table></figure>
-
-<h2 id="スケルトンアプリケーションを作成する"><a href="#スケルトンアプリケーションを作成する" class="headerlink" title="スケルトンアプリケーションを作成する"></a>スケルトンアプリケーションを作成する</h2><p>expressコマンドでスケルトンアプリケーションを作成します。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> express myapp</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> myapp</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> npm install</span></span><br></pre></td></tr></table></figure>
-
-<p>起動してみます。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">⇒  <span class="attribute">DEBUG</span>=myapp:* npm start</span><br><span class="line"></span><br><span class="line">&gt; myapp@0.0.0 start /Users/PMAC025S/Development/sample/nodejs/myapp</span><br><span class="line">&gt; node ./bin/www</span><br><span class="line"></span><br><span class="line">  myapp:server Listening on<span class="built_in"> port </span>3000 +0ms</span><br><span class="line"><span class="builtin-name">GET</span> / 200 659.865 ms - 170</span><br><span class="line"><span class="builtin-name">GET</span> /stylesheets/style.css 200 9.088 ms - 111</span><br><span class="line"><span class="builtin-name">GET</span> /favicon.ico 404 70.846 ms - 1285</span><br></pre></td></tr></table></figure>
-
-<p><code>http://localhost:3000</code> にアクセスしてみます。<br>Welcome to Express と表示されていれば正常に起動できています。</p>
-<p>サーバーの停止は<code>Ctrl + C</code>です。</p>
-<h2 id="ルーティング"><a href="#ルーティング" class="headerlink" title="ルーティング"></a>ルーティング</h2><p>ルーティングの基本的な構造です。</p>
-<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app<span class="function">.<span class="keyword">METHOD</span><span class="params">(PATH, HANDLER)</span></span></span><br></pre></td></tr></table></figure>
-
-<p><strong>app</strong>: expressのインスタンス<br><strong>METHOD</strong>: HTTPメソッド(GET, POST, PUT, PATCH, DELETE等)<br><strong>PATH</strong>: サーバーのパス<br><strong>HANDLER</strong>: 実行する関数  </p>
-<p>Hello World!を返すルーティングのサンプルです。<br><code>/</code>にGETリクエストを送ると、Hello World!が返却されます。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  res.send(<span class="string">'Hello World!'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p><code>/</code>にPOSTリクエストを送ると、<code>Got a POST request</code>が返却されます。</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.post(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(req, res)</span> </span>&#123;</span><br><span class="line">  res.send(<span class="string">'Got a POST request'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h2 id="Expressの構造"><a href="#Expressの構造" class="headerlink" title="Expressの構造"></a>Expressの構造</h2><p>express-generator で作成されたファイルを確認していきます。<br>ファイル構成は以下です。</p>
-<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">⇒  tree -L <span class="number">2</span></span><br><span class="line">.</span><br><span class="line">├── app.<span class="keyword">js</span></span><br><span class="line"><span class="keyword">├── </span><span class="keyword">bin</span></span><br><span class="line"><span class="keyword">│ </span>  └── www</span><br><span class="line">├── node_modules</span><br><span class="line">│   ├── <span class="keyword">body-parser</span></span><br><span class="line"><span class="keyword">│ </span>  ├── cookie-parser</span><br><span class="line">│   ├── <span class="built_in">debug</span></span><br><span class="line">│   ├── express</span><br><span class="line">│   ├── <span class="keyword">jade</span></span><br><span class="line"><span class="keyword">│ </span>  ├── morgan</span><br><span class="line">│   └── serve-favicon</span><br><span class="line">├── package.<span class="keyword">json</span></span><br><span class="line"><span class="keyword">├── </span>public</span><br><span class="line">│   ├── images</span><br><span class="line">│   ├── <span class="keyword">javascripts</span></span><br><span class="line"><span class="keyword">│ </span>  └── stylesheets</span><br><span class="line">├── routes</span><br><span class="line">│   ├── index.<span class="keyword">js</span></span><br><span class="line"><span class="keyword">│ </span>  └── users.<span class="keyword">js</span></span><br><span class="line"><span class="keyword">└── </span>views</span><br><span class="line">    ├── error.<span class="keyword">jade</span></span><br><span class="line"><span class="keyword"> </span>   ├── index.<span class="keyword">jade</span></span><br><span class="line"><span class="keyword"> </span>   └── layout.<span class="keyword">jade</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="app-js"><a href="#app-js" class="headerlink" title="app.js"></a>app.js</h3><p>app.jsではアプリの設定やルーティングを定義します。<br>簡単なアプリであれば、ここに全て書いてしまってもよいでしょう。<br>express-generatorで作成されたファイル構成では、<code>routes/</code>、<code>views/</code> ディレクトリが作成されており、ルーティングやテンプレートは分離する構成となっています。</p>
-<h3 id="bin"><a href="#bin" class="headerlink" title="bin"></a>bin</h3><p>実行ファイルが格納されます。</p>
-<h3 id="node-modules"><a href="#node-modules" class="headerlink" title="node_modules"></a>node_modules</h3><p>Expressなどのモジュールが入っているディレクトリです。npmでインストールしたファイルが格納されます。</p>
-<h3 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h3><p>アプリの設定やメタ情報を定義するファイルです。</p>
-<h3 id="public"><a href="#public" class="headerlink" title="public"></a>public</h3><p>公開ディレクトリです、cssファイル、imageファイル、JavaScriptファイルを格納します。</p>
-<h3 id="routes"><a href="#routes" class="headerlink" title="routes"></a>routes</h3><p>アプリケーションのルーティングと処理を定義したファイルを格納します。</p>
-<h3 id="viewsディレクトリ"><a href="#viewsディレクトリ" class="headerlink" title="viewsディレクトリ"></a>viewsディレクトリ</h3><p>テンプレートを定義したファイルを格納します。</p>
-<p>Expressの構成は把握できました。<br>次はExpressを使ってチャットアプリケーションを作ってみたいと思います(次回へ続く)。</p>
-<h3 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h3><ul>
-<li><a href="http://expressjs.com/en/starter/installing.html" target="_blank" rel="noopener">Installing Express</a></li>
-</ul>
 
         </div>
       </div>
