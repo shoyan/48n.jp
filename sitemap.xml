@@ -11,6 +11,15 @@
   </url>
   
   <url>
+    <loc>https://48n.jp/blog/2026/01/21/table-design-patterns/</loc>
+    
+    <lastmod>2026-01-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://48n.jp/blog/2025/11/28/translation-type-check-mechanism/</loc>
     
     <lastmod>2026-01-22</lastmod>
@@ -38,51 +47,6 @@
   </url>
   
   <url>
-    <loc>https://48n.jp/blog/2026/01/21/table-design-patterns/</loc>
-    
-    <lastmod>2026-01-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://48n.jp/blog/2026/01/10/freelance-contract-risks/</loc>
-    
-    <lastmod>2026-01-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://48n.jp/blog/2025/07/02/git-japanese-filename-encoding-fix/</loc>
-    
-    <lastmod>2026-01-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://48n.jp/blog/2025/05/30/go-1-24-3-build-error/</loc>
-    
-    <lastmod>2026-01-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://48n.jp/blog/2025/05/30/go-error-handling-best-practice/</loc>
-    
-    <lastmod>2026-01-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://48n.jp/blog/2025/09/17/go-interface-implementation-check/</loc>
     
     <lastmod>2026-01-22</lastmod>
@@ -101,7 +65,34 @@
   </url>
   
   <url>
-    <loc>https://48n.jp/blog/2025/12/25/2025-year-in-review/</loc>
+    <loc>https://48n.jp/blog/2026/01/10/freelance-contract-risks/</loc>
+    
+    <lastmod>2026-01-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://48n.jp/blog/2025/05/30/go-1-24-3-build-error/</loc>
+    
+    <lastmod>2026-01-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://48n.jp/blog/2025/07/02/git-japanese-filename-encoding-fix/</loc>
+    
+    <lastmod>2026-01-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://48n.jp/blog/2025/05/30/go-error-handling-best-practice/</loc>
     
     <lastmod>2026-01-22</lastmod>
     
@@ -111,6 +102,15 @@
   
   <url>
     <loc>https://48n.jp/blog/2016/08/02/README/</loc>
+    
+    <lastmod>2026-01-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://48n.jp/blog/2025/12/25/2025-year-in-review/</loc>
     
     <lastmod>2026-01-22</lastmod>
     
@@ -1539,14 +1539,14 @@
 
   
   <url>
-    <loc>https://48n.jp/categories/%E3%83%95%E3%83%AA%E3%83%BC%E3%83%A9%E3%83%B3%E3%82%B9/</loc>
+    <loc>https://48n.jp/categories/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0/</loc>
     <lastmod>2026-01-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://48n.jp/categories/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0/</loc>
+    <loc>https://48n.jp/categories/%E3%83%95%E3%83%AA%E3%83%BC%E3%83%A9%E3%83%B3%E3%82%B9/</loc>
     <lastmod>2026-01-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
