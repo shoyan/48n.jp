@@ -74,7 +74,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                           }
                         }
                         </script>
-  <meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
+  <meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
 </head>
 
   <body>
@@ -191,26 +191,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <a class="post-tags-link" href="/tags/Ruby/" rel="tag">Ruby</a>
   </div>
   <div class="sharing">
-  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" target="_blank" rel="noopener" class="twitter-share-button" data-via="48njp" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-  <a href="https://b.hatena.ne.jp/entry/" target="_blank" rel="noopener" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="48njp" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <a href="https://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 </div>
   
   
   <p>ファイルのパスを生成する際にセパレーターを意識しなくてはならず、どうにもいけていないコードがあります(ありますというか自分が量産していました)。<br>以下のようなコードです。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">path = <span class="string">"<span class="subst">#&#123;path1&#125;</span>/&#123;$path2&#125;"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">path = <span class="string">&quot;<span class="subst">#&#123;path1&#125;</span>/&#123;$path2&#125;&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>セパレーターを意識せずコーディングできないものかと調べたところ、<code>File.join</code>を使えばよしなにやってくれることがわかりました。<br><code>File.join</code>を使えばセパレーターを指定する必要はありません。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">File.join(<span class="string">"hoge"</span>, <span class="string">"moge"</span>)</span><br><span class="line">=&gt; <span class="string">"hoge/moge"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">File.join(<span class="string">&quot;hoge&quot;</span>, <span class="string">&quot;moge&quot;</span>)</span><br><span class="line">=&gt; <span class="string">&quot;hoge/moge&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p><code>File.join</code>は正しいであろうパスのフォーマットに補正してくれるため、<code>//hoge</code>のようなパスが生成されることもありません。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">File.join(<span class="string">"hoge"</span>, <span class="string">"moge/"</span>, <span class="string">"/fuga"</span>)</span><br><span class="line">=&gt; <span class="string">"hoge/moge/fuga"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">File.join(<span class="string">&quot;hoge&quot;</span>, <span class="string">&quot;moge/&quot;</span>, <span class="string">&quot;/fuga&quot;</span>)</span><br><span class="line">=&gt; <span class="string">&quot;hoge/moge/fuga&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>パラメーターが配列でもよしなにやってくれます。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">File.join(%w(hoge moge/ fuga))</span><br><span class="line">=&gt; <span class="string">"hoge/moge/fuga"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">File.join(%w(hoge moge/ fuga))</span><br><span class="line">=&gt; <span class="string">&quot;hoge/moge/fuga&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>地味ですが、これでセパレーターの悩みから解放されて幸せになれます。</p>
 <h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
-<li><a href="http://ruby-doc.org/core-2.2.0/File.html#method-c-join" target="_blank" rel="noopener">http://ruby-doc.org/core-2.2.0/File.html#method-c-join</a></li>
+<li><a href="http://ruby-doc.org/core-2.2.0/File.html#method-c-join">http://ruby-doc.org/core-2.2.0/File.html#method-c-join</a></li>
 </ul>
 
 </article>

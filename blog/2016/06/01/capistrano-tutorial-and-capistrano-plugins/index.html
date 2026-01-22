@@ -74,7 +74,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                           }
                         }
                         </script>
-  <meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
+  <meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
 </head>
 
   <body>
@@ -191,30 +191,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <a class="post-tags-link" href="/tags/Ruby/" rel="tag">Ruby</a>
   </div>
   <div class="sharing">
-  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" target="_blank" rel="noopener" class="twitter-share-button" data-via="48njp" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-  <a href="https://b.hatena.ne.jp/entry/" target="_blank" rel="noopener" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="48njp" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <a href="https://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 </div>
   
   
   <p>Capistranoのインストールと設定、プラグインの紹介をします。</p>
 <h2 id="Capistranoのインストール"><a href="#Capistranoのインストール" class="headerlink" title="Capistranoのインストール"></a>Capistranoのインストール</h2><p>bundle initコマンドでGemfileを作成します。</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$  bundle init</span><br><span class="line">Writing <span class="keyword">new</span> Gemfile to <span class="regexp">/Users/</span>shoyan<span class="regexp">/app/G</span>emfile</span><br></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$  bundle init</span><br><span class="line">Writing <span class="keyword">new</span> Gemfile to <span class="regexp">/Users/</span>shoyan<span class="regexp">/app/G</span>emfile</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>以下のGemfileが作成されます。</p>
-<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ cat Gemfile</span><br><span class="line"><span class="meta"># A sample Gemfile</span></span><br><span class="line">source <span class="string">"https://rubygems.org"</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># gem "rails"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> Gemfile</span><br><span class="line"><span class="comment"># A sample Gemfile</span></span><br><span class="line"><span class="built_in">source</span> <span class="string">&quot;https://rubygems.org&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># gem &quot;rails&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>GemfileにCapistranoを定義します。</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">group</span> <span class="title">:development</span> do</span><br><span class="line">  gem <span class="string">"capistrano"</span>, <span class="string">"~&gt; 3.4"</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">group</span> <span class="title">:development</span> do</span><br><span class="line">  gem <span class="string">&quot;capistrano&quot;</span>, <span class="string">&quot;~&gt; 3.4&quot;</span></span><br><span class="line">end</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>bundle installコマンドでインストールします。</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">bundle </span>install</span><br></pre></td></tr></table></figure>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">bundle </span><span class="keyword">install</span></span><br><span class="line"><span class="keyword"></span></span><br></pre></td></tr></table></figure>
 
 <h2 id="Capistranoの設定"><a href="#Capistranoの設定" class="headerlink" title="Capistranoの設定"></a>Capistranoの設定</h2><p>Capistranoがインストールできたので、設定をしていきます。<br>cap installコマンドで雛形を作成します。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> bundle <span class="built_in">exec</span> <span class="built_in">cap</span> install</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">bundle <span class="built_in">exec</span> <span class="built_in">cap</span> install</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p><code>config/deploy.rb</code>と<code>config/deploy/{production, staging}.rb</code> が作成されているので適宜編集します。</p>
+<p><code>config/deploy.rb</code>と<code>config/deploy/&#123;production, staging&#125;.rb</code> が作成されているので適宜編集します。</p>
 <p>config/deploy.rb</p>
-<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># config valid only <span class="keyword">for</span> current <span class="keyword">version</span> of Capistrano</span><br><span class="line">lock '3.5.0'</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span> :application, ‘<span class="keyword">app</span>'</span><br><span class="line"><span class="keyword">set</span> :repo_url, 'git@github.com:shoyan/shoyan.git'</span><br><span class="line"></span><br><span class="line">ask :branch, `git rev-<span class="keyword">parse</span> --abbrev-ref HEAD`.chomp</span><br><span class="line"><span class="keyword">set</span> :deploy_to, '/<span class="keyword">var</span>/www/<span class="keyword">app</span>'</span><br><span class="line"><span class="keyword">set</span> :scm, :git</span><br><span class="line"><span class="keyword">set</span> :<span class="keyword">format</span>, :airbrussh</span><br><span class="line"><span class="keyword">set</span> :keep_releases, 5</span><br></pre></td></tr></table></figure>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># config valid only <span class="keyword">for</span> current <span class="keyword">version</span> of Capistrano</span><br><span class="line">lock &#x27;3.5.0&#x27;</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span> :application, ‘<span class="keyword">app</span>&#x27;</span><br><span class="line"><span class="keyword">set</span> :repo_url, &#x27;git@github.com:shoyan/shoyan.git&#x27;</span><br><span class="line"></span><br><span class="line">ask :branch, `git rev-<span class="keyword">parse</span> --abbrev-ref HEAD`.chomp</span><br><span class="line"><span class="keyword">set</span> :deploy_to, &#x27;/<span class="keyword">var</span>/www/<span class="keyword">app</span>&#x27;</span><br><span class="line"><span class="keyword">set</span> :scm, :git</span><br><span class="line"><span class="keyword">set</span> :<span class="keyword">format</span>, :airbrussh</span><br><span class="line"><span class="keyword">set</span> :keep_releases, 5</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><strong>application</strong>:  アプリケーション名</li>
@@ -227,25 +227,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </ul>
 <p>デプロイするサーバーを定義します。<br>事前に鍵認証でsshログインできるようにしておくととスムーズです。</p>
 <p>config/deploy/production.rb</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">role </span>:app, %w&#123;shoyan<span class="variable">@server001</span>.example.jp shoyan<span class="variable">@server002</span>.example.jp&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">role</span> <span class="title">:app</span>, %w&#123;shoyan@server001.example.jp shoyan@server002.example.jp&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h2 id="Capistranoでデプロイする"><a href="#Capistranoでデプロイする" class="headerlink" title="Capistranoでデプロイする"></a>Capistranoでデプロイする</h2><p>以下のコマンドでデプロイします。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> bundle <span class="built_in">exec</span> <span class="built_in">cap</span> production deploy</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">bundle <span class="built_in">exec</span> <span class="built_in">cap</span> production deploy</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h2 id="便利なCapistranoプラグイン"><a href="#便利なCapistranoプラグイン" class="headerlink" title="便利なCapistranoプラグイン"></a>便利なCapistranoプラグイン</h2><p>Capistranoには様々なプラグインがあります。<br>ここでは私が使っているプラグインを紹介します。</p>
 <h3 id="capistrano-github-releases"><a href="#capistrano-github-releases" class="headerlink" title="capistrano-github-releases"></a>capistrano-github-releases</h3><p>デプロイ時にタグをつけたり、PRにリリースコメントをつけれます。</p>
-<p><a href="https://github.com/linyows/capistrano-github-releases" target="_blank" rel="noopener">https://github.com/linyows/capistrano-github-releases</a></p>
+<p><a href="https://github.com/linyows/capistrano-github-releases">https://github.com/linyows/capistrano-github-releases</a></p>
 <h3 id="capistrano-slack-notification"><a href="#capistrano-slack-notification" class="headerlink" title="capistrano/slack_notification"></a>capistrano/slack_notification</h3><p>デプロイ時にSlackに通知できるようになります。</p>
-<p><a href="https://github.com/linyows/capistrano-slack_notification" target="_blank" rel="noopener">https://github.com/linyows/capistrano-slack_notification</a></p>
+<p><a href="https://github.com/linyows/capistrano-slack_notification">https://github.com/linyows/capistrano-slack_notification</a></p>
 <h3 id="capistrano-banner"><a href="#capistrano-banner" class="headerlink" title="capistrano_banner"></a>capistrano_banner</h3><p>デプロイ時にASCIIアートを設定できます。<br>また、productionにデプロイする前に確認をしてくれるようになります。</p>
-<p><a href="https://github.com/holysugar/capistrano_banner" target="_blank" rel="noopener">https://github.com/holysugar/capistrano_banner</a></p>
+<p><a href="https://github.com/holysugar/capistrano_banner">https://github.com/holysugar/capistrano_banner</a></p>
 <h3 id="capistrano-bundler"><a href="#capistrano-bundler" class="headerlink" title="capistrano-bundler"></a>capistrano-bundler</h3><p>デプロイ時にbundle installを実行できるようになります。</p>
-<p><a href="https://github.com/capistrano/bundler" target="_blank" rel="noopener">https://github.com/capistrano/bundler</a></p>
+<p><a href="https://github.com/capistrano/bundler">https://github.com/capistrano/bundler</a></p>
 <h3 id="capistrano3-unicorn"><a href="#capistrano3-unicorn" class="headerlink" title="capistrano3-unicorn"></a>capistrano3-unicorn</h3><p>デプロイ時にunicornのコマンドを実行できるようになります。</p>
-<p><a href="https://github.com/tablexi/capistrano3-unicorn" target="_blank" rel="noopener">https://github.com/tablexi/capistrano3-unicorn</a></p>
+<p><a href="https://github.com/tablexi/capistrano3-unicorn">https://github.com/tablexi/capistrano3-unicorn</a></p>
 <p>###capistrano-withrsync</p>
 <p>rsyncでデプロイしてくれるプラグインです。<br>デプロイするファイルが大きい場合に便利です。</p>
-<p><a href="https://github.com/linyows/capistrano-withrsync" target="_blank" rel="noopener">https://github.com/linyows/capistrano-withrsync</a></p>
+<p><a href="https://github.com/linyows/capistrano-withrsync">https://github.com/linyows/capistrano-withrsync</a></p>
 
 </article>
 

@@ -72,7 +72,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                           }
                         }
                         </script>
-  <meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
+  <meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
 </head>
 
   <body>
@@ -189,47 +189,47 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <a class="post-tags-link" href="/tags/Docker/" rel="tag">Docker</a>
   </div>
   <div class="sharing">
-  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" target="_blank" rel="noopener" class="twitter-share-button" data-via="48njp" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-  <a href="https://b.hatena.ne.jp/entry/" target="_blank" rel="noopener" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="48njp" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <a href="https://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 </div>
   
   
   <p>Chefのレシピを書くとき、Dockerコンテナにレシピを流せると気軽に確認ができてよいなと思い、DockerコンテナにChefを流せるようにしてみました。</p>
-<p>リポジトリを作ったので参考にどうぞ。<br><a href="https://github.com/shoyan/nginx-and-ruby-on-docker" target="_blank" rel="noopener">https://github.com/shoyan/nginx-and-ruby-on-docker</a></p>
+<p>リポジトリを作ったので参考にどうぞ。<br><a href="https://github.com/shoyan/nginx-and-ruby-on-docker">https://github.com/shoyan/nginx-and-ruby-on-docker</a></p>
 <h3 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h3><p>DockerとChefをインストールしている必要があるので、以下からインストールしてください。</p>
 <p>Docker</p>
 <ul>
-<li><a href="https://www.docker.com/products/docker-toolbox" target="_blank" rel="noopener">https://www.docker.com/products/docker-toolbox</a></li>
+<li><a href="https://www.docker.com/products/docker-toolbox">https://www.docker.com/products/docker-toolbox</a></li>
 </ul>
 <p>Chef</p>
 <ul>
-<li><a href="https://downloads.chef.io/chef-client/" target="_blank" rel="noopener">https://downloads.chef.io/chef-client/</a></li>
+<li><a href="https://downloads.chef.io/chef-client/">https://downloads.chef.io/chef-client/</a></li>
 </ul>
 <h3 id="DockerコンテナにChefを流す"><a href="#DockerコンテナにChefを流す" class="headerlink" title="DockerコンテナにChefを流す"></a>DockerコンテナにChefを流す</h3><p>まずは、Docker QuickStart TerminalをクリックしてDockerを起動します(アプリケーションにあります)。</p>
 <p>Dockerを起動したらNginxとrubyをインストールするCookbookを実行します。</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git clone http<span class="variable">s:</span>//github.<span class="keyword">com</span>/shoyan/nginx-<span class="built_in">and</span>-<span class="keyword">ruby</span>-<span class="keyword">on</span>-docker</span><br><span class="line">$ <span class="keyword">cd</span> nginx-<span class="built_in">and</span>-<span class="keyword">ruby</span>-<span class="keyword">on</span>-docker</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.<span class="keyword">com</span>/shoyan/nginx-<span class="built_in">and</span>-<span class="keyword">ruby</span>-<span class="keyword">on</span>-docker</span><br><span class="line">$ <span class="keyword">cd</span> nginx-<span class="built_in">and</span>-<span class="keyword">ruby</span>-<span class="keyword">on</span>-docker</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>以下のコマンドでimageをbuildします。</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="keyword">build </span>-t nginx-<span class="keyword">and-ruby </span>.</span><br></pre></td></tr></table></figure>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">$ </span>docker build -t nginx-<span class="keyword">and</span>-ruby .</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>imageを確認</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$  docker images</span><br><span class="line">REPOSITORY             TAG                            IMAGE ID            CREATED             SIZE</span><br><span class="line">nginx-<span class="keyword">and</span>-ruby         latest                         <span class="number">6</span>b4d5602119f        <span class="number">36</span> seconds ago      <span class="number">382.2</span> MB</span><br></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$  docker images</span><br><span class="line">REPOSITORY             <span class="keyword">TAG</span>                            <span class="title">IMAGE</span> ID            CREATED             SIZE</span><br><span class="line">nginx-<span class="keyword">and</span>-ruby         latest                         <span class="number">6</span>b4d5602119f        <span class="number">36</span> seconds ago      <span class="number">382.2</span> MB</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>Dockerのコンテナを起動します。<br>image_idは docker imagesのIMAGE IDを指定します。<br>今回の場合は6b4d5602119fです(場合により変わります)。</p>
-<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run <span class="params">--privileged</span> -d <span class="params">--name</span> nginx-and-ruby image_id <span class="string">/sbin/init</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker run <span class="params">--privileged</span> -d <span class="params">--name</span> nginx-and-ruby image_id <span class="string">/sbin/init</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>–privilegedはCentOS7のimageでserviceコマンドを起動するおまじないです。<br><a href="http://shoyan.github.io/blog/2016/04/14/start-systemctl-on-docker/" target="_blank" rel="noopener">Dockerでsystemctlでserviceが起動できない</a></p>
+<p>–privilegedはCentOS7のimageでserviceコマンドを起動するおまじないです。<br><a href="http://shoyan.github.io/blog/2016/04/14/start-systemctl-on-docker/">Dockerでsystemctlでserviceが起動できない</a></p>
 <p>起動したDockerのコンテナにログインします。</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker exec -<span class="keyword">it </span>nginx-<span class="keyword">and-ruby </span><span class="keyword">bash</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker exec -it nginx-<span class="keyword">and-ruby </span><span class="keyword">bash</span></span><br><span class="line"><span class="keyword"></span></span><br></pre></td></tr></table></figure>
 
 <p>ログインしたらDockerコンテナでChefを実行します。</p>
-<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># chef-client -z -j nodes/bootstrap.json -c client.rb</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">chef-client -z -j nodes/bootstrap.json -c client.rb</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>Dockerを使うとChefを実行→コンテナを消す→真っさらな状態からもう一度Chefを流すというサイクルが気軽にできるので便利です。</p>
 <p>もう一度真っさらな状態のコンテナを作りたいときは、以下のようにします。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> doker ps</span><br><span class="line">CONTAINER ID        IMAGE                  COMMAND              CREATED             STATUS                        PORTS                                           NAMES</span><br><span class="line"><span class="number">17</span>a11c4b6ce8        <span class="number">6</span>b4d5602119f           <span class="string">"/sbin/init"</span>         <span class="number">2</span> hours ago         Exited (<span class="number">137</span>) <span class="number">12</span> seconds ago                                                   nginx<span class="operator">-and</span><span class="literal">-ruby</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Dockerコンテナを消す</span></span><br><span class="line"><span class="variable">$</span> docker rm <span class="operator">-f</span> <span class="number">17</span>a11c4b6ce8</span><br><span class="line"></span><br><span class="line"><span class="comment"># dockerコンテナを起動する</span></span><br><span class="line"><span class="variable">$</span> docker run -<span class="literal">-privileged</span> <span class="literal">-d</span> -<span class="literal">-name</span> nginx<span class="operator">-and</span><span class="literal">-ruby</span> image_id /sbin/init</span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> doker <span class="built_in">ps</span></span><br><span class="line">CONTAINER ID        IMAGE                  COMMAND              CREATED             STATUS                        PORTS                                           NAMES</span><br><span class="line"><span class="number">17</span>a11c4b6ce8        <span class="number">6</span>b4d5602119f           <span class="string">&quot;/sbin/init&quot;</span>         <span class="number">2</span> hours ago         Exited (<span class="number">137</span>) <span class="number">12</span> seconds ago                                                   nginx<span class="operator">-and</span><span class="literal">-ruby</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Dockerコンテナを消す</span></span><br><span class="line"><span class="variable">$</span> docker <span class="built_in">rm</span> <span class="operator">-f</span> <span class="number">17</span>a11c4b6ce8</span><br><span class="line"></span><br><span class="line"><span class="comment"># dockerコンテナを起動する</span></span><br><span class="line"><span class="variable">$</span> docker run <span class="literal">--privileged</span> <span class="literal">-d</span> <span class="literal">--name</span> nginx<span class="operator">-and</span><span class="literal">-ruby</span> image_id /sbin/init</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p><a href="https://github.com/shoyan/nginx-and-ruby-on-docker" target="_blank" rel="noopener">https://github.com/shoyan/nginx-and-ruby-on-docker</a></p>
+<p><a href="https://github.com/shoyan/nginx-and-ruby-on-docker">https://github.com/shoyan/nginx-and-ruby-on-docker</a></p>
 
 </article>
 

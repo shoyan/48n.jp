@@ -74,7 +74,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                           }
                         }
                         </script>
-  <meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
+  <meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
 </head>
 
   <body>
@@ -191,12 +191,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
   </div>
   <div class="sharing">
-  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" target="_blank" rel="noopener" class="twitter-share-button" data-via="48njp" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-  <a href="https://b.hatena.ne.jp/entry/" target="_blank" rel="noopener" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="48njp" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <a href="https://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 </div>
   
   
-  <p>GMOペパボで開催された<a href="http://osan.pepabo.com/" target="_blank" rel="noopener">ハッカソン</a>に参加するため東京へ行ってきました。<br>チームを作って、2日でプロダクトを作るというイベントです。</p>
+  <p>GMOペパボで開催された<a href="http://osan.pepabo.com/">ハッカソン</a>に参加するため東京へ行ってきました。<br>チームを作って、2日でプロダクトを作るというイベントです。</p>
 <h2 id="チームについて"><a href="#チームについて" class="headerlink" title="チームについて"></a>チームについて</h2><p><img src="http://img-cdn.jg.jugem.jp/b8d/927914/20170809_1578727.jpg" alt="チーム"></p>
 <p>エンジニア2名とデザイナー、カスタマーサービスの4名で構成されています（農家ではありませんよ！）。<br>チームメンバーについては、なるべく異なった技能を持つ人で構成しようと考えました。<br>チーム名はすいかとかぼちゃです。開催されたのが8月だったので、夏っぽい名前をコンセプトとしましたが、深い意味はありません。</p>
 <h2 id="お産合宿で作ったもの"><a href="#お産合宿で作ったもの" class="headerlink" title="お産合宿で作ったもの"></a>お産合宿で作ったもの</h2><p>チャットBotを作りました。チャットBotにした理由は、チャットBotの作成に関するサービス、オープンソースが充実してきたことです。これらを利用すればそれほどコードを書かずにチャットBotの実装が可能だと考えました。また、どれほどの労力でどれほどのものが作れるかといったことを実際に検証してみたかったという理由もあります。</p>
@@ -207,8 +207,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p><img src="/images/osan02.jpg" alt="osan02"></p>
 <p>19時の飛行機で福岡へ帰りました。</p>
 <h2 id="チャットBotを作って感じた課題"><a href="#チャットBotを作って感じた課題" class="headerlink" title="チャットBotを作って感じた課題"></a>チャットBotを作って感じた課題</h2><p>実際にチャットBotを作ってみることで、どういうことができて、どこが課題なのかを肌で感じることができました。</p>
-<h3 id="ウェブベースのチャットBotの開発コスト"><a href="#ウェブベースのチャットBotの開発コスト" class="headerlink" title="ウェブベースのチャットBotの開発コスト"></a>ウェブベースのチャットBotの開発コスト</h3><p>今回はウェブブラウザで動作するチャットBotを作ったのですが、チャットのUI自体を自前で用意する必要がありました。LINEやFacebook Messengerのプラットフォーム上で動くボットであればチャットの画面自体の開発が必要ないため、開発コストを削減できます。この点から各種のプラットフォームで動くボットが主流となっていると考えられます。とはいえ、WebベースのチャットBotの需要はあるでしょうから、WebベースのチャットBotを簡単に作れるサービスの需要はあると思います。ちなみに今回は<a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js</a>+<a href="https://socket.io/" target="_blank" rel="noopener">Socket.io</a>と<a href="https://github.com/botui/botui" target="_blank" rel="noopener">BotUI</a>を使って実装しました。</p>
-<h3 id="回答精度の問題"><a href="#回答精度の問題" class="headerlink" title="回答精度の問題"></a>回答精度の問題</h3><p>質問の解析、返答に関してはユーザーローカルが提供している<a href="http://ai.userlocal.jp/" target="_blank" rel="noopener">人工知能チャットボットのAPI</a>を利用しました。<br>単純なキーワード一致であれば対応できますが、少し複雑な質問になると全然関係のない応答を返したりと、精度の点ではまだまだといった印象でした。</p>
+<h3 id="ウェブベースのチャットBotの開発コスト"><a href="#ウェブベースのチャットBotの開発コスト" class="headerlink" title="ウェブベースのチャットBotの開発コスト"></a>ウェブベースのチャットBotの開発コスト</h3><p>今回はウェブブラウザで動作するチャットBotを作ったのですが、チャットのUI自体を自前で用意する必要がありました。LINEやFacebook Messengerのプラットフォーム上で動くボットであればチャットの画面自体の開発が必要ないため、開発コストを削減できます。この点から各種のプラットフォームで動くボットが主流となっていると考えられます。とはいえ、WebベースのチャットBotの需要はあるでしょうから、WebベースのチャットBotを簡単に作れるサービスの需要はあると思います。ちなみに今回は<a href="https://nodejs.org/en/">Node.js</a>+<a href="https://socket.io/">Socket.io</a>と<a href="https://github.com/botui/botui">BotUI</a>を使って実装しました。</p>
+<h3 id="回答精度の問題"><a href="#回答精度の問題" class="headerlink" title="回答精度の問題"></a>回答精度の問題</h3><p>質問の解析、返答に関してはユーザーローカルが提供している<a href="http://ai.userlocal.jp/">人工知能チャットボットのAPI</a>を利用しました。<br>単純なキーワード一致であれば対応できますが、少し複雑な質問になると全然関係のない応答を返したりと、精度の点ではまだまだといった印象でした。</p>
 <h2 id="終わりに"><a href="#終わりに" class="headerlink" title="終わりに"></a>終わりに</h2><p>チャットBotの開発に関しては多くのサービスやソフトウェアが提供されており、まさにチャットBot戦国時代といったところでしょうか。このように、チャットBotを作る環境は整ってきつつあります。しかし、自然な会話ができるチャットBotを誰もが作れるわけではなく、まだまだノウハウやコツが必要だと感じます。</p>
 
 </article>
