@@ -1,11 +1,11 @@
 https://48n.jp/googlef7e82fffb075bee5.html
-https://48n.jp/blog/2026/01/04/strong-engineers-go-silent/
-https://48n.jp/blog/2026/01/21/table-design-patterns/
 https://48n.jp/blog/2025/11/28/translation-type-check-mechanism/
 https://48n.jp/blog/2025/06/05/slack-block-kit-detailed-guide/
-https://48n.jp/blog/2025/07/02/git-japanese-filename-encoding-fix/
+https://48n.jp/blog/2026/01/04/strong-engineers-go-silent/
+https://48n.jp/blog/2026/01/21/table-design-patterns/
 https://48n.jp/blog/2025/05/30/go-1-24-3-build-error/
 https://48n.jp/blog/2025/05/30/go-error-handling-best-practice/
+https://48n.jp/blog/2025/07/02/git-japanese-filename-encoding-fix/
 https://48n.jp/blog/2025/09/17/go-interface-implementation-check/
 https://48n.jp/blog/2025/06/04/go-slack-notification-guide/
 https://48n.jp/blog/2026/01/10/freelance-contract-risks/

@@ -11,24 +11,6 @@
   </url>
   
   <url>
-    <loc>https://48n.jp/blog/2026/01/04/strong-engineers-go-silent/</loc>
-    
-    <lastmod>2026-01-23</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://48n.jp/blog/2026/01/21/table-design-patterns/</loc>
-    
-    <lastmod>2026-01-23</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://48n.jp/blog/2025/11/28/translation-type-check-mechanism/</loc>
     
     <lastmod>2026-01-23</lastmod>
@@ -47,7 +29,16 @@
   </url>
   
   <url>
-    <loc>https://48n.jp/blog/2025/07/02/git-japanese-filename-encoding-fix/</loc>
+    <loc>https://48n.jp/blog/2026/01/04/strong-engineers-go-silent/</loc>
+    
+    <lastmod>2026-01-23</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://48n.jp/blog/2026/01/21/table-design-patterns/</loc>
     
     <lastmod>2026-01-23</lastmod>
     
@@ -66,6 +57,15 @@
   
   <url>
     <loc>https://48n.jp/blog/2025/05/30/go-error-handling-best-practice/</loc>
+    
+    <lastmod>2026-01-23</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://48n.jp/blog/2025/07/02/git-japanese-filename-encoding-fix/</loc>
     
     <lastmod>2026-01-23</lastmod>
     
