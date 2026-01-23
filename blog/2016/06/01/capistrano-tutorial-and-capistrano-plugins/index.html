@@ -213,7 +213,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">bundle <span class="built_in">exec</span> <span class="built_in">cap</span> install</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p><code>config/deploy.rb</code>と<code>config/deploy/{production, staging}.rb</code> が作成されているので適宜編集します。</p>
-<p>config/deploy.rb</p>
+<p>config&#x2F;deploy.rb</p>
 <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># config valid only <span class="keyword">for</span> current <span class="keyword">version</span> of Capistrano</span><br><span class="line">lock &#x27;3.5.0&#x27;</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span> :application, ‘<span class="keyword">app</span>&#x27;</span><br><span class="line"><span class="keyword">set</span> :repo_url, &#x27;git@github.com:shoyan/shoyan.git&#x27;</span><br><span class="line"></span><br><span class="line">ask :branch, `git rev-<span class="keyword">parse</span> --abbrev-ref HEAD`.chomp</span><br><span class="line"><span class="keyword">set</span> :deploy_to, &#x27;/<span class="keyword">var</span>/www/<span class="keyword">app</span>&#x27;</span><br><span class="line"><span class="keyword">set</span> :scm, :git</span><br><span class="line"><span class="keyword">set</span> :<span class="keyword">format</span>, :airbrussh</span><br><span class="line"><span class="keyword">set</span> :keep_releases, 5</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -226,7 +226,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <li><strong>keep_releases</strong>: 過去にデプロイしたアプリケーションを何世代保持するか</li>
 </ul>
 <p>デプロイするサーバーを定義します。<br>事前に鍵認証でsshログインできるようにしておくととスムーズです。</p>
-<p>config/deploy/production.rb</p>
+<p>config&#x2F;deploy&#x2F;production.rb</p>
 <figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">role</span> <span class="title">:app</span>, %w&#123;shoyan@server001.example.jp shoyan@server002.example.jp&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h2 id="Capistranoでデプロイする"><a href="#Capistranoでデプロイする" class="headerlink" title="Capistranoでデプロイする"></a>Capistranoでデプロイする</h2><p>以下のコマンドでデプロイします。</p>
@@ -235,7 +235,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h2 id="便利なCapistranoプラグイン"><a href="#便利なCapistranoプラグイン" class="headerlink" title="便利なCapistranoプラグイン"></a>便利なCapistranoプラグイン</h2><p>Capistranoには様々なプラグインがあります。<br>ここでは私が使っているプラグインを紹介します。</p>
 <h3 id="capistrano-github-releases"><a href="#capistrano-github-releases" class="headerlink" title="capistrano-github-releases"></a>capistrano-github-releases</h3><p>デプロイ時にタグをつけたり、PRにリリースコメントをつけれます。</p>
 <p><a href="https://github.com/linyows/capistrano-github-releases">https://github.com/linyows/capistrano-github-releases</a></p>
-<h3 id="capistrano-slack-notification"><a href="#capistrano-slack-notification" class="headerlink" title="capistrano/slack_notification"></a>capistrano/slack_notification</h3><p>デプロイ時にSlackに通知できるようになります。</p>
+<h3 id="capistrano-slack-notification"><a href="#capistrano-slack-notification" class="headerlink" title="capistrano&#x2F;slack_notification"></a>capistrano&#x2F;slack_notification</h3><p>デプロイ時にSlackに通知できるようになります。</p>
 <p><a href="https://github.com/linyows/capistrano-slack_notification">https://github.com/linyows/capistrano-slack_notification</a></p>
 <h3 id="capistrano-banner"><a href="#capistrano-banner" class="headerlink" title="capistrano_banner"></a>capistrano_banner</h3><p>デプロイ時にASCIIアートを設定できます。<br>また、productionにデプロイする前に確認をしてくれるようになります。</p>
 <p><a href="https://github.com/holysugar/capistrano_banner">https://github.com/holysugar/capistrano_banner</a></p>

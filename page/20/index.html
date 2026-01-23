@@ -229,7 +229,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p>これで準備は整いました。</p>
 <p>Kramdown のドキュメントに書かれているサンプルを表示します。</p>
-<p>$$<br>\begin{align<em>}<br>  &amp; \phi(x,y) = \phi \left(\sum_{i=1}^n x_ie_i, \sum_{j=1}^n y_je_j \right)<br>  = \sum_{i=1}^n \sum_{j=1}^n x_i y_j \phi(e_i, e_j) = \<br>  &amp; (x_1, \ldots, x_n) \left( \begin{array}{ccc}<br>      \phi(e_1, e_1) &amp; \cdots &amp; \phi(e_1, e_n) \<br>      \vdots &amp; \ddots &amp; \vdots \<br>      \phi(e_n, e_1) &amp; \cdots &amp; \phi(e_n, e_n)<br>    \end{array} \right)<br>  \left( \begin{array}{c}<br>      y_1 \<br>      \vdots \<br>      y_n<br>    \end{array} \right)<br>\end{align</em>}<br>$$</p>
+<p>$$<br>\begin{align*}<br>  &amp; \phi(x,y) &#x3D; \phi \left(\sum_{i&#x3D;1}^n x_ie_i, \sum_{j&#x3D;1}^n y_je_j \right)<br>  &#x3D; \sum_{i&#x3D;1}^n \sum_{j&#x3D;1}^n x_i y_j \phi(e_i, e_j) &#x3D; \<br>  &amp; (x_1, \ldots, x_n) \left( \begin{array}{ccc}<br>      \phi(e_1, e_1) &amp; \cdots &amp; \phi(e_1, e_n) \<br>      \vdots &amp; \ddots &amp; \vdots \<br>      \phi(e_n, e_1) &amp; \cdots &amp; \phi(e_n, e_n)<br>    \end{array} \right)<br>  \left( \begin{array}{c}<br>      y_1 \<br>      \vdots \<br>      y_n<br>    \end{array} \right)<br>\end{align*}<br>$$</p>
 <figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$$</span><br><span class="line"><span class="string">\begin&#123;align*&#125;</span></span><br><span class="line">  &amp; <span class="string">\phi(x,y)</span> = <span class="string">\phi</span> <span class="string">\left(\sum_&#123;i=1&#125;^n</span> x_ie_i, <span class="string">\sum_&#123;j=1&#125;^n</span> y_je_j <span class="string">\right)</span></span><br><span class="line">  = <span class="string">\sum_&#123;i=1&#125;^n</span> <span class="string">\sum_&#123;j=1&#125;^n</span> x_i y_j <span class="string">\phi(e_i,</span> e_j) = <span class="string">\\</span></span><br><span class="line">  &amp; (x_1, <span class="string">\ldots,</span> x_n) <span class="string">\left(</span> <span class="string">\begin&#123;array&#125;&#123;ccc&#125;</span></span><br><span class="line">      <span class="string">\phi(e_1,</span> e_1) &amp; <span class="string">\cdots</span> &amp; <span class="string">\phi(e_1,</span> e_n) <span class="string">\\</span></span><br><span class="line">      <span class="string">\vdots</span> &amp; <span class="string">\ddots</span> &amp; <span class="string">\vdots</span> <span class="string">\\</span></span><br><span class="line">      <span class="string">\phi(e_n,</span> e_1) &amp; <span class="string">\cdots</span> &amp; <span class="string">\phi(e_n,</span> e_n)</span><br><span class="line">    <span class="string">\end&#123;array&#125;</span> <span class="string">\right)</span></span><br><span class="line">  <span class="string">\left(</span> <span class="string">\begin&#123;array&#125;&#123;c&#125;</span></span><br><span class="line">      y_1 <span class="string">\\</span></span><br><span class="line">      <span class="string">\vdots</span> <span class="string">\\</span></span><br><span class="line">      y_n</span><br><span class="line">    <span class="string">\end&#123;array&#125;</span> <span class="string">\right)</span></span><br><span class="line"><span class="string">\end&#123;align*&#125;</span></span><br><span class="line">$$</span><br></pre></td></tr></table></figure>
 
 <p>基本的な書式は以下のようになります。</p>
@@ -329,7 +329,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <ul>
 <li><a href="https://circleci.com/docs/environment-variables/#custom">https://circleci.com/docs/environment-variables/#custom</a></li>
 </ul>
-<p>また、通知ではなく単に結果を出力する場合は、<a href="https://github.com/packsaddle/ruby-saddler-reporter-text">saddler/reporter/text</a>を指定します。</p>
+<p>また、通知ではなく単に結果を出力する場合は、<a href="https://github.com/packsaddle/ruby-saddler-reporter-text">saddler&#x2F;reporter&#x2F;text</a>を指定します。</p>
 <figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">bundle</span> exec saddler re<span class="keyword">port</span> \</span><br><span class="line">  <span class="comment">--require saddler/reporter/text \</span></span><br><span class="line">  <span class="comment">--reporter Saddler::Reporter::Text</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>以下は、出力があった場合はエラーにする例です。</p>
@@ -348,7 +348,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p><del>PRもしているので直ることに期待です。</del><br>Mergeいただきました。</p>
 <ul>
-<li><a href="https://github.com/packsaddle/ruby-checkstyle_filter-git/pull/11">https://github.com/packsaddle/ruby-checkstyle_filter-git/pull/11</a></li>
+<li><a href="https://github.com/packsaddle/ruby-checkstyle_filter-git/pull/11">https://github.com/packsaddle/ruby-checkstyle_filter-git&#x2F;pull&#x2F;11</a></li>
 </ul>
 <p>サンプルとしてGithubにphp-syntax-checkというリポジトリを作成しているので参考にしてください。</p>
 <ul>
@@ -393,7 +393,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ name=<span class="string">&quot;$(hostname)&quot;</span></span><br><span class="line">$ echo $name</span><br><span class="line">=&gt; shoyan-pc</span><br><span class="line"></span><br><span class="line"># 以下も同じです。</span><br><span class="line"></span><br><span class="line">$ name=`hostname`</span><br><span class="line">$ echo $name</span><br><span class="line">=&gt; shoyan-pc</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h2 id="if-と-test-コマンドの合わせ技"><a href="#if-と-test-コマンドの合わせ技" class="headerlink" title="if と test コマンドの合わせ技"></a>if と test コマンドの合わせ技</h2><p>ifとtestコマンドを使う場合はtestコマンドを省略した<code>[]</code>がよく使われます。</p>
-<p>[ 文字列1 = 文字列2 ]<br>[ 数値1 オプション 数値2 ]<br>[ オプション 評価対象 ]  </p>
+<p>[ 文字列1 &#x3D; 文字列2 ]<br>[ 数値1 オプション 数値2 ]<br>[ オプション 評価対象 ]  </p>
 <p>[ の直後と ] の直前には必ず半角スペースが必要です (無いと正常に動作しません)。</p>
 <p>ちなみに比較は <code>==</code> でなくて <code>=</code>です。</p>
 <p>シェルの比較は文字列の比較と数値の比較があり、それぞれに対応するオペレーターがあります。<br>そのせいで複雑になっている印象があります。</p>
@@ -431,7 +431,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
 <li><a href="http://doi-t.hatenablog.com/entry/2013/12/08/161929">シェル変数のデフォルト値を設定する、未初期化時にエラーメッセージを出力してスクリプトを強制終了する - 百日半狂乱</a></li>
-<li><a href="http://shellscript.sunone.me/if_and_test.html#数値の比較:ed775c34e441eb16a91481d087cc1a74">if 文と test コマンド - UNIX &amp; Linux コマンド・シェルスクリプト リファレンス</a></li>
+<li><a href="http://shellscript.sunone.me/if_and_test.html#%E6%95%B0%E5%80%A4%E3%81%AE%E6%AF%94%E8%BC%83:ed775c34e441eb16a91481d087cc1a74">if 文と test コマンド - UNIX &amp; Linux コマンド・シェルスクリプト リファレンス</a></li>
 </ul>
 
         </div>

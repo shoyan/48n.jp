@@ -195,22 +195,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   
   
   <p>Rails4でlibディレクトリに作ったライブラリを読み込むときはautoloadを利用すると便利です。<br>autoloadを利用するにはファイル名とクラス名がautoloadのルールに則っている必要があります。  </p>
-<h2 id="autoload-のパスを設定する"><a href="#autoload-のパスを設定する" class="headerlink" title="autoload のパスを設定する"></a>autoload のパスを設定する</h2><p>まず config/application.rb に autoload 用の設定を行います。</p>
-<p>config/application.rb</p>
+<h2 id="autoload-のパスを設定する"><a href="#autoload-のパスを設定する" class="headerlink" title="autoload のパスを設定する"></a>autoload のパスを設定する</h2><p>まず config&#x2F;application.rb に autoload 用の設定を行います。</p>
+<p>config&#x2F;application.rb</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#to auto load lib/directory</span></span><br><span class="line">config.autoload_paths += <span class="string">%W(<span class="subst">#&#123;config.root&#125;</span>/lib)</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>これで、lib ディレクトリ以下のファイルが、以降に説明するディレクトリ・ファイル構成と命名の規約に従うと、自動的に読み込まれるようになります。</p>
 <h2 id="lib-ディレクトリ以下のファイル"><a href="#lib-ディレクトリ以下のファイル" class="headerlink" title="lib ディレクトリ以下のファイル"></a>lib ディレクトリ以下のファイル</h2><p>ファイル名は小文字、単語の区切りは _ (アンダースコア)にする。<br>クラス名はアンダースコアの区切りでキャメルケースにする。</p>
 <p>以下はファイル名とクラス名の例です。</p>
-<p><strong>lib/hoge_fuga.rb</strong></p>
+<p><strong>lib&#x2F;hoge_fuga.rb</strong></p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">HogeFuga</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>lib/hoge ディレクトリにファイルを置くこともできます。</p>
-<p><strong>lib/hoge/fuga.rb</strong></p>
+<p>lib&#x2F;hoge ディレクトリにファイルを置くこともできます。</p>
+<p><strong>lib&#x2F;hoge&#x2F;fuga.rb</strong></p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> <span class="title class_">Hoge</span></span><br><span class="line">  <span class="keyword">class</span> <span class="title class_">Fuga</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以下の様にも書けます。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Hoge::Fuga</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>以下の様な書き方もできます。</p>
-<p><strong>lib/hoge_moge/fuga.rb</strong></p>
+<p><strong>lib&#x2F;hoge_moge&#x2F;fuga.rb</strong></p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> <span class="title class_">HogeMoge</span></span><br><span class="line">  <span class="keyword">class</span> <span class="title class_">Fuga</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># もしくは</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">HogeMoge::Fuga</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 </article>

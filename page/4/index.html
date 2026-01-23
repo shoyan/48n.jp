@@ -177,7 +177,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2025-05-30T03:33:47.000Z" itemprop="datepublished">
             2025/05/30
           </time>
-          <time datetime="2026-01-23T00:56:31.261Z" itemprop="modified">
+          <time datetime="2026-01-23T00:56:57.520Z" itemprop="modified">
             (更新日: 2026/01/23)
           </time>
         </div>
@@ -210,7 +210,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h3 id="4-カスタムエラー型の作成"><a href="#4-カスタムエラー型の作成" class="headerlink" title="4. カスタムエラー型の作成"></a>4. カスタムエラー型の作成</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> NotFoundError <span class="keyword">struct</span> &#123;</span><br><span class="line">    ID <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(e *NotFoundError)</span></span> Error() <span class="type">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> fmt.Sprintf(<span class="string">&quot;user %s not found&quot;</span>, e.ID)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>Goでは、<code>Error()</code>メソッドを実装した任意の型をエラーとして使用できます。カスタムエラー型を作成することで、エラーに追加情報（この例では<code>ID</code>）を含めることができ、より詳細なエラーハンドリングが可能になります。</p>
-<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>Goのエラー判定では、==演算子による比較はラップされたエラーに対して正しく動作しません。<br>そのため、Go1.13以降で導入された<code>errors.Is</code>や<code>errors.As</code>を活用することで、より安全かつ柔軟なエラーハンドリングが可能になります。<br>エラー処理の品質向上のため、ぜひこれらの手法を取り入れてみてください。</p>
+<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>Goのエラー判定では、&#x3D;&#x3D;演算子による比較はラップされたエラーに対して正しく動作しません。<br>そのため、Go1.13以降で導入された<code>errors.Is</code>や<code>errors.As</code>を活用することで、より安全かつ柔軟なエラーハンドリングが可能になります。<br>エラー処理の品質向上のため、ぜひこれらの手法を取り入れてみてください。</p>
 
         </div>
       </div>
@@ -352,9 +352,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </ul>
 <div class="memo">この２つが整うまではお金をかけてはいけません。無駄な投資になってしまうリスクがあるからです。</div>
 
-<h3 id="学習する下地をつくる"><a href="#学習する下地をつくる" class="headerlink" title="学習する下地をつくる"></a>学習する下地をつくる</h3><p>どうやって学習する下地をつくるかですが、<strong>HTML/CSSの学習</strong>からはじめましょう。</p>
+<h3 id="学習する下地をつくる"><a href="#学習する下地をつくる" class="headerlink" title="学習する下地をつくる"></a>学習する下地をつくる</h3><p>どうやって学習する下地をつくるかですが、<strong>HTML&#x2F;CSSの学習</strong>からはじめましょう。</p>
 <p>最初からPHPなどのプログラミング言語を学習した方が効率がいいというインフルエンサーもいますが<a href="#ref4">*4</a>、パソコンに慣れていない人はプログラミング言語をインストールしたり、実行したりすることが難しいので、そこで詰みます。</p>
-<p>また、ターミナルやブラウザーに表示されているプログラムの実行結果をみて、楽しいと感じる人はあまりいないでしょう。それよりも、華やかなHTML/CSSの画面をみる方がやりがいを感じられるものです。</p>
+<p>また、ターミナルやブラウザーに表示されているプログラムの実行結果をみて、楽しいと感じる人はあまりいないでしょう。それよりも、華やかなHTML&#x2F;CSSの画面をみる方がやりがいを感じられるものです。</p>
 <div class="memo">パソコンの操作に慣れていない人はHTML/CSSから始めましょう。具体的な方法については、別の記事で説明したいと思います。</div>
 
 <h3 id="プログラミングが自分にあっているのかを確認する"><a href="#プログラミングが自分にあっているのかを確認する" class="headerlink" title="プログラミングが自分にあっているのかを確認する"></a>プログラミングが自分にあっているのかを確認する</h3><p>最初の段階で必要なのは、パソコンの操作に慣れつつ<strong>プログラミングが自分にあっているのかを確認する</strong>ことです。特に<strong>プログラミングの学習が楽しい</strong>と感じられるかどうかが重要です。</p>
@@ -419,7 +419,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p><code>hexo server</code> を実行後に<code>http://localhost:4000</code> にアクセスするとブログが表示されます。</p>
 <h3 id="テーマの作成がしやすい"><a href="#テーマの作成がしやすい" class="headerlink" title="テーマの作成がしやすい"></a>テーマの作成がしやすい</h3><p>Hexoにはテーマ作成をサポートするツールが用意されています。<br><a href="https://www.npmjs.com/package/generator-hexo-theme" target="_blank" class="outbound">generator-hexo-theme</a>を使えば簡単にブログテーマの雛形を用意することができます。<br>ブログテーマは自作したのですが、その雛形はgenerator-hexo-themeで作成しました。</p>
-<h3 id="CI-CDも簡単"><a href="#CI-CDも簡単" class="headerlink" title="CI/CDも簡単"></a>CI/CDも簡単</h3><p>masterにマージしたら自動的にデプロイする設定を入れています。そのあたりも公式のマニュアルが用意してあり、手順にそって設定していくだけでCI/CD環境を作ることができます。私はGitHub Pagesを使っており、サーバー費用0円でブログを運営しています。コストパフォーマンスは最高ですね。</p>
+<h3 id="CI-CDも簡単"><a href="#CI-CDも簡単" class="headerlink" title="CI&#x2F;CDも簡単"></a>CI&#x2F;CDも簡単</h3><p>masterにマージしたら自動的にデプロイする設定を入れています。そのあたりも公式のマニュアルが用意してあり、手順にそって設定していくだけでCI&#x2F;CD環境を作ることができます。私はGitHub Pagesを使っており、サーバー費用0円でブログを運営しています。コストパフォーマンスは最高ですね。</p>
 <ul>
 <li><a href="https://hexo.io/docs/github-pages.html" target="_blank" class="outbound">GitHub Pages | Hexo</a></li>
 </ul>

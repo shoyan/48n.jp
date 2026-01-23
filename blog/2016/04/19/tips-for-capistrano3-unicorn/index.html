@@ -194,7 +194,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
   
   
-  <p>capistrano3-unicornとは、capistranoでデプロイしたときにunicornのstart/restartをしてくれるgemです。<br><a href="https://github.com/tablexi/capistrano3-unicorn">https://github.com/tablexi/capistrano3-unicorn</a></p>
+  <p>capistrano3-unicornとは、capistranoでデプロイしたときにunicornのstart&#x2F;restartをしてくれるgemです。<br><a href="https://github.com/tablexi/capistrano3-unicorn">https://github.com/tablexi/capistrano3-unicorn</a></p>
 <h3 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h3><p><code>Gemfile</code>に以下を追記して<code>bundle install</code>します。</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">group <span class="symbol">:development</span> <span class="keyword">do</span></span><br><span class="line">  gem <span class="string">&#x27;capistrano3-unicorn&#x27;</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -209,7 +209,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>unicorn.rbがデフォルトでは<code>CURRENT_PATH/config/unicorn/RAILS_ENV.rb</code>に設定されています。<br>sinatraなどのrails以外のアプリケーションの場合は、RAILS_ENVがセットされていないため、<code>CURRENT_PATH/config/unicorn/.rb</code>のようになってしまいます。<br>ですので、明示的に設定が必要です。<br>しかし、設定方法についてドキュメントに明記されてないので少し戸惑いました。</p>
 <p>設定はソースを参考にしました。</p>
 <p><a href="https://github.com/tablexi/capistrano3-unicorn/blob/master/lib/capistrano3/tasks/unicorn.rake#L4">https://github.com/tablexi/capistrano3-unicorn/blob/master/lib/capistrano3/tasks/unicorn.rake#L4</a></p>
-<h4 id="unicorn-config-pathの設定"><a href="#unicorn-config-pathの設定" class="headerlink" title="unicorn_config_pathの設定"></a>unicorn_config_pathの設定</h4><p>以下のようにlambdaを使って設定します。<br>config/unicorn.rbをunicorn_config_pathとして設定しています。<br>config/deploy.rb</p>
+<h4 id="unicorn-config-pathの設定"><a href="#unicorn-config-pathの設定" class="headerlink" title="unicorn_config_pathの設定"></a>unicorn_config_pathの設定</h4><p>以下のようにlambdaを使って設定します。<br>config&#x2F;unicorn.rbをunicorn_config_pathとして設定しています。<br>config&#x2F;deploy.rb</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set <span class="symbol">:unicorn_config_path</span>, -&gt; &#123; <span class="title class_">File</span>.join(current_path, <span class="string">&quot;config&quot;</span>, <span class="string">&quot;unicorn.rb&quot;</span>) &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 </article>

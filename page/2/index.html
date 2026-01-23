@@ -177,7 +177,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2025-09-17T03:30:00.000Z" itemprop="datepublished">
             2025/09/17
           </time>
-          <time datetime="2026-01-23T00:56:31.261Z" itemprop="modified">
+          <time datetime="2026-01-23T00:56:57.520Z" itemprop="modified">
             (更新日: 2026/01/23)
           </time>
         </div>
@@ -259,7 +259,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <a href="/blog/2025/08/07/code-complexity-cyclomatic-complexity-guide/">コードの複雑度を測る：循環的複雑度（Cyclomatic Complexity）の計算方法と実践ガイド</a>
         </h1>
         <div class="content">
-          <p>コードの品質を測る指標として「複雑度」がありますが、特に<strong>循環的複雑度（Cyclomatic Complexity）</strong>は、コードの保守性やバグの発生リスクを定量的に評価できる指標です。</p>
+          <p>コードの品質を測る指標として「複雑度」がありますが、特に**循環的複雑度（Cyclomatic Complexity）**は、コードの保守性やバグの発生リスクを定量的に評価できる指標です。</p>
 <p>この記事では、循環的複雑度の計算方法、複雑度を削減する方法、実践的な測定ツールについて、詳しく解説していきます。</p>
 <h2 id="循環的複雑度（Cyclomatic-Complexity）とは"><a href="#循環的複雑度（Cyclomatic-Complexity）とは" class="headerlink" title="循環的複雑度（Cyclomatic Complexity）とは"></a>循環的複雑度（Cyclomatic Complexity）とは</h2><p>循環的複雑度は、プログラムの制御フローの分岐の数から算出される複雑度の指標です。この値が高いほど、コードは複雑で理解しにくく、バグが発生しやすくなります。</p>
 <h3 id="基本計算式"><a href="#基本計算式" class="headerlink" title="基本計算式"></a>基本計算式</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">M</span> = E - N + <span class="number">2</span>P</span><br></pre></td></tr></table></figure>
@@ -281,7 +281,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <ul>
 <li>分岐・ループの数：3</li>
-<li>複雑度：3 + 1 = <strong>4</strong></li>
+<li>複雑度：3 + 1 &#x3D; <strong>4</strong></li>
 </ul>
 <p>上記の例のように分岐を繰り返しを数えて+1をすれば概算で計算することができます。</p>
 <h3 id="例2：基本計算式を使った計算方法"><a href="#例2：基本計算式を使った計算方法" class="headerlink" title="例2：基本計算式を使った計算方法"></a>例2：基本計算式を使った計算方法</h3><p>次は <code>M = E - N + 2P</code> を使った計算方法を見ていきましょう。</p>
@@ -292,13 +292,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p><strong>計算：</strong><br>次に制御フローグラフからノードの数、辺の数を数えます。</p>
 <ul>
-<li>N（ノード数）= 3（Start, print, End）</li>
-<li>E（辺の数）= 2（Start→print, print→End）</li>
-<li>P（連結成分数）= 1</li>
+<li>N（ノード数）&#x3D; 3（Start, print, End）</li>
+<li>E（辺の数）&#x3D; 2（Start→print, print→End）</li>
+<li>P（連結成分数）&#x3D; 1</li>
 </ul>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">M</span> = E - N + <span class="number">2</span>P</span><br><span class="line"><span class="attribute">M</span> = <span class="number">2</span> - <span class="number">3</span> + <span class="number">2</span>*<span class="number">1</span></span><br><span class="line"><span class="attribute">M</span> = <span class="number">1</span></span><br></pre></td></tr></table></figure>
 
-<p>結果：<strong>複雑度 = 1</strong>（最低値、まったく複雑ではない関数）</p>
+<p>結果：<strong>複雑度 &#x3D; 1</strong>（最低値、まったく複雑ではない関数）</p>
 <h3 id="分岐を追加した場合"><a href="#分岐を追加した場合" class="headerlink" title="分岐を追加した場合"></a>分岐を追加した場合</h3><p>次に分岐を追加した関数の計算をしてみましょう。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">helper</span>(<span class="params">flag</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;do something&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -307,13 +307,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p><strong>計算：</strong></p>
 <ul>
-<li>N（ノード数）= 4（Start, 条件判定, print, End）</li>
-<li>E（辺の数）= 4（Start→条件判定, 条件判定→print, 条件判定→End, print→End）</li>
-<li>P（連結成分数）= 1</li>
+<li>N（ノード数）&#x3D; 4（Start, 条件判定, print, End）</li>
+<li>E（辺の数）&#x3D; 4（Start→条件判定, 条件判定→print, 条件判定→End, print→End）</li>
+<li>P（連結成分数）&#x3D; 1</li>
 </ul>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">M</span> = E - N + <span class="number">2</span>P</span><br><span class="line"><span class="attribute">M</span> = <span class="number">4</span> - <span class="number">4</span> + <span class="number">2</span>*<span class="number">1</span></span><br><span class="line"><span class="attribute">M</span> = <span class="number">2</span></span><br></pre></td></tr></table></figure>
 
-<p>結果：<strong>複雑度 = 2</strong>（分岐を1つ追加しただけで、複雑度は 1 → 2 に増加）</p>
+<p>結果：<strong>複雑度 &#x3D; 2</strong>（分岐を1つ追加しただけで、複雑度は 1 → 2 に増加）</p>
 <h3 id="ネストした条件分岐"><a href="#ネストした条件分岐" class="headerlink" title="ネストした条件分岐"></a>ネストした条件分岐</h3><p>条件分岐がネストした関数の循環的複雑度を計算をしてみます。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">helper</span>(<span class="params">a, b</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (a &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (b &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;A and B are positive&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -322,13 +322,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p><strong>計算：</strong></p>
 <ul>
-<li>N（ノード数）= 5（Start, 条件判定1, 条件判定2, print, End）</li>
-<li>E（辺の数）= 6（Start→条件判定1, 条件判定1→End, 条件判定1→条件判定2, 条件判定2→End, 条件判定2→print, print→End）</li>
-<li>P（連結成分数）= 1</li>
+<li>N（ノード数）&#x3D; 5（Start, 条件判定1, 条件判定2, print, End）</li>
+<li>E（辺の数）&#x3D; 6（Start→条件判定1, 条件判定1→End, 条件判定1→条件判定2, 条件判定2→End, 条件判定2→print, print→End）</li>
+<li>P（連結成分数）&#x3D; 1</li>
 </ul>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">M</span> = E - N + <span class="number">2</span>P</span><br><span class="line"><span class="attribute">M</span> = <span class="number">6</span> - <span class="number">5</span> + <span class="number">2</span>*<span class="number">1</span></span><br><span class="line"><span class="attribute">M</span> = <span class="number">3</span></span><br></pre></td></tr></table></figure>
 
-<p>結果：<strong>複雑度 = 3</strong></p>
+<p>結果：<strong>複雑度 &#x3D; 3</strong></p>
 <h3 id="重要なポイント"><a href="#重要なポイント" class="headerlink" title="重要なポイント"></a>重要なポイント</h3><ul>
 <li>循環的複雑度は「ネストの深さ」ではなく「分岐の総数」で増える</li>
 <li>ただし、ネストが深いと認知的複雑度（Cognitive Complexity）はもっと増える</li>
@@ -373,36 +373,36 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <ul>
 <li><code>main</code> の中には分岐もループもなし</li>
-<li><code>main</code> の複雑度 = 1（最低値）</li>
-<li><code>helper</code> は別に計算（=1）</li>
+<li><code>main</code> の複雑度 &#x3D; 1（最低値）</li>
+<li><code>helper</code> は別に計算（&#x3D;1）</li>
 </ul>
 <h3 id="例2：条件式の中で呼び出し（影響あり）"><a href="#例2：条件式の中で呼び出し（影響あり）" class="headerlink" title="例2：条件式の中で呼び出し（影響あり）"></a>例2：条件式の中で呼び出し（影響あり）</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">isValid</span>(<span class="params">x</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> x &gt; <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params">x</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="title function_">isValid</span>(x)) &#123;   <span class="comment">// 分岐1</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;ok&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><code>isValid()</code> の中身はカウントしないが、<code>if</code> の分岐1つとして <code>main</code> の複雑度に加算される</li>
 <li>複雑度：<ul>
-<li><code>main</code> =  1（if）+ 1 = <strong>2</strong></li>
-<li><code>isValid</code> = 1</li>
+<li><code>main</code> &#x3D;  1（if）+ 1 &#x3D; <strong>2</strong></li>
+<li><code>isValid</code> &#x3D; 1</li>
 </ul>
 </li>
 </ul>
 <h2 id="複雑度を下げる方法"><a href="#複雑度を下げる方法" class="headerlink" title="複雑度を下げる方法"></a>複雑度を下げる方法</h2><h3 id="1-関数の分割"><a href="#1-関数の分割" class="headerlink" title="1. 関数の分割"></a>1. 関数の分割</h3><p>関数を分割することで１つ１つの関数の循環的複雑度は下がります。</p>
-<p><strong>Before（複雑度 = 8）</strong></p>
+<p><strong>Before（複雑度 &#x3D; 8）</strong></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">complexFunction</span>(<span class="params">data</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (data.<span class="property">type</span> === <span class="string">&#x27;A&#x27;</span>) &#123;</span><br><span class="line">    <span class="comment">// 処理A</span></span><br><span class="line">    <span class="keyword">if</span> (data.<span class="property">value</span> &gt; <span class="number">10</span>) &#123;</span><br><span class="line">      <span class="comment">// 処理A-1</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 処理A-2</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (data.<span class="property">type</span> === <span class="string">&#x27;B&#x27;</span>) &#123;</span><br><span class="line">    <span class="comment">// 処理B</span></span><br><span class="line">    <span class="keyword">if</span> (data.<span class="property">value</span> &gt; <span class="number">20</span>) &#123;</span><br><span class="line">      <span class="comment">// 処理B-1</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 処理B-2</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>After（複雑度 = 2）</strong></p>
+<p><strong>After（複雑度 &#x3D; 2）</strong></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">processTypeA</span>(<span class="params">data</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (data.<span class="property">value</span> &gt; <span class="number">10</span>) &#123;</span><br><span class="line">    <span class="comment">// 処理A-1</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 処理A-2</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">processTypeB</span>(<span class="params">data</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (data.<span class="property">value</span> &gt; <span class="number">20</span>) &#123;</span><br><span class="line">    <span class="comment">// 処理B-1</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 処理B-2</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">complexFunction</span>(<span class="params">data</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (data.<span class="property">type</span> === <span class="string">&#x27;A&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">processTypeA</span>(data);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (data.<span class="property">type</span> === <span class="string">&#x27;B&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">processTypeB</span>(data);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-ポリモーフィズムの活用"><a href="#2-ポリモーフィズムの活用" class="headerlink" title="2. ポリモーフィズムの活用"></a>2. ポリモーフィズムの活用</h3><p>ポリモーフィズムを使うことで、分岐がなくなります。それにより、複雑度が下がります。<br><strong>Before（複雑度 = 6）</strong></p>
+<h3 id="2-ポリモーフィズムの活用"><a href="#2-ポリモーフィズムの活用" class="headerlink" title="2. ポリモーフィズムの活用"></a>2. ポリモーフィズムの活用</h3><p>ポリモーフィズムを使うことで、分岐がなくなります。それにより、複雑度が下がります。<br><strong>Before（複雑度 &#x3D; 6）</strong></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">processPayment</span>(<span class="params">payment</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (payment.<span class="property">type</span> === <span class="string">&#x27;credit&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">processCreditCard</span>(payment);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (payment.<span class="property">type</span> === <span class="string">&#x27;debit&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">processDebitCard</span>(payment);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (payment.<span class="property">type</span> === <span class="string">&#x27;bank&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">processBankTransfer</span>(payment);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>After（複雑度 = 1）：</strong></p>
+<p><strong>After（複雑度 &#x3D; 1）：</strong></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> paymentProcessors = &#123;</span><br><span class="line">  <span class="attr">credit</span>: processCreditCard,</span><br><span class="line">  <span class="attr">debit</span>: processDebitCard,</span><br><span class="line">  <span class="attr">bank</span>: processBankTransfer</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">processPayment</span>(<span class="params">payment</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> processor = paymentProcessors[payment.<span class="property">type</span>];</span><br><span class="line">  <span class="keyword">return</span> processor ? <span class="title function_">processor</span>(payment) : <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Unknown payment type&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="測定ツール"><a href="#測定ツール" class="headerlink" title="測定ツール"></a>測定ツール</h2><p>ここでは、循環的複雑度の計算方法について説明してきました。<br>実際の関数は複雑であり、手計算は現実的ではありません。各言語でツールが開発されており、そのツールを利用するのがよいです。</p>
 <ul>
-<li><strong>JavaScript/TypeScript</strong>: ESLint</li>
+<li><strong>JavaScript&#x2F;TypeScript</strong>: ESLint</li>
 <li><strong>Python</strong>: radon</li>
-<li><strong>Java</strong>: SonarQube / PMD</li>
+<li><strong>Java</strong>: SonarQube &#x2F; PMD</li>
 <li><strong>Go</strong>: gocyclo</li>
 </ul>
 <h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>循環的複雑度は、コードの品質を数値で測れる指標です。<strong>チーム開発では「このコードは複雑すぎる」という主観的な意見ではなく、「複雑度が15だからリファクタリングが必要」と客観的に判断できます</strong>。複雑度の計算方法を理解すれば、コードレビューでも「なぜこの関数は複雑なのか」を論理的に説明できるようになり、より建設的な議論ができるようになります。</p>
@@ -423,9 +423,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <a href="/blog/2025/08/06/http-proxy-protocol-guide/">HTTP中継（プロキシ）のプロトコル詳細解説</a>
         </h1>
         <div class="content">
-          <p>HTTP中継（プロキシ）は、アプリケーション層（OSIの第7層）のHTTPプロトコルを中継（再発行）する仕組みです。プロキシサーバーはTCP/IPのセッションを一度終了させ、新たに別のセッションを開始して通信を中継します。</p>
-<p>この記事では、HTTPの構造、リクエスト/レスポンスの伝播、TCP/IP層での扱い、ヘッダーの処理など、「プロトコルとして何がどう動いているか」に焦点を当てて詳述します。</p>
-<h2 id="HTTP中継のプロトコル的な概要"><a href="#HTTP中継のプロトコル的な概要" class="headerlink" title="HTTP中継のプロトコル的な概要"></a>HTTP中継のプロトコル的な概要</h2><p>HTTP中継（proxy）は、アプリケーション層（OSIの第7層）のHTTPプロトコルを中継（再発行）するものです。プロキシサーバーはTCP/IPのセッションを一度終了させ、新たに別のセッションを開始して通信を中継します。</p>
+          <p>HTTP中継（プロキシ）は、アプリケーション層（OSIの第7層）のHTTPプロトコルを中継（再発行）する仕組みです。プロキシサーバーはTCP&#x2F;IPのセッションを一度終了させ、新たに別のセッションを開始して通信を中継します。</p>
+<p>この記事では、HTTPの構造、リクエスト&#x2F;レスポンスの伝播、TCP&#x2F;IP層での扱い、ヘッダーの処理など、「プロトコルとして何がどう動いているか」に焦点を当てて詳述します。</p>
+<h2 id="HTTP中継のプロトコル的な概要"><a href="#HTTP中継のプロトコル的な概要" class="headerlink" title="HTTP中継のプロトコル的な概要"></a>HTTP中継のプロトコル的な概要</h2><p>HTTP中継（proxy）は、アプリケーション層（OSIの第7層）のHTTPプロトコルを中継（再発行）するものです。プロキシサーバーはTCP&#x2F;IPのセッションを一度終了させ、新たに別のセッションを開始して通信を中継します。</p>
 <figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Client] --<span class="function"><span class="params">(HTTP over TCP)</span>--&gt;</span> [<span class="built_in">Proxy</span>] --<span class="function"><span class="params">(HTTP over TCP)</span>--&gt;</span> [Server]</span><br></pre></td></tr></table></figure>
 
 <p>つまり、ClientとProxy間のTCPコネクションと、ProxyとServer間のTCPコネクションは完全に別物です。</p>
@@ -446,7 +446,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">HTTP/1.1</span> <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>application/json</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>123</span><br><span class="line"></span><br><span class="line"><span class="language-json"><span class="punctuation">&#123;</span><span class="attr">&quot;username&quot;</span><span class="punctuation">:</span> <span class="string">&quot;taro&quot;</span><span class="punctuation">&#125;</span></span></span><br></pre></td></tr></table></figure>
 
 <h3 id="5-プロキシ→クライアント"><a href="#5-プロキシ→クライアント" class="headerlink" title="5. プロキシ→クライアント"></a>5. プロキシ→クライアント</h3><p>そのレスポンスを、必要に応じて加工しながら、もとのクライアントに返します。</p>
-<h2 id="TCP-IPレイヤーの流れ"><a href="#TCP-IPレイヤーの流れ" class="headerlink" title="TCP/IPレイヤーの流れ"></a>TCP/IPレイヤーの流れ</h2><table>
+<h2 id="TCP-IPレイヤーの流れ"><a href="#TCP-IPレイヤーの流れ" class="headerlink" title="TCP&#x2F;IPレイヤーの流れ"></a>TCP&#x2F;IPレイヤーの流れ</h2><table>
 <thead>
 <tr>
 <th>層</th>
@@ -494,7 +494,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <td>どのプロキシを通ったかを記録（RFC2616で推奨）</td>
 </tr>
 <tr>
-<td>Content-Length / Transfer-Encoding</td>
+<td>Content-Length &#x2F; Transfer-Encoding</td>
 <td>ストリーミングやチャンク転送時に注意が必要</td>
 </tr>
 </tbody></table>
@@ -519,9 +519,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <li>バックエンドサーバーの障害</li>
 <li>ネットワークタイムアウト</li>
 <li>不正なHTTPリクエスト</li>
-<li>SSL/TLS証明書の問題</li>
+<li>SSL&#x2F;TLS証明書の問題</li>
 </ul>
-<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>HTTP中継（プロキシ）は、単純に見えて実は非常に複雑な仕組みです。TCP/IPレイヤーでのセッション管理、HTTPヘッダーの適切な処理、セキュリティ上の考慮事項など、多くの技術的要素が絡み合っています。</p>
+<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>HTTP中継（プロキシ）は、単純に見えて実は非常に複雑な仕組みです。TCP&#x2F;IPレイヤーでのセッション管理、HTTPヘッダーの適切な処理、セキュリティ上の考慮事項など、多くの技術的要素が絡み合っています。</p>
 <p>この記事で解説した内容を基に、実際のプロキシサーバーの設定や、カスタムプロキシの実装に取り組んでみてください。 </p>
 
         </div>
@@ -550,13 +550,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// クライアント側</span></span><br><span class="line"><span class="keyword">const</span> file = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;fileInput&#x27;</span>).<span class="property">files</span>[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">const</span> reader = <span class="keyword">new</span> <span class="title class_">FileReader</span>();</span><br><span class="line">reader.<span class="property">onload</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> base64 = reader.<span class="property">result</span>.<span class="title function_">split</span>(<span class="string">&#x27;,&#x27;</span>)[<span class="number">1</span>]; <span class="comment">// data:image/jpeg;base64, の部分を除去</span></span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> mutation = <span class="string">`</span></span><br><span class="line"><span class="string">    mutation UploadFile($file: String!) &#123;</span></span><br><span class="line"><span class="string">      uploadFile(file: $file) &#123;</span></span><br><span class="line"><span class="string">        id</span></span><br><span class="line"><span class="string">        url</span></span><br><span class="line"><span class="string">        filename</span></span><br><span class="line"><span class="string">      &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">  `</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// GraphQLリクエストを送信</span></span><br><span class="line">  <span class="title function_">fetch</span>(<span class="string">&#x27;/graphql&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">    <span class="attr">headers</span>: &#123; <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/json&#x27;</span> &#125;,</span><br><span class="line">    <span class="attr">body</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123;</span><br><span class="line">      <span class="attr">query</span>: mutation,</span><br><span class="line">      <span class="attr">variables</span>: &#123; <span class="attr">file</span>: base64 &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line">reader.<span class="title function_">readAsDataURL</span>(file);</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-GraphQL-multipart-request-specification（ファイルアップロード）"><a href="#2-GraphQL-multipart-request-specification（ファイルアップロード）" class="headerlink" title="2. GraphQL multipart request specification（ファイルアップロード）"></a><strong>2. GraphQL multipart request specification（ファイルアップロード）</strong></h3><ul>
-<li>Apollo Serverやgraphql-uploadなどのライブラリを使うことで、<strong>multipart/form-data</strong>形式でファイルアップロードが可能です</li>
+<li>Apollo Serverやgraphql-uploadなどのライブラリを使うことで、<strong>multipart&#x2F;form-data</strong>形式でファイルアップロードが可能です</li>
 <li>これはHTTPの拡張で、GraphQLのmutationと一緒にバイナリファイルを送信できます</li>
 <li>サーバー側でgraphql-uploadなどのミドルウェアが必要です</li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// クライアント側</span></span><br><span class="line"><span class="keyword">const</span> file = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;fileInput&#x27;</span>).<span class="property">files</span>[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">const</span> formData = <span class="keyword">new</span> <span class="title class_">FormData</span>();</span><br><span class="line"></span><br><span class="line">formData.<span class="title function_">append</span>(<span class="string">&#x27;operations&#x27;</span>, <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123;</span><br><span class="line">  <span class="attr">query</span>: <span class="string">`</span></span><br><span class="line"><span class="string">    mutation UploadFile($file: Upload!) &#123;</span></span><br><span class="line"><span class="string">      uploadFile(file: $file) &#123;</span></span><br><span class="line"><span class="string">        id</span></span><br><span class="line"><span class="string">        url</span></span><br><span class="line"><span class="string">        filename</span></span><br><span class="line"><span class="string">      &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  <span class="attr">variables</span>: &#123; <span class="attr">file</span>: <span class="literal">null</span> &#125;</span><br><span class="line">&#125;));</span><br><span class="line"></span><br><span class="line">formData.<span class="title function_">append</span>(<span class="string">&#x27;map&#x27;</span>, <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123;</span><br><span class="line">  <span class="string">&quot;0&quot;</span>: [<span class="string">&quot;variables.file&quot;</span>]</span><br><span class="line">&#125;));</span><br><span class="line"></span><br><span class="line">formData.<span class="title function_">append</span>(<span class="string">&#x27;0&#x27;</span>, file);</span><br><span class="line"></span><br><span class="line"><span class="title function_">fetch</span>(<span class="string">&#x27;/graphql&#x27;</span>, &#123;</span><br><span class="line">  <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">  <span class="attr">body</span>: formData</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
-<h2 id="multipart-form-dataとは"><a href="#multipart-form-dataとは" class="headerlink" title="multipart/form-dataとは"></a>multipart/form-dataとは</h2><p>multipart/form-dataは、HTTPリクエストで<strong>テキストデータとバイナリデータ（ファイル）を同時に送信</strong>するためのMIMEタイプです。HTMLの<code>&lt;form&gt;</code>要素でファイルアップロードを行う際に使用されます。</p>
+<h2 id="multipart-form-dataとは"><a href="#multipart-form-dataとは" class="headerlink" title="multipart&#x2F;form-dataとは"></a>multipart&#x2F;form-dataとは</h2><p>multipart&#x2F;form-dataは、HTTPリクエストで<strong>テキストデータとバイナリデータ（ファイル）を同時に送信</strong>するためのMIMEタイプです。HTMLの<code>&lt;form&gt;</code>要素でファイルアップロードを行う際に使用されます。</p>
 <h3 id="基本的な構造"><a href="#基本的な構造" class="headerlink" title="基本的な構造"></a><strong>基本的な構造</strong></h3><p><strong>1. Content-Typeヘッダー</strong></p>
 <figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-<span class="keyword">Type</span>: multipart/<span class="keyword">form</span>-<span class="keyword">data</span>; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW</span><br></pre></td></tr></table></figure>
 
@@ -581,7 +581,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <tr>
 <th>項目</th>
 <th>Base64エンコード</th>
-<th>バイナリ（multipart/form-data）</th>
+<th>バイナリ（multipart&#x2F;form-data）</th>
 </tr>
 </thead>
 <tbody><tr>
@@ -601,7 +601,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </tr>
 <tr>
 <td>CPU使用量</td>
-<td>エンコード/デコード処理が必要</td>
+<td>エンコード&#x2F;デコード処理が必要</td>
 <td>処理不要</td>
 </tr>
 <tr>
@@ -619,10 +619,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h3 id="1-ファイルサイズの制限"><a href="#1-ファイルサイズの制限" class="headerlink" title="1. ファイルサイズの制限"></a>1. ファイルサイズの制限</h3><p>サーバー側でファイルサイズを検証します。</p>
 <h3 id="2-ファイルタイプの検証"><a href="#2-ファイルタイプの検証" class="headerlink" title="2. ファイルタイプの検証"></a>2. ファイルタイプの検証</h3><p>ホワイトリスト方式で .jpg, .png, .pdf のように明示的に許可された拡張子のみ受付します。<br>また、クライアントから送られたContent-Typeではなく、サーバー側でMIMEタイプを再検査します。</p>
 <h3 id="3-ファイル名のリネーム"><a href="#3-ファイル名のリネーム" class="headerlink" title="3. ファイル名のリネーム"></a>3. ファイル名のリネーム</h3><p>アップロードされたファイルをランダム名に変えて保存（例：upload_48cd1e2a.jpg）します。</p>
-<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>GraphQLでのファイルアップロードは、Base64エンコード方式とmultipart/form-data方式の2つのアプローチがあります。</p>
+<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>GraphQLでのファイルアップロードは、Base64エンコード方式とmultipart&#x2F;form-data方式の2つのアプローチがあります。</p>
 <ul>
 <li><strong>Base64エンコード</strong>: 小さなファイルや簡易的な用途に適している</li>
-<li><strong>multipart/form-data</strong>: 大きなファイルや本格的なファイルアップロード機能に適している</li>
+<li><strong>multipart&#x2F;form-data</strong>: 大きなファイルや本格的なファイルアップロード機能に適している</li>
 </ul>
 <p>用途に応じて適切な方法を選択し、ファイルサイズ制限やファイルタイプ検証などのセキュリティ対策も忘れずに実装することが重要です。 </p>
 
@@ -666,7 +666,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <h2 id="GraphQLプロトコルレイヤー"><a href="#GraphQLプロトコルレイヤー" class="headerlink" title="GraphQLプロトコルレイヤー"></a>GraphQLプロトコルレイヤー</h2><p>GraphQLは以下のプロトコルレイヤーで動作します。</p>
 <ol>
-<li><strong>HTTP/HTTPS</strong>: 主なトランスポートプロトコル</li>
+<li><strong>HTTP&#x2F;HTTPS</strong>: 主なトランスポートプロトコル</li>
 <li><strong>WebSocket</strong>: Subscriptions用のリアルタイム通信</li>
 <li><strong>GraphQL</strong>: アプリケーションレベルのクエリ言語</li>
 </ol>

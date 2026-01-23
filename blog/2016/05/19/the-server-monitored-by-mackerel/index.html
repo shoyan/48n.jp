@@ -202,30 +202,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>metadata.rb</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">depends</span> <span class="string">&#x27;mackerel-agent&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>recipes/default.rb</p>
+<p>recipes&#x2F;default.rb</p>
 <figure class="highlight sml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">include_recipe <span class="symbol">&#x27;mackerel</span>-agent&#x27;</span><br><span class="line">include_recipe <span class="symbol">&#x27;mackerel</span>-agent::plugins&#x27;</span><br><span class="line">yum_package <span class="symbol">&#x27;mackerel</span>-check-plugins&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>cookbook-mackerel-agentだけだとcheckプラグインが入らなかったので<code>yum_package</code>リソースを使ってインストールしています。  </p>
-<p>attributes/default.rb</p>
+<p>attributes&#x2F;default.rb</p>
 <figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">default</span>[<span class="symbol">&#x27;mackerel</span>-agent&#x27;][<span class="symbol">&#x27;package</span>-action&#x27;] = <span class="symbol">&#x27;upgrade</span>&#x27;</span><br><span class="line"><span class="keyword">default</span>[<span class="symbol">&#x27;mackerel</span>-agent&#x27;][<span class="symbol">&#x27;conf</span>&#x27;][<span class="symbol">&#x27;apikey</span>&#x27;] = ‘API KEYをかく&#x27;</span><br><span class="line"><span class="keyword">default</span>[<span class="symbol">&#x27;mackerel</span>-agent&#x27;][<span class="symbol">&#x27;conf</span>&#x27;][<span class="symbol">&#x27;plugins</span>&#x27;] = <span class="literal">true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>サーバーにレシピを適用するとマカレルの管理画面にサーバーがでてくるのでロールを設定します。<br>これでサーバーのメトリクスを見ることができます。</p>
 <h2 id="プラグインを使う"><a href="#プラグインを使う" class="headerlink" title="プラグインを使う"></a>プラグインを使う</h2><p>マカレルには様々なプラグインが用意されています。<br>使い方はgithubのREADMEに書いてあります。<br><a href="https://github.com/mackerelio/mackerel-agent-plugins">https://github.com/mackerelio/mackerel-agent-plugins</a></p>
 <p>自分はプラグインを使って以下のことを行っています。</p>
 <h3 id="linuxマカレルプラグインを使って様々なメトリクスをだす"><a href="#linuxマカレルプラグインを使って様々なメトリクスをだす" class="headerlink" title="linuxマカレルプラグインを使って様々なメトリクスをだす"></a>linuxマカレルプラグインを使って様々なメトリクスをだす</h3><p>linuxマカレルプラグインを使えばswapやnetstat、Disk read time 等のグラフを表示することができます。</p>
-<p>attributes/default.rb に以下を定義します。</p>
+<p>attributes&#x2F;default.rb に以下を定義します。</p>
 <figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">default[<span class="string">&#x27;mackerel-agent&#x27;</span>][<span class="string">&#x27;conf&#x27;</span>][<span class="string">&#x27;plugin.metrics.linux&#x27;</span>][<span class="string">&#x27;command&#x27;</span>] = <span class="string">&#x27;/usr/local/bin/mackerel-plugin-linux&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h3 id="Unicornマカレルプラグインを使ってUnicornのメトリクスをだす"><a href="#Unicornマカレルプラグインを使ってUnicornのメトリクスをだす" class="headerlink" title="Unicornマカレルプラグインを使ってUnicornのメトリクスをだす"></a>Unicornマカレルプラグインを使ってUnicornのメトリクスをだす</h3><p>Unicornマカレルプラグインを使えばダッシュボードにUnicornのメモリとワーカ数のグラフが表示されます。</p>
-<p>attributes/default.rb に以下を定義します。</p>
+<p>attributes&#x2F;default.rb に以下を定義します。</p>
 <figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">default[<span class="string">&#x27;mackerel-agent&#x27;</span>][<span class="string">&#x27;conf&#x27;</span>][<span class="string">&#x27;plugin.metrics.unicorn&#x27;</span>][<span class="string">&#x27;command&#x27;</span>] = <span class="string">&quot;/usr/local/bin/mackerel-plugin-unicorn -pidfile=/var/www/app/shared/tmp/pids/unicorn.pid&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h3 id="httpの監視"><a href="#httpの監視" class="headerlink" title="httpの監視"></a>httpの監視</h3><p>httpのレスポンスをチェックして監視を行います。<br>細かい設定を行いたい場合は、<code>check-tcp</code>がよいですが、単純なチェックでよいのであれば<code>http</code>のほうが設定が簡単です。</p>
-<p>attributes/default.rb に以下を定義します。</p>
+<p>attributes&#x2F;default.rb に以下を定義します。</p>
 <figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">default[<span class="string">&#x27;mackerel-agent&#x27;</span>][<span class="string">&#x27;conf&#x27;</span>][<span class="string">&#x27;plugin.checks.http&#x27;</span>][<span class="string">&#x27;command&#x27;</span>] = <span class="string">&quot;/usr/bin/check-http -u http://localhost&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h3 id="ログファイルの監視"><a href="#ログファイルの監視" class="headerlink" title="ログファイルの監視"></a>ログファイルの監視</h3><p>nginxのログファイルを監視し、500系のエラーが頻発したときは通知するようにします。</p>
-<p>attributes/default.rb に以下を定義します。</p>
+<p>attributes&#x2F;default.rb に以下を定義します。</p>
 <figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/check-<span class="keyword">log</span> --<span class="keyword">file</span> /var/<span class="keyword">log</span>/nginx/access.<span class="keyword">log</span> --pattern <span class="string">&#x27;HTTP/1\.[01]&quot; [5][0-9][0-9] &#x27;</span> --<span class="keyword">warning</span>-over <span class="number">3</span> --critical-over <span class="number">10</span> --<span class="keyword">return</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h2 id="監視ルールの設定"><a href="#監視ルールの設定" class="headerlink" title="監視ルールの設定"></a>監視ルールの設定</h2><p>監視ルールを設定することで閾値を超えた際に通知をすることができます。<br>CPU、メモリ、ロードアベレージ、ディスク容量等の監視を管理画面より設定できます。<br>詳しい設定方法については以下を参照ください。  </p>

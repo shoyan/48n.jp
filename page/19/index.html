@@ -328,7 +328,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <ul>
 <li><a href="http://knowledge.sakura.ad.jp/tech/1336/">柔軟なログ収集を可能にする「Fluentd」入門</a></li>
 <li><a href="http://docs.fluentd.org/articles/install-by-dmg">Installing Fluentd using .dmg Installer (MacOS X)</a></li>
-<li><a href="http://docs.Fluentd.org/articles/config-file">Configuration File</a></li>
+<li><a href="http://docs.fluentd.org/articles/config-file">Configuration File</a></li>
 </ul>
 
         </div>
@@ -386,18 +386,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>文字 | 個数 | 符号<br>B | 5 | 0<br>C | 3 | 10<br>A | 2 | 110<br>D | 1 | 1110<br>E | 1 | 1111</p>
 <h2 id="データ圧縮アルゴリズムについて"><a href="#データ圧縮アルゴリズムについて" class="headerlink" title="データ圧縮アルゴリズムについて"></a>データ圧縮アルゴリズムについて</h2><p>一般的にデータ圧縮アルゴリズムは「モデル化」と「符号化」の2つにわけて考えることができます。<br>「モデル化」は入力された記号(データ)から各記号の出現確率を求めます。<br>「符号化」は出現確率に基づいて符号語を割り当て、入力されたデータを各符号語に変換して出力します。<br>モデル化についてはいろいろな方法がありますが、ハフマン符号のように記号の出現確率を求めそれに基づいて符号語を割り当てるモデルを「無記憶情報源モデル」といいます。<br>「情報源」は記号を生成する基となるデータのことです。<br>情報源が記号を生成するとき、以前に生成した記号との間に関連性がないことを「無記憶」といいます。<br>記号aの次は記号bが生成されるといった関係性はなく、確率でのみ記号が作成されるということです。</p>
 <p>データ圧縮アルゴリズムを評価する場合、圧縮率のほかに「平均符号長」という尺度があります。<br>これは、符号化された記号列のビット長を入力された記号数で割った値として定義されます。</p>
-<p>たとえば <code>DAEBCBACBBBC</code> をハフマン符号化すると<code>1110110111101001101000010</code>となります。<br>符号化された記号列のビット長(1110110111101001101000010)を入力された記号数(DAEBCBACBBBC)で割ると平均符号長は 25 / 12 = 2.0833333 となります。</p>
+<p>たとえば <code>DAEBCBACBBBC</code> をハフマン符号化すると<code>1110110111101001101000010</code>となります。<br>符号化された記号列のビット長(1110110111101001101000010)を入力された記号数(DAEBCBACBBBC)で割ると平均符号長は 25 &#x2F; 12 &#x3D; 2.0833333 となります。</p>
 <p>無記憶情報源モデルの場合、各記号 $$ a_i $$ の出現確率 $$ p(a_i) $$ がわかると、次の式で平均符号長の下限値を求めることができます。  </p>
-<p>$$ H=-\sum_{i=1}^n p(a_i) \log _2 p(a_i) $$</p>
+<p>$$ H&#x3D;-\sum_{i&#x3D;1}^n p(a_i) \log _2 p(a_i) $$</p>
 <p>$$ H $$ を平均情報量、またはエントロピー(Entropy)と呼びます。</p>
 <p>情報源符号化定理によると、平均符号長はエントロピーより短くすることができません。  </p>
 <h3 id="情報源符号化定理"><a href="#情報源符号化定理" class="headerlink" title="情報源符号化定理"></a>情報源符号化定理</h3><blockquote>
-<p>意復号可能な平均符号長 L は、無記憶情報源のエントロピー H よりも小さくすることができない。すなわち不等式 H &lt;= L が成り立つ。また、平均符号長 L が H &lt;= L &lt; H + 1 を満足する瞬時に復号可能な符号が構成できる。</p>
+<p>意復号可能な平均符号長 L は、無記憶情報源のエントロピー H よりも小さくすることができない。すなわち不等式 H &lt;&#x3D; L が成り立つ。また、平均符号長 L が H &lt;&#x3D; L &lt; H + 1 を満足する瞬時に復号可能な符号が構成できる。</p>
 </blockquote>
 <p>先ほどの記号列のエントロピーを求めてみます。</p>
 <figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">記号列: DAEBCBACBBBC</span><br><span class="line"><span class="section">記号: 確率: -p(ai) / log2 p(ai)</span></span><br><span class="line"><span class="section">------------------------------------------</span></span><br><span class="line">D: 1 / 12: 0.29874687506009634</span><br><span class="line">A: 2 / 12: 0.430827083453526</span><br><span class="line">E: 1 / 12: 0.29874687506009634</span><br><span class="line">B: 5 / 12: 0.5262643357640807</span><br><span class="line"><span class="section">C: 3 / 12: 0.5</span></span><br><span class="line"><span class="section">------------------------------------------</span></span><br><span class="line">エントロピー = 2.054585169337799</span><br><span class="line">12 * 2.054585169337799 = 24.65502203205359 bit</span><br></pre></td></tr></table></figure>
 
-<p>したがって、この記号列では平均符号長を 2.05 ビット以下にすることはできません。<br>いいかえると、この記号列を表すには少なくても 12 * 2.054585169337799 = 24.65502203205359 ビット以上が必要になる、ということです。</p>
+<p>したがって、この記号列では平均符号長を 2.05 ビット以下にすることはできません。<br>いいかえると、この記号列を表すには少なくても 12 * 2.054585169337799 &#x3D; 24.65502203205359 ビット以上が必要になる、ということです。</p>
 <h3 id="エントロピーの算出コード"><a href="#エントロピーの算出コード" class="headerlink" title="エントロピーの算出コード"></a>エントロピーの算出コード</h3><p>エントロピーを算出するコードをRubyで書きました。</p>
 <script src="https://gist.github.com/shoyan/cfa5528ccd9388eee25b2e120c4c452b.js"></script>
 
@@ -413,7 +413,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>ファイルサイズ * エントロピー で圧縮の下限値を計算することができます。<br>上記の場合は3バイトよりも圧縮することはできないということです。</p>
 <p>ただし、この結果は無記憶情報源モデルの場合であり、モデル化によってエントロピーの値は異なることに注意してください。エントロピーをより小さくするモデルを作成することがでれきば、これよりも高い圧縮率を達成することができます。</p>
 <h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
-<li><a href="http://www.geocities.jp/m_hiroi/light/pyalgo31.html">Algorithms with Python / シャノン・ファノ符号とハフマン符号</a></li>
+<li><a href="http://www.geocities.jp/m_hiroi/light/pyalgo31.html">Algorithms with Python &#x2F; シャノン・ファノ符号とハフマン符号</a></li>
 <li><a href="http://fussy.web.fc2.com/algo/compress3_huffman.htm">圧縮アルゴリズム (3) ハフマン符号化 - 静的ハフマン圧縮</a></li>
 <li><a href="http://www.infonet.co.jp/ueyama/ip/concept/entropy.html">平均情報量／エントロピー</a></li>
 </ul>

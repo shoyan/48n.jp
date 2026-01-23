@@ -196,9 +196,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
   
   
-  <p>HTTP中継（プロキシ）は、アプリケーション層（OSIの第7層）のHTTPプロトコルを中継（再発行）する仕組みです。プロキシサーバーはTCP/IPのセッションを一度終了させ、新たに別のセッションを開始して通信を中継します。</p>
-<p>この記事では、HTTPの構造、リクエスト/レスポンスの伝播、TCP/IP層での扱い、ヘッダーの処理など、「プロトコルとして何がどう動いているか」に焦点を当てて詳述します。</p>
-<h2 id="HTTP中継のプロトコル的な概要"><a href="#HTTP中継のプロトコル的な概要" class="headerlink" title="HTTP中継のプロトコル的な概要"></a>HTTP中継のプロトコル的な概要</h2><p>HTTP中継（proxy）は、アプリケーション層（OSIの第7層）のHTTPプロトコルを中継（再発行）するものです。プロキシサーバーはTCP/IPのセッションを一度終了させ、新たに別のセッションを開始して通信を中継します。</p>
+  <p>HTTP中継（プロキシ）は、アプリケーション層（OSIの第7層）のHTTPプロトコルを中継（再発行）する仕組みです。プロキシサーバーはTCP&#x2F;IPのセッションを一度終了させ、新たに別のセッションを開始して通信を中継します。</p>
+<p>この記事では、HTTPの構造、リクエスト&#x2F;レスポンスの伝播、TCP&#x2F;IP層での扱い、ヘッダーの処理など、「プロトコルとして何がどう動いているか」に焦点を当てて詳述します。</p>
+<h2 id="HTTP中継のプロトコル的な概要"><a href="#HTTP中継のプロトコル的な概要" class="headerlink" title="HTTP中継のプロトコル的な概要"></a>HTTP中継のプロトコル的な概要</h2><p>HTTP中継（proxy）は、アプリケーション層（OSIの第7層）のHTTPプロトコルを中継（再発行）するものです。プロキシサーバーはTCP&#x2F;IPのセッションを一度終了させ、新たに別のセッションを開始して通信を中継します。</p>
 <figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Client] --<span class="function"><span class="params">(HTTP over TCP)</span>--&gt;</span> [<span class="built_in">Proxy</span>] --<span class="function"><span class="params">(HTTP over TCP)</span>--&gt;</span> [Server]</span><br></pre></td></tr></table></figure>
 
 <p>つまり、ClientとProxy間のTCPコネクションと、ProxyとServer間のTCPコネクションは完全に別物です。</p>
@@ -219,7 +219,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">HTTP/1.1</span> <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>application/json</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>123</span><br><span class="line"></span><br><span class="line"><span class="language-json"><span class="punctuation">&#123;</span><span class="attr">&quot;username&quot;</span><span class="punctuation">:</span> <span class="string">&quot;taro&quot;</span><span class="punctuation">&#125;</span></span></span><br></pre></td></tr></table></figure>
 
 <h3 id="5-プロキシ→クライアント"><a href="#5-プロキシ→クライアント" class="headerlink" title="5. プロキシ→クライアント"></a>5. プロキシ→クライアント</h3><p>そのレスポンスを、必要に応じて加工しながら、もとのクライアントに返します。</p>
-<h2 id="TCP-IPレイヤーの流れ"><a href="#TCP-IPレイヤーの流れ" class="headerlink" title="TCP/IPレイヤーの流れ"></a>TCP/IPレイヤーの流れ</h2><table>
+<h2 id="TCP-IPレイヤーの流れ"><a href="#TCP-IPレイヤーの流れ" class="headerlink" title="TCP&#x2F;IPレイヤーの流れ"></a>TCP&#x2F;IPレイヤーの流れ</h2><table>
 <thead>
 <tr>
 <th>層</th>
@@ -267,7 +267,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <td>どのプロキシを通ったかを記録（RFC2616で推奨）</td>
 </tr>
 <tr>
-<td>Content-Length / Transfer-Encoding</td>
+<td>Content-Length &#x2F; Transfer-Encoding</td>
 <td>ストリーミングやチャンク転送時に注意が必要</td>
 </tr>
 </tbody></table>
@@ -292,9 +292,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <li>バックエンドサーバーの障害</li>
 <li>ネットワークタイムアウト</li>
 <li>不正なHTTPリクエスト</li>
-<li>SSL/TLS証明書の問題</li>
+<li>SSL&#x2F;TLS証明書の問題</li>
 </ul>
-<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>HTTP中継（プロキシ）は、単純に見えて実は非常に複雑な仕組みです。TCP/IPレイヤーでのセッション管理、HTTPヘッダーの適切な処理、セキュリティ上の考慮事項など、多くの技術的要素が絡み合っています。</p>
+<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>HTTP中継（プロキシ）は、単純に見えて実は非常に複雑な仕組みです。TCP&#x2F;IPレイヤーでのセッション管理、HTTPヘッダーの適切な処理、セキュリティ上の考慮事項など、多くの技術的要素が絡み合っています。</p>
 <p>この記事で解説した内容を基に、実際のプロキシサーバーの設定や、カスタムプロキシの実装に取り組んでみてください。 </p>
 
 </article>

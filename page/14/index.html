@@ -186,15 +186,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </h1>
         <div class="content">
           <p>SIMといえば携帯電話やスマートフォンに入っているカードという認識はありましたが、そのSIMについて調べてみました。</p>
-<h2 id="SIMの概要"><a href="#SIMの概要" class="headerlink" title="SIMの概要"></a>SIMの概要</h2><p>SIMとは Subscriber Identity Module = 加入者IDモジュール の頭文字をとったものです。<br>それをカード状にしたものが「SIMカード」と呼ばれています。<br>つまり一種のIDカードです。<br>また、簡単に情報が盗まれないような仕組みも入っています。</p>
+<h2 id="SIMの概要"><a href="#SIMの概要" class="headerlink" title="SIMの概要"></a>SIMの概要</h2><p>SIMとは Subscriber Identity Module &#x3D; 加入者IDモジュール の頭文字をとったものです。<br>それをカード状にしたものが「SIMカード」と呼ばれています。<br>つまり一種のIDカードです。<br>また、簡単に情報が盗まれないような仕組みも入っています。</p>
 <h2 id="SIMの中に入っている情報"><a href="#SIMの中に入っている情報" class="headerlink" title="SIMの中に入っている情報"></a>SIMの中に入っている情報</h2><h3 id="電話番号"><a href="#電話番号" class="headerlink" title="電話番号"></a>電話番号</h3><p>SIMが内部に保持している情報の代表的なものが電話番号です。<br>電話番号は国際的に一意になるよう定められており、国番号と加入者電話番号の組み合わせにより世界中で唯一無二の存在になります。<br>例えば、090-1234-5678のSIMカードを持っている人は、日本からはその番号が、海外からは国番号を表す「+」記号と日本の国番号「81」を先頭につけて「+81-90-1234-5678」がそのSIMへの電話番号となります。<br>090ではなく90となっているのは理由があります。<br>実はこの省略された0は電話番号の一部ではなく、「国内プリフィックス」と呼ばれる、国内への電話番号だよということを電話に識別させるための識別番号なのです。<br>ですので、日本から電話をかけるときは  「0」、海外から電話をかけるときは「81」に変わるわけです。</p>
 <h3 id="ICCID-ICカードID"><a href="#ICCID-ICカードID" class="headerlink" title="ICCID(ICカードID)"></a>ICCID(ICカードID)</h3><p>国際電気通信連合で定められた、すべてのICカードを一意に識別するためのIDです。<br>クレジットカードにも使われています。<br>構成は以下です([]の中の数字は桁数です)。</p>
-<p>| [2]産業識別(電気通信=89) | [2]国番号(日本81) | [3]事業者番号(ドコモ=100, SB=200, KDDI=300) | [11]カード番号 | [1]チェックデジット |</p>
-<h3 id="IMSI-International-Mobile-Subscriber-ID-国際的な端末加入者識別番号"><a href="#IMSI-International-Mobile-Subscriber-ID-国際的な端末加入者識別番号" class="headerlink" title="IMSI(International Mobile Subscriber ID = 国際的な端末加入者識別番号)"></a>IMSI(International Mobile Subscriber ID = 国際的な端末加入者識別番号)</h3><p>SIMカードで最も重要な情報です。<br>SIMカードの通信上の根本となるもので、1枚のSIMカードに固有の一意な番号が与えられおり、世界で一意に識別できる番号です。<br>構成は以下です。</p>
-<p>| [3]MCC(国番号 日本=440) | [2]MNC(事業者番号 ドコモ=10, SB=20, KDDI=50/54) | [最大10]MSIN |</p>
-<h3 id="MSISDN-Mobile-Subscriber-ISDN-Number-電話番号"><a href="#MSISDN-Mobile-Subscriber-ISDN-Number-電話番号" class="headerlink" title="MSISDN(Mobile Subscriber ISDN Number = 電話番号)"></a>MSISDN(Mobile Subscriber ISDN Number = 電話番号)</h3><p>キャリアと契約するとキャリアから与えられる番号で、いわゆる電話番号です。<br>これはSIMカード固有ではなく、キャリアがどのSIMカードにこの番号を書くかを決定します。</p>
+<p>| [2]産業識別(電気通信&#x3D;89) | [2]国番号(日本81) | [3]事業者番号(ドコモ&#x3D;100, SB&#x3D;200, KDDI&#x3D;300) | [11]カード番号 | [1]チェックデジット |</p>
+<h3 id="IMSI-International-Mobile-Subscriber-ID-国際的な端末加入者識別番号"><a href="#IMSI-International-Mobile-Subscriber-ID-国際的な端末加入者識別番号" class="headerlink" title="IMSI(International Mobile Subscriber ID &#x3D; 国際的な端末加入者識別番号)"></a>IMSI(International Mobile Subscriber ID &#x3D; 国際的な端末加入者識別番号)</h3><p>SIMカードで最も重要な情報です。<br>SIMカードの通信上の根本となるもので、1枚のSIMカードに固有の一意な番号が与えられおり、世界で一意に識別できる番号です。<br>構成は以下です。</p>
+<p>| [3]MCC(国番号 日本&#x3D;440) | [2]MNC(事業者番号 ドコモ&#x3D;10, SB&#x3D;20, KDDI&#x3D;50&#x2F;54) | [最大10]MSIN |</p>
+<h3 id="MSISDN-Mobile-Subscriber-ISDN-Number-電話番号"><a href="#MSISDN-Mobile-Subscriber-ISDN-Number-電話番号" class="headerlink" title="MSISDN(Mobile Subscriber ISDN Number &#x3D; 電話番号)"></a>MSISDN(Mobile Subscriber ISDN Number &#x3D; 電話番号)</h3><p>キャリアと契約するとキャリアから与えられる番号で、いわゆる電話番号です。<br>これはSIMカード固有ではなく、キャリアがどのSIMカードにこの番号を書くかを決定します。</p>
 <p>構成は以下です。</p>
-<p>| [3]CC(国番号 日本=81) | [2]NDC(国内宛先番号 90など) | [最大10]加入者番号(電話番号) |</p>
+<p>| [3]CC(国番号 日本&#x3D;81) | [2]NDC(国内宛先番号 90など) | [最大10]加入者番号(電話番号) |</p>
 <p>例えば、090-1234-5678の番号の場合は <code>|81|90|12345678|</code> となります。</p>
 <h2 id="SIMの利点"><a href="#SIMの利点" class="headerlink" title="SIMの利点"></a>SIMの利点</h2><p>SIMカードを使う利点は、端末と電話番号の切り離しができることです。<br>つまり、端末からSIMカードを抜いてしまえば電話番号はまったく残らないことになります。<br>これにより以下のメリットがあります。</p>
 <ul>

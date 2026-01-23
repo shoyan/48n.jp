@@ -2,25 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://48n.jp/blog/2025/11/28/translation-type-check-mechanism/</loc>
-    
-    <lastmod>2026-01-23</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://48n.jp/googlef7e82fffb075bee5.html</loc>
-    
-    <lastmod>2026-01-23</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://48n.jp/blog/2025/06/05/slack-block-kit-detailed-guide/</loc>
     
     <lastmod>2026-01-23</lastmod>
     
@@ -47,7 +29,7 @@
   </url>
   
   <url>
-    <loc>https://48n.jp/blog/2026/01/10/freelance-contract-risks/</loc>
+    <loc>https://48n.jp/blog/2025/11/28/translation-type-check-mechanism/</loc>
     
     <lastmod>2026-01-23</lastmod>
     
@@ -56,16 +38,7 @@
   </url>
   
   <url>
-    <loc>https://48n.jp/blog/2025/07/02/git-japanese-filename-encoding-fix/</loc>
-    
-    <lastmod>2026-01-23</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://48n.jp/blog/2025/05/30/go-1-24-3-build-error/</loc>
+    <loc>https://48n.jp/blog/2025/06/05/slack-block-kit-detailed-guide/</loc>
     
     <lastmod>2026-01-23</lastmod>
     
@@ -93,6 +66,33 @@
   
   <url>
     <loc>https://48n.jp/blog/2025/06/04/go-slack-notification-guide/</loc>
+    
+    <lastmod>2026-01-23</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://48n.jp/blog/2026/01/10/freelance-contract-risks/</loc>
+    
+    <lastmod>2026-01-23</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://48n.jp/blog/2025/07/02/git-japanese-filename-encoding-fix/</loc>
+    
+    <lastmod>2026-01-23</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://48n.jp/blog/2025/05/30/go-1-24-3-build-error/</loc>
     
     <lastmod>2026-01-23</lastmod>
     
@@ -1539,14 +1539,14 @@
 
   
   <url>
-    <loc>https://48n.jp/categories/%E3%82%B3%E3%83%A9%E3%83%A0/</loc>
+    <loc>https://48n.jp/categories/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0/</loc>
     <lastmod>2026-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://48n.jp/categories/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0/</loc>
+    <loc>https://48n.jp/categories/%E3%82%B3%E3%83%A9%E3%83%A0/</loc>
     <lastmod>2026-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

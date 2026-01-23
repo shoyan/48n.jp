@@ -196,7 +196,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
   
   
-  <p>コードの品質を測る指標として「複雑度」がありますが、特に<strong>循環的複雑度（Cyclomatic Complexity）</strong>は、コードの保守性やバグの発生リスクを定量的に評価できる指標です。</p>
+  <p>コードの品質を測る指標として「複雑度」がありますが、特に**循環的複雑度（Cyclomatic Complexity）**は、コードの保守性やバグの発生リスクを定量的に評価できる指標です。</p>
 <p>この記事では、循環的複雑度の計算方法、複雑度を削減する方法、実践的な測定ツールについて、詳しく解説していきます。</p>
 <h2 id="循環的複雑度（Cyclomatic-Complexity）とは"><a href="#循環的複雑度（Cyclomatic-Complexity）とは" class="headerlink" title="循環的複雑度（Cyclomatic Complexity）とは"></a>循環的複雑度（Cyclomatic Complexity）とは</h2><p>循環的複雑度は、プログラムの制御フローの分岐の数から算出される複雑度の指標です。この値が高いほど、コードは複雑で理解しにくく、バグが発生しやすくなります。</p>
 <h3 id="基本計算式"><a href="#基本計算式" class="headerlink" title="基本計算式"></a>基本計算式</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">M</span> = E - N + <span class="number">2</span>P</span><br></pre></td></tr></table></figure>
@@ -218,7 +218,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <ul>
 <li>分岐・ループの数：3</li>
-<li>複雑度：3 + 1 = <strong>4</strong></li>
+<li>複雑度：3 + 1 &#x3D; <strong>4</strong></li>
 </ul>
 <p>上記の例のように分岐を繰り返しを数えて+1をすれば概算で計算することができます。</p>
 <h3 id="例2：基本計算式を使った計算方法"><a href="#例2：基本計算式を使った計算方法" class="headerlink" title="例2：基本計算式を使った計算方法"></a>例2：基本計算式を使った計算方法</h3><p>次は <code>M = E - N + 2P</code> を使った計算方法を見ていきましょう。</p>
@@ -229,13 +229,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p><strong>計算：</strong><br>次に制御フローグラフからノードの数、辺の数を数えます。</p>
 <ul>
-<li>N（ノード数）= 3（Start, print, End）</li>
-<li>E（辺の数）= 2（Start→print, print→End）</li>
-<li>P（連結成分数）= 1</li>
+<li>N（ノード数）&#x3D; 3（Start, print, End）</li>
+<li>E（辺の数）&#x3D; 2（Start→print, print→End）</li>
+<li>P（連結成分数）&#x3D; 1</li>
 </ul>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">M</span> = E - N + <span class="number">2</span>P</span><br><span class="line"><span class="attribute">M</span> = <span class="number">2</span> - <span class="number">3</span> + <span class="number">2</span>*<span class="number">1</span></span><br><span class="line"><span class="attribute">M</span> = <span class="number">1</span></span><br></pre></td></tr></table></figure>
 
-<p>結果：<strong>複雑度 = 1</strong>（最低値、まったく複雑ではない関数）</p>
+<p>結果：<strong>複雑度 &#x3D; 1</strong>（最低値、まったく複雑ではない関数）</p>
 <h3 id="分岐を追加した場合"><a href="#分岐を追加した場合" class="headerlink" title="分岐を追加した場合"></a>分岐を追加した場合</h3><p>次に分岐を追加した関数の計算をしてみましょう。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">helper</span>(<span class="params">flag</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;do something&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -244,13 +244,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p><strong>計算：</strong></p>
 <ul>
-<li>N（ノード数）= 4（Start, 条件判定, print, End）</li>
-<li>E（辺の数）= 4（Start→条件判定, 条件判定→print, 条件判定→End, print→End）</li>
-<li>P（連結成分数）= 1</li>
+<li>N（ノード数）&#x3D; 4（Start, 条件判定, print, End）</li>
+<li>E（辺の数）&#x3D; 4（Start→条件判定, 条件判定→print, 条件判定→End, print→End）</li>
+<li>P（連結成分数）&#x3D; 1</li>
 </ul>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">M</span> = E - N + <span class="number">2</span>P</span><br><span class="line"><span class="attribute">M</span> = <span class="number">4</span> - <span class="number">4</span> + <span class="number">2</span>*<span class="number">1</span></span><br><span class="line"><span class="attribute">M</span> = <span class="number">2</span></span><br></pre></td></tr></table></figure>
 
-<p>結果：<strong>複雑度 = 2</strong>（分岐を1つ追加しただけで、複雑度は 1 → 2 に増加）</p>
+<p>結果：<strong>複雑度 &#x3D; 2</strong>（分岐を1つ追加しただけで、複雑度は 1 → 2 に増加）</p>
 <h3 id="ネストした条件分岐"><a href="#ネストした条件分岐" class="headerlink" title="ネストした条件分岐"></a>ネストした条件分岐</h3><p>条件分岐がネストした関数の循環的複雑度を計算をしてみます。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">helper</span>(<span class="params">a, b</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (a &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (b &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;A and B are positive&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -259,13 +259,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <p><strong>計算：</strong></p>
 <ul>
-<li>N（ノード数）= 5（Start, 条件判定1, 条件判定2, print, End）</li>
-<li>E（辺の数）= 6（Start→条件判定1, 条件判定1→End, 条件判定1→条件判定2, 条件判定2→End, 条件判定2→print, print→End）</li>
-<li>P（連結成分数）= 1</li>
+<li>N（ノード数）&#x3D; 5（Start, 条件判定1, 条件判定2, print, End）</li>
+<li>E（辺の数）&#x3D; 6（Start→条件判定1, 条件判定1→End, 条件判定1→条件判定2, 条件判定2→End, 条件判定2→print, print→End）</li>
+<li>P（連結成分数）&#x3D; 1</li>
 </ul>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">M</span> = E - N + <span class="number">2</span>P</span><br><span class="line"><span class="attribute">M</span> = <span class="number">6</span> - <span class="number">5</span> + <span class="number">2</span>*<span class="number">1</span></span><br><span class="line"><span class="attribute">M</span> = <span class="number">3</span></span><br></pre></td></tr></table></figure>
 
-<p>結果：<strong>複雑度 = 3</strong></p>
+<p>結果：<strong>複雑度 &#x3D; 3</strong></p>
 <h3 id="重要なポイント"><a href="#重要なポイント" class="headerlink" title="重要なポイント"></a>重要なポイント</h3><ul>
 <li>循環的複雑度は「ネストの深さ」ではなく「分岐の総数」で増える</li>
 <li>ただし、ネストが深いと認知的複雑度（Cognitive Complexity）はもっと増える</li>
@@ -310,36 +310,36 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <ul>
 <li><code>main</code> の中には分岐もループもなし</li>
-<li><code>main</code> の複雑度 = 1（最低値）</li>
-<li><code>helper</code> は別に計算（=1）</li>
+<li><code>main</code> の複雑度 &#x3D; 1（最低値）</li>
+<li><code>helper</code> は別に計算（&#x3D;1）</li>
 </ul>
 <h3 id="例2：条件式の中で呼び出し（影響あり）"><a href="#例2：条件式の中で呼び出し（影響あり）" class="headerlink" title="例2：条件式の中で呼び出し（影響あり）"></a>例2：条件式の中で呼び出し（影響あり）</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">isValid</span>(<span class="params">x</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> x &gt; <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params">x</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="title function_">isValid</span>(x)) &#123;   <span class="comment">// 分岐1</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;ok&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><code>isValid()</code> の中身はカウントしないが、<code>if</code> の分岐1つとして <code>main</code> の複雑度に加算される</li>
 <li>複雑度：<ul>
-<li><code>main</code> =  1（if）+ 1 = <strong>2</strong></li>
-<li><code>isValid</code> = 1</li>
+<li><code>main</code> &#x3D;  1（if）+ 1 &#x3D; <strong>2</strong></li>
+<li><code>isValid</code> &#x3D; 1</li>
 </ul>
 </li>
 </ul>
 <h2 id="複雑度を下げる方法"><a href="#複雑度を下げる方法" class="headerlink" title="複雑度を下げる方法"></a>複雑度を下げる方法</h2><h3 id="1-関数の分割"><a href="#1-関数の分割" class="headerlink" title="1. 関数の分割"></a>1. 関数の分割</h3><p>関数を分割することで１つ１つの関数の循環的複雑度は下がります。</p>
-<p><strong>Before（複雑度 = 8）</strong></p>
+<p><strong>Before（複雑度 &#x3D; 8）</strong></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">complexFunction</span>(<span class="params">data</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (data.<span class="property">type</span> === <span class="string">&#x27;A&#x27;</span>) &#123;</span><br><span class="line">    <span class="comment">// 処理A</span></span><br><span class="line">    <span class="keyword">if</span> (data.<span class="property">value</span> &gt; <span class="number">10</span>) &#123;</span><br><span class="line">      <span class="comment">// 処理A-1</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 処理A-2</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (data.<span class="property">type</span> === <span class="string">&#x27;B&#x27;</span>) &#123;</span><br><span class="line">    <span class="comment">// 処理B</span></span><br><span class="line">    <span class="keyword">if</span> (data.<span class="property">value</span> &gt; <span class="number">20</span>) &#123;</span><br><span class="line">      <span class="comment">// 処理B-1</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 処理B-2</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>After（複雑度 = 2）</strong></p>
+<p><strong>After（複雑度 &#x3D; 2）</strong></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">processTypeA</span>(<span class="params">data</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (data.<span class="property">value</span> &gt; <span class="number">10</span>) &#123;</span><br><span class="line">    <span class="comment">// 処理A-1</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 処理A-2</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">processTypeB</span>(<span class="params">data</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (data.<span class="property">value</span> &gt; <span class="number">20</span>) &#123;</span><br><span class="line">    <span class="comment">// 処理B-1</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 処理B-2</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">complexFunction</span>(<span class="params">data</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (data.<span class="property">type</span> === <span class="string">&#x27;A&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">processTypeA</span>(data);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (data.<span class="property">type</span> === <span class="string">&#x27;B&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">processTypeB</span>(data);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-ポリモーフィズムの活用"><a href="#2-ポリモーフィズムの活用" class="headerlink" title="2. ポリモーフィズムの活用"></a>2. ポリモーフィズムの活用</h3><p>ポリモーフィズムを使うことで、分岐がなくなります。それにより、複雑度が下がります。<br><strong>Before（複雑度 = 6）</strong></p>
+<h3 id="2-ポリモーフィズムの活用"><a href="#2-ポリモーフィズムの活用" class="headerlink" title="2. ポリモーフィズムの活用"></a>2. ポリモーフィズムの活用</h3><p>ポリモーフィズムを使うことで、分岐がなくなります。それにより、複雑度が下がります。<br><strong>Before（複雑度 &#x3D; 6）</strong></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">processPayment</span>(<span class="params">payment</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (payment.<span class="property">type</span> === <span class="string">&#x27;credit&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">processCreditCard</span>(payment);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (payment.<span class="property">type</span> === <span class="string">&#x27;debit&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">processDebitCard</span>(payment);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (payment.<span class="property">type</span> === <span class="string">&#x27;bank&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">processBankTransfer</span>(payment);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>After（複雑度 = 1）：</strong></p>
+<p><strong>After（複雑度 &#x3D; 1）：</strong></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> paymentProcessors = &#123;</span><br><span class="line">  <span class="attr">credit</span>: processCreditCard,</span><br><span class="line">  <span class="attr">debit</span>: processDebitCard,</span><br><span class="line">  <span class="attr">bank</span>: processBankTransfer</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">processPayment</span>(<span class="params">payment</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> processor = paymentProcessors[payment.<span class="property">type</span>];</span><br><span class="line">  <span class="keyword">return</span> processor ? <span class="title function_">processor</span>(payment) : <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Unknown payment type&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="測定ツール"><a href="#測定ツール" class="headerlink" title="測定ツール"></a>測定ツール</h2><p>ここでは、循環的複雑度の計算方法について説明してきました。<br>実際の関数は複雑であり、手計算は現実的ではありません。各言語でツールが開発されており、そのツールを利用するのがよいです。</p>
 <ul>
-<li><strong>JavaScript/TypeScript</strong>: ESLint</li>
+<li><strong>JavaScript&#x2F;TypeScript</strong>: ESLint</li>
 <li><strong>Python</strong>: radon</li>
-<li><strong>Java</strong>: SonarQube / PMD</li>
+<li><strong>Java</strong>: SonarQube &#x2F; PMD</li>
 <li><strong>Go</strong>: gocyclo</li>
 </ul>
 <h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>循環的複雑度は、コードの品質を数値で測れる指標です。<strong>チーム開発では「このコードは複雑すぎる」という主観的な意見ではなく、「複雑度が15だからリファクタリングが必要」と客観的に判断できます</strong>。複雑度の計算方法を理解すれば、コードレビューでも「なぜこの関数は複雑なのか」を論理的に説明できるようになり、より建設的な議論ができるようになります。</p>

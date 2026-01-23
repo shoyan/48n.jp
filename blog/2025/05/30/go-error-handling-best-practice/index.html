@@ -66,7 +66,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             "url": "https://48n.jp"
                           },
                           "datePublished": "Fri May 30 2025 12:33:47 GMT+0900",
-                          "dateModified": "Fri Jan 23 2026 09:56:31 GMT+0900",
+                          "dateModified": "Fri Jan 23 2026 09:56:57 GMT+0900",
                           "description": "Goのエラーハンドリングのベストプラクティスを解説。errors.Is()、errors.As()、エラーのラッピングとアンラッピング、カスタムエラーの作成方法について詳しく説明します。",
                           "mainEntityOfPage": {
                             "@type": "WebPage",
@@ -175,7 +175,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <time datetime="2025-05-30T03:33:47.000Z" itemprop="datepublished">
       2025/05/30
     </time>
-    <time datetime="2026-01-23T00:56:31.261Z" itemprop="modified">
+    <time datetime="2026-01-23T00:56:57.520Z" itemprop="modified">
       (更新日: 2026/01/23)
     </time>
   </div>
@@ -221,7 +221,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h3 id="4-カスタムエラー型の作成"><a href="#4-カスタムエラー型の作成" class="headerlink" title="4. カスタムエラー型の作成"></a>4. カスタムエラー型の作成</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> NotFoundError <span class="keyword">struct</span> &#123;</span><br><span class="line">    ID <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(e *NotFoundError)</span></span> Error() <span class="type">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> fmt.Sprintf(<span class="string">&quot;user %s not found&quot;</span>, e.ID)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>Goでは、<code>Error()</code>メソッドを実装した任意の型をエラーとして使用できます。カスタムエラー型を作成することで、エラーに追加情報（この例では<code>ID</code>）を含めることができ、より詳細なエラーハンドリングが可能になります。</p>
-<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>Goのエラー判定では、==演算子による比較はラップされたエラーに対して正しく動作しません。<br>そのため、Go1.13以降で導入された<code>errors.Is</code>や<code>errors.As</code>を活用することで、より安全かつ柔軟なエラーハンドリングが可能になります。<br>エラー処理の品質向上のため、ぜひこれらの手法を取り入れてみてください。</p>
+<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>Goのエラー判定では、&#x3D;&#x3D;演算子による比較はラップされたエラーに対して正しく動作しません。<br>そのため、Go1.13以降で導入された<code>errors.Is</code>や<code>errors.As</code>を活用することで、より安全かつ柔軟なエラーハンドリングが可能になります。<br>エラー処理の品質向上のため、ぜひこれらの手法を取り入れてみてください。</p>
 
 </article>
 

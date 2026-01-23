@@ -64,7 +64,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             "url": "https://48n.jp"
                           },
                           "datePublished": "Fri May 30 2025 16:03:12 GMT+0900",
-                          "dateModified": "Fri Jan 23 2026 09:56:31 GMT+0900",
+                          "dateModified": "Fri Jan 23 2026 09:56:57 GMT+0900",
                           "description": "",
                           "mainEntityOfPage": {
                             "@type": "WebPage",
@@ -173,7 +173,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <time datetime="2025-05-30T07:03:12.000Z" itemprop="datepublished">
       2025/05/30
     </time>
-    <time datetime="2026-01-23T00:56:31.261Z" itemprop="modified">
+    <time datetime="2026-01-23T00:56:57.519Z" itemprop="modified">
       (更新日: 2026/01/23)
     </time>
   </div>
@@ -198,8 +198,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h2 id="発生した問題"><a href="#発生した問題" class="headerlink" title="発生した問題"></a>発生した問題</h2><p>Go 1.24.3にアップデートした後、以下のようなエラーメッセージが表示されるようになりました。</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">link: duplicated definition of symbol dlopen, from github.com<span class="regexp">/ebitengine/</span>purego and github.com<span class="regexp">/ebitengine/</span>purego (<span class="keyword">exit</span> status <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
 
-<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>調査の結果、このエラーはMacのIntel CPU（darwin/amd64）環境で発生する既知の問題であることがわかりました。Go公式リポジトリでも同様の問題が報告されています。</p>
-<p><a href="https://github.com/golang/go/issues/73617">Github Issue #73617: cmd/link: Go 1.24.3 and 1.23.9 regression - duplicated definition of symbol dlopen</a></p>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>調査の結果、このエラーはMacのIntel CPU（darwin&#x2F;amd64）環境で発生する既知の問題であることがわかりました。Go公式リポジトリでも同様の問題が報告されています。</p>
+<p><a href="https://github.com/golang/go/issues/73617">Github Issue #73617: cmd&#x2F;link: Go 1.24.3 and 1.23.9 regression - duplicated definition of symbol dlopen</a></p>
 <h2 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h2><p>この問題は<code>github.com/ebitengine/purego</code>の最新バージョン（v0.8.3）で修正されています。以下のコマンドでpuregoをアップデートすることで解決できます。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/ebitengine/purego@v0.8.3</span><br></pre></td></tr></table></figure>
 

@@ -177,7 +177,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2025-07-02T03:00:00.000Z" itemprop="datepublished">
             2025/07/02
           </time>
-          <time datetime="2026-01-23T00:56:31.261Z" itemprop="modified">
+          <time datetime="2026-01-23T00:56:57.519Z" itemprop="modified">
             (更新日: 2026/01/23)
           </time>
         </div>
@@ -213,7 +213,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2025-06-05T02:00:00.000Z" itemprop="datepublished">
             2025/06/05
           </time>
-          <time datetime="2026-01-23T00:56:31.264Z" itemprop="modified">
+          <time datetime="2026-01-23T00:56:57.523Z" itemprop="modified">
             (更新日: 2026/01/23)
           </time>
         </div>
@@ -335,7 +335,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2025-06-04T01:30:00.000Z" itemprop="datepublished">
             2025/06/04
           </time>
-          <time datetime="2026-01-23T00:56:31.261Z" itemprop="modified">
+          <time datetime="2026-01-23T00:56:57.520Z" itemprop="modified">
             (更新日: 2026/01/23)
           </time>
         </div>
@@ -380,17 +380,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="comment">// Slack APIトークンを環境変数から取得</span></span><br><span class="line">    token := os.Getenv(<span class="string">&quot;SLACK_BOT_TOKEN&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> token == <span class="string">&quot;&quot;</span> &#123;</span><br><span class="line">        log.Fatal(<span class="string">&quot;SLACK_BOT_TOKEN is not set&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Slackクライアントの初期化</span></span><br><span class="line">    api := slack.New(token)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ユーザー一覧を取得して表示</span></span><br><span class="line">    getUsers(api)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 特定のユーザーにDMを送信</span></span><br><span class="line">    userID := <span class="string">&quot;U02K6JU8D&quot;</span> <span class="comment">// 実際のユーザーIDに置き換えてください</span></span><br><span class="line">    err := sendDirectMessage(api, userID, <span class="string">&quot;これはテストメッセージです！&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Fatalf(<span class="string">&quot;DMの送信に失敗しました: %v&quot;</span>, err)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ブロックキットを使用したDMを送信</span></span><br><span class="line">    blocks := buildSampleBlockKit()</span><br><span class="line">    err = sendDirectMessageWithBlocks(api, userID, blocks)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Fatalf(<span class="string">&quot;ブロックキットDMの送信に失敗しました: %v&quot;</span>, err)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="実行方法"><a href="#実行方法" class="headerlink" title="実行方法"></a>実行方法</h2><ol>
-<li><p>依存関係をインストール：</p>
+<li>依存関係をインストール：</li>
+</ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go mod tidy</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>環境変数を設定：</p>
+
+<ol start="2">
+<li>環境変数を設定：</li>
+</ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> SLACK_BOT_TOKEN=<span class="string">&quot;xoxb-your-token&quot;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>プログラムを実行：</p>
+
+<ol start="3">
+<li>プログラムを実行：</li>
+</ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run main.go</span><br></pre></td></tr></table></figure>
 
-</li>
-</ol>
 <h2 id="注意事項"><a href="#注意事項" class="headerlink" title="注意事項"></a>注意事項</h2><ol>
 <li><p><strong>レート制限</strong>: Slack APIにはレート制限があります。大量のメッセージを送信する場合は、適切な間隔を設けましょう。</p>
 </li>
@@ -413,7 +416,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2025-06-03T03:00:00.000Z" itemprop="datepublished">
             2025/06/03
           </time>
-          <time datetime="2026-01-23T00:56:31.260Z" itemprop="modified">
+          <time datetime="2026-01-23T00:56:57.518Z" itemprop="modified">
             (更新日: 2026/01/23)
           </time>
         </div>
@@ -433,7 +436,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// limiter/limiter.go</span></span><br><span class="line"><span class="keyword">package</span> limiter</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// レート制限を確認し、エラーを返す</span></span><br><span class="line"><span class="keyword">type</span> Limiter <span class="keyword">interface</span> &#123;</span><br><span class="line">    Check() <span class="type">error</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// RateLimitErrorは、レート制限が超過されたときに発生するエラー</span></span><br><span class="line"><span class="keyword">type</span> RateLimitError <span class="keyword">struct</span> &#123;</span><br><span class="line">    RetryIn time.Duration</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(e *RateLimitError)</span></span> Error() <span class="type">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> fmt.Sprintf(<span class="string">&quot;rate limited (retry in %v)&quot;</span>, e.RetryIn)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>このインターフェース設計により、異なるレート制限の実装を簡単に差し替えることができます。</p>
-<h2 id="2-レート制限の実装方式"><a href="#2-レート制限の実装方式" class="headerlink" title="2. レート制限の実装方式"></a>2. レート制限の実装方式</h2><h3 id="2-1-golang-org-x-time-rateを使った実装"><a href="#2-1-golang-org-x-time-rateを使った実装" class="headerlink" title="2.1 golang.org/x/time/rateを使った実装"></a>2.1 golang.org/x/time/rateを使った実装</h3><p>標準的なトークンバケットアルゴリズムを使った実装です。</p>
+<h2 id="2-レート制限の実装方式"><a href="#2-レート制限の実装方式" class="headerlink" title="2. レート制限の実装方式"></a>2. レート制限の実装方式</h2><h3 id="2-1-golang-org-x-time-rateを使った実装"><a href="#2-1-golang-org-x-time-rateを使った実装" class="headerlink" title="2.1 golang.org&#x2F;x&#x2F;time&#x2F;rateを使った実装"></a>2.1 golang.org&#x2F;x&#x2F;time&#x2F;rateを使った実装</h3><p>標準的なトークンバケットアルゴリズムを使った実装です。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// limiter/rate_limiter.go</span></span><br><span class="line"><span class="keyword">type</span> RateLimiter <span class="keyword">struct</span> &#123;</span><br><span class="line">    limiter *rate.Limiter</span><br><span class="line">    limit   <span class="type">int</span>           <span class="comment">// 1秒間に処理できるリクエスト数</span></span><br><span class="line">    burst   <span class="type">int</span>           <span class="comment">// 瞬間的に許可される最大リクエスト数</span></span><br><span class="line">    retryIn time.Duration <span class="comment">// レート制限時の再試行待機時間</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewRateLimiter</span><span class="params">(limit <span class="type">int</span>, burst <span class="type">int</span>, retryIn time.Duration)</span></span> *RateLimiter &#123;</span><br><span class="line">    <span class="keyword">return</span> &amp;RateLimiter&#123;</span><br><span class="line">        limiter: rate.NewLimiter(rate.Limit(limit), burst),</span><br><span class="line">        limit:   limit,</span><br><span class="line">        burst:   burst,</span><br><span class="line">        retryIn: retryIn,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(rl *RateLimiter)</span></span> Check() <span class="type">error</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> !rl.limiter.Allow() &#123;</span><br><span class="line">        <span class="keyword">return</span> &amp;RateLimitError&#123;</span><br><span class="line">            RetryIn: rl.retryIn,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>メリット</strong></p>
@@ -477,8 +480,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run producer/main.go</span><br></pre></td></tr></table></figure>
 
 <h2 id="5-実装のポイント"><a href="#5-実装のポイント" class="headerlink" title="5. 実装のポイント"></a>5. 実装のポイント</h2><h3 id="レート制限の適切な設定"><a href="#レート制限の適切な設定" class="headerlink" title="レート制限の適切な設定"></a>レート制限の適切な設定</h3><ul>
-<li><strong>外部API呼び出し</strong>: APIの制限に合わせて設定（例：100リクエスト/分）</li>
-<li><strong>メール送信</strong>: メール送信サービスの制限に合わせて設定（例：10通/秒）</li>
+<li><strong>外部API呼び出し</strong>: APIの制限に合わせて設定（例：100リクエスト&#x2F;分）</li>
+<li><strong>メール送信</strong>: メール送信サービスの制限に合わせて設定（例：10通&#x2F;秒）</li>
 <li><strong>データベース操作</strong>: データベースの負荷を考慮して設定</li>
 </ul>
 <h3 id="エラーハンドリング"><a href="#エラーハンドリング" class="headerlink" title="エラーハンドリング"></a>エラーハンドリング</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">srv := asynq.NewServer(</span><br><span class="line">    redisOpt,</span><br><span class="line">    asynq.Config&#123;</span><br><span class="line">        <span class="comment">// レート制限エラーは失敗としてカウントしない</span></span><br><span class="line">        IsFailure: <span class="function"><span class="keyword">func</span><span class="params">(err <span class="type">error</span>)</span></span> <span class="type">bool</span> &#123; </span><br><span class="line">            <span class="keyword">return</span> !IsRateLimitError(err) </span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="comment">// レート制限エラーの場合は適切な待機時間でリトライ</span></span><br><span class="line">        RetryDelayFunc: retryDelay,</span><br><span class="line">    &#125;,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
@@ -491,7 +494,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>インターフェースベースの設計により、後から実装を切り替えることも容易です。適切なレート制限により、安定したタスク処理システムを構築できます。</p>
 <h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
 <li><a href="https://github.com/hibiken/asynq">Asynq公式ドキュメント</a></li>
-<li><a href="https://pkg.go.dev/golang.org/x/time/rate">golang.org/x/time/rate</a></li>
+<li><a href="https://pkg.go.dev/golang.org/x/time/rate">golang.org&#x2F;x&#x2F;time&#x2F;rate</a></li>
 <li><a href="https://github.com/shoyan/asynq-late-limiter">サンプルコード</a></li>
 </ul>
 
@@ -503,7 +506,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2025-05-30T07:03:12.000Z" itemprop="datepublished">
             2025/05/30
           </time>
-          <time datetime="2026-01-23T00:56:31.261Z" itemprop="modified">
+          <time datetime="2026-01-23T00:56:57.519Z" itemprop="modified">
             (更新日: 2026/01/23)
           </time>
         </div>
@@ -515,8 +518,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h2 id="発生した問題"><a href="#発生した問題" class="headerlink" title="発生した問題"></a>発生した問題</h2><p>Go 1.24.3にアップデートした後、以下のようなエラーメッセージが表示されるようになりました。</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">link: duplicated definition of symbol dlopen, from github.com<span class="regexp">/ebitengine/</span>purego and github.com<span class="regexp">/ebitengine/</span>purego (<span class="keyword">exit</span> status <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
 
-<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>調査の結果、このエラーはMacのIntel CPU（darwin/amd64）環境で発生する既知の問題であることがわかりました。Go公式リポジトリでも同様の問題が報告されています。</p>
-<p><a href="https://github.com/golang/go/issues/73617">Github Issue #73617: cmd/link: Go 1.24.3 and 1.23.9 regression - duplicated definition of symbol dlopen</a></p>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>調査の結果、このエラーはMacのIntel CPU（darwin&#x2F;amd64）環境で発生する既知の問題であることがわかりました。Go公式リポジトリでも同様の問題が報告されています。</p>
+<p><a href="https://github.com/golang/go/issues/73617">Github Issue #73617: cmd&#x2F;link: Go 1.24.3 and 1.23.9 regression - duplicated definition of symbol dlopen</a></p>
 <h2 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h2><p>この問題は<code>github.com/ebitengine/purego</code>の最新バージョン（v0.8.3）で修正されています。以下のコマンドでpuregoをアップデートすることで解決できます。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/ebitengine/purego@v0.8.3</span><br></pre></td></tr></table></figure>
 
