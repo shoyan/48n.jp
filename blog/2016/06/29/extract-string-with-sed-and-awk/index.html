@@ -74,7 +74,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                           }
                         }
                         </script>
-  <meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
+  <meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
 </head>
 
   <body>
@@ -203,7 +203,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <h3 id="スペース区切りに加工する"><a href="#スペース区切りに加工する" class="headerlink" title="スペース区切りに加工する"></a>スペース区切りに加工する</h3><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">⇒  <span class="variable">sed</span> <span class="operator">-</span><span class="variable">n</span> <span class="operator">&#x27;</span><span class="number">4</span><span class="operator">,</span><span class="number">14</span><span class="variable">p</span><span class="operator">&#x27;</span> <span class="variable">table</span><span class="operator">.</span><span class="variable">txt</span> <span class="operator">|</span> <span class="variable">awk</span> <span class="operator">&#x27;</span><span class="punctuation">&#123;</span><span class="variable">print</span> <span class="variable">$2</span> <span class="string">&quot; &quot;</span><span class="punctuation">&#125;</span><span class="operator">&#x27;</span> <span class="operator">|</span> <span class="variable">tr</span> <span class="operator">-</span><span class="variable">d</span> <span class="operator">&#x27;</span>\<span class="variable">n</span><span class="operator">&#x27;</span></span><br><span class="line"><span class="variable">A</span> <span class="variable">B</span> <span class="built_in">C</span> <span class="built_in">D</span> <span class="built_in">E</span> <span class="variable">F</span> <span class="variable">G</span> <span class="variable">H</span> <span class="built_in">I</span> <span class="variable">J</span> <span class="built_in">K</span></span><br></pre></td></tr></table></figure>
 
-<p><code>sed -n &#39;4,14p’</code> で指定した行数のみ取得しています<br>次に<code>awk &#39;&#123;print $2&#125;’</code> でlabel列のみ抽出しています。<br>改行を消すのは <code>tr -d &#39;\n’</code> が便利です。</p>
+<p><code>sed -n &#39;4,14p’</code> で指定した行数のみ取得しています<br>次に<code>awk &#39;{print $2}’</code> でlabel列のみ抽出しています。<br>改行を消すのは <code>tr -d &#39;\n’</code> が便利です。</p>
 
 </article>
 

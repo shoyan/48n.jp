@@ -74,7 +74,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                           }
                         }
                         </script>
-  <meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
+  <meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/atom.xml" title="SHOYAN BLOG" type="application/atom+xml">
 </head>
 
   <body>
@@ -212,7 +212,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h2 id="Capistranoの設定"><a href="#Capistranoの設定" class="headerlink" title="Capistranoの設定"></a>Capistranoの設定</h2><p>Capistranoがインストールできたので、設定をしていきます。<br>cap installコマンドで雛形を作成します。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">bundle <span class="built_in">exec</span> <span class="built_in">cap</span> install</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p><code>config/deploy.rb</code>と<code>config/deploy/&#123;production, staging&#125;.rb</code> が作成されているので適宜編集します。</p>
+<p><code>config/deploy.rb</code>と<code>config/deploy/{production, staging}.rb</code> が作成されているので適宜編集します。</p>
 <p>config/deploy.rb</p>
 <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># config valid only <span class="keyword">for</span> current <span class="keyword">version</span> of Capistrano</span><br><span class="line">lock &#x27;3.5.0&#x27;</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span> :application, ‘<span class="keyword">app</span>&#x27;</span><br><span class="line"><span class="keyword">set</span> :repo_url, &#x27;git@github.com:shoyan/shoyan.git&#x27;</span><br><span class="line"></span><br><span class="line">ask :branch, `git rev-<span class="keyword">parse</span> --abbrev-ref HEAD`.chomp</span><br><span class="line"><span class="keyword">set</span> :deploy_to, &#x27;/<span class="keyword">var</span>/www/<span class="keyword">app</span>&#x27;</span><br><span class="line"><span class="keyword">set</span> :scm, :git</span><br><span class="line"><span class="keyword">set</span> :<span class="keyword">format</span>, :airbrussh</span><br><span class="line"><span class="keyword">set</span> :keep_releases, 5</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
