@@ -174,11 +174,43 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2025-05-30T07:03:12.000Z" itemprop="datepublished">
+            2025/05/30
+          </time>
+          <time datetime="2026-02-01T12:53:50.107Z" itemprop="modified">
+            (更新日: 2026/02/01)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2025/05/30/go-1-24-3-build-error/">Go 1.24.3アップデート後のビルドエラーと解決方法</a>
+        </h1>
+        <div class="content">
+          <h2 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h2><p>最近Go 1.24.3へアップデートしたところ、ローカル環境でビルドエラーが発生するようになりました。この記事では、発生した問題と解決方法について共有します。</p>
+<h2 id="発生した問題"><a href="#発生した問題" class="headerlink" title="発生した問題"></a>発生した問題</h2><p>Go 1.24.3にアップデートした後、以下のようなエラーメッセージが表示されるようになりました。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">link: duplicated definition of symbol dlopen, from github.com<span class="regexp">/ebitengine/</span>purego and github.com<span class="regexp">/ebitengine/</span>purego (<span class="keyword">exit</span> status <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>調査の結果、このエラーはMacのIntel CPU（darwin&#x2F;amd64）環境で発生する既知の問題であることがわかりました。Go公式リポジトリでも同様の問題が報告されています。</p>
+<p><a href="https://github.com/golang/go/issues/73617">Github Issue #73617: cmd&#x2F;link: Go 1.24.3 and 1.23.9 regression - duplicated definition of symbol dlopen</a></p>
+<h2 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h2><p>この問題は<code>github.com/ebitengine/purego</code>の最新バージョン（v0.8.3）で修正されています。以下のコマンドでpuregoをアップデートすることで解決できます。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/ebitengine/purego@v0.8.3</span><br></pre></td></tr></table></figure>
+
+<p>アップデート後、ビルドが正常に完了することを確認しました。</p>
+<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>Go言語のバージョンアップ後にはライブラリとの互換性の問題が発生することがあります。特にGoのマイナーバージョンアップデート（1.24.2→1.24.3など）でも互換性の問題が生じる可能性があるため、ビルドエラーが発生した場合は依存ライブラリの更新も検討するとよいでしょう。</p>
+<h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
+<li><a href="https://github.com/golang/go/issues/73617">Go公式リポジトリのIssue #73617</a></li>
+<li><a href="https://github.com/ebitengine/purego/releases/tag/v0.8.3">purego v0.8.3リリースノート</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2025-05-30T03:33:47.000Z" itemprop="datepublished">
             2025/05/30
           </time>
-          <time datetime="2026-01-23T01:01:39.590Z" itemprop="modified">
-            (更新日: 2026/01/23)
+          <time datetime="2026-02-01T12:53:50.107Z" itemprop="modified">
+            (更新日: 2026/02/01)
           </time>
         </div>
         <h1>
@@ -424,30 +456,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <li><a href="https://hexo.io/docs/github-pages.html" target="_blank" class="outbound">GitHub Pages | Hexo</a></li>
 </ul>
 <h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>Hexoは学習コストが低く、テーマ作成もわりと簡単にできるので楽にブログを作りたい人におすすめです。Node.js環境でブログを作りたいときは検討してみてはいかがでしょうか。</p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2019-08-19T03:48:14.000Z" itemprop="datepublished">
-            2019/08/19
-          </time>
-          <time datetime="2026-01-13T03:48:14.000Z" itemprop="modified">
-            (更新日: 2026/01/13)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2019/08/19/simple-implementation/">シンプルに実装する大切さ</a>
-        </h1>
-        <div class="content">
-          <p>私はシンプルに実装することを最も大切にしています。これは単なる好みではなく、長期的なプロジェクトの成功に直結する重要な原則です。</p>
-<h2 id="シンプルさは難しい"><a href="#シンプルさは難しい" class="headerlink" title="シンプルさは難しい"></a>シンプルさは難しい</h2><p>プログラミングの経験が浅い人の中には、難解なコードや短い行数で書けることが「かっこいい」と考える人もいるかもしれません。<br>実は、シンプルに実装することは非常に難しいのです。プログラムは自然と複雑になっていく性質を持っているため、意図的にシンプルさを保つには、継続的な努力と判断力が必要です。</p>
-<h2 id="実例：Node-jsコミッターのコード"><a href="#実例：Node-jsコミッターのコード" class="headerlink" title="実例：Node.jsコミッターのコード"></a>実例：Node.jsコミッターのコード</h2><p>私はNode.jsのコミッターが、あえてトラディショナルな<code>for</code>文を使ったコードを書いているのを見たことがあります。そのコードは、これ以上ないくらいシンプルで、誰が読んでも意図が明確でした。</p>
-<p>最新の機能や複雑な構文を使うことが必ずしも良いわけではありません。むしろ、一般的な技術を有したエンジニアであれば誰でも理解できるコードを書くことが、チーム全体の生産性を高めます。</p>
-<h2 id="メンテナンス性の重要性"><a href="#メンテナンス性の重要性" class="headerlink" title="メンテナンス性の重要性"></a>メンテナンス性の重要性</h2><p>現在のプログラムの多くは、今後も多くの変更が入ります。そうであれば、完璧に動くことよりも、メンテナンスがしやすいことが大切です。</p>
-<p>後々、悪い影響を及ぼすコードは複雑で難解なコードです。シンプルで意図が明快なコードが問題を起こすことはありません。6ヶ月後の自分や、チームの他のメンバーがコードを読むとき、そのシンプルさが大きな助けになります。</p>
-<h2 id="実践への心がけ"><a href="#実践への心がけ" class="headerlink" title="実践への心がけ"></a>実践への心がけ</h2><p>この記事を読んでいるみなさんには、今後は簡単でシンプルな必要最小限のコードを書くという意識でコードを書いてほしいと思います。複雑さを避け、読みやすさを優先する。それが、長期的に見て最も価値のあるコードです。</p>
 
         </div>
       </div>

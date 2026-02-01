@@ -174,6 +174,38 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2018-11-20T07:04:35.000Z" itemprop="datepublished">
+            2018/11/20
+          </time>
+          <time datetime="2018-11-20T07:04:35.000Z" itemprop="modified">
+            (更新日: 2018/11/20)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2018/11/20/sinatra-way/">RubyでのWebアプリケーション開発はSinatraから入りRailsに行く</a>
+        </h1>
+        <div class="content">
+          <p>私はソフトウェアエンジニアなのですが、プログラミング講師としても生徒さんにRubyを教えています。RubyでWebアプリケーションを作る場合、まず候補になるフレームワークはRuby on Railsですが、Railsは初学者には難しいと思います。プログラミング初学者にRailsを教えるということは、車の教習所でいきなりスポーツカーを運転させるようなものです。入門者には入門者に適した車があるのと同様にプログラミングにもそのようなものがあります。</p>
+<p>では、最初は何がいいかというと、Sinatraがよいと思います。そういうわけで、Sinatraを使ったWebアプリケーションのサンプルを探してみたのですが、よいものが見つかりませんでした。ないなら作ってしまえというわけで作りました。</p>
+<ul>
+<li><a href="https://github.com/shoyan/sinatra-app" target="_blank">https://github.com/shoyan/sinatra-app</a></li>
+</ul>
+<p>今回作成したのはシンプルなメモアプリケーションでフォームに入力した値をメモとして保存することができます。作成したメモの一覧表示、詳細表示、編集機能、削除機能を実装しています。基本的なCRUD操作を備えており、RESTについても学ぶことができるようになっています。</p>
+<p>わかりやすいようにディレクトリをわけています。initialディレクトリは最初からフルスクラッチで作る場合のディレクトリです。step1はメモの作成とメモの表示機能を実装しています。step2はstep1の機能にメモの削除とメモの編集機能を追加しています。</p>
+<p>実装にあたっては、できるだけRubyの標準ライブラリを使うようにしました。理由は長い年月において最も安定的に使えるのはRubyの標準ライブラリであることからです。サードパーティのライブラリは便利ですが、Rubyのバージョンアップによる互換性の問題などを含んでいます。将来的にも安定して動作させることを考慮すると標準ライブラリで実現できる機能であれば標準ライブラリを選択するのは良い選択肢だと思います。</p>
+<p>また、データベース（正確にはRDBMS）はややこしいので使っていません。もう少し丁寧に説明すると、今回のアプリケーションはプログラミング初学者の学習に適しているアプリケーションをシンプルな実装（環境も含めて）で作るということを目的として作ったので、その点でRDBMSは適していません。では、どうやってメモを永続的に保持するのかというと、ファイルとして保持しています。この機能の実装には、Rubyの標準ライブラリであるpstoreを利用しました。pstoreとはオブジェクトをそのままファイルとして保存するライブラリです。メモアプリケーションの機能を実現するなら、これで十分なわけです。</p>
+<ul>
+<li><a href="https://docs.ruby-lang.org/ja/latest/library/pstore.html" target="_blank">https://docs.ruby-lang.org/ja/latest/library/pstore.html</a></li>
+</ul>
+<p>Webアプリケーションはリクエストとパラメーター（必要であれば）をアプリケーションサーバーに送信し、ルーティング設定に従ってそのリクエストを処理します。そして、レスポンスを返します。この流れを理解することがはじめの1歩です。この流れが理解できていない状態でRailsを使うのは早すぎるように思いますし、データベースの用意やらマイグレーションやらは確実に最初の壁となってプログラミング初学者に立ちはだかるでしょう。</p>
+<p>そのようなややこしいことは置いておいて、まずは小さな動くアプリケーションを作りましょう。Sinatraであればターミナルに数コマンドを打つだけでアプリケーションを起動できます。自分で全てのコードを書いても数時間程度で書くことができます。コードのほとんどは標準のRubyのライブラリを使用しているため、とてもシンプルです。</p>
+<p>ここまではRailsについて散々けなしていますが、誤解のないように断っておくと、本格的なWebアプリケーションを作るのであればRailsがいいです。習得に数ヶ月はかかるでしょうが、多くの機能を少ないコードで実装できてしまうRailsの生産性の高さは、それだけの時間をかける価値があります。しかし、プログラミング初学者がいきなりRailsから入るのは難しいのではと思います。RubyでのWebアプリケーション開発は、まずはSinatraから入りそこからRailsに行くのがよいというのが私の考えです。</p>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2018-09-05T10:40:36.000Z" itemprop="datepublished">
             2018/09/05
           </time>
@@ -293,40 +325,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h2 id="見えない影響を考える"><a href="#見えない影響を考える" class="headerlink" title="見えない影響を考える"></a>見えない影響を考える</h2><p>このMTGのように、それ自身は些細な時間でも与える影響は大きいものです。会議の時間そのものだけでなく、会議前後の心理的な影響や、集中力が途切れることによる生産性の低下も考慮する必要があります。</p>
 <p>予定を入れる際は、その予定自体の時間だけでなく、<strong>その予定が与える影響についても考える</strong>ことが大切です。特に午前中の集中できる時間帯に会議を入れることは、思っている以上に生産性に影響を与える可能性があります。</p>
 <h2 id="対策として"><a href="#対策として" class="headerlink" title="対策として"></a>対策として</h2><p>会議は予定されている時間以上にエンジニアの生産性に影響をするものです。可能であれば、会議の時間帯はまとめた方がよいでしょう。例えば、同じ日に会議が分散しているのであれば、特定の時間帯にまとめることができないかを検討してみてください。また、MTGの日を設けてまとめた方がトータルでは集中しやすくなると思います。スケジュールの組み方を工夫してみてください。</p>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2018-06-29T08:39:49.000Z" itemprop="datepublished">
-            2018/06/29
-          </time>
-          <time datetime="2018-06-29T08:39:49.000Z" itemprop="modified">
-            (更新日: 2018/06/29)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2018/06/29/use-of-setter-or-builder/">SetterとBuilderの使いわけ</a>
-        </h1>
-        <div class="content">
-          <p>先日、「SetterとBuilderはどのように使いわければいいのか？」という質問を受けました。なかなかよい質問ですね。Builderを使うとクラスのインスタンスを柔軟に作ることができます。Builderを使ったサンプルコードです。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> User.builder()</span><br><span class="line">        .lastName(<span class="string">&quot;山田&quot;</span>)</span><br><span class="line">        .firstName(<span class="string">&quot;太郎&quot;</span>)</span><br><span class="line">        .build();</span><br></pre></td></tr></table></figure>
-
-<p>Builderを実装したUserクラスのサンプルコードです。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String lastName;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String firstName;</span><br><span class="line"></span><br><span class="line">    User(String lastName, String firstName) &#123;</span><br><span class="line">        <span class="built_in">this</span>.lastName = lastName;</span><br><span class="line">        <span class="built_in">this</span>.firstName = firstName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> UserBuilder <span class="title function_">builder</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">UserBuilder</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">UserBuilder</span> &#123;</span><br><span class="line">        <span class="keyword">private</span> String lastName;</span><br><span class="line">        <span class="keyword">private</span> String firstName;</span><br><span class="line"></span><br><span class="line">        UserBuilder() &#123;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> UserBuilder <span class="title function_">lastName</span><span class="params">(String lastName)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.lastName = lastName;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> UserBuilder <span class="title function_">firstName</span><span class="params">(String firstName)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.firstName = firstName;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> User <span class="title function_">build</span><span class="params">()</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">User</span>(lastName, firstName);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Setterを使うと次のようになります(実装は省略)。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">user.setLastName(<span class="string">&quot;山田&quot;</span>);</span><br><span class="line">user.setFirstName(<span class="string">&quot;太郎&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>Setterの問題点として、インスタンスの状態を変更してしまうことがあります。イミュータブルな実装にする場合、原則としてコンストラクタで値は設定するべきでSetterで変更するべきではありません。</p>
-<p>では、Setterではなくコンストラクタで設定するようにしましょう。引数が少ないうちは問題がないのですが、次の例のように引数の数が増えてしまうとコードが煩雑になってしまいます。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 姓、名、年齢、血液型、国が引数のコンストラクタの例</span></span><br><span class="line"><span class="comment">// 年齢と血液型は不明だが、nullを指定する必要がある</span></span><br><span class="line"><span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>(<span class="string">&quot;山田&quot;</span>, <span class="string">&quot;太郎&quot;</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="string">&quot;日本&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>そこで、Builderを使うメリットが出てきます。Builderを使えば柔軟にパラメーターの設定が行えるようになります。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> User.builder()</span><br><span class="line">        .lastName(<span class="string">&quot;山田&quot;</span>)</span><br><span class="line">        .firstName(<span class="string">&quot;太郎&quot;</span>)</span><br><span class="line">        .country(<span class="string">&quot;日本&quot;</span>)</span><br><span class="line">        .build();</span><br></pre></td></tr></table></figure>
-
-<p>SetterもBuilderもやりたいことはオブジェクトにパラメーターをセットすることです。Setterを使うとオブジェクトの状態を変更してしまうことになります。イミュータブルな実装かつ柔軟にパラメーターを設定したい場合はBuilderを使いましょう。</p>
 
         </div>
       </div>

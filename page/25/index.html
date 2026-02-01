@@ -174,6 +174,75 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-05-18T04:46:32.000Z" itemprop="datepublished">
+            2016/05/18
+          </time>
+          <time datetime="2016-05-18T04:46:32.000Z" itemprop="modified">
+            (更新日: 2016/05/18)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/05/18/tips-of-google-spreadsheets/">Google spreadsheetsを使ってデータの分析をする</a>
+        </h1>
+        <div class="content">
+          <p>データの分析によく使われるエクセルですが、Google Spreadsheetsでも様々な関数が用意されています。<br>関数を使えば日付の差分を調べたり、特定の条件に一致するデータをカウントすることができます。<br>Google Spreadsheetsを使ってデータの集計、分析をするためのTipsの紹介をします。</p>
+<h2 id="日付の差分を調べる"><a href="#日付の差分を調べる" class="headerlink" title="日付の差分を調べる"></a>日付の差分を調べる</h2><p>例えばユーザーの契約日数を調べたいとしましょう。<br><code>DATEVALUE</code>を使って以下のように計算できます。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=<span class="built_in">DATEVALUE</span>(<span class="string">&quot;2016/05/17&quot;</span>) - <span class="built_in">DATEVALUE</span>(<span class="string">&quot;2016/05/01&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>セルを指定することもできます。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=<span class="built_in">DATEVALUE</span>(<span class="symbol">A2</span>) - <span class="built_in">DATEVALUE</span>(<span class="symbol">A1</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>月で表示したい場合は30で割ります。<br>FLOORは小数点を切り捨てるために使っています。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=<span class="built_in">FLOOR</span>((<span class="built_in">DATEVALUE</span>(<span class="string">&quot;2016/05/17&quot;</span>) - <span class="built_in">DATEVALUE</span>(<span class="string">&quot;2015/05/01&quot;</span>))/<span class="number">30</span>, <span class="number">0.1</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="特定の条件をカウントする"><a href="#特定の条件をカウントする" class="headerlink" title="特定の条件をカウントする"></a>特定の条件をカウントする</h2><p>例えば、契約期間が1年未満のユーザーをカウントする場合は<code>COUNTIFS</code>を使います。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=<span class="built_in">COUNTIFS</span>(<span class="symbol">A1</span>:<span class="symbol">A1000</span>, <span class="string">&quot;&lt;365&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><code>COUNTIFS</code>は複数条件を指定できます。<br>契約期間が1年以上〜2年未満のユーザーをカウントするということができます。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=<span class="built_in">COUNTIFS</span>(<span class="symbol">A1</span>:<span class="symbol">A1000</span>, <span class="string">&quot;&gt;=365&quot;</span>, <span class="symbol">I3</span>:<span class="symbol">I1009</span>, <span class="string">&quot;&lt;730&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="点数を分析する"><a href="#点数を分析する" class="headerlink" title="点数を分析する"></a>点数を分析する</h2><p>平均点を求めることは <code>AVERAGE</code> を使えばできます。<br>平均だけでなくばらつきを求めると違った角度でデータを捉えることができます。<br>ばらつきは標準偏差を求める関数 <code>STDEVP</code>で求めることができます。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">= <span class="built_in">STDEVP</span>(<span class="symbol">A1</span>:<span class="symbol">E1</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>例えばそれぞれの項目にたいして点数をつけるアンケートがあるとします。<br>以下の2つの項目は平均点は同じですが、標準偏差を求めるとばらつきがあることがわかります。<br>標準偏差を使えばこのようなデータを見つけることができます。</p>
+<table>
+<thead>
+<tr>
+<th>点数</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th>平均点</th>
+<th>標準偏差</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>6</td>
+<td>7</td>
+<td>9</td>
+<td>7</td>
+<td>6</td>
+<td>7</td>
+<td>1.095445115</td>
+</tr>
+<tr>
+<td>8</td>
+<td>5</td>
+<td>10</td>
+<td>7</td>
+<td>5</td>
+<td>7</td>
+<td>1.897366596</td>
+</tr>
+</tbody></table>
+<p>サンプルを用意しました。参考にどうぞ。<br><a href="https://docs.google.com/spreadsheets/d/1bOc3s8ikFcbBPGuzxDbRzd8KVT00lgQUDz275TJAIoE/edit#gid=0">https://docs.google.com/spreadsheets/d/1bOc3s8ikFcbBPGuzxDbRzd8KVT00lgQUDz275TJAIoE/edit#gid=0</a></p>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-05-17T04:33:55.000Z" itemprop="datepublished">
             2016/05/17
           </time>
@@ -333,44 +402,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
 <li><a href="http://www.sinatrarb.com/intro.html#Error%20Handling">http://www.sinatrarb.com/intro.html#Error%20Handling</a></li>
 </ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-05-10T04:29:15.000Z" itemprop="datepublished">
-            2016/05/10
-          </time>
-          <time datetime="2016-05-10T04:29:15.000Z" itemprop="modified">
-            (更新日: 2016/05/10)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/05/10/chef-converge-with-knife-zero/">knife zeroを使ってレシピを適用する</a>
-        </h1>
-        <div class="content">
-          <p>Chefでよく使われるknifeコマンドですが、そのプラグインである<a href="https://github.com/higanworks/knife-zero">knife zero</a>を使ってレシピを適用する方法を紹介します。<br>knife zeroはknifeプラグインで、リモートnode上でchef-clientを実行するツールです。</p>
-<p>リモートnodeとはchefを適用するサーバー(管理対象となるサーバー)のことです。</p>
-<h2 id="インストール"><a href="#インストール" class="headerlink" title="インストール"></a>インストール</h2><p>今回はGemfileに定義してインストールします。</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Gemfile</span></span><br><span class="line"><span class="attribute">gem</span> <span class="string">&#x27;knife-zero&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>以下でインストールされます。</p>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>bundle</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="chefをリモートnodeにインストール"><a href="#chefをリモートnodeにインストール" class="headerlink" title="chefをリモートnodeにインストール"></a>chefをリモートnodeにインストール</h2><p>まずはchefをリモートnodeにインストールします。<br>以下のコマンドでインストールします。</p>
-<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">bundle </span>exec knife <span class="built_in">zero</span> <span class="keyword">bootstrap </span><span class="keyword">shoyan@server01.example.com </span>--sudo</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>実行すると <code>node/</code> 配下にファイルが作成さます。</p>
-<p><code>chef_environment</code>と<code>run_list</code>を追加します。</p>
-<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;server01.example.com&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">&quot;chef_environment&quot;</span><span class="punctuation">:</span> <span class="string">&quot;production&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">&quot;run_list&quot;</span><span class="punctuation">:</span> [</span><br><span class="line">    “role[awesome_cookbook]<span class="string">&quot;</span></span><br><span class="line">  ]<span class="punctuation">,</span></span><br><span class="line">  <span class="string">&quot;normal&quot;</span><span class="punctuation">:</span> &#123;</span><br><span class="line">    <span class="string">&quot;knife_zero&quot;</span><span class="punctuation">:</span> &#123;</span><br><span class="line">      <span class="string">&quot;host&quot;</span><span class="punctuation">:</span> <span class="string">&quot;server01.example.com&quot;</span></span><br><span class="line">    &#125;<span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;tags&quot;</span><span class="punctuation">:</span> [</span><br><span class="line"></span><br><span class="line">    ]</span><br><span class="line">  &#125;<span class="punctuation">,</span></span><br><span class="line">  <span class="string">&quot;automatic&quot;</span><span class="punctuation">:</span> &#123;</span><br><span class="line">    <span class="string">&quot;fqdn&quot;</span><span class="punctuation">:</span> <span class="string">&quot;server01.example.com&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;os&quot;</span><span class="punctuation">:</span> <span class="string">&quot;linux&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;os_version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.6.32-504.3.3.el6.x86_64&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;platform&quot;</span><span class="punctuation">:</span> <span class="string">&quot;centos&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;platform_version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;6.4&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;hostname&quot;</span><span class="punctuation">:</span> <span class="string">&quot;server01.example.com&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;ipaddress&quot;</span><span class="punctuation">:</span> “<span class="number">192.168</span>.<span class="number">1.1</span><span class="string">&quot;,</span></span><br><span class="line">    <span class="string">&quot;roles&quot;</span><span class="punctuation">:</span> [</span><br><span class="line"></span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>リモートnodeにログインして、chefのコマンドが実行されていることを確認してみます。</p>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>ssh shoyan<span class="variable">@server01</span>.example.com</span><br><span class="line"></span><br><span class="line">[shoyan<span class="variable">@server01</span> ~]<span class="variable">$ </span>chef-[Tabを押す]</span><br><span class="line">chef-apply   chef-client  chef-shell   chef-solo</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="レシピをリモートnodeに適用する"><a href="#レシピをリモートnodeに適用する" class="headerlink" title="レシピをリモートnodeに適用する"></a>レシピをリモートnodeに適用する</h2><p>Chefを実行する準備ができました。<br>以下のコマンドでレシピをリモートnodeに適用します。</p>
-<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">bundle </span>exec knife <span class="built_in">zero</span> converge <span class="string">&#x27;fqdn:server01.example.com&#x27;</span> -x <span class="keyword">shoyan</span></span><br><span class="line"><span class="keyword"></span></span><br></pre></td></tr></table></figure>
-
 
         </div>
       </div>

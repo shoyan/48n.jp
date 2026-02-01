@@ -174,6 +174,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-08-24T08:32:51.000Z" itemprop="datepublished">
+            2016/08/24
+          </time>
+          <time datetime="2016-08-24T08:32:51.000Z" itemprop="modified">
+            (更新日: 2016/08/24)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/08/24/sets-locale-on-docker/">Dockerでlocaleを設定する</a>
+        </h1>
+        <div class="content">
+          <p>Dockerでlocaleを設定したいときがある。<br>例えばマルチバイトを扱うときだ。<br>localeを設定していないイメージで処理を行うと <code>ArgumentError: invalid byte sequence in US-ASCII</code> のようなエラーが発生することがある。<br>Dockerでlocaleを設定する場合は、以下のようにDockerfileに定義する。</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">RUN</span><span class="language-bash"> locale-gen ja_JP.UTF-8</span></span><br><span class="line"><span class="keyword">ENV</span> LANG ja_JP.UTF-<span class="number">8</span></span><br><span class="line"><span class="keyword">ENV</span> LANGUAGE ja_JP:en</span><br><span class="line"><span class="keyword">ENV</span> LC_ALL ja_JP.UTF-<span class="number">8</span></span><br></pre></td></tr></table></figure>
+
+<p>タイムゾーンも変えたい場合は以下も追記しておく。</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">ln</span> -fs /usr/share/zoneinfo/Asia/Tokyo /etc/localtime</span></span><br></pre></td></tr></table></figure>
+
+<p>コンテナに入ってlocaleを表示すると以下のようになった。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">root@e893a5fa3eea:/# locale</span><br><span class="line"><span class="attribute">LANG</span>=ja_JP.UTF-8</span><br><span class="line"><span class="attribute">LANGUAGE</span>=ja_JP:en</span><br><span class="line"><span class="attribute">LC_CTYPE</span>=<span class="string">&quot;ja_JP.UTF-8&quot;</span></span><br><span class="line"><span class="attribute">LC_NUMERIC</span>=<span class="string">&quot;ja_JP.UTF-8&quot;</span></span><br><span class="line"><span class="attribute">LC_TIME</span>=<span class="string">&quot;ja_JP.UTF-8&quot;</span></span><br><span class="line"><span class="attribute">LC_COLLATE</span>=<span class="string">&quot;ja_JP.UTF-8&quot;</span></span><br><span class="line"><span class="attribute">LC_MONETARY</span>=<span class="string">&quot;ja_JP.UTF-8&quot;</span></span><br><span class="line"><span class="attribute">LC_MESSAGES</span>=<span class="string">&quot;ja_JP.UTF-8&quot;</span></span><br><span class="line"><span class="attribute">LC_PAPER</span>=<span class="string">&quot;ja_JP.UTF-8&quot;</span></span><br><span class="line"><span class="attribute">LC_NAME</span>=<span class="string">&quot;ja_JP.UTF-8&quot;</span></span><br><span class="line"><span class="attribute">LC_ADDRESS</span>=<span class="string">&quot;ja_JP.UTF-8&quot;</span></span><br><span class="line"><span class="attribute">LC_TELEPHONE</span>=<span class="string">&quot;ja_JP.UTF-8&quot;</span></span><br><span class="line"><span class="attribute">LC_MEASUREMENT</span>=<span class="string">&quot;ja_JP.UTF-8&quot;</span></span><br><span class="line"><span class="attribute">LC_IDENTIFICATION</span>=<span class="string">&quot;ja_JP.UTF-8&quot;</span></span><br><span class="line"><span class="attribute">LC_ALL</span>=ja_JP.UTF-8</span><br></pre></td></tr></table></figure>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-08-23T04:37:27.000Z" itemprop="datepublished">
             2016/08/23
           </time>
@@ -296,43 +321,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>以上、簡単ですがDockerの自動ビルドの設定方法の紹介でした。<br>英語版ですが、詳しい方法が書いてあるのでこちらも参考にしてください。</p>
 <ul>
 <li><a href="https://docs.docker.com/docker-hub/builds/">Automated Builds on Docker Hub</a></li>
-</ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-08-02T04:40:25.000Z" itemprop="datepublished">
-            2016/08/02
-          </time>
-          <time datetime="2026-01-23T01:01:39.588Z" itemprop="modified">
-            (更新日: 2026/01/23)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/08/02/README/">Botsインテグレーションを使って手軽にRubotyをSlackで動かす</a>
-        </h1>
-        <div class="content">
-          <p>前回は<a href="/blog/2016/07/29/first-step-ruboty/">Rubotyのインストールとプラグインチュートリアル</a>でRubotyの導入方法を紹介しました。<br>今回はRubotyをSlackで動かす方法を紹介します。</p>
-<p>RubotyにはSlackアダプターが用意してありますが、新しくユーザーの作成が必要です。<br>ユーザーの作成が必要のない、Botsインテグレーションと<a href="https://github.com/rosylilly/ruboty-slack_rtm">ruboty-slack_rtm</a>を使ってRubotyをSlackで動かす方法を紹介します。</p>
-<h2 id="ruboty-slack-rtmのインストール"><a href="#ruboty-slack-rtmのインストール" class="headerlink" title="ruboty-slack_rtmのインストール"></a>ruboty-slack_rtmのインストール</h2><p>Gemfileに以下を定義します。</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">gem</span> <span class="string">&quot;ruboty-slack_rtm&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p><code>bundle install</code> コマンドでインストールします。</p>
-<h2 id="SlackのBotsインテグレーションを設定する"><a href="#SlackのBotsインテグレーションを設定する" class="headerlink" title="SlackのBotsインテグレーションを設定する"></a>SlackのBotsインテグレーションを設定する</h2><p>Slackの管理画面でBotsインテグレーションを登録します。</p>
-<p><img src="/images/bots-integration.png" alt="bots-integration"></p>
-<p>登録するとTokenが発行されるので、そのTokenをSLACK_TOKENという名前で環境変数に設定します。<br>Rubotyは dotenv に対応しているので、<code>.env</code> ファイルを作成し、そこにTOKENを登録しておくと便利です。</p>
-<p>.env</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">SLACK_TOKEN</span>=&lt;slack token&gt;</span><br></pre></td></tr></table></figure>
-
-<p>Ruboty を起動します。<code>.env</code> ファイルを読み込むように <code>—dotenv</code> オプションをつけて起動します。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bundle <span class="keyword">exec</span> ruby <span class="comment">--dotenv</span></span><br></pre></td></tr></table></figure>
-
-<p>起動すると SlackのRubotyがログインマークに変わります。</p>
-<p>あとは、チャンネルにinviteすればSlackでRubotyが使えます！<br>ちなみにrubotyではなく、Botsインテグレーションで登録したユーザー名に反応します。</p>
-<h3 id="関連記事"><a href="#関連記事" class="headerlink" title="関連記事"></a>関連記事</h3><ul>
-<li><a href="/blog/2016/07/29/first-step-ruboty/">Rubotyのインストールとプラグインチュートリアル</a></li>
 </ul>
 
         </div>

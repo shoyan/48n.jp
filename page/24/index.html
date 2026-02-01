@@ -174,6 +174,40 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2016-05-30T03:58:52.000Z" itemprop="datepublished">
+            2016/05/30
+          </time>
+          <time datetime="2016-05-30T03:58:52.000Z" itemprop="modified">
+            (更新日: 2016/05/30)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2016/05/30/yum-install-failed-by-insufficient-space-on-docker/">Dockerのコンテナでyum installが失敗する</a>
+        </h1>
+        <div class="content">
+          <p>Dockerのコンテナでyum installが失敗する。<br>以下のようなエラーがでていた。  </p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Insufficient space <span class="keyword">in</span> download directory <span class="regexp">/var/</span>cache<span class="regexp">/yum/</span>x86_64<span class="regexp">/6/u</span>pdates/packages</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>容量が不足しているらしい。</p>
+<p>ディスク容量を確認したところ、100%になっていた。</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">bash-4.2<span class="comment"># df</span></span><br><span class="line">Filesystem     1K-blocks     Used Available Use% Mounted on</span><br><span class="line">none           <span class="number"> 19049892 </span>18226752        <span class="number"> 0 </span>100% /</span><br><span class="line">tmpfs            <span class="number"> 509992 </span>      <span class="number"> 0 </span>  <span class="number"> 509992 </span>  0% /dev</span><br><span class="line">tmpfs            <span class="number"> 509992 </span>      <span class="number"> 0 </span>  <span class="number"> 509992 </span>  0% /sys/fs/cgroup</span><br><span class="line">/dev/sda1      <span class="number"> 19049892 </span>18226752        <span class="number"> 0 </span>100% /etc/hosts</span><br><span class="line">shm               <span class="number"> 65536 </span>      <span class="number"> 0 </span>   <span class="number"> 65536 </span>  0% /dev/shm</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>不要なコンテナが溜まっていて、そのせいでディスク容量を圧迫していたようだ。</p>
+<h3 id="コンテナを消す方法"><a href="#コンテナを消す方法" class="headerlink" title="コンテナを消す方法"></a>コンテナを消す方法</h3><ul>
+<li>docker ps -a でコンテナの一覧が表示される</li>
+<li>docker rm  container_id で消す</li>
+</ul>
+<p>コンテナを消すと、ディスク容量に空きができてyum installできるようになった。</p>
+<p>こちらは類似案件。</p>
+<ul>
+<li><a href="http://shoyan.github.io/blog/2016/04/13/no-space-left-on-device-on-docker/">Dockerでno Space Left on Deviceが出てbuildできなくなった</a></li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2016-05-27T04:48:34.000Z" itemprop="datepublished">
             2016/05/27
           </time>
@@ -367,75 +401,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h2 id="参考リンク"><a href="#参考リンク" class="headerlink" title="参考リンク"></a>参考リンク</h2><ul>
 <li><a href="https://mackerel.io/ja/docs/">ヘルプ - Mackerel ヘルプ</a></li>
 </ul>
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2016-05-18T04:46:32.000Z" itemprop="datepublished">
-            2016/05/18
-          </time>
-          <time datetime="2016-05-18T04:46:32.000Z" itemprop="modified">
-            (更新日: 2016/05/18)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2016/05/18/tips-of-google-spreadsheets/">Google spreadsheetsを使ってデータの分析をする</a>
-        </h1>
-        <div class="content">
-          <p>データの分析によく使われるエクセルですが、Google Spreadsheetsでも様々な関数が用意されています。<br>関数を使えば日付の差分を調べたり、特定の条件に一致するデータをカウントすることができます。<br>Google Spreadsheetsを使ってデータの集計、分析をするためのTipsの紹介をします。</p>
-<h2 id="日付の差分を調べる"><a href="#日付の差分を調べる" class="headerlink" title="日付の差分を調べる"></a>日付の差分を調べる</h2><p>例えばユーザーの契約日数を調べたいとしましょう。<br><code>DATEVALUE</code>を使って以下のように計算できます。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=<span class="built_in">DATEVALUE</span>(<span class="string">&quot;2016/05/17&quot;</span>) - <span class="built_in">DATEVALUE</span>(<span class="string">&quot;2016/05/01&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>セルを指定することもできます。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=<span class="built_in">DATEVALUE</span>(<span class="symbol">A2</span>) - <span class="built_in">DATEVALUE</span>(<span class="symbol">A1</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>月で表示したい場合は30で割ります。<br>FLOORは小数点を切り捨てるために使っています。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=<span class="built_in">FLOOR</span>((<span class="built_in">DATEVALUE</span>(<span class="string">&quot;2016/05/17&quot;</span>) - <span class="built_in">DATEVALUE</span>(<span class="string">&quot;2015/05/01&quot;</span>))/<span class="number">30</span>, <span class="number">0.1</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="特定の条件をカウントする"><a href="#特定の条件をカウントする" class="headerlink" title="特定の条件をカウントする"></a>特定の条件をカウントする</h2><p>例えば、契約期間が1年未満のユーザーをカウントする場合は<code>COUNTIFS</code>を使います。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=<span class="built_in">COUNTIFS</span>(<span class="symbol">A1</span>:<span class="symbol">A1000</span>, <span class="string">&quot;&lt;365&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><code>COUNTIFS</code>は複数条件を指定できます。<br>契約期間が1年以上〜2年未満のユーザーをカウントするということができます。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=<span class="built_in">COUNTIFS</span>(<span class="symbol">A1</span>:<span class="symbol">A1000</span>, <span class="string">&quot;&gt;=365&quot;</span>, <span class="symbol">I3</span>:<span class="symbol">I1009</span>, <span class="string">&quot;&lt;730&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="点数を分析する"><a href="#点数を分析する" class="headerlink" title="点数を分析する"></a>点数を分析する</h2><p>平均点を求めることは <code>AVERAGE</code> を使えばできます。<br>平均だけでなくばらつきを求めると違った角度でデータを捉えることができます。<br>ばらつきは標準偏差を求める関数 <code>STDEVP</code>で求めることができます。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">= <span class="built_in">STDEVP</span>(<span class="symbol">A1</span>:<span class="symbol">E1</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>例えばそれぞれの項目にたいして点数をつけるアンケートがあるとします。<br>以下の2つの項目は平均点は同じですが、標準偏差を求めるとばらつきがあることがわかります。<br>標準偏差を使えばこのようなデータを見つけることができます。</p>
-<table>
-<thead>
-<tr>
-<th>点数</th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th>平均点</th>
-<th>標準偏差</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>6</td>
-<td>7</td>
-<td>9</td>
-<td>7</td>
-<td>6</td>
-<td>7</td>
-<td>1.095445115</td>
-</tr>
-<tr>
-<td>8</td>
-<td>5</td>
-<td>10</td>
-<td>7</td>
-<td>5</td>
-<td>7</td>
-<td>1.897366596</td>
-</tr>
-</tbody></table>
-<p>サンプルを用意しました。参考にどうぞ。<br><a href="https://docs.google.com/spreadsheets/d/1bOc3s8ikFcbBPGuzxDbRzd8KVT00lgQUDz275TJAIoE/edit#gid=0">https://docs.google.com/spreadsheets/d/1bOc3s8ikFcbBPGuzxDbRzd8KVT00lgQUDz275TJAIoE/edit#gid=0</a></p>
 
         </div>
       </div>

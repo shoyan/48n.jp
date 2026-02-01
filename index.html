@@ -174,11 +174,87 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
       <div class="recent-post-item">
         <div class="date-box">
+          <time datetime="2026-02-01T12:00:00.000Z" itemprop="datepublished">
+            2026/02/01
+          </time>
+          <time datetime="2026-02-01T12:53:50.113Z" itemprop="modified">
+            (更新日: 2026/02/01)
+          </time>
+        </div>
+        <h1>
+        <a href="/blog/2026/02/01/why-abstract-words-stop-design-thinking/">「筋が悪い」「美しくない」が設計の議論を止める理由</a>
+        </h1>
+        <div class="content">
+          <p>ソフトウェア開発の現場において、次のような言葉を聞くことがあります。</p>
+<ul>
+<li>「この設計は筋がいい／悪い」</li>
+<li>「美しい／汚いコードだ」</li>
+<li>「モダン／レガシーな技術だ」</li>
+</ul>
+<p>こういった言葉は開発現場においてよく聞く言葉ではありますが、いくつかの問題を含んでいます。そのため、私はこういった言葉を極力使わないようにしています。<br>この記事ではこういった言葉がなぜ問題なのか、ソフトウェア設計をどのように考え、どのように評価するべきかについてまとめています。</p>
+<h2 id="抽象語の問題"><a href="#抽象語の問題" class="headerlink" title="抽象語の問題"></a>抽象語の問題</h2><p>「筋が悪い」「美しくない」。もしこういった言葉であなたのコードや設計が評価されたら困りませんか？なぜ困るのかというと、こういった言葉は曖昧で人によって使っている意味や判断基準が違うからです。具体的には次の問題があります。</p>
+<ul>
+<li>意図が正確に伝わらない</li>
+<li>議論を終了させる言葉になりやすい</li>
+</ul>
+<h3 id="意図が正確に伝わらない"><a href="#意図が正確に伝わらない" class="headerlink" title="意図が正確に伝わらない"></a>意図が正確に伝わらない</h3><p>「筋が悪い」「美しくない」といった抽象語の問題は<strong>意図が正確に伝わらない</strong>ことです。多くの場合、抽象語の裏には具体的な評価軸があります。例えば次のような評価軸です。</p>
+<ul>
+<li>変更に強いか</li>
+<li>責務が分離されているか</li>
+<li>ドメインの考え方がコードに素直に反映されているか</li>
+</ul>
+<p>しかし、これを言語化せずに「それ、設計として筋が悪いよね」と言われると、聞いている側は相手が何を言いたいのかがわかりません。抽象語は「<strong>お互いの意思疎通を阻害する言葉</strong>」になりやすいです。</p>
+<h3 id="議論を終了させる言葉になりやすい"><a href="#議論を終了させる言葉になりやすい" class="headerlink" title="議論を終了させる言葉になりやすい"></a>議論を終了させる言葉になりやすい</h3><p>抽象語の問題は<strong>議論を終了させる言葉</strong>になることです。多くの抽象語はこう使われます。</p>
+<ol>
+<li>違和感・不満・結論が先にある</li>
+<li>それを正当化するために</li>
+</ol>
+<ul>
+<li>「筋が悪い」</li>
+<li>「美しくない」</li>
+<li>「技術負債」<br>といったラベルを貼る</li>
+</ul>
+<ol start="3">
+<li>その瞬間、議論は終了する（なぜなら“悪いもの”だから）</li>
+</ol>
+<p>ここではもう「考える」工程がありません。抽象的な言葉は「議論を閉じる言葉」になりやすいです。<br>抽象語はあまり考えずに使うことができるので、使う方も楽です。しかし、その言葉を使った瞬間に結論が出てしまうため、思考がストップしてしまいます。</p>
+<p>具体的にどのような問題が起こる可能性があるか？それは許容できるのか、許容できないのか？現実として大事なことは、こういった問いです。こういった問いを飛ばして、「問題である」「直すべき」という結論だけが残ります。</p>
+<h2 id="ソフトウェア設計をどう考えるべきか"><a href="#ソフトウェア設計をどう考えるべきか" class="headerlink" title="ソフトウェア設計をどう考えるべきか"></a>ソフトウェア設計をどう考えるべきか</h2><h3 id="設計とはトレードオフである"><a href="#設計とはトレードオフである" class="headerlink" title="設計とはトレードオフである"></a>設計とはトレードオフである</h3><p>私は設計に絶対の正解はないと考えています。あるのは、要件と制約と現実的な手段の選択です。そこには必ずトレードオフがあります。</p>
+<ul>
+<li>実装を単純にする代わりに、拡張性を捨てる</li>
+<li>将来の変更に強くする代わりに、設計が複雑になる</li>
+</ul>
+<p>本来、設計の議論は <strong>「どのトレードオフを選ぶか」</strong> の話のはずです。</p>
+<h2 id="設計の良し悪しは「時間の使われ方」で測れる"><a href="#設計の良し悪しは「時間の使われ方」で測れる" class="headerlink" title="設計の良し悪しは「時間の使われ方」で測れる"></a>設計の良し悪しは「時間の使われ方」で測れる</h2><p>結局、設計評価はこれに集約されます。</p>
+<p><strong>エンジニアの時間がどこに消えているか</strong></p>
+<ul>
+<li>運用・保守・依存更新 → 悪化</li>
+<li>機能開発・改善 → 良好</li>
+</ul>
+<p>優れた設計は運用・保守の時間を最小化し、機能開発の時間を創出します。</p>
+<h3 id="本質的な評価軸"><a href="#本質的な評価軸" class="headerlink" title="本質的な評価軸"></a>本質的な評価軸</h3><p>設計を評価するなら、見るべきは次のポイントです。</p>
+<ul>
+<li>要件に対して不足していたり過剰ではないか</li>
+<li>要件に対してコストのバランスが取れているか</li>
+<li>将来的なメンテナンスや依存リスクはないか</li>
+<li>新規参入のエンジニアが容易に理解することができるか</li>
+</ul>
+<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><ul>
+<li><strong>抽象語の問題</strong>：「筋が悪い」「美しくない」「技術負債」といった言葉は意図を正確に伝えず、議論を終了させて思考を止めてしまう</li>
+<li><strong>設計の本質</strong>：設計に絶対的な良し悪しはなく、トレードオフである。制約の中で何を楽にして何を捨てるか、どのトレードオフを選ぶかの話である</li>
+<li><strong>評価の軸</strong>：設計の良し悪しは、エンジニアの時間が運用・保守に消えているか、機能開発・改善に使えているかで測れる</li>
+</ul>
+
+        </div>
+      </div>
+    
+      <div class="recent-post-item">
+        <div class="date-box">
           <time datetime="2026-01-21T01:00:00.000Z" itemprop="datepublished">
             2026/01/21
           </time>
-          <time datetime="2026-01-23T01:01:39.594Z" itemprop="modified">
-            (更新日: 2026/01/23)
+          <time datetime="2026-02-01T12:53:50.112Z" itemprop="modified">
+            (更新日: 2026/02/01)
           </time>
         </div>
         <h1>
@@ -263,8 +339,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2026-01-10T01:00:00.000Z" itemprop="datepublished">
             2026/01/10
           </time>
-          <time datetime="2026-01-23T01:01:39.590Z" itemprop="modified">
-            (更新日: 2026/01/23)
+          <time datetime="2026-02-01T12:53:50.107Z" itemprop="modified">
+            (更新日: 2026/02/01)
           </time>
         </div>
         <h1>
@@ -467,8 +543,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2026-01-04T01:00:00.000Z" itemprop="datepublished">
             2026/01/04
           </time>
-          <time datetime="2026-01-23T01:01:39.594Z" itemprop="modified">
-            (更新日: 2026/01/23)
+          <time datetime="2026-02-01T12:53:50.111Z" itemprop="modified">
+            (更新日: 2026/02/01)
           </time>
         </div>
         <h1>
@@ -545,8 +621,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2025-12-25T03:00:00.000Z" itemprop="datepublished">
             2025/12/25
           </time>
-          <time datetime="2026-01-23T01:01:39.588Z" itemprop="modified">
-            (更新日: 2026/01/23)
+          <time datetime="2026-02-01T12:53:50.105Z" itemprop="modified">
+            (更新日: 2026/02/01)
           </time>
         </div>
         <h1>
@@ -606,114 +682,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <br>
 <br>
 今回は1年の振り返りということで個人的な内容となってしまいましたが、同じようにソフトウェアエンジニアやフリーランスとしての働き方に興味がある方の参考になれば幸いです。
-
-        </div>
-      </div>
-    
-      <div class="recent-post-item">
-        <div class="date-box">
-          <time datetime="2025-11-28T09:07:53.000Z" itemprop="datepublished">
-            2025/11/28
-          </time>
-          <time datetime="2026-01-23T01:01:39.595Z" itemprop="modified">
-            (更新日: 2026/01/23)
-          </time>
-        </div>
-        <h1>
-        <a href="/blog/2025/11/28/translation-type-check-mechanism/">TypeScriptで多言語システムの型チェックを実装する</a>
-        </h1>
-        <div class="content">
-          <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>多言語対応は一般的に翻訳関数に翻訳キーを渡すことで実装されます。その際に問題になるのが、キー名の間違い、キー名の変更漏れなどによる実装不備です。このようなエラーを人の目で全て確認するのは難しいため、システムによる検知が有効です。</p>
-<p>この記事では、TypeScriptの型システムを活用した、型チェックの方法を説明します。これにより、正しい翻訳キーが割り当てられていることがコンパイル時にチェックされ、アプリケーションの品質向上に大きな効果が期待できます。</p>
-<h2 id="多言語システムの実装"><a href="#多言語システムの実装" class="headerlink" title="多言語システムの実装"></a>多言語システムの実装</h2><h3 id="1-ベースとなる型の定義"><a href="#1-ベースとなる型の定義" class="headerlink" title="1. ベースとなる型の定義"></a>1. ベースとなる型の定義</h3><p>翻訳の型チェックは、日本語のメッセージファイル（<code>ja.ts</code>）をベースとして構築します。翻訳ファイルはJSONファイルで扱われることもありますが、型チェックという観点ではtsファイルで管理するのがおすすめです。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; jaMessage &#125; <span class="keyword">from</span> <span class="string">&#x27;./ja&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> <span class="title class_">JaMessage</span> = <span class="keyword">typeof</span> jaMessage</span><br></pre></td></tr></table></figure>
-
-<h4 id="TypeScriptの機能：typeof演算子"><a href="#TypeScriptの機能：typeof演算子" class="headerlink" title="TypeScriptの機能：typeof演算子"></a>TypeScriptの機能：<code>typeof</code>演算子</h4><p><code>typeof</code>演算子は、値から型を抽出するTypeScriptの機能です。<code>typeof jaMessage</code>により、<code>jaMessage</code>オブジェクトの構造から型を自動的に生成します。これにより、<code>jaMessage</code>の構造が変更されると、型定義も自動的に更新されます。</p>
-<h4 id="ja-tsのサンプルコード"><a href="#ja-tsのサンプルコード" class="headerlink" title="ja.tsのサンプルコード"></a><code>ja.ts</code>のサンプルコード</h4><p>以下は、日本語メッセージファイル（<code>ja.ts</code>）のサンプルです。このファイルが型定義のベースとなります。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> jaMessage = &#123;</span><br><span class="line">  <span class="attr">term</span>: &#123;</span><br><span class="line">    <span class="attr">next</span>: <span class="string">&#x27;次へ&#x27;</span>,</span><br><span class="line">    <span class="attr">back</span>: <span class="string">&#x27;戻る&#x27;</span>,</span><br><span class="line">    <span class="attr">cancel</span>: <span class="string">&#x27;キャンセル&#x27;</span>,</span><br><span class="line">    <span class="attr">submit</span>: <span class="string">&#x27;送信&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">pages</span>: &#123;</span><br><span class="line">    <span class="attr">home</span>: &#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&#x27;ホーム&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">about</span>: &#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&#x27;紹介&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">contact</span>: &#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&#x27;お問い合わせ&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">terms</span>: &#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&#x27;利用規約&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125; <span class="keyword">as</span> <span class="keyword">const</span></span><br></pre></td></tr></table></figure>
-
-<p>このファイルでは、<code>as const</code>を使用することで、値がリテラル型として推論されます。これにより、型の精度が向上し、より厳密な型チェックが可能になります。</p>
-<h4 id="as-constとは"><a href="#as-constとは" class="headerlink" title="as constとは"></a>as constとは</h4><p><code>as const</code>は、TypeScriptの「constアサーション」という機能です。オブジェクトや配列に<code>as const</code>を付けることで、以下の効果が得られます。</p>
-<ol>
-<li><strong>リテラル型として推論される</strong>: 値が具体的なリテラル型（例：<code>&#39;マイページ&#39;</code>）として推論されます</li>
-<li><strong>読み取り専用になる</strong>: オブジェクトのプロパティが<code>readonly</code>になります</li>
-<li><strong>型の精度が向上する</strong>: より具体的な型情報が保持されます</li>
-</ol>
-<h4 id="as-constがない場合"><a href="#as-constがない場合" class="headerlink" title="as constがない場合"></a>as constがない場合</h4><p><code>as const</code>がない場合、TypeScriptは値の型を一般的な型として推論します。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// as const がない場合</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> jaMessage = &#123;</span><br><span class="line">  <span class="attr">term</span>: &#123;</span><br><span class="line">    <span class="attr">next</span>: <span class="string">&#x27;次へ&#x27;</span>,</span><br><span class="line">    <span class="attr">back</span>: <span class="string">&#x27;戻る&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 推論される型</span></span><br><span class="line"><span class="comment">// &#123;</span></span><br><span class="line"><span class="comment">//   term: &#123;</span></span><br><span class="line"><span class="comment">//     next: string;  // 一般的な string 型</span></span><br><span class="line"><span class="comment">//     back: string;  // 一般的な string 型</span></span><br><span class="line"><span class="comment">//   &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>この場合、<code>typeof jaMessage</code>で取得できる型は、値が<code>string</code>型として推論されます。</p>
-<h4 id="as-constがある場合"><a href="#as-constがある場合" class="headerlink" title="as constがある場合"></a><code>as const</code>がある場合</h4><p><code>as const</code>がある場合、TypeScriptは値の型をリテラル型として推論します。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// as const がある場合</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> jaMessage = &#123;</span><br><span class="line">  <span class="attr">term</span>: &#123;</span><br><span class="line">    <span class="attr">next</span>: <span class="string">&#x27;次へ&#x27;</span>,</span><br><span class="line">    <span class="attr">back</span>: <span class="string">&#x27;戻る&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125; <span class="keyword">as</span> <span class="keyword">const</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 推論される型</span></span><br><span class="line"><span class="comment">// &#123;</span></span><br><span class="line"><span class="comment">//   readonly term: &#123;</span></span><br><span class="line"><span class="comment">//     readonly next: &#x27;次へ&#x27;;         // リテラル型</span></span><br><span class="line"><span class="comment">//     readonly back: &#x27;戻る&#x27;;         // リテラル型</span></span><br><span class="line"><span class="comment">//   &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>この場合、<code>typeof jaMessage</code>で取得できる型は、値が具体的なリテラル型（<code>&#39;次へ&#39;</code>、<code>&#39;戻る&#39;</code>）として推論されます。</p>
-<h4 id="なぜas-constが必要なのか"><a href="#なぜas-constが必要なのか" class="headerlink" title="なぜas constが必要なのか"></a>なぜ<code>as const</code>が必要なのか</h4><p>翻訳メッセージの型チェックにおいて、<code>as const</code>は以下の理由で重要です。</p>
-<ol>
-<li><strong>型の一貫性</strong>: <code>typeof jaMessage</code>で取得した型が、実際の値の構造を正確に反映します</li>
-<li><strong>型の精度</strong>: <code>GenericType</code>が適用される際、元の構造が正確に保持されます</li>
-<li><strong>読み取り専用の保証</strong>: 翻訳メッセージが誤って変更されることを防ぎます</li>
-</ol>
-<h4 id="実際の違い"><a href="#実際の違い" class="headerlink" title="実際の違い"></a>実際の違い</h4><p><code>as const</code>の有無による型の違いを確認してみましょう。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// as const がない場合</span></span><br><span class="line"><span class="keyword">const</span> message1 = &#123; <span class="attr">term</span>: &#123; <span class="attr">next</span>: <span class="string">&#x27;次へ&#x27;</span> &#125; &#125;</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Type1</span> = <span class="keyword">typeof</span> message1</span><br><span class="line"><span class="comment">// Type1 = &#123; term: &#123; next: string &#125; &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// as const がある場合</span></span><br><span class="line"><span class="keyword">const</span> message2 = &#123; <span class="attr">term</span>: &#123; <span class="attr">next</span>: <span class="string">&#x27;次へ&#x27;</span> &#125; &#125; <span class="keyword">as</span> <span class="keyword">const</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Type2</span> = <span class="keyword">typeof</span> message2</span><br><span class="line"><span class="comment">// Type2 = &#123; readonly term: &#123; readonly next: &#x27;次へ&#x27; &#125; &#125;</span></span><br></pre></td></tr></table></figure>
-
-<p><code>as const</code>がある場合、<code>next</code>の型は<code>&#39;次へ&#39;</code>という具体的なリテラル型になります。これにより、型システムがより正確に動作し、翻訳キーの型チェックがより厳密になります。</p>
-<h3 id="2-再帰的な型変換"><a href="#2-再帰的な型変換" class="headerlink" title="2. 再帰的な型変換"></a>2. 再帰的な型変換</h3><p>翻訳メッセージはネストされたオブジェクト構造を持っています。この構造を型として表現するために、<code>GenericType</code>というユーティリティ型を使用しています。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">GenericType</span>&lt;T <span class="keyword">extends</span> <span class="built_in">object</span>&gt; = &#123;</span><br><span class="line">  [K <span class="keyword">in</span> keyof T]: T[K] <span class="keyword">extends</span> <span class="built_in">object</span> ? <span class="title class_">GenericType</span>&lt;T[K]&gt; : <span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> I18nMessage = <span class="title class_">GenericType</span>&lt;<span class="title class_">JaMessage</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<h4 id="TypeScriptの機能：条件型（Conditional-Types）と再帰的な型"><a href="#TypeScriptの機能：条件型（Conditional-Types）と再帰的な型" class="headerlink" title="TypeScriptの機能：条件型（Conditional Types）と再帰的な型"></a>TypeScriptの機能：条件型（Conditional Types）と再帰的な型</h4><ul>
-<li><p><code>[K in keyof T]</code>: マップ型（Mapped Types）により、オブジェクトの各キーを反復処理します</p>
-</li>
-<li><p><code>T[K] extends object ? GenericType&lt;T[K]&gt; : string</code>: 条件型により、値がオブジェクトの場合は再帰的に<code>GenericType</code>を適用し、そうでない場合は<code>string</code>型とします</p>
-</li>
-</ul>
-<p>これにより、以下のような構造が正しく型付けされます。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">term</span>: &#123;</span><br><span class="line">    <span class="attr">next</span>: <span class="built_in">string</span>  <span class="comment">// 文字列型</span></span><br><span class="line">    <span class="attr">back</span>: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">cancel</span>: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">submit</span>: <span class="built_in">string</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">pages</span>: &#123;</span><br><span class="line">    <span class="attr">home</span>: &#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="built_in">string</span>  <span class="comment">// 3段階のネストも正しく型付けされる</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">about</span>: &#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="built_in">string</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">contact</span>: &#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="built_in">string</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">terms</span>: &#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="built_in">string</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>GenericType</code>は再帰的に動作するため、何段階のネストでも正しく型付けされます。</p>
-<h3 id="3-各言語ファイルでの型チェック"><a href="#3-各言語ファイルでの型チェック" class="headerlink" title="3. 各言語ファイルでの型チェック"></a>3. 各言語ファイルでの型チェック</h3><p>各言語ファイルでは、<code>I18nMessage</code>型を明示的に指定することで、型チェックが行われます。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; I18nMessage &#125; <span class="keyword">from</span> <span class="string">&#x27;./types&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="attr">enMessage</span>: I18nMessage = &#123;</span><br><span class="line">  <span class="attr">term</span>: &#123;</span><br><span class="line">    <span class="attr">next</span>: <span class="string">&#x27;Next&#x27;</span>,</span><br><span class="line">    <span class="attr">back</span>: <span class="string">&#x27;Back&#x27;</span>,</span><br><span class="line">    <span class="attr">cancel</span>: <span class="string">&#x27;Cancel&#x27;</span>,</span><br><span class="line">    <span class="attr">submit</span>: <span class="string">&#x27;Submit&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">pages</span>: &#123;</span><br><span class="line">    <span class="attr">home</span>: &#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&#x27;Home&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">about</span>: &#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&#x27;About&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">contact</span>: &#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&#x27;Contact&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">terms</span>: &#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&#x27;Terms&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>型チェックの効果</strong></p>
-<ul>
-<li><p>必須キーが欠落している場合、コンパイルエラーが発生します</p>
-</li>
-<li><p>存在しないキーを追加しようとすると、エラーが発生します</p>
-</li>
-<li><p>値の型が<code>string</code>でない場合、エラーが発生します</p>
-</li>
-<li><p>キーのタイポがある場合、エラーが発生します</p>
-</li>
-</ul>
-<h3 id="4-翻訳関数の型安全な実装"><a href="#4-翻訳関数の型安全な実装" class="headerlink" title="4. 翻訳関数の型安全な実装"></a>4. 翻訳関数の型安全な実装</h3><p>翻訳関数はライブラリを利用してもよいですが、シンプルな翻訳システムであれば自前で実装するのもよいと思います。ここでは、必要最低限の翻訳関数のサンプルを紹介します。</p>
-<p>翻訳関数についても型安全を担保する必要があります。型システムを実装するために、<code>Paths</code>型と<code>PathValue</code>型を使用します。</p>
-<h4 id="キーパスの型生成"><a href="#キーパスの型生成" class="headerlink" title="キーパスの型生成"></a>キーパスの型生成</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">PathsInternal</span>&lt;T&gt; = T <span class="keyword">extends</span> <span class="built_in">string</span></span><br><span class="line">  ? <span class="built_in">never</span></span><br><span class="line">  : T <span class="keyword">extends</span> <span class="built_in">object</span></span><br><span class="line">  ? &#123;</span><br><span class="line">      [K <span class="keyword">in</span> keyof T]: K <span class="keyword">extends</span> <span class="built_in">string</span></span><br><span class="line">        ? T[K] <span class="keyword">extends</span> <span class="built_in">object</span></span><br><span class="line">          ? T[K] <span class="keyword">extends</span> <span class="built_in">string</span></span><br><span class="line">            ? K</span><br><span class="line">            : <span class="string">`<span class="subst">$&#123;K&#125;</span>.<span class="subst">$&#123;PathsInternal&lt;T[K]&gt;&#125;</span>`</span></span><br><span class="line">          : K</span><br><span class="line">        : <span class="built_in">never</span></span><br><span class="line">    &#125;[keyof T]</span><br><span class="line">  : <span class="built_in">never</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> <span class="title class_">Paths</span> = <span class="title class_">PathsInternal</span>&lt;<span class="title class_">JaMessage</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<p>この型により、<code>&#39;term.next&#39;</code>、<code>&#39;pages.home.title&#39;</code>のような文字列リテラル型が自動生成されます。</p>
-<h4 id="キーパスから値を取得する型"><a href="#キーパスから値を取得する型" class="headerlink" title="キーパスから値を取得する型"></a>キーパスから値を取得する型</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> <span class="title class_">PathValue</span>&lt;T, P <span class="keyword">extends</span> <span class="built_in">string</span>&gt; = P <span class="keyword">extends</span> <span class="string">`<span class="subst">$&#123;infer Key&#125;</span>.<span class="subst">$&#123;infer Rest&#125;</span>`</span></span><br><span class="line">  ? <span class="title class_">Key</span> <span class="keyword">extends</span> keyof T</span><br><span class="line">    ? T[<span class="title class_">Key</span>] <span class="keyword">extends</span> <span class="built_in">object</span></span><br><span class="line">      ? <span class="title class_">PathValue</span>&lt;T[<span class="title class_">Key</span>], <span class="title class_">Rest</span>&gt;</span><br><span class="line">      : <span class="built_in">never</span></span><br><span class="line">    : <span class="built_in">never</span></span><br><span class="line">  : P <span class="keyword">extends</span> keyof T</span><br><span class="line">  ? T[P] <span class="keyword">extends</span> <span class="built_in">string</span></span><br><span class="line">    ? T[P]</span><br><span class="line">    : <span class="built_in">never</span></span><br><span class="line">  : <span class="built_in">never</span></span><br></pre></td></tr></table></figure>
-
-<p>この型により、キーパスから対応する文字列型を取得できます。</p>
-<h4 id="翻訳関数の実装"><a href="#翻訳関数の実装" class="headerlink" title="翻訳関数の実装"></a>翻訳関数の実装</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; I18nMessage, <span class="title class_">Paths</span>, <span class="title class_">PathValue</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./types&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> I18nFunction = &lt;P <span class="keyword">extends</span> <span class="title class_">Paths</span>&gt;<span class="function">(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">  <span class="attr">key</span>: P</span></span></span><br><span class="line"><span class="params"><span class="function"></span>) =&gt;</span> <span class="title class_">PathValue</span>&lt;I18nMessage, P&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">createI18n</span>(<span class="params"><span class="attr">message</span>: I18nMessage</span>): I18nFunction &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> &lt;P <span class="keyword">extends</span> <span class="title class_">Paths</span>&gt;(<span class="attr">key</span>: P &amp; <span class="built_in">string</span>): <span class="title class_">PathValue</span>&lt;I18nMessage, P&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> keys = (key <span class="keyword">as</span> <span class="built_in">string</span>).<span class="title function_">split</span>(<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">    <span class="keyword">let</span> <span class="attr">value</span>: <span class="built_in">any</span> = message</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> k <span class="keyword">of</span> keys) &#123;</span><br><span class="line">      <span class="keyword">if</span> (value &amp;&amp; <span class="keyword">typeof</span> value === <span class="string">&#x27;object&#x27;</span> &amp;&amp; k <span class="keyword">in</span> value) &#123;</span><br><span class="line">        value = value[k <span class="keyword">as</span> keyof <span class="keyword">typeof</span> value]</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">`Translation key &quot;<span class="subst">$&#123;key&#125;</span>&quot; not found`</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> value !== <span class="string">&#x27;string&#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">`Translation key &quot;<span class="subst">$&#123;key&#125;</span>&quot; does not point to a string value`</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> value <span class="keyword">as</span> <span class="title class_">PathValue</span>&lt;I18nMessage, P&gt;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用例"><a href="#使用例" class="headerlink" title="使用例"></a>使用例</h2><p>翻訳関数の使用例です。</p>
-<h3 id="翻訳関数の使用"><a href="#翻訳関数の使用" class="headerlink" title="翻訳関数の使用"></a>翻訳関数の使用</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createI18n &#125; <span class="keyword">from</span> <span class="string">&#x27;./i18n&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; jaMessage &#125; <span class="keyword">from</span> <span class="string">&#x27;./ja&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; enMessage &#125; <span class="keyword">from</span> <span class="string">&#x27;./en&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 日本語の翻訳関数を作成</span></span><br><span class="line"><span class="keyword">const</span> tJa = <span class="title function_">createI18n</span>(jaMessage)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 英語の翻訳関数を作成</span></span><br><span class="line"><span class="keyword">const</span> tEn = <span class="title function_">createI18n</span>(enMessage)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用例</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">tJa</span>(<span class="string">&#x27;term.next&#x27;</span>)) <span class="comment">// &#x27;次へ&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">tJa</span>(<span class="string">&#x27;pages.home.title&#x27;</span>)) <span class="comment">// &#x27;ホーム&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">tJa</span>(<span class="string">&#x27;pages.about.title&#x27;</span>)) <span class="comment">// &#x27;紹介&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">tJa</span>(<span class="string">&#x27;pages.contact.title&#x27;</span>)) <span class="comment">// &#x27;お問い合わせ&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">tJa</span>(<span class="string">&#x27;pages.terms.title&#x27;</span>)) <span class="comment">// &#x27;利用規約&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">tEn</span>(<span class="string">&#x27;term.next&#x27;</span>)) <span class="comment">// &#x27;Next&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">tEn</span>(<span class="string">&#x27;pages.home.title&#x27;</span>)) <span class="comment">// &#x27;Home&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">tEn</span>(<span class="string">&#x27;pages.about.title&#x27;</span>)) <span class="comment">// &#x27;About&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">tEn</span>(<span class="string">&#x27;pages.contact.title&#x27;</span>)) <span class="comment">// &#x27;Contact&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">tEn</span>(<span class="string">&#x27;pages.terms.title&#x27;</span>)) <span class="comment">// &#x27;Terms&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="正しい使用例"><a href="#正しい使用例" class="headerlink" title="正しい使用例"></a>正しい使用例</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="attr">enMessage</span>: I18nMessage = &#123;</span><br><span class="line">  <span class="attr">term</span>: &#123;</span><br><span class="line">    <span class="attr">next</span>: <span class="string">&#x27;Next&#x27;</span>, <span class="comment">// ✅ 正しい</span></span><br><span class="line">    <span class="attr">back</span>: <span class="string">&#x27;Back&#x27;</span>,</span><br><span class="line">    <span class="attr">cancel</span>: <span class="string">&#x27;Cancel&#x27;</span>,</span><br><span class="line">    <span class="attr">submit</span>: <span class="string">&#x27;Submit&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">pages</span>: &#123;</span><br><span class="line">    <span class="attr">home</span>: &#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&#x27;Home&#x27;</span>,  <span class="comment">// ✅ 3段階のネストも正しい</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">about</span>: &#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&#x27;About&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">contact</span>: &#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&#x27;Contact&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">terms</span>: &#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&#x27;Terms&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="エラーが発生する例"><a href="#エラーが発生する例" class="headerlink" title="エラーが発生する例"></a>エラーが発生する例</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="attr">enMessage</span>: I18nMessage = &#123;</span><br><span class="line">  <span class="attr">term</span>: &#123;</span><br><span class="line">    <span class="attr">next</span>: <span class="string">&#x27;Next&#x27;</span>,</span><br><span class="line">    <span class="comment">// ❌ エラー: &#x27;back&#x27; プロパティが必須だが欠落している</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ❌ エラー: &#x27;unknownKey&#x27; は存在しないキー</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="attr">enMessage</span>: I18nMessage = &#123;</span><br><span class="line">  <span class="attr">term</span>: &#123;</span><br><span class="line">    <span class="attr">next</span>: <span class="string">&#x27;Next&#x27;</span>,</span><br><span class="line">    <span class="attr">unknownKey</span>: <span class="string">&#x27;Value&#x27;</span>,  <span class="comment">// エラー</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ❌ エラー: 翻訳関数で存在しないキーを指定</span></span><br><span class="line"><span class="keyword">const</span> t = <span class="title function_">createI18n</span>(enMessage)</span><br><span class="line"><span class="title function_">t</span>(<span class="string">&#x27;term.invalidKey&#x27;</span>)      <span class="comment">// コンパイルエラー</span></span><br><span class="line"><span class="title function_">t</span>(<span class="string">&#x27;pages.home.invalid&#x27;</span>)   <span class="comment">// コンパイルエラー</span></span><br><span class="line"><span class="title function_">t</span>(<span class="string">&#x27;invalid.path&#x27;</span>)         <span class="comment">// コンパイルエラー</span></span><br><span class="line"><span class="title function_">t</span>(<span class="string">&#x27;pages.invalid.title&#x27;</span>)  <span class="comment">// コンパイルエラー</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="メリット"><a href="#メリット" class="headerlink" title="メリット"></a>メリット</h2><ol>
-<li><p><strong>コンパイル時の安全性</strong>: 翻訳キーのエラーを実行前に検出できます</p>
-</li>
-<li><p><strong>自動補完</strong>: IDEが翻訳キーを自動補完してくれます</p>
-</li>
-<li><p><strong>リファクタリングの安全性</strong>: キー名を変更する際、使用箇所を自動的に検出できます</p>
-</li>
-<li><p><strong>ドキュメントとしての役割</strong>: 型定義自体が、利用可能な翻訳キーのドキュメントとなります</p>
-</li>
-<li><p><strong>翻訳関数の型安全</strong>: 翻訳関数を使用する際も、存在しないキーを指定するとコンパイルエラーが発生します</p>
-</li>
-</ol>
-<h2 id="サンプルコード"><a href="#サンプルコード" class="headerlink" title="サンプルコード"></a>サンプルコード</h2><p>サンプルコードは <a href="https://github.com/shoyan/i18n-sample">https://github.com/shoyan/i18n-sample</a> で公開しています。</p>
 
         </div>
       </div>
