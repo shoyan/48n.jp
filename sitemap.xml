@@ -56,6 +56,33 @@
   </url>
   
   <url>
+    <loc>https://48n.jp/blog/2025/06/04/go-slack-notification-guide/</loc>
+    
+    <lastmod>2026-02-03</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://48n.jp/blog/2025/09/17/go-interface-implementation-check/</loc>
+    
+    <lastmod>2026-02-03</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://48n.jp/blog/2025/07/02/git-japanese-filename-encoding-fix/</loc>
+    
+    <lastmod>2026-02-03</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://48n.jp/blog/2026/01/10/freelance-contract-risks/</loc>
     
     <lastmod>2026-02-03</lastmod>
@@ -74,43 +101,7 @@
   </url>
   
   <url>
-    <loc>https://48n.jp/blog/2025/07/02/git-japanese-filename-encoding-fix/</loc>
-    
-    <lastmod>2026-02-03</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://48n.jp/blog/2025/05/30/go-error-handling-best-practice/</loc>
-    
-    <lastmod>2026-02-03</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://48n.jp/blog/2025/09/17/go-interface-implementation-check/</loc>
-    
-    <lastmod>2026-02-03</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://48n.jp/blog/2025/06/04/go-slack-notification-guide/</loc>
-    
-    <lastmod>2026-02-03</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://48n.jp/blog/2025/06/03/asynq-rate-limiter-implementation-guide/</loc>
     
     <lastmod>2026-02-03</lastmod>
     
@@ -129,6 +120,15 @@
   
   <url>
     <loc>https://48n.jp/blog/2025/12/25/2025-year-in-review/</loc>
+    
+    <lastmod>2026-02-03</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://48n.jp/blog/2025/06/03/asynq-rate-limiter-implementation-guide/</loc>
     
     <lastmod>2026-02-03</lastmod>
     
