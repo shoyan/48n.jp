@@ -2,36 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://48n.jp/blog/2026/02/01/why-abstract-words-stop-design-thinking/</loc>
-    
-    <lastmod>2026-02-03</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://48n.jp/googlef7e82fffb075bee5.html</loc>
     
-    <lastmod>2026-02-03</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://48n.jp/blog/2026/01/04/strong-engineers-go-silent/</loc>
-    
-    <lastmod>2026-02-03</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://48n.jp/blog/2026/01/21/table-design-patterns/</loc>
-    
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -40,7 +13,34 @@
   <url>
     <loc>https://48n.jp/blog/2025/11/28/translation-type-check-mechanism/</loc>
     
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://48n.jp/blog/2026/02/01/why-abstract-words-stop-design-thinking/</loc>
+    
+    <lastmod>2026-02-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://48n.jp/blog/2026/01/04/strong-engineers-go-silent/</loc>
+    
+    <lastmod>2026-02-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://48n.jp/blog/2026/01/21/table-design-patterns/</loc>
+    
+    <lastmod>2026-02-06</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -49,43 +49,7 @@
   <url>
     <loc>https://48n.jp/blog/2025/06/05/slack-block-kit-detailed-guide/</loc>
     
-    <lastmod>2026-02-03</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://48n.jp/blog/2025/06/04/go-slack-notification-guide/</loc>
-    
-    <lastmod>2026-02-03</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://48n.jp/blog/2025/09/17/go-interface-implementation-check/</loc>
-    
-    <lastmod>2026-02-03</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://48n.jp/blog/2025/07/02/git-japanese-filename-encoding-fix/</loc>
-    
-    <lastmod>2026-02-03</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://48n.jp/blog/2026/01/10/freelance-contract-risks/</loc>
-    
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -94,7 +58,16 @@
   <url>
     <loc>https://48n.jp/blog/2025/05/30/go-1-24-3-build-error/</loc>
     
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://48n.jp/blog/2025/07/02/git-japanese-filename-encoding-fix/</loc>
+    
+    <lastmod>2026-02-06</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -103,16 +76,34 @@
   <url>
     <loc>https://48n.jp/blog/2025/05/30/go-error-handling-best-practice/</loc>
     
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://48n.jp/blog/2016/08/02/README/</loc>
+    <loc>https://48n.jp/blog/2025/09/17/go-interface-implementation-check/</loc>
     
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://48n.jp/blog/2025/06/04/go-slack-notification-guide/</loc>
+    
+    <lastmod>2026-02-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://48n.jp/blog/2026/01/10/freelance-contract-risks/</loc>
+    
+    <lastmod>2026-02-06</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -121,7 +112,16 @@
   <url>
     <loc>https://48n.jp/blog/2025/12/25/2025-year-in-review/</loc>
     
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://48n.jp/blog/2016/08/02/README/</loc>
+    
+    <lastmod>2026-02-06</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -130,7 +130,7 @@
   <url>
     <loc>https://48n.jp/blog/2025/06/03/asynq-rate-limiter-implementation-guide/</loc>
     
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1462,7 +1462,7 @@
 
   <url>
     <loc>https://48n.jp/</loc>
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -1470,77 +1470,77 @@
   
   <url>
     <loc>https://48n.jp/tags/Ruby/</loc>
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://48n.jp/tags/PHP/</loc>
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://48n.jp/tags/Go/</loc>
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://48n.jp/tags/%E3%82%A2%E3%83%AB%E3%82%B4%E3%83%AA%E3%82%BA%E3%83%A0/</loc>
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://48n.jp/tags/Java/</loc>
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://48n.jp/tags/Node-js/</loc>
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://48n.jp/tags/GraphQL/</loc>
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://48n.jp/tags/JavaScript/</loc>
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://48n.jp/tags/Linux/</loc>
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://48n.jp/tags/Docker/</loc>
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://48n.jp/tags/TypeScript/</loc>
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -1548,43 +1548,43 @@
 
   
   <url>
-    <loc>https://48n.jp/categories/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0/</loc>
-    <lastmod>2026-02-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://48n.jp/categories/%E3%83%95%E3%83%AA%E3%83%BC%E3%83%A9%E3%83%B3%E3%82%B9/</loc>
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://48n.jp/categories/%E3%82%B3%E3%83%A9%E3%83%A0/</loc>
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://48n.jp/categories/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0/</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://48n.jp/categories/%E7%99%BB%E5%A3%87/</loc>
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://48n.jp/categories/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E9%96%8B%E7%99%BA/</loc>
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://48n.jp/categories/%E8%B6%A3%E5%91%B3/</loc>
-    <lastmod>2026-02-03</lastmod>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>

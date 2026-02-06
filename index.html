@@ -177,8 +177,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2026-02-01T12:00:00.000Z" itemprop="datepublished">
             2026/02/01
           </time>
-          <time datetime="2026-02-03T10:26:00.012Z" itemprop="modified">
-            (更新日: 2026/02/03)
+          <time datetime="2026-02-06T01:26:16.457Z" itemprop="modified">
+            (更新日: 2026/02/06)
           </time>
         </div>
         <h1>
@@ -247,8 +247,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2026-01-21T01:00:00.000Z" itemprop="datepublished">
             2026/01/21
           </time>
-          <time datetime="2026-02-03T10:26:00.011Z" itemprop="modified">
-            (更新日: 2026/02/03)
+          <time datetime="2026-02-06T01:26:16.456Z" itemprop="modified">
+            (更新日: 2026/02/06)
           </time>
         </div>
         <h1>
@@ -260,7 +260,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h2 id="テーブル初期設計の基本ポイント"><a href="#テーブル初期設計の基本ポイント" class="headerlink" title="テーブル初期設計の基本ポイント"></a>テーブル初期設計の基本ポイント</h2><p>テーブル設計において、特に「状態を持つデータ」の設計は難しいものです。<br>ユーザー情報を例にすると、<code>status</code> カラムに <code>active</code> &#x2F; <code>inactive</code> &#x2F; <code>banned</code> などの状態を持つという設計はよくある設計でしょう。このように状態を持つ設計は一見シンプルに見えますが、実は後々問題になりがちです。</p>
 <h3 id="なぜ状態を持つ設計が問題になりやすいのか"><a href="#なぜ状態を持つ設計が問題になりやすいのか" class="headerlink" title="なぜ状態を持つ設計が問題になりやすいのか"></a>なぜ状態を持つ設計が問題になりやすいのか</h3><p>状態を1つのカラムで管理する設計は、一見シンプルに見えますが、実際には以下のような問題が発生しやすくなります。</p>
 <h4 id="データの不整合が発生しやすい"><a href="#データの不整合が発生しやすい" class="headerlink" title="データの不整合が発生しやすい"></a>データの不整合が発生しやすい</h4><p>状態を持つとデータの不整合が発生しやすくなります。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 悪い例：派生情報をカラムに保存</span></span><br><span class="line">users</span><br><span class="line"><span class="operator">-</span> id</span><br><span class="line"><span class="operator">-</span> email</span><br><span class="line"><span class="operator">-</span> is_active  <span class="comment">-- 派生情報</span></span><br><span class="line"><span class="operator">-</span> deleted_at <span class="comment">-- 事実</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 例：派生情報をカラムに保存</span></span><br><span class="line">users</span><br><span class="line"><span class="operator">-</span> id</span><br><span class="line"><span class="operator">-</span> email</span><br><span class="line"><span class="operator">-</span> is_active  <span class="comment">-- 派生情報</span></span><br><span class="line"><span class="operator">-</span> deleted_at <span class="comment">-- 事実</span></span><br></pre></td></tr></table></figure>
 
 <p>この設計では、<code>deleted_at</code> が設定されているのに <code>is_active = true</code> のまま、という矛盾した状態が発生する可能性があります。</p>
 <h4 id="データが曖昧になりやすい"><a href="#データが曖昧になりやすい" class="headerlink" title="データが曖昧になりやすい"></a>データが曖昧になりやすい</h4><p>初期設計では <code>active</code> &#x2F; <code>inactive</code> の2つだった状態が、後から以下のような状態が必要になることがあります。</p>
@@ -278,7 +278,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </ul>
 <p><strong>派生情報は保存せずに事実から算出します</strong>。<br>このように、事実のみを保存するという原則に則ることにより、データの不整合や曖昧さに強い設計にすることができます。</p>
 <p>以下は、ユーザーの情報を日付型として扱う例です。１つのカラムでは１つの意味を取り扱うことで、明確なデータ設計にしているのがポイントです。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 良い例：日時型を使う（状態が増えたらカラム追加で対応）</span></span><br><span class="line">users</span><br><span class="line"><span class="operator">-</span> id</span><br><span class="line"><span class="operator">-</span> email</span><br><span class="line"><span class="operator">-</span> deleted_at      <span class="comment">-- 退会日時</span></span><br><span class="line"><span class="operator">-</span> banned_at        <span class="comment">-- BAN日時</span></span><br><span class="line"><span class="operator">-</span> suspended_at     <span class="comment">-- 一時停止日時</span></span><br><span class="line"><span class="operator">-</span> email_verified_at <span class="comment">-- メール認証日時</span></span><br><span class="line"><span class="comment">-- 新しい状態が増えても、新しい日時カラムを追加するだけ</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 例：日時型を使う（状態が増えたらカラム追加で対応）</span></span><br><span class="line">users</span><br><span class="line"><span class="operator">-</span> id</span><br><span class="line"><span class="operator">-</span> email</span><br><span class="line"><span class="operator">-</span> deleted_at      <span class="comment">-- 退会日時</span></span><br><span class="line"><span class="operator">-</span> banned_at        <span class="comment">-- BAN日時</span></span><br><span class="line"><span class="operator">-</span> suspended_at     <span class="comment">-- 一時停止日時</span></span><br><span class="line"><span class="operator">-</span> email_verified_at <span class="comment">-- メール認証日時</span></span><br><span class="line"><span class="comment">-- 新しい状態が増えても、新しい日時カラムを追加するだけ</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="状態＝「事実の集合」として考える"><a href="#状態＝「事実の集合」として考える" class="headerlink" title="状態＝「事実の集合」として考える"></a>状態＝「事実の集合」として考える</h3><p>状態は事実の組み合わせです。例えば、ユーザーが「利用可能」かどうかは、<strong>これらの事実の組み合わせ</strong>から判断します。</p>
 <ul>
@@ -289,7 +289,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 利用可能ユーザー</span></span><br><span class="line"><span class="keyword">WHERE</span> deleted_at <span class="keyword">IS</span> <span class="keyword">NULL</span></span><br><span class="line">  <span class="keyword">AND</span> banned_at <span class="keyword">IS</span> <span class="keyword">NULL</span></span><br><span class="line">  <span class="keyword">AND</span> email_verified_at <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span></span><br></pre></td></tr></table></figure>
 
 <p>ユーザーが「利用可能」というような状態は事実を元に算出する設計が安定します。</p>
-<h2 id="状態として持つ場合"><a href="#状態として持つ場合" class="headerlink" title="状態として持つ場合"></a>状態として持つ場合</h2><p>一方で <strong>「割り切って状態を持たせた方が“良い設計”になるケース」</strong> は、実務では普通にあります。</p>
+<h2 id="状態として持った方が扱いやすいケース"><a href="#状態として持った方が扱いやすいケース" class="headerlink" title="状態として持った方が扱いやすいケース"></a>状態として持った方が扱いやすいケース</h2><p>一方で <strong>「割り切って状態を持たせた方が扱いやすい設計になるケース」</strong> は、実務では普通にあります。</p>
 <h3 id="UI-管理画面で即座に使いたいとき"><a href="#UI-管理画面で即座に使いたいとき" class="headerlink" title="UI &#x2F; 管理画面で即座に使いたいとき"></a>UI &#x2F; 管理画面で即座に使いたいとき</h3><h4 id="例：決済管理画面"><a href="#例：決済管理画面" class="headerlink" title="例：決済管理画面"></a>例：決済管理画面</h4><p>例えば、一覧で「未払い」「支払済み」「返金済み」を表示したい場合は、状態を持ったほうがよいことがあります。<br>一覧画面で毎回集計の計算をするのはパフォーマンスが重くなりがちです。そういった場合は割り切って状態を持ったほうがトータルとして安定します。</p>
 <figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">invoices</span><br><span class="line"><span class="bullet">- </span>id</span><br><span class="line"><span class="bullet">- </span>total_amount</span><br><span class="line"><span class="bullet">- </span>status  -- unpaid / paid</span><br></pre></td></tr></table></figure>
 
@@ -304,14 +304,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <li>状態遷移が業務ルールとして固定</li>
 <li>「今どこか」が重要</li>
 </ul>
-<h3 id="一生変わらない意味の状態"><a href="#一生変わらない意味の状態" class="headerlink" title="一生変わらない意味の状態"></a>一生変わらない意味の状態</h3><p>状態の意味がが変わらない場合は状態として持って問題ありません。例えば、次のような場合です。</p>
+<h3 id="一生変わらない意味の状態"><a href="#一生変わらない意味の状態" class="headerlink" title="一生変わらない意味の状態"></a>一生変わらない意味の状態</h3><p>一度設定された状態の意味が変わらない場合は、状態として持って問題ない場合が多いです。例えば、次のような場合です。</p>
 <h4 id="例"><a href="#例" class="headerlink" title="例"></a>例</h4><ul>
 <li>is_admin（管理者かどうか）</li>
 <li>is_trial_user（トライアルユーザーかどうか）</li>
 <li>is_archived（アーカイブされているかどうか）</li>
 </ul>
-<h4 id="補足：YES-NOで判断できるという意味？"><a href="#補足：YES-NOで判断できるという意味？" class="headerlink" title="補足：YES&#x2F;NOで判断できるという意味？"></a>補足：YES&#x2F;NOで判断できるという意味？</h4><p>多くの場合は <strong>YES&#x2F;NO（boolean）で表現できる</strong> ということです。ただし重要なのは、単に2値で表現できることではなく、次の2点です。</p>
-<ul>
+<h4 id="考え方"><a href="#考え方" class="headerlink" title="考え方"></a>考え方</h4><ul>
 <li><strong>定義が将来もブレない</strong>：運用や要件が変わっても「何を意味するか」が変わらない</li>
 <li><strong>派生状態ではない</strong>：他の複数の事実の組み合わせ（計算結果）になっていない</li>
 </ul>
@@ -333,8 +332,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2026-01-10T01:00:00.000Z" itemprop="datepublished">
             2026/01/10
           </time>
-          <time datetime="2026-02-03T10:26:00.006Z" itemprop="modified">
-            (更新日: 2026/02/03)
+          <time datetime="2026-02-06T01:26:16.451Z" itemprop="modified">
+            (更新日: 2026/02/06)
           </time>
         </div>
         <h1>
@@ -537,8 +536,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2026-01-04T01:00:00.000Z" itemprop="datepublished">
             2026/01/04
           </time>
-          <time datetime="2026-02-03T10:26:00.011Z" itemprop="modified">
-            (更新日: 2026/02/03)
+          <time datetime="2026-02-06T01:26:16.456Z" itemprop="modified">
+            (更新日: 2026/02/06)
           </time>
         </div>
         <h1>
@@ -615,8 +614,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <time datetime="2025-12-25T03:00:00.000Z" itemprop="datepublished">
             2025/12/25
           </time>
-          <time datetime="2026-02-03T10:26:00.005Z" itemprop="modified">
-            (更新日: 2026/02/03)
+          <time datetime="2026-02-06T01:26:16.450Z" itemprop="modified">
+            (更新日: 2026/02/06)
           </time>
         </div>
         <h1>
