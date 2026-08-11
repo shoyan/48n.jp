@@ -1,12 +1,10 @@
 ---
-
-## title: GitHub Copilot Code Reviewは実務でどれくらい有効か
-
+title: GitHub Copilot Code Reviewは実務でどれくらい有効か
 date: 2026-08-11 22:00:00
 description: 実務リポジトリの過去20 PR、Copilot Code Reviewの行単位コメント180件を分類し、Actionable RateやDefect/Risk Rateから実務での有効性を評価した結果をまとめます。
 categories:
-
-- ソフトウェア開発
+ - ソフトウェア開発
+---
 
 ## はじめに
 
