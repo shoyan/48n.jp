@@ -2,15 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://48n.jp/googlef7e82fffb075bee5.html</loc>
-    
-    <lastmod>2026-08-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://48n.jp/blog/2026/02/01/why-abstract-words-stop-design-thinking/</loc>
     
     <lastmod>2026-08-21</lastmod>
@@ -20,7 +11,7 @@
   </url>
   
   <url>
-    <loc>https://48n.jp/blog/2026/01/04/strong-engineers-go-silent/</loc>
+    <loc>https://48n.jp/googlef7e82fffb075bee5.html</loc>
     
     <lastmod>2026-08-21</lastmod>
     
@@ -56,6 +47,24 @@
   </url>
   
   <url>
+    <loc>https://48n.jp/blog/2026/01/04/strong-engineers-go-silent/</loc>
+    
+    <lastmod>2026-08-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://48n.jp/blog/2025/12/25/2025-year-in-review/</loc>
+    
+    <lastmod>2026-08-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://48n.jp/blog/2016/08/02/README/</loc>
     
     <lastmod>2026-08-21</lastmod>
@@ -66,15 +75,6 @@
   
   <url>
     <loc>https://48n.jp/blog/2025/06/03/asynq-rate-limiter-implementation-guide/</loc>
-    
-    <lastmod>2026-08-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://48n.jp/blog/2025/12/25/2025-year-in-review/</loc>
     
     <lastmod>2026-08-21</lastmod>
     
@@ -119,7 +119,7 @@
   </url>
   
   <url>
-    <loc>https://48n.jp/blog/2025/09/17/go-interface-implementation-check/</loc>
+    <loc>https://48n.jp/blog/2025/05/30/go-error-handling-best-practice/</loc>
     
     <lastmod>2026-08-21</lastmod>
     
@@ -128,7 +128,7 @@
   </url>
   
   <url>
-    <loc>https://48n.jp/blog/2025/05/30/go-error-handling-best-practice/</loc>
+    <loc>https://48n.jp/blog/2025/09/17/go-interface-implementation-check/</loc>
     
     <lastmod>2026-08-21</lastmod>
     
@@ -1557,6 +1557,13 @@
 
   
   <url>
+    <loc>https://48n.jp/categories/%E3%83%95%E3%83%AA%E3%83%BC%E3%83%A9%E3%83%B3%E3%82%B9/</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://48n.jp/categories/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0/</loc>
     <lastmod>2026-08-21</lastmod>
     <changefreq>weekly</changefreq>
@@ -1565,13 +1572,6 @@
   
   <url>
     <loc>https://48n.jp/categories/%E3%82%B3%E3%83%A9%E3%83%A0/</loc>
-    <lastmod>2026-08-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://48n.jp/categories/%E3%83%95%E3%83%AA%E3%83%BC%E3%83%A9%E3%83%B3%E3%82%B9/</loc>
     <lastmod>2026-08-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
